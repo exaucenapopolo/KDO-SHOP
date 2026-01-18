@@ -3,156 +3,486 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KDO SHOP - Tableau de bord</title>
+    <title>KDO SHOP - Votre marketplace professionnelle</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome pour les icônes -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS personnalisé -->
     <style>
         :root {
-            --primary-blue: #0056b3;
-            --secondary-blue: #007bff;
-            --light-gray: #f8f9fa;
-            --dark-gray: #343a40;
-            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --primary-blue: #1E3A8A;    /* Bleu foncé du logo */
+            --secondary-orange: #F97316; /* Orange du logo */
+            --accent-blue: #3B82F6;     /* Bleu clair */
+            --light-gray: #F8FAFC;
+            --dark-gray: #1F2937;
+            --medium-gray: #6B7280;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --radius: 12px;
         }
+        
         body {
-            background-color: #f5f7fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            padding-bottom: 80px; /* Pour le footer */
         }
-        /* En-tête fixe */
+        
+        /* En-tête amélioré */
         .navbar-kdo {
-            background-color: var(--primary-blue);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1E40AF 100%);
             box-shadow: var(--shadow);
+            padding: 12px 0;
         }
-        .navbar-kdo .logo {
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 42px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            color: white;
             font-weight: 700;
             font-size: 1.8rem;
-            color: white;
+            letter-spacing: -0.5px;
         }
+        
         .search-box {
-            max-width: 600px;
+            max-width: 650px;
+            position: relative;
         }
+        
+        .search-box .form-control {
+            border-radius: 25px;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid transparent;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
         .search-box .form-control:focus {
-            border-color: var(--secondary-blue);
-            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            border-color: var(--secondary-orange);
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
         }
-        /* Sidebar des filtres */
-        .sidebar-filter {
-            background: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            padding: 1.5rem;
-            position: sticky;
-            top: 20px;
+        
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-gray);
+            z-index: 10;
         }
-        .sidebar-filter h5 {
-            color: var(--dark-gray);
-            border-bottom: 2px solid var(--primary-blue);
-            padding-bottom: 0.5rem;
-        }
-        .filter-section {
-            margin-bottom: 1.5rem;
-        }
-        /* Carte produit */
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        
+        .search-btn {
+            background: var(--secondary-orange);
+            border: none;
+            border-radius: 0 25px 25px 0;
+            color: white;
+            padding: 0 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: absolute;
+            right: 0;
+            top: 0;
             height: 100%;
         }
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        
+        .search-btn:hover {
+            background: #EA580C;
         }
+        
+        /* Navigation */
+        .nav-link-custom {
+            color: white !important;
+            font-weight: 500;
+            padding: 8px 15px !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin: 0 3px;
+        }
+        
+        .nav-link-custom:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        /* Section de filtres améliorée */
+        .filters-section {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-btn {
+            background: white;
+            border: 2px solid #E5E7EB;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+            transform: translateY(-2px);
+        }
+        
+        .price-filter-container {
+            background: #F9FAFB;
+            border-radius: 10px;
+            padding: 1.2rem;
+        }
+        
+        .price-range-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .price-label {
+            background: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            border: 1px solid #E5E7EB;
+        }
+        
+        /* Sections de produits par catégorie */
+        .category-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--secondary-orange);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+        
+        .view-all-link {
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .view-all-link:hover {
+            color: var(--primary-blue);
+            text-decoration: underline;
+        }
+        
+        /* Grille de produits horizontale */
+        .products-horizontal {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 15px 5px;
+            scroll-behavior: smooth;
+        }
+        
+        .products-horizontal::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .products-horizontal::-webkit-scrollbar-track {
+            background: #F1F1F1;
+            border-radius: 10px;
+        }
+        
+        .products-horizontal::-webkit-scrollbar-thumb {
+            background: var(--accent-blue);
+            border-radius: 10px;
+        }
+        
+        /* Carte produit améliorée */
+        .product-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: var(--shadow);
+            width: 280px;
+            flex-shrink: 0;
+            border: 1px solid #F1F5F9;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--secondary-orange);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+        
         .product-img {
-            height: 180px;
-            object-fit: cover;
-            background-color: #e9ecef;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6c757d;
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+            overflow: hidden;
         }
+        
+        .product-img i {
+            font-size: 4rem;
+            color: var(--accent-blue);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
         .product-title {
-            font-weight: 600;
+            font-weight: 700;
             color: var(--dark-gray);
             font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
+        
         .product-price {
             color: var(--primary-blue);
-            font-weight: 700;
-            font-size: 1.3rem;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
-        .product-category {
+        
+        .product-specs {
             font-size: 0.85rem;
-            color: #6c757d;
-            background-color: #e9ecef;
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            display: inline-block;
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
         }
+        
+        .spec-item {
+            background: #F1F5F9;
+            padding: 3px 10px;
+            border-radius: 12px;
+        }
+        
         .btn-add-to-cart {
-            background-color: var(--secondary-blue);
+            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
             color: white;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
-            transition: background-color 0.3s;
+            border-radius: 8px;
+            padding: 12px;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
+        
         .btn-add-to-cart:hover {
-            background-color: #0056b3;
+            background: linear-gradient(to right, #1E40AF, #2563EB);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
         }
-        /* Pagination */
-        .pagination-kdo .page-item.active .page-link {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
-        }
-        /* Notification d'ajout au panier */
+        
+        /* Notification */
         #cartAlert {
             position: fixed;
-            top: 80px;
+            top: 100px;
             right: 20px;
-            z-index: 1050;
-            display: none;
+            z-index: 9999;
+            min-width: 300px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            border-left: 5px solid var(--secondary-orange);
         }
+        
+        /* Footer */
+        .footer-kdo {
+            background: var(--dark-gray);
+            color: white;
+            padding: 2rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #D1D5DB;
+            transition: all 0.3s ease;
+            padding: 10px 15px;
+            border-radius: 10px;
+            min-width: 80px;
+        }
+        
+        .footer-item:hover, .footer-item.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+        
+        .footer-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
-            .sidebar-filter {
-                margin-bottom: 2rem;
-                position: static;
+            .logo-text {
+                display: none;
             }
+            
+            .products-horizontal {
+                gap: 15px;
+            }
+            
             .product-card {
-                margin-bottom: 1.5rem;
+                width: 240px;
             }
+            
+            .footer-nav {
+                justify-content: space-between;
+                padding: 0 10px;
+            }
+            
+            .footer-item {
+                min-width: 60px;
+                padding: 8px 5px;
+            }
+            
+            .footer-label {
+                font-size: 0.75rem;
+            }
+        }
+        
+        /* Animation pour l'ajout au panier */
+        @keyframes cartBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .cart-bounce {
+            animation: cartBounce 0.5s ease;
+        }
+        
+        /* Animation d'apparition des produits */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .product-item {
+            animation: fadeInUp 0.5s ease forwards;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation principale (inspirée d'Alibaba.com) -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-kdo sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand logo" href="#"><i class="fas fa-gift me-2"></i>KDO SHOP</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <div class="d-flex w-100 search-box mx-auto my-2 my-lg-0">
-                    <input class="form-control me-2" type="search" placeholder="Rechercher des produits, fournisseurs..." id="searchInput">
-                    <button class="btn btn-light" type="button" id="searchButton"><i class="fas fa-search"></i></button>
+    <!-- Navigation principale -->
+    <nav class="navbar navbar-expand-lg navbar-kdo sticky-top">
+        <div class="container">
+            <a class="navbar-brand p-0" href="#">
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                         alt="KDO SHOP" 
+                         class="logo-img"
+                         onerror="this.onerror=null; this.style.display='none'; document.querySelector('.logo-text').style.display='block';">
+                    <span class="logo-text">KDO SHOP</span>
                 </div>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <div class="d-flex w-100 search-box mx-auto my-3 my-lg-0">
+                    <i class="fas fa-search search-icon"></i>
+                    <input class="form-control" type="search" placeholder="Rechercher des produits, fournisseurs, catégories..." id="searchInput">
+                    <button class="search-btn" type="button" id="searchButton">Rechercher</button>
+                </div>
+                
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-th-large me-1"></i> Tableau de bord</a>
+                        <a class="nav-link nav-link-custom" href="#"><i class="fas fa-home me-1"></i> Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart me-1"></i> Panier <span id="cartCount" class="badge bg-light text-dark">0</span></a>
+                        <a class="nav-link nav-link-custom" href="#categories"><i class="fas fa-th-large me-1"></i> Catégories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fas fa-user me-1"></i> Mon compte</a>
+                        <a class="nav-link nav-link-custom" href="#"><i class="fas fa-shopping-cart me-1"></i> Panier 
+                            <span id="cartCount" class="badge bg-danger ms-1">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="#"><i class="fas fa-user me-1"></i> Mon Compte</a>
                     </li>
                 </ul>
             </div>
@@ -160,93 +490,158 @@
     </nav>
 
     <!-- Contenu principal -->
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <!-- Sidebar des filtres (à gauche) -->
-            <div class="col-lg-3 col-xl-2">
-                <div class="sidebar-filter">
-                    <h5><i class="fas fa-filter me-2"></i>Filtres</h5>
-                    <div class="filter-section">
-                        <h6>Catégories</h6>
-                        <div class="form-check">
-                            <input class="form-check-input category-filter" type="checkbox" value="all" id="catAll" checked>
-                            <label class="form-check-label" for="catAll">Tous les produits</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input category-filter" type="checkbox" value="ordinateur" id="catOrdinateur">
-                            <label class="form-check-label" for="catOrdinateur">Ordinateurs</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input category-filter" type="checkbox" value="accessoire" id="catAccessoire">
-                            <label class="form-check-label" for="catAccessoire">Accessoires</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input category-filter" type="checkbox" value="sac" id="catSac">
-                            <label class="form-check-label" for="catSac">Sacs & Bagages</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input category-filter" type="checkbox" value="telephone" id="catTelephone">
-                            <label class="form-check-label" for="catTelephone">Téléphones & Tablettes</label>
-                        </div>
-                    </div>
-                    <div class="filter-section">
-                        <h6>Prix (XAF)</h6>
-                        <div class="d-flex justify-content-between">
-                            <span id="priceMinLabel">50 000</span>
-                            <span id="priceMaxLabel">500 000</span>
-                        </div>
-                        <input type="range" class="form-range" min="50000" max="500000" step="10000" id="priceRange">
-                    </div>
-                    <div class="filter-section">
-                        <h6>Tri par</h6>
-                        <select class="form-select" id="sortSelect">
-                            <option value="default">Pertinence</option>
-                            <option value="price_asc">Prix croissant</option>
-                            <option value="price_desc">Prix décroissant</option>
-                            <option value="name_asc">Nom A-Z</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-outline-primary w-100 mt-3" id="resetFilters"><i class="fas fa-redo me-1"></i> Réinitialiser</button>
+    <div class="container mt-4">
+        <!-- Filtres par catégorie -->
+        <div class="filters-section">
+            <h5 class="mb-3"><i class="fas fa-filter me-2"></i>Filtrer par catégorie</h5>
+            <div class="category-buttons">
+                <button class="category-btn active" data-category="all">
+                    <i class="fas fa-th"></i> Tous les produits
+                </button>
+                <button class="category-btn" data-category="ordinateur">
+                    <i class="fas fa-laptop"></i> Ordinateurs
+                </button>
+                <button class="category-btn" data-category="accessoire">
+                    <i class="fas fa-keyboard"></i> Accessoires
+                </button>
+                <button class="category-btn" data-category="sac">
+                    <i class="fas fa-briefcase"></i> Sacs & Bagages
+                </button>
+                <button class="category-btn" data-category="telephone">
+                    <i class="fas fa-mobile-alt"></i> Téléphones & Tablettes
+                </button>
+                <button class="category-btn" data-category="tablette">
+                    <i class="fas fa-tablet-alt"></i> Tablettes
+                </button>
+                <button class="category-btn" data-category="gaming">
+                    <i class="fas fa-gamepad"></i> Gaming
+                </button>
+            </div>
+            
+            <!-- Filtre de prix dynamique -->
+            <div class="price-filter-container">
+                <h6><i class="fas fa-tag me-1"></i> Fourchette de prix (FCFA)</h6>
+                <div class="d-flex justify-content-between mb-2">
+                    <span id="priceMinLabel" class="price-label">5 000</span>
+                    <span id="priceMaxLabel" class="price-label">1 500 000</span>
+                </div>
+                <input type="range" class="form-range" min="1000" max="1500000" step="1000" id="priceRange">
+                <div class="price-range-labels">
+                    <small>Min</small>
+                    <small>Max</small>
                 </div>
             </div>
-
-            <!-- Zone principale des produits -->
-            <div class="col-lg-9 col-xl-10">
-                <div class="row mb-3">
-                    <div class="col">
-                        <h4 class="text-dark">Catalogue des produits <small class="text-muted" id="productCount">(12 produits)</small></h4>
-                        <p class="text-muted">Inspiré des catégories de <strong>chezkdo.com</strong> avec la disposition <strong>Alibaba.com</strong></p>
-                    </div>
-                    <div class="col-auto">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-secondary active" data-view="grid"><i class="fas fa-th-large"></i></button>
-                            <button type="button" class="btn btn-outline-secondary" data-view="list"><i class="fas fa-list"></i></button>
-                        </div>
-                    </div>
+        </div>
+        
+        <!-- Sections de produits par catégorie -->
+        <div id="categories">
+            <!-- Section Ordinateurs -->
+            <div class="category-section" id="ordinateurs-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-laptop me-2"></i> Ordinateurs & PC Portables</h2>
+                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
-
-                <!-- Grille de produits (données fictives) -->
-                <div class="row g-4" id="productGrid">
-                    <!-- Les produits sont générés dynamiquement par JavaScript -->
+                <div class="products-horizontal" id="ordinateurs-container">
+                    <!-- Rempli dynamiquement -->
                 </div>
-
-                <!-- Pagination fictive -->
-                <nav aria-label="Navigation des pages" class="mt-5">
-                    <ul class="pagination pagination-kdo justify-content-center">
-                        <li class="page-item disabled"><a class="page-link" href="#">Précédent</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
-                    </ul>
-                </nav>
+            </div>
+            
+            <!-- Section Téléphones -->
+            <div class="category-section" id="telephones-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-mobile-alt me-2"></i> Téléphones & Smartphones</h2>
+                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="products-horizontal" id="telephones-container">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Section Tablettes -->
+            <div class="category-section" id="tablettes-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-tablet-alt me-2"></i> Tablettes</h2>
+                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="products-horizontal" id="tablettes-container">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Section Accessoires -->
+            <div class="category-section" id="accessoires-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-keyboard me-2"></i> Accessoires Informatiques</h2>
+                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="products-horizontal" id="accessoires-container">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Section Sacs -->
+            <div class="category-section" id="sacs-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-briefcase me-2"></i> Sacs & Bagages</h2>
+                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="products-horizontal" id="sacs-container">
+                    <!-- Rempli dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Section Gaming -->
+            <div class="category-section" id="gaming-section">
+                <div class="section-header">
+                    <h2 class="section-title"><i class="fas fa-gamepad me-2"></i> Équipement Gaming</h2>
+                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="products-horizontal" id="gaming-container">
+                    <!-- Rempli dynamiquement -->
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Notification d'ajout au panier -->
+    <!-- Footer -->
+    <div class="footer-kdo">
+        <div class="container">
+            <div class="footer-nav">
+                <a href="#" class="footer-item active">
+                    <i class="fas fa-home footer-icon"></i>
+                    <span class="footer-label">Accueil</span>
+                </a>
+                <a href="#categories" class="footer-item">
+                    <i class="fas fa-th-large footer-icon"></i>
+                    <span class="footer-label">Catégories</span>
+                </a>
+                <a href="#" class="footer-item">
+                    <i class="fas fa-comments footer-icon"></i>
+                    <span class="footer-label">Messagerie</span>
+                    <span class="badge bg-danger position-absolute top-0 end-0 translate-middle">3</span>
+                </a>
+                <a href="#" class="footer-item" id="footer-cart">
+                    <i class="fas fa-shopping-cart footer-icon"></i>
+                    <span class="footer-label">Panier</span>
+                    <span id="footerCartCount" class="badge bg-danger position-absolute top-0 end-0 translate-middle">0</span>
+                </a>
+                <a href="#" class="footer-item">
+                    <i class="fas fa-user footer-icon"></i>
+                    <span class="footer-label">Mon KDO</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
     <div class="alert alert-success alert-dismissible fade show" id="cartAlert" role="alert">
-        <strong><i class="fas fa-check-circle me-1"></i> Produit ajouté au panier !</strong>
+        <div class="d-flex align-items-center">
+            <i class="fas fa-check-circle me-3 fs-4"></i>
+            <div>
+                <strong>Produit ajouté au panier !</strong>
+                <p class="mb-0 small" id="cartProductName"></p>
+            </div>
+        </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
@@ -254,160 +649,335 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script de l'application -->
+    <!-- Script principal -->
     <script>
-        // Données fictives basées sur les catégories de chezkdo.com
+        // Données complètes des produits
         const products = [
-            { id: 1, name: "Ordinateur Portable HP EliteBook", price: "250 000", category: "ordinateur", image: "", desc: "Portable professionnel remis à neuf, 8 Go RAM, 256 Go SSD." },
-            { id: 2, name: "Souris Gaming RGB", price: "15 000", category: "accessoire", image: "", desc: "Souris filaire avec rétroéclairage LED, 6400 DPI." },
-            { id: 3, name: "Sac à Dos pour Ordinateur 15.6\"", price: "18 000", category: "sac", image: "", desc: "Sac waterproof avec compartiment rembourré." },
-            { id: 4, name: "iPhone 12 Reconditionné", price: "380 000", category: "telephone", image: "", desc: "État comme neuf, batterie à 95%, 128 Go." },
-            { id: 5, name: "Disque Dur Externe 1 To", price: "55 000", category: "accessoire", image: "", desc: "Portable USB 3.0, compatible PC et Mac." },
-            { id: 6, name: "Clavier Mécanique Bluetooth", price: "22 000", category: "accessoire", image: "", desc: "Clavier sans fil avec switches bleus." },
-            { id: 7, name: "Tablette Samsung Galaxy Tab A8", price: "120 000", category: "telephone", image: "", desc: "Écran 10.5\", 64 Go, parfait pour la lecture." },
-            { id: 8, name: "PC Bureau Gaming (Config de base)", price: "450 000", category: "ordinateur", image: "", desc: "Processeur Intel i5, GTX 1660, 16 Go RAM." },
-            { id: 9, name: "Power Bank 20000 mAh", price: "12 000", category: "accessoire", image: "", desc: "Double port USB, charge rapide." },
-            { id: 10, name: "Sacoche Professionnelle", price: "25 000", category: "sac", image: "", desc: "Cuir synthétique, compartiments multiples." },
-            { id: 11, name: "MacBook Air M1 2020", price: "520 000", category: "ordinateur", image: "", desc: "Batterie longue durée, 256 Go SSD." },
-            { id: 12, name: "Écran 24\" Full HD", price: "90 000", category: "accessoire", image: "", desc: "Écran LED avec ports HDMI et VGA." }
+            // ORDINATEURS (min: 35000 FCFA)
+            { id: 1, name: "HP EliteBook 840 G5", price: 450000, category: "ordinateur", specs: ["i7 8ème gen", "16Go RAM", "512Go SSD"], desc: "PC portable professionnel reconditionné" },
+            { id: 2, name: "Dell Latitude 5490", price: 380000, category: "ordinateur", specs: ["i5 8ème gen", "8Go RAM", "256Go SSD"], desc: "Excellent état, batterie neuve" },
+            { id: 3, name: "Lenovo ThinkPad T480", price: 420000, category: "ordinateur", specs: ["i5 8ème gen", "16Go RAM", "512Go SSD"], desc: "Robuste et fiable" },
+            { id: 4, name: "MacBook Air M1 2020", price: 850000, category: "ordinateur", specs: ["Apple M1", "8Go RAM", "256Go SSD"], desc: "Comme neuf, garantie 6 mois" },
+            { id: 5, name: "Asus VivoBook 15", price: 350000, category: "ordinateur", specs: ["i3 10ème gen", "8Go RAM", "256Go SSD"], desc: "Neuf sous blister" },
+            { id: 6, name: "PC Bureau Gaming", price: 720000, category: "ordinateur", specs: ["Ryzen 5", "16Go RAM", "RTX 3060"], desc: "Configuration gaming complète" },
+            { id: 7, name: "Microsoft Surface Laptop 4", price: 690000, category: "ordinateur", specs: ["i7 11ème gen", "16Go RAM", "512Go SSD"], desc: "Écran tactile, ultra-léger" },
+            { id: 8, name: "Acer Swift 3", price: 390000, category: "ordinateur", specs: ["i5 11ème gen", "8Go RAM", "512Go SSD"], desc: "Design métallique, fin" },
+            
+            // TÉLÉPHONES (min: 24900 FCFA)
+            { id: 9, name: "iPhone 12 128Go", price: 420000, category: "telephone", specs: ["Écran 6.1\"", "128Go", "Double caméra"], desc: "Reconditionné grade A" },
+            { id: 10, name: "Samsung Galaxy S21", price: 380000, category: "telephone", specs: ["Écran 6.2\"", "128Go", "Triple caméra"], desc: "État impeccable" },
+            { id: 11, name: "iPhone 11 64Go", price: 280000, category: "telephone", specs: ["Écran 6.1\"", "64Go", "Double caméra"], desc: "Batterie à 95%" },
+            { id: 12, name: "Xiaomi Redmi Note 12", price: 145000, category: "telephone", specs: ["Écran 6.67\"", "128Go", "108MP"], desc: "Neuf sous garantie" },
+            { id: 13, name: "Samsung Galaxy A54", price: 220000, category: "telephone", specs: ["Écran 6.4\"", "256Go", "5G"], desc: "Nouveau modèle 2023" },
+            { id: 14, name: "iPhone XR 64Go", price: 190000, category: "telephone", specs: ["Écran 6.1\"", "64Go", "Face ID"], desc: "Fonctionne parfaitement" },
+            { id: 15, name: "Tecno Spark 10", price: 85000, category: "telephone", specs: ["Écran 6.6\"", "128Go", "5000mAh"], desc: "Autonomie exceptionnelle" },
+            { id: 16, name: "OnePlus Nord CE 3", price: 260000, category: "telephone", specs: ["Écran 6.7\"", "256Go", "120Hz"], desc: "Fluide et rapide" },
+            
+            // TABLETTES
+            { id: 17, name: "iPad Air 5 64Go", price: 520000, category: "tablette", specs: ["M1 Chip", "10.9\"", "WiFi"], desc: "Performance extrême" },
+            { id: 18, name: "Samsung Tab S8", price: 480000, category: "tablette", specs: ["Snapdragon 8", "11\"", "Stylus inclus"], desc: "Parfaite pour créateurs" },
+            { id: 19, name: "iPad 10.2\" 64Go", price: 320000, category: "tablette", specs: ["A13 Bionic", "10.2\"", "Apple Pencil"], desc: "Idéal pour étudiants" },
+            { id: 20, name: "Lenovo Tab P11 Pro", price: 280000, category: "tablette", specs: ["Snapdragon 730G", "11.5\"", "4K OLED"], desc: "Écran exceptionnel" },
+            { id: 21, name: "Xiaomi Pad 6", price: 240000, category: "tablette", specs: ["Snapdragon 870", "11\"", "144Hz"], desc: "Gaming et productivité" },
+            
+            // ACCESSOIRES (min: 1000 FCFA)
+            { id: 22, name: "Souris Gaming RGB", price: 15000, category: "accessoire", specs: ["6400 DPI", "RGB", "Filaire"], desc: "Précision extrême" },
+            { id: 23, name: "Clavier Mécanique", price: 25000, category: "accessoire", specs: ["Switches bleus", "RGB", "Anti-ghosting"], desc: "Tactile et cliquetant" },
+            { id: 24, name: "Casque Gaming 7.1", price: 35000, category: "accessoire", specs: ["7.1 surround", "Micro", "LED RGB"], desc: "Immersif et confortable" },
+            { id: 25, name: "Disque Dur 1To", price: 55000, category: "accessoire", specs: ["USB 3.0", "Portable", "2.5\""], desc: "Sauvegarde facile" },
+            { id: 26, name: "Power Bank 30000mAh", price: 18000, category: "accessoire", specs: ["PD 30W", "3 ports", "Quick Charge"], desc: "Charge ultra-rapide" },
+            { id: 27, name: "Webcam 4K", price: 42000, category: "accessoire", specs: ["4K UHD", "Micro", "Auto-focus"], desc: "Qualité professionnelle" },
+            { id: 28, name: "Écran 24\" Full HD", price: 120000, category: "accessoire", specs: ["1080p", "75Hz", "HDMI/VGA"], desc: "Couleurs vibrantes" },
+            { id: 29, name: "Hub USB-C 7-en-1", price: 12500, category: "accessoire", specs: ["HDMI 4K", "USB 3.0", "SD Card"], desc: "Connectivité complète" },
+            { id: 30, name: "Station d'accueil Dell", price: 65000, category: "accessoire", specs: ["Dual Display", "Ethernet", "Audio"], desc: "Bureau en un câble" },
+            
+            // SACS (min: 5000 FCFA)
+            { id: 31, name: "Sac à Dos Gaming", price: 22000, category: "sac", specs: ["17\"", "Waterproof", "USB Charging"], desc: "Style gamer, pratique" },
+            { id: 32, name: "Sacoche Professionnelle", price: 18000, category: "sac", specs: ["Cuir synthétique", "Multicompartiments"], desc: "Élégant et spacieux" },
+            { id: 33, name: "Valise Cabine 20\"", price: 45000, category: "sac", specs: ["4 roues", "TSA Lock", "Léger"], desc: "Voyage en toute sérénité" },
+            { id: 34, name: "Sac Messager Cuir", price: 32000, category: "sac", specs: ["Cuir véritable", "Réglable", "Style vintage"], desc: "Pour urbain chic" },
+            { id: 35, name: "Sac Sport 30L", price: 15000, category: "sac", specs: ["Respirable", "Poche eau", "Ceinture"], desc: "Randonnée et sport" },
+            
+            // GAMING
+            { id: 36, name: "Manette Xbox Series X", price: 35000, category: "gaming", specs: ["Sans fil", "Bluetooth", "Batterie"], desc: "Compatibilité large" },
+            { id: 37, name: "Volant Racing Logitech", price: 280000, category: "gaming", specs: ["Force Feedback", "900°", "3 pédales"], desc: "Expérience réaliste" },
+            { id: 38, name: "Chaise Gaming Ergonomique", price: 185000, category: "gaming", specs: ["Accoudoirs 4D", "Coussin lombaire", "Inclinable"], desc: "Confort longue session" },
+            { id: 39, name: "Casque VR Oculus Quest 2", price: 320000, category: "gaming", specs: ["128Go", "Sans fil", "Contrôleurs"], desc: "Réalité virtuelle complète" },
+            { id: 40, name: "Clavier Gaming 60%", price: 38000, category: "gaming", specs: ["Switches rouges", "RGB", "Compact"], desc: "Minimaliste et performant" },
+            { id: 41, name: "SSD NVMe 1To Gaming", price: 75000, category: "gaming", specs: ["3500MB/s", "M.2", "Dissipateur"], desc: "Chargement ultra-rapide" },
+            { id: 42, name: "Kit Streaming", price: 89000, category: "gaming", specs: ["Micro", "Lumière", "Support"], desc: "Pour streamers débutants" },
+            { id: 43, name: "Tapis de Souris XXL", price: 12000, category: "gaming", specs: ["900x400mm", "Anti-dérapant", "Bordure"], desc: "Espace illimité" }
         ];
 
         let cart = [];
-        let filteredProducts = [...products];
+        let currentCategory = "all";
+        const priceRanges = {
+            "all": { min: 1000, max: 1500000 },
+            "ordinateur": { min: 35000, max: 1500000 },
+            "telephone": { min: 24900, max: 500000 },
+            "tablette": { min: 240000, max: 600000 },
+            "accessoire": { min: 1000, max: 150000 },
+            "sac": { min: 5000, max: 50000 },
+            "gaming": { min: 12000, max: 350000 }
+        };
 
-        // Fonction pour afficher les produits
-        function renderProducts(productsArray) {
-            const container = $('#productGrid');
-            container.empty();
-            if (productsArray.length === 0) {
-                container.html('<div class="col-12 text-center py-5"><h5 class="text-muted">Aucun produit ne correspond aux filtres.</h5></div>');
+        // Formatage des prix
+        function formatPrice(price) {
+            return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
+        }
+
+        // Rendu des produits par catégorie
+        function renderProductsByCategory() {
+            const containers = {
+                "ordinateur": "#ordinateurs-container",
+                "telephone": "#telephones-container",
+                "tablette": "#tablettes-container",
+                "accessoire": "#accessoires-container",
+                "sac": "#sacs-container",
+                "gaming": "#gaming-container"
+            };
+            
+            // Vider tous les conteneurs
+            Object.values(containers).forEach(selector => {
+                $(selector).empty();
+            });
+            
+            // Filtrer les produits selon la catégorie active et le prix
+            const minPrice = parseInt($("#priceRange").attr("min"));
+            const maxPrice = parseInt($("#priceRange").attr("max"));
+            
+            const filteredProducts = products.filter(p => {
+                if (currentCategory !== "all" && p.category !== currentCategory) return false;
+                if (p.price < minPrice || p.price > maxPrice) return false;
+                return true;
+            });
+            
+            // Grouper par catégorie
+            const groupedProducts = {};
+            filteredProducts.forEach(p => {
+                if (!groupedProducts[p.category]) {
+                    groupedProducts[p.category] = [];
+                }
+                groupedProducts[p.category].push(p);
+            });
+            
+            // Remplir chaque conteneur
+            Object.keys(groupedProducts).forEach(category => {
+                const container = containers[category];
+                if (container) {
+                    groupedProducts[category].forEach(p => {
+                        const productCard = `
+                            <div class="product-item">
+                                <div class="product-card">
+                                    <div class="product-badge">TOP</div>
+                                    <div class="product-img">
+                                        <i class="fas fa-${getProductIcon(p.category)}"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h5 class="product-title">${p.name}</h5>
+                                        <p class="text-muted small mb-2">${p.desc}</p>
+                                        <div class="product-specs">
+                                            ${p.specs.map(spec => `<span class="spec-item">${spec}</span>`).join('')}
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="product-price">${formatPrice(p.price)}</span>
+                                        </div>
+                                        <button class="btn-add-to-cart" data-id="${p.id}">
+                                            <i class="fas fa-cart-plus"></i> Ajouter au panier
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $(container).append(productCard);
+                    });
+                }
+            });
+            
+            // Masquer les sections vides
+            Object.keys(containers).forEach(category => {
+                const section = $(`#${category}s-section`);
+                const container = containers[category];
+                if ($(container).children().length === 0) {
+                    section.hide();
+                } else {
+                    section.show();
+                }
+            });
+        }
+
+        // Obtenir l'icône appropriée
+        function getProductIcon(category) {
+            const icons = {
+                "ordinateur": "laptop",
+                "telephone": "mobile-alt",
+                "tablette": "tablet-alt",
+                "accessoire": "keyboard",
+                "sac": "briefcase",
+                "gaming": "gamepad"
+            };
+            return icons[category] || "box";
+        }
+
+        // Mettre à jour le filtre de prix selon la catégorie
+        function updatePriceRangeForCategory(category) {
+            const range = priceRanges[category] || priceRanges.all;
+            $("#priceRange").attr("min", range.min).attr("max", range.max).val(range.max);
+            $("#priceMinLabel").text(formatPrice(range.min));
+            $("#priceMaxLabel").text(formatPrice(range.max));
+        }
+
+        // Gestionnaires d'événements
+        $(document).ready(function() {
+            // Initialisation
+            renderProductsByCategory();
+            
+            // Catégorie clic
+            $(".category-btn").on("click", function() {
+                $(".category-btn").removeClass("active");
+                $(this).addClass("active");
+                currentCategory = $(this).data("category");
+                updatePriceRangeForCategory(currentCategory);
+                renderProductsByCategory();
+                $('html, body').animate({ scrollTop: $('#categories').offset().top - 20 }, 500);
+            });
+            
+            // Changement de prix
+            $("#priceRange").on("input", function() {
+                $("#priceMaxLabel").text(formatPrice(this.value));
+                renderProductsByCategory();
+            });
+            
+            // Recherche
+            $("#searchButton").on("click", performSearch);
+            $("#searchInput").on("keyup", function(e) {
+                if (e.key === "Enter") performSearch();
+            });
+            
+            // Ajout au panier
+            $(document).on("click", ".btn-add-to-cart", function() {
+                const id = parseInt($(this).data("id"));
+                const product = products.find(p => p.id === id);
+                
+                cart.push(product);
+                updateCartCount();
+                
+                // Notification
+                $("#cartProductName").text(product.name);
+                $("#cartAlert").addClass("show").removeClass("fade");
+                setTimeout(() => {
+                    $("#cartAlert").removeClass("show").addClass("fade");
+                }, 3000);
+                
+                // Animation du badge
+                $("#footerCartCount").addClass("cart-bounce");
+                setTimeout(() => {
+                    $("#footerCartCount").removeClass("cart-bounce");
+                }, 500);
+            });
+            
+            // Footer navigation
+            $(".footer-item").on("click", function(e) {
+                e.preventDefault();
+                $(".footer-item").removeClass("active");
+                $(this).addClass("active");
+                
+                if ($(this).attr("href") === "#categories") {
+                    $('html, body').animate({ scrollTop: $('#categories').offset().top - 20 }, 500);
+                }
+            });
+            
+            // Initialiser le compteur panier
+            updateCartCount();
+        });
+        
+        // Fonction de recherche
+        function performSearch() {
+            const term = $("#searchInput").val().toLowerCase().trim();
+            
+            if (term === "") {
+                renderProductsByCategory();
                 return;
             }
-            productsArray.forEach(p => {
-                const productCard = `
-                <div class="col-md-6 col-xl-4 col-xxl-3 product-item" data-category="${p.category}">
-                    <div class="product-card p-3 h-100">
-                        <div class="product-img mb-3">
-                            <i class="fas fa-laptop fa-3x"></i>
-                        </div>
-                        <h5 class="product-title">${p.name}</h5>
-                        <p class="text-muted small mb-2">${p.desc}</p>
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="product-price">${p.price} XAF</span>
-                            <span class="product-category">${p.category}</span>
-                        </div>
-                        <button class="btn btn-add-to-cart w-100 mt-2" data-id="${p.id}">
-                            <i class="fas fa-cart-plus me-2"></i> Ajouter au panier
-                        </button>
-                    </div>
-                </div>`;
-                container.append(productCard);
+            
+            // Filtrer les produits
+            const searchResults = products.filter(p => 
+                p.name.toLowerCase().includes(term) || 
+                p.desc.toLowerCase().includes(term) ||
+                p.specs.some(spec => spec.toLowerCase().includes(term))
+            );
+            
+            // Afficher les résultats
+            const containers = {
+                "ordinateur": "#ordinateurs-container",
+                "telephone": "#telephones-container",
+                "tablette": "#tablettes-container",
+                "accessoire": "#accessoires-container",
+                "sac": "#sacs-container",
+                "gaming": "#gaming-container"
+            };
+            
+            // Vider tous les conteneurs
+            Object.values(containers).forEach(selector => $(selector).empty());
+            
+            // Grouper les résultats par catégorie
+            const groupedResults = {};
+            searchResults.forEach(p => {
+                if (!groupedResults[p.category]) {
+                    groupedResults[p.category] = [];
+                }
+                groupedResults[p.category].push(p);
             });
-            $('#productCount').text(`(${productsArray.length} produits)`);
-        }
-
-        // Filtrage par catégorie
-        $('.category-filter').on('change', function() {
-            if ($(this).val() === 'all' && $(this).is(':checked')) {
-                $('.category-filter').not(this).prop('checked', false);
-            } else {
-                $('#catAll').prop('checked', false);
-            }
-            applyFilters();
-        });
-
-        // Filtrage par prix
-        $('#priceRange').on('input', function() {
-            $('#priceMinLabel').text((this.valueAsNumber).toLocaleString('fr-FR'));
-            applyFilters();
-        });
-
-        // Tri
-        $('#sortSelect').on('change', applyFilters);
-
-        // Recherche
-        $('#searchButton').on('click', applyFilters);
-        $('#searchInput').on('keyup', function(e) {
-            if (e.key === 'Enter') applyFilters();
-        });
-
-        // Réinitialisation
-        $('#resetFilters').on('click', function() {
-            $('.category-filter').prop('checked', false);
-            $('#catAll').prop('checked', true);
-            $('#priceRange').val(250000);
-            $('#priceMinLabel').text('250 000');
-            $('#sortSelect').val('default');
-            $('#searchInput').val('');
-            applyFilters();
-        });
-
-        // Vue grid/list
-        $('[data-view]').on('click', function() {
-            $('[data-view]').removeClass('active');
-            $(this).addClass('active');
-            if ($(this).data('view') === 'list') {
-                $('#productGrid').addClass('row-cols-1');
-                $('.product-card').addClass('d-flex');
-            } else {
-                $('#productGrid').removeClass('row-cols-1');
-                $('.product-card').removeClass('d-flex');
-            }
-        });
-
-        // Ajout au panier
-        $(document).on('click', '.btn-add-to-cart', function() {
-            const id = $(this).data('id');
-            const product = products.find(p => p.id === id);
-            cart.push(product);
-            $('#cartCount').text(cart.length);
-            $('#cartAlert').fadeIn().delay(2000).fadeOut();
-        });
-
-        // Fonction principale de filtrage
-        function applyFilters() {
-            let result = [...products];
-
-            // Filtre par catégorie
-            const checkedCategories = $('.category-filter:checked').map(function() {
-                return $(this).val();
-            }).get();
-            if (!checkedCategories.includes('all')) {
-                result = result.filter(p => checkedCategories.includes(p.category));
-            }
-
-            // Filtre par prix
-            const maxPrice = $('#priceRange').val();
-            result = result.filter(p => {
-                const price = parseInt(p.price.replace(/\s/g, ''));
-                return price <= maxPrice;
+            
+            // Afficher les résultats groupés
+            Object.keys(groupedResults).forEach(category => {
+                const container = containers[category];
+                if (container) {
+                    groupedResults[category].forEach(p => {
+                        const productCard = `
+                            <div class="product-item">
+                                <div class="product-card">
+                                    <div class="product-badge">RECHERCHE</div>
+                                    <div class="product-img">
+                                        <i class="fas fa-${getProductIcon(p.category)}"></i>
+                                    </div>
+                                    <div class="product-info">
+                                        <h5 class="product-title">${p.name}</h5>
+                                        <p class="text-muted small mb-2">${p.desc}</p>
+                                        <div class="product-specs">
+                                            ${p.specs.map(spec => `<span class="spec-item">${spec}</span>`).join('')}
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="product-price">${formatPrice(p.price)}</span>
+                                        </div>
+                                        <button class="btn-add-to-cart" data-id="${p.id}">
+                                            <i class="fas fa-cart-plus"></i> Ajouter au panier
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $(container).append(productCard);
+                    });
+                }
             });
-
-            // Filtre par recherche
-            const searchTerm = $('#searchInput').val().toLowerCase();
-            if (searchTerm) {
-                result = result.filter(p => p.name.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm));
-            }
-
-            // Tri
-            const sortVal = $('#sortSelect').val();
-            if (sortVal === 'price_asc') {
-                result.sort((a,b) => parseInt(a.price.replace(/\s/g, '')) - parseInt(b.price.replace(/\s/g, '')));
-            } else if (sortVal === 'price_desc') {
-                result.sort((a,b) => parseInt(b.price.replace(/\s/g, '')) - parseInt(a.price.replace(/\s/g, '')));
-            } else if (sortVal === 'name_asc') {
-                result.sort((a,b) => a.name.localeCompare(b.name));
-            }
-
-            filteredProducts = result;
-            renderProducts(result);
+            
+            // Masquer les sections vides
+            Object.keys(containers).forEach(category => {
+                const section = $(`#${category}s-section`);
+                const container = containers[category];
+                if ($(container).children().length === 0) {
+                    section.hide();
+                } else {
+                    section.show();
+                    section.find(".section-title").html(`<i class="fas fa-search me-2"></i> Résultats pour "${term}"`);
+                }
+            });
         }
-
-        // Initialisation
-        $(document).ready(function() {
-            renderProducts(products);
-            $('#priceMinLabel').text(($('#priceRange').val()).toLocaleString('fr-FR'));
-        });
+        
+        // Mettre à jour le compteur panier
+        function updateCartCount() {
+            $("#cartCount").text(cart.length);
+            $("#footerCartCount").text(cart.length);
+        }
     </script>
 </body>
 </html>
