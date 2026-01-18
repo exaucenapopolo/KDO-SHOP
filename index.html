@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KDO SHOP - Votre marketplace professionnelle</title>
+    <title>KDO SHOP - Marketplace professionnelle</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -25,31 +25,31 @@
         }
         
         * {
-            font-size: 13px;
+            font-size: 12px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
             background-color: var(--white);
             color: var(--text-dark);
-            padding-bottom: 60px;
+            padding-bottom: 50px;
         }
         
         /* Header simplifié */
         .header-kdo {
             border-bottom: 1px solid var(--border-color);
             background: var(--white);
-            padding: 12px 0;
+            padding: 8px 0;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .logo-img {
-            height: 40px;
+            height: 32px;
             width: auto;
             object-fit: contain;
         }
@@ -57,24 +57,29 @@
         .logo-text {
             color: var(--primary-orange);
             font-weight: 700;
-            font-size: 20px;
+            font-size: 16px;
             letter-spacing: -0.5px;
         }
         
         /* Barre de recherche */
         .search-wrapper {
             position: relative;
-            max-width: 700px;
+            max-width: 500px;
             margin: 0 auto;
         }
         
         .search-input {
-            border: 2px solid var(--primary-orange);
+            border: 1px solid var(--border-color);
             border-radius: 4px;
-            padding: 10px 50px 10px 15px;
-            font-size: 14px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
             width: 100%;
-            height: 44px;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
         }
         
         .search-btn {
@@ -82,21 +87,26 @@
             right: 0;
             top: 0;
             height: 100%;
-            background: var(--primary-orange);
-            color: white;
+            background: var(--accent-gray);
+            color: var(--text-medium);
             border: none;
             border-radius: 0 4px 4px 0;
-            padding: 0 25px;
-            font-size: 14px;
+            padding: 0 15px;
+            font-size: 12px;
             cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
         }
         
         /* Barre de catégories horizontale défilante */
         .categories-scroll {
             background: var(--accent-gray);
             border-bottom: 1px solid var(--border-color);
-            padding: 12px 0;
-            margin-bottom: 15px;
+            padding: 8px 0;
+            margin-bottom: 12px;
             overflow-x: auto;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
@@ -104,18 +114,18 @@
         
         .categories-container {
             display: inline-flex;
-            gap: 10px;
-            padding: 0 15px;
+            gap: 8px;
+            padding: 0 12px;
         }
         
         .category-item {
             background: var(--white);
             border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 8px 16px;
+            border-radius: 16px;
+            padding: 6px 12px;
             color: var(--text-dark);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 11px;
             transition: all 0.2s;
             flex-shrink: 0;
         }
@@ -128,54 +138,113 @@
         }
         
         .category-item i {
-            margin-right: 5px;
+            margin-right: 4px;
+            font-size: 11px;
         }
         
         /* Filtres horizontaux simplifiés */
         .filters-horizontal {
             background: var(--white);
             border-bottom: 1px solid var(--border-color);
-            padding: 15px 0;
-            margin-bottom: 15px;
+            padding: 12px 0;
+            margin-bottom: 12px;
         }
         
         .filter-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
         }
         
         .filter-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .filter-label {
             color: var(--text-medium);
-            font-size: 13px;
+            font-size: 11px;
             white-space: nowrap;
+        }
+        
+        /* Option pour activer/désactiver le filtre de prix */
+        .price-filter-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 18px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 18px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--primary-orange);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(18px);
         }
         
         /* Slider de prix amélioré */
         .price-slider-container {
-            min-width: 250px;
+            min-width: 200px;
+            display: none;
+        }
+        
+        .price-slider-container.active {
+            display: block;
         }
         
         .price-slider {
             width: 100%;
-            height: 6px;
+            height: 4px;
             -webkit-appearance: none;
             background: #ddd;
-            border-radius: 3px;
+            border-radius: 2px;
             outline: none;
         }
         
         .price-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             background: var(--primary-orange);
             border-radius: 50%;
             cursor: pointer;
@@ -184,23 +253,23 @@
         .price-values {
             display: flex;
             justify-content: space-between;
-            margin-top: 5px;
+            margin-top: 4px;
         }
         
         .price-value {
-            font-size: 12px;
+            font-size: 10px;
             color: var(--text-medium);
         }
         
         /* Conteneur principal */
         .main-container {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
         
         /* Sidebar des catégories */
         .sidebar-categories {
-            width: 220px;
+            width: 180px;
             flex-shrink: 0;
         }
         
@@ -208,26 +277,26 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
             background: var(--white);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .category-header {
             background: var(--accent-gray);
-            padding: 10px 15px;
+            padding: 8px 12px;
             border-bottom: 1px solid var(--border-color);
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
             color: var(--text-dark);
         }
         
         .category-list {
             list-style: none;
-            padding: 10px 0;
+            padding: 8px 0;
             margin: 0;
         }
         
         .category-item-sidebar {
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-bottom: 1px solid var(--accent-gray);
         }
         
@@ -238,7 +307,7 @@
         .category-link {
             color: var(--text-dark);
             text-decoration: none;
-            font-size: 13px;
+            font-size: 11px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -246,6 +315,14 @@
         
         .category-link:hover {
             color: var(--primary-orange);
+        }
+        
+        .category-count {
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-size: 9px;
         }
         
         /* Grille de produits */
@@ -257,30 +334,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 1px solid var(--border-color);
         }
         
         .products-count {
             color: var(--text-medium);
-            font-size: 13px;
+            font-size: 11px;
         }
         
         .sort-select {
             border: 1px solid var(--border-color);
             border-radius: 3px;
-            padding: 6px 10px;
-            font-size: 13px;
+            padding: 5px 8px;
+            font-size: 11px;
             background: var(--white);
+            min-width: 140px;
         }
         
         /* Carte produit */
         .products-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
         }
         
         .product-card {
@@ -298,7 +376,7 @@
         }
         
         .product-image {
-            height: 180px;
+            height: 150px;
             background: var(--accent-gray);
             display: flex;
             align-items: center;
@@ -314,33 +392,34 @@
         
         .product-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 6px;
+            left: 6px;
             background: var(--success-green);
             color: white;
-            font-size: 10px;
-            padding: 2px 8px;
+            font-size: 9px;
+            padding: 1px 6px;
             border-radius: 2px;
             display: flex;
             align-items: center;
             gap: 3px;
+            z-index: 2;
         }
         
         .product-badge i {
-            font-size: 9px;
+            font-size: 8px;
         }
         
         .product-info {
-            padding: 12px;
+            padding: 10px;
             border-top: 1px solid var(--accent-gray);
         }
         
         .product-title {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-dark);
-            margin-bottom: 8px;
-            line-height: 1.4;
-            height: 36px;
+            margin-bottom: 6px;
+            line-height: 1.3;
+            height: 32px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -350,27 +429,33 @@
         .product-price {
             color: var(--primary-orange);
             font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 5px;
+            font-size: 14px;
+            margin-bottom: 4px;
         }
         
         .product-supplier {
             color: var(--text-light);
-            font-size: 11px;
+            font-size: 10px;
             display: flex;
             align-items: center;
-            gap: 5px;
-            margin-bottom: 10px;
+            gap: 4px;
+            margin-bottom: 8px;
         }
         
         .verified-badge {
             color: var(--success-green);
+            font-size: 9px;
+        }
+        
+        .product-orders {
             font-size: 10px;
+            color: var(--text-medium);
+            margin-bottom: 8px;
         }
         
         .product-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
         
         .btn-contact {
@@ -379,8 +464,8 @@
             border: 1px solid var(--secondary-blue);
             color: var(--secondary-blue);
             border-radius: 3px;
-            padding: 8px;
-            font-size: 13px;
+            padding: 6px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s;
             text-decoration: none;
@@ -399,14 +484,14 @@
             border: 1px solid var(--secondary-blue);
             color: white;
             border-radius: 3px;
-            padding: 8px;
-            font-size: 13px;
+            padding: 6px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
         }
         
         .btn-cart:hover {
@@ -417,25 +502,32 @@
         .pagination-container {
             display: flex;
             justify-content: center;
-            margin: 30px 0;
+            margin: 25px 0;
         }
         
         .pagination {
             display: flex;
-            gap: 5px;
+            gap: 4px;
         }
         
         .page-item {
             border: 1px solid var(--border-color);
             border-radius: 3px;
+            transition: all 0.2s;
+        }
+        
+        .page-item:hover:not(.disabled):not(.active) {
+            border-color: var(--primary-orange);
         }
         
         .page-link {
-            padding: 5px 10px;
-            font-size: 13px;
+            padding: 4px 8px;
+            font-size: 11px;
             color: var(--text-dark);
             text-decoration: none;
             display: block;
+            min-width: 30px;
+            text-align: center;
         }
         
         .page-item.active {
@@ -447,6 +539,15 @@
             color: white;
         }
         
+        .page-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .page-item.disabled .page-link {
+            color: var(--text-light);
+        }
+        
         /* Footer avec navigation fonctionnelle */
         .footer-kdo {
             background: var(--white);
@@ -454,7 +555,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            padding: 10px 0;
+            padding: 8px 0;
             z-index: 1000;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
@@ -472,8 +573,9 @@
             text-decoration: none;
             color: var(--text-medium);
             transition: all 0.2s;
-            padding: 5px;
-            min-width: 70px;
+            padding: 4px;
+            min-width: 60px;
+            position: relative;
         }
         
         .footer-item:hover,
@@ -483,22 +585,22 @@
         }
         
         .footer-icon {
-            font-size: 20px;
-            margin-bottom: 3px;
+            font-size: 18px;
+            margin-bottom: 2px;
         }
         
         .footer-label {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
         }
         
         /* Notification */
         #cartAlert {
             position: fixed;
-            top: 80px;
-            right: 20px;
+            top: 70px;
+            right: 15px;
             z-index: 9999;
-            min-width: 300px;
+            min-width: 250px;
             box-shadow: var(--shadow-hover);
             border-left: 3px solid var(--primary-orange);
             display: none;
@@ -511,7 +613,7 @@
             }
             
             .products-container {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
         }
         
@@ -521,51 +623,58 @@
             }
             
             .filter-row {
-                gap: 10px;
+                gap: 8px;
             }
             
             .price-slider-container {
-                min-width: 200px;
+                min-width: 180px;
+            }
+            
+            .logo-text {
+                font-size: 14px;
             }
         }
         
-        @media (max-width: 480px) {
+        @media (max-width: 576px) {
             .products-container {
                 grid-template-columns: 1fr;
             }
             
             .logo-text {
-                font-size: 16px;
+                display: none;
             }
             
             .search-wrapper {
-                margin: 0 10px;
+                margin: 0 5px;
+                max-width: 100%;
             }
             
             .price-slider-container {
                 min-width: 150px;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
         
         /* Style pour le panier dans le footer */
         .cart-count-badge {
             position: absolute;
-            top: -5px;
-            right: -5px;
+            top: 0;
+            right: 5px;
             background: var(--primary-orange);
             color: white;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
-        }
-        
-        .footer-item {
-            position: relative;
         }
     </style>
 </head>
@@ -584,7 +693,7 @@
                 
                 <!-- Barre de recherche -->
                 <div class="search-wrapper">
-                    <input type="text" class="search-input" placeholder="Rechercher des produits, fournisseurs, catégories...">
+                    <input type="text" class="search-input" placeholder="Rechercher produits, fournisseurs...">
                     <button class="search-btn">
                         <i class="fas fa-search"></i>
                     </button>
@@ -634,13 +743,21 @@
         <div class="container">
             <div class="filter-row">
                 <div class="filter-group">
-                    <span class="filter-label">Prix :</span>
-                    <div class="price-slider-container">
-                        <input type="range" class="price-slider" id="priceSlider" min="1000" max="500000" step="1000" value="500000">
-                        <div class="price-values">
-                            <span class="price-value">1 000 FCFA</span>
-                            <span class="price-value" id="currentPrice">500 000 FCFA</span>
-                        </div>
+                    <span class="filter-label">Filtrer par prix :</span>
+                    <div class="price-filter-toggle">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="priceToggle">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="filter-label" id="toggleLabel">Désactivé</span>
+                    </div>
+                </div>
+                
+                <div class="price-slider-container" id="priceSliderContainer">
+                    <input type="range" class="price-slider" id="priceSlider" min="1000" max="500000" step="1000" value="500000">
+                    <div class="price-values">
+                        <span class="price-value">1 000 FCFA</span>
+                        <span class="price-value" id="currentPrice">500 000 FCFA</span>
                     </div>
                 </div>
                 
@@ -651,12 +768,9 @@
                         <option value="price_asc">Prix croissant</option>
                         <option value="price_desc">Prix décroissant</option>
                         <option value="newest">Plus récents</option>
+                        <option value="popular">Plus populaires</option>
                     </select>
                 </div>
-                
-                <button class="btn btn-sm" style="background: var(--primary-orange); color: white; padding: 6px 20px; border: none; border-radius: 3px;" id="applyFilters">
-                    Appliquer
-                </button>
             </div>
         </div>
     </div>
@@ -668,43 +782,61 @@
             <aside class="sidebar-categories">
                 <div class="category-box">
                     <div class="category-header">
-                        <i class="fas fa-list me-2"></i> Catégories populaires
+                        <i class="fas fa-list me-2"></i> Catégories
                     </div>
                     <ul class="category-list">
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link">
-                                <span>Vêtements & Accessoires</span>
-                                <span class="category-count">1.2k</span>
+                            <a href="#" class="category-link" data-category="ordinateur">
+                                <span>Ordinateurs</span>
+                                <span class="category-count">4</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link">
-                                <span>Électronique grand public</span>
-                                <span class="category-count">856</span>
+                            <a href="#" class="category-link" data-category="telephone">
+                                <span>Téléphones</span>
+                                <span class="category-count">4</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link">
-                                <span>Maison & Jardin</span>
-                                <span class="category-count">742</span>
+                            <a href="#" class="category-link" data-category="tablette">
+                                <span>Tablettes</span>
+                                <span class="category-count">2</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link">
-                                <span>Sports & Loisirs</span>
-                                <span class="category-count">512</span>
+                            <a href="#" class="category-link" data-category="accessoire">
+                                <span>Accessoires</span>
+                                <span class="category-count">3</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link">
-                                <span>Produits de beauté</span>
-                                <span class="category-count">398</span>
+                            <a href="#" class="category-link" data-category="sac">
+                                <span>Sacs & Bagages</span>
+                                <span class="category-count">2</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link">
-                                <span>Bijoux, Lunettes & Montres</span>
-                                <span class="category-count">287</span>
+                            <a href="#" class="category-link" data-category="gaming">
+                                <span>Gaming</span>
+                                <span class="category-count">2</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="vetement">
+                                <span>Vêtements</span>
+                                <span class="category-count">3</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="montre">
+                                <span>Montres</span>
+                                <span class="category-count">1</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="beaute">
+                                <span>Beauté</span>
+                                <span class="category-count">1</span>
                             </a>
                         </li>
                     </ul>
@@ -714,7 +846,16 @@
             <!-- Grille de produits -->
             <main class="products-grid">
                 <div class="products-header">
-                    <div class="products-count" id="productsCount">24 produits trouvés</div>
+                    <div class="products-count" id="productsCount">Chargement des produits...</div>
+                    <div>
+                        <span class="filter-label me-2">Produits par page:</span>
+                        <select class="sort-select" id="itemsPerPage" style="width: auto;">
+                            <option value="10">10</option>
+                            <option value="20" selected>20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <div class="products-container" id="productsContainer">
@@ -723,14 +864,8 @@
                 
                 <!-- Pagination -->
                 <div class="pagination-container">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+                    <ul class="pagination" id="pagination">
+                        <!-- Pagination générée dynamiquement -->
                     </ul>
                 </div>
             </main>
@@ -818,6 +953,7 @@
             // VÊTEMENTS
             { id: 18, name: "T-shirt Homme Coton 100% Design Moderne", price: 3500, category: "vetement", verified: true, image: "tshirt", orders: 1234 },
             { id: 19, name: "Poncho de Pluie Réutilisable Léger", price: 7500, category: "vetement", verified: true, image: "tshirt", orders: 567 },
+            { id: 23, name: "Maillot de Football Équipe 2024", price: 8500, category: "vetement", verified: true, image: "tshirt", orders: 345 },
             
             // MONTRES
             { id: 20, name: "Montre Mécanique Homme Luxe Cuir", price: 45000, category: "montre", verified: true, image: "clock", orders: 123 },
@@ -825,17 +961,19 @@
             // BEAUTÉ
             { id: 21, name: "Kit Faux Ongles en Gel Professionnels", price: 8500, category: "beaute", verified: true, image: "spa", orders: 456 },
             
-            // NOUVEAUX PRODUITS
+            // AUTRES
             { id: 22, name: "Monture de Lunettes de Vue Ronde Style", price: 12000, category: "accessoire", verified: true, image: "glasses", orders: 789 },
-            { id: 23, name: "Maillot de Football Équipe 2024", price: 8500, category: "vetement", verified: true, image: "tshirt", orders: 345 },
             { id: 24, name: "Mini-Ordinateur Windows 11 Pro 8Go RAM", price: 185000, category: "ordinateur", verified: true, image: "desktop", orders: 89 }
         ];
 
-        // Panier stocké dans localStorage
+        // Variables globales
         let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
         let filteredProducts = [...products];
         let currentCategory = "all";
-        let maxPrice = 500000;
+        let priceFilterActive = false;
+        let currentPage = 1;
+        let itemsPerPage = 20;
+        let totalPages = 1;
 
         // Formatage des prix
         function formatPrice(price) {
@@ -869,7 +1007,12 @@
             const container = $('#productsContainer');
             container.empty();
             
-            if (filteredProducts.length === 0) {
+            // Calculer les produits à afficher pour la page actuelle
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const productsToShow = filteredProducts.slice(startIndex, endIndex);
+            
+            if (productsToShow.length === 0) {
                 container.html(`
                     <div class="col-12 text-center py-5">
                         <i class="fas fa-search fa-3x mb-3 text-muted"></i>
@@ -880,19 +1023,22 @@
                 return;
             }
             
-            filteredProducts.forEach(p => {
+            productsToShow.forEach(p => {
                 const productCard = `
                     <div class="product-card" data-category="${p.category}" data-price="${p.price}">
                         ${p.verified ? `<div class="product-badge"><i class="fas fa-check"></i> VÉRIFIÉ</div>` : ''}
                         <div class="product-image">
-                            <i class="fas ${getProductImage(p.image)} fa-4x text-muted"></i>
+                            <i class="fas ${getProductImage(p.image)} fa-3x text-muted"></i>
                         </div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
                             <div class="product-price">${formatPrice(p.price)}</div>
                             <div class="product-supplier">
                                 <i class="fas fa-check-circle verified-badge"></i>
-                                Fournisseur vérifié · CN
+                                Fournisseur vérifié
+                            </div>
+                            <div class="product-orders">
+                                <i class="fas fa-shopping-cart"></i> ${p.orders} commandes
                             </div>
                             <div class="product-actions">
                                 <a href="contact.html?product=${p.id}" class="btn-contact">
@@ -908,7 +1054,64 @@
                 container.append(productCard);
             });
             
-            $('#productsCount').text(`${filteredProducts.length} produit(s) trouvé(s)`);
+            // Mettre à jour le compteur de produits
+            const totalProducts = filteredProducts.length;
+            const showingStart = totalProducts > 0 ? startIndex + 1 : 0;
+            const showingEnd = Math.min(endIndex, totalProducts);
+            $('#productsCount').text(`${showingStart}-${showingEnd} sur ${totalProducts} produits`);
+            
+            // Mettre à jour la pagination
+            updatePagination();
+        }
+
+        // Mise à jour de la pagination
+        function updatePagination() {
+            const totalProducts = filteredProducts.length;
+            totalPages = Math.ceil(totalProducts / itemsPerPage);
+            
+            const pagination = $('#pagination');
+            pagination.empty();
+            
+            if (totalPages <= 1) return;
+            
+            // Bouton précédent
+            const prevDisabled = currentPage === 1 ? 'disabled' : '';
+            pagination.append(`
+                <li class="page-item ${prevDisabled}">
+                    <a class="page-link" href="#" data-page="${currentPage - 1}">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                </li>
+            `);
+            
+            // Pages numérotées
+            const maxPagesToShow = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+            
+            // Ajuster si on est proche de la fin
+            if (endPage - startPage + 1 < maxPagesToShow) {
+                startPage = Math.max(1, endPage - maxPagesToShow + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const activeClass = i === currentPage ? 'active' : '';
+                pagination.append(`
+                    <li class="page-item ${activeClass}">
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
+                    </li>
+                `);
+            }
+            
+            // Bouton suivant
+            const nextDisabled = currentPage === totalPages ? 'disabled' : '';
+            pagination.append(`
+                <li class="page-item ${nextDisabled}">
+                    <a class="page-link" href="#" data-page="${currentPage + 1}">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </li>
+            `);
         }
 
         // Filtrage des produits
@@ -922,8 +1125,8 @@
                 // Filtre par catégorie
                 if (currentCategory !== "all" && p.category !== currentCategory) return false;
                 
-                // Filtre par prix maximum
-                if (p.price > priceMax) return false;
+                // Filtre par prix maximum si activé
+                if (priceFilterActive && p.price > priceMax) return false;
                 
                 return true;
             });
@@ -939,7 +1142,13 @@
                 case 'newest':
                     filteredProducts.sort((a, b) => b.id - a.id);
                     break;
+                case 'popular':
+                    filteredProducts.sort((a, b) => b.orders - a.orders);
+                    break;
             }
+            
+            // Réinitialiser à la première page
+            currentPage = 1;
             
             renderProducts();
         }
@@ -954,8 +1163,9 @@
             if (existingItem) {
                 existingItem.quantity = (existingItem.quantity || 1) + 1;
             } else {
-                product.quantity = 1;
-                cart.push(product);
+                const productCopy = {...product};
+                productCopy.quantity = 1;
+                cart.push(productCopy);
             }
             
             // Sauvegarder dans localStorage
@@ -967,10 +1177,10 @@
             // Notification
             $('#cartProductName').text(product.name);
             const alert = $('#cartAlert');
-            alert.addClass('show');
+            alert.removeClass('fade').addClass('show');
             
             setTimeout(() => {
-                alert.removeClass('show');
+                alert.removeClass('show').addClass('fade');
             }, 3000);
         }
 
@@ -982,19 +1192,43 @@
 
         // Initialisation
         $(document).ready(function() {
-            renderProducts();
+            // Initialiser le compteur du panier
             updateCartCount();
+            
+            // Initialiser le filtre de prix désactivé
+            $('#priceToggle').prop('checked', false);
+            $('#toggleLabel').text('Désactivé');
+            $('#priceSliderContainer').removeClass('active');
+            
+            // Initialiser les produits
+            filterProducts();
+            
+            // Gestion du toggle du filtre de prix
+            $('#priceToggle').on('change', function() {
+                priceFilterActive = $(this).is(':checked');
+                $('#toggleLabel').text(priceFilterActive ? 'Activé' : 'Désactivé');
+                $('#priceSliderContainer').toggleClass('active', priceFilterActive);
+                filterProducts();
+            });
             
             // Gestion du slider de prix
             $('#priceSlider').on('input', function() {
                 $('#currentPrice').text(formatPrice($(this).val()));
+                if (priceFilterActive) {
+                    filterProducts();
+                }
             });
             
-            // Appliquer les filtres
-            $('#applyFilters').on('click', filterProducts);
-            
             // Recherche
-            $('.search-btn').on('click', function() {
+            $('.search-btn').on('click', performSearch);
+            
+            $('.search-input').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
                 const term = $('.search-input').val().toLowerCase().trim();
                 
                 if (term) {
@@ -1003,31 +1237,15 @@
                         p.category.toLowerCase().includes(term)
                     );
                     
-                    if (filteredProducts.length === 0) {
-                        $('#productsContainer').html(`
-                            <div class="col-12 text-center py-5">
-                                <i class="fas fa-search fa-3x mb-3 text-muted"></i>
-                                <h5 class="text-muted">Aucun résultat pour "${term}"</h5>
-                                <p class="text-muted">Essayez d'autres mots-clés</p>
-                            </div>
-                        `);
-                        $('#productsCount').text('0 produit(s) trouvé(s)');
-                    } else {
-                        renderProducts();
-                    }
+                    currentPage = 1;
+                    renderProducts();
                 } else {
                     filteredProducts = [...products];
                     filterProducts();
                 }
-            });
+            }
             
-            $('.search-input').on('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    $('.search-btn').click();
-                }
-            });
-            
-            // Gestion des catégories
+            // Gestion des catégories (barre horizontale)
             $('.category-item').on('click', function(e) {
                 e.preventDefault();
                 
@@ -1042,6 +1260,25 @@
                 filterProducts();
             });
             
+            // Gestion des catégories (sidebar)
+            $('.category-link').on('click', function(e) {
+                e.preventDefault();
+                
+                const category = $(this).data('category');
+                if (category) {
+                    currentCategory = category;
+                    
+                    // Mettre à jour l'état actif dans la barre horizontale
+                    $('.category-item').removeClass('active');
+                    $(`.category-item[data-category="${category}"]`).addClass('active');
+                    if (category === "all") {
+                        $('.category-item:first').addClass('active');
+                    }
+                    
+                    filterProducts();
+                }
+            });
+            
             // Ajout au panier
             $(document).on('click', '.btn-cart', function() {
                 const productId = parseInt($(this).data('id'));
@@ -1051,13 +1288,32 @@
             // Tri des produits
             $('#sortProducts').on('change', filterProducts);
             
+            // Navigation par pagination
+            $(document).on('click', '.page-link', function(e) {
+                e.preventDefault();
+                const page = $(this).data('page');
+                if (page && page !== currentPage) {
+                    currentPage = page;
+                    renderProducts();
+                    
+                    // Faire défiler vers le haut
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+            
+            // Changer le nombre d'articles par page
+            $('#itemsPerPage').on('change', function() {
+                itemsPerPage = parseInt($(this).val());
+                currentPage = 1;
+                filterProducts();
+            });
+            
             // Navigation footer
             $('.footer-item').on('click', function(e) {
-                // Mettre à jour l'état actif
+                // La navigation se fait via les liens href
+                // On met à jour l'état actif
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
-                
-                // La navigation se fait via les liens href
             });
         });
     </script>
