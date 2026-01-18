@@ -11,16 +11,17 @@
     <!-- CSS personnalisé -->
     <style>
         :root {
-            --primary-orange: #FF6B00;    /* Orange principal du logo */
-            --secondary-blue: #0066CC;     /* Bleu pour les boutons */
-            --accent-gray: #F5F5F5;        /* Gris clair */
-            --text-dark: #333333;          /* Texte foncé */
-            --text-medium: #666666;        /* Texte moyen */
-            --text-light: #999999;         /* Texte clair */
-            --border-color: #E0E0E0;       /* Couleur des bordures */
+            --primary-orange: #FF6B00;
+            --secondary-blue: #0066CC;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --border-color: #E0E0E0;
             --white: #FFFFFF;
             --shadow: 0 1px 3px rgba(0,0,0,0.08);
             --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
+            --success-green: #52C41A;
         }
         
         * {
@@ -31,18 +32,14 @@
         body {
             background-color: var(--white);
             color: var(--text-dark);
-            padding-bottom: 60px; /* Pour le footer */
+            padding-bottom: 60px;
         }
         
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 600;
-        }
-        
-        /* Header */
+        /* Header simplifié */
         .header-kdo {
             border-bottom: 1px solid var(--border-color);
             background: var(--white);
-            padding: 8px 0;
+            padding: 12px 0;
         }
         
         .logo-container {
@@ -52,7 +49,7 @@
         }
         
         .logo-img {
-            height: 36px;
+            height: 40px;
             width: auto;
             object-fit: contain;
         }
@@ -60,27 +57,24 @@
         .logo-text {
             color: var(--primary-orange);
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px;
             letter-spacing: -0.5px;
         }
         
-        /* Barre de recherche Alibaba-like */
-        .search-container {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
+        /* Barre de recherche */
         .search-wrapper {
             position: relative;
+            max-width: 700px;
+            margin: 0 auto;
         }
         
         .search-input {
             border: 2px solid var(--primary-orange);
             border-radius: 4px;
-            padding: 8px 50px 8px 15px;
-            font-size: 13px;
+            padding: 10px 50px 10px 15px;
+            font-size: 14px;
             width: 100%;
-            height: 40px;
+            height: 44px;
         }
         
         .search-btn {
@@ -92,113 +86,110 @@
             color: white;
             border: none;
             border-radius: 0 4px 4px 0;
-            padding: 0 20px;
+            padding: 0 25px;
             font-size: 14px;
             cursor: pointer;
         }
         
-        .search-categories {
-            margin-top: 5px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 12px;
-        }
-        
-        .search-category {
-            color: var(--text-medium);
-            text-decoration: none;
-        }
-        
-        .search-category:hover {
-            color: var(--primary-orange);
-        }
-        
-        /* Navigation droite */
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .nav-item {
-            font-size: 12px;
-            color: var(--text-dark);
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .nav-icon {
-            font-size: 18px;
-            margin-bottom: 2px;
-        }
-        
-        /* Filtres horizontaux */
-        .filters-horizontal {
+        /* Barre de catégories horizontale défilante */
+        .categories-scroll {
             background: var(--accent-gray);
             border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
+            padding: 12px 0;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .categories-container {
+            display: inline-flex;
+            gap: 10px;
+            padding: 0 15px;
+        }
+        
+        .category-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .category-item:hover,
+        .category-item.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        .category-item i {
+            margin-right: 5px;
+        }
+        
+        /* Filtres horizontaux simplifiés */
+        .filters-horizontal {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
             margin-bottom: 15px;
         }
         
-        .filter-container {
+        .filter-row {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
         
         .filter-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         
         .filter-label {
             color: var(--text-medium);
-            font-size: 12px;
+            font-size: 13px;
             white-space: nowrap;
         }
         
-        .filter-select {
-            border: 1px solid var(--border-color);
+        /* Slider de prix amélioré */
+        .price-slider-container {
+            min-width: 250px;
+        }
+        
+        .price-slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #ddd;
             border-radius: 3px;
-            padding: 5px 10px;
+            outline: none;
+        }
+        
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .price-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+        }
+        
+        .price-value {
             font-size: 12px;
-            background: var(--white);
-            color: var(--text-dark);
-            min-width: 150px;
-        }
-        
-        .price-min-input {
-            border: 1px solid var(--border-color);
-            border-radius: 3px;
-            padding: 5px 10px;
-            font-size: 12px;
-            width: 120px;
-        }
-        
-        /* Bannière */
-        .banner {
-            background: linear-gradient(to right, #FFE5D0, #FFD5B0);
-            border-radius: 4px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #FFD0A0;
-        }
-        
-        .banner-title {
-            color: var(--primary-orange);
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-        
-        .banner-text {
-            color: var(--text-dark);
-            font-size: 12px;
+            color: var(--text-medium);
         }
         
         /* Conteneur principal */
@@ -225,7 +216,7 @@
             padding: 10px 15px;
             border-bottom: 1px solid var(--border-color);
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-dark);
         }
         
@@ -235,19 +226,19 @@
             margin: 0;
         }
         
-        .category-item {
+        .category-item-sidebar {
             padding: 8px 15px;
             border-bottom: 1px solid var(--accent-gray);
         }
         
-        .category-item:last-child {
+        .category-item-sidebar:last-child {
             border-bottom: none;
         }
         
         .category-link {
             color: var(--text-dark);
             text-decoration: none;
-            font-size: 12px;
+            font-size: 13px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -255,11 +246,6 @@
         
         .category-link:hover {
             color: var(--primary-orange);
-        }
-        
-        .category-count {
-            color: var(--text-light);
-            font-size: 11px;
         }
         
         /* Grille de produits */
@@ -278,18 +264,18 @@
         
         .products-count {
             color: var(--text-medium);
-            font-size: 12px;
+            font-size: 13px;
         }
         
         .sort-select {
             border: 1px solid var(--border-color);
             border-radius: 3px;
-            padding: 5px 10px;
-            font-size: 12px;
+            padding: 6px 10px;
+            font-size: 13px;
             background: var(--white);
         }
         
-        /* Carte produit Alibaba-like */
+        /* Carte produit */
         .products-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -330,11 +316,18 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background: var(--primary-orange);
+            background: var(--success-green);
             color: white;
             font-size: 10px;
-            padding: 2px 6px;
+            padding: 2px 8px;
             border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        .product-badge i {
+            font-size: 9px;
         }
         
         .product-info {
@@ -343,11 +336,11 @@
         }
         
         .product-title {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-dark);
             margin-bottom: 8px;
             line-height: 1.4;
-            height: 34px;
+            height: 36px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -361,12 +354,6 @@
             margin-bottom: 5px;
         }
         
-        .product-moq {
-            color: var(--text-medium);
-            font-size: 11px;
-            margin-bottom: 3px;
-        }
-        
         .product-supplier {
             color: var(--text-light);
             font-size: 11px;
@@ -377,7 +364,7 @@
         }
         
         .verified-badge {
-            color: #52C41A;
+            color: var(--success-green);
             font-size: 10px;
         }
         
@@ -392,15 +379,18 @@
             border: 1px solid var(--secondary-blue);
             color: var(--secondary-blue);
             border-radius: 3px;
-            padding: 6px;
-            font-size: 12px;
+            padding: 8px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
         }
         
         .btn-contact:hover {
             background: var(--secondary-blue);
             color: white;
+            text-decoration: none;
         }
         
         .btn-cart {
@@ -409,10 +399,14 @@
             border: 1px solid var(--secondary-blue);
             color: white;
             border-radius: 3px;
-            padding: 6px;
-            font-size: 12px;
+            padding: 8px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         
         .btn-cart:hover {
@@ -438,7 +432,7 @@
         
         .page-link {
             padding: 5px 10px;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-dark);
             text-decoration: none;
             display: block;
@@ -453,7 +447,7 @@
             color: white;
         }
         
-        /* Footer Alibaba-like */
+        /* Footer avec navigation fonctionnelle */
         .footer-kdo {
             background: var(--white);
             border-top: 1px solid var(--border-color);
@@ -462,6 +456,7 @@
             width: 100%;
             padding: 10px 0;
             z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
         
         .footer-nav {
@@ -478,20 +473,23 @@
             color: var(--text-medium);
             transition: all 0.2s;
             padding: 5px;
-            min-width: 60px;
+            min-width: 70px;
         }
         
+        .footer-item:hover,
         .footer-item.active {
             color: var(--primary-orange);
+            text-decoration: none;
         }
         
         .footer-icon {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 3px;
         }
         
         .footer-label {
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: 500;
         }
         
         /* Notification */
@@ -500,7 +498,7 @@
             top: 80px;
             right: 20px;
             z-index: 9999;
-            min-width: 280px;
+            min-width: 300px;
             box-shadow: var(--shadow-hover);
             border-left: 3px solid var(--primary-orange);
             display: none;
@@ -522,16 +520,12 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .nav-right {
+            .filter-row {
                 gap: 10px;
             }
             
-            .filter-container {
-                gap: 10px;
-            }
-            
-            .search-categories {
-                display: none;
+            .price-slider-container {
+                min-width: 200px;
             }
         }
         
@@ -541,17 +535,42 @@
             }
             
             .logo-text {
-                display: none;
+                font-size: 16px;
             }
             
-            .search-container {
+            .search-wrapper {
                 margin: 0 10px;
             }
+            
+            .price-slider-container {
+                min-width: 150px;
+            }
+        }
+        
+        /* Style pour le panier dans le footer */
+        .cart-count-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        
+        .footer-item {
+            position: relative;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header simplifié -->
     <header class="header-kdo">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
@@ -564,94 +583,81 @@
                 </a>
                 
                 <!-- Barre de recherche -->
-                <div class="search-container">
-                    <div class="search-wrapper">
-                        <input type="text" class="search-input" placeholder="Rechercher des produits, fournisseurs, catégories...">
-                        <button class="search-btn">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    <div class="search-categories">
-                        <a href="#" class="search-category">Vêtements & Accessoires</a>
-                        <a href="#" class="search-category">Électronique</a>
-                        <a href="#" class="search-category">Maison & Jardin</a>
-                        <a href="#" class="search-category">Sports & Loisirs</a>
-                        <a href="#" class="search-category">Auto & Motos</a>
-                    </div>
-                </div>
-                
-                <!-- Navigation droite -->
-                <div class="nav-right">
-                    <a href="messagerie.html" class="nav-item">
-                        <i class="far fa-comment-dots nav-icon"></i>
-                        <span>Messagerie</span>
-                    </a>
-                    <a href="panier.html" class="nav-item">
-                        <i class="fas fa-shopping-cart nav-icon"></i>
-                        <span>Panier <span id="cartCount" class="badge bg-danger">0</span></span>
-                    </a>
-                    <a href="profil.html" class="nav-item">
-                        <i class="far fa-user nav-icon"></i>
-                        <span>Mon KDO</span>
-                    </a>
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Rechercher des produits, fournisseurs, catégories...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Filtres horizontaux -->
-    <div class="filters-horizontal">
-        <div class="container">
-            <div class="filter-container">
-                <div class="filter-group">
-                    <span class="filter-label">Catégorie:</span>
-                    <select class="filter-select" id="categoryFilter">
-                        <option value="all">Toutes les catégories</option>
-                        <option value="ordinateur">Ordinateurs & PC</option>
-                        <option value="telephone">Téléphones & Smartphones</option>
-                        <option value="tablette">Tablettes</option>
-                        <option value="accessoire">Accessoires Informatiques</option>
-                        <option value="sac">Sacs & Bagages</option>
-                        <option value="gaming">Équipement Gaming</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <span class="filter-label">Prix min (FCFA):</span>
-                    <input type="number" class="price-min-input" id="priceMinFilter" placeholder="Prix minimum" min="0">
-                </div>
-                
-                <div class="filter-group">
-                    <span class="filter-label">Fournisseur:</span>
-                    <select class="filter-select" id="supplierFilter">
-                        <option value="all">Tous les fournisseurs</option>
-                        <option value="verified">Vérifiés seulement</option>
-                        <option value="gold">Fournisseurs Gold</option>
-                    </select>
-                </div>
-                
-                <div class="filter-group">
-                    <span class="filter-label">Commande min:</span>
-                    <select class="filter-select" id="moqFilter">
-                        <option value="all">Tous les MOQ</option>
-                        <option value="1">MOQ: 1</option>
-                        <option value="2">MOQ: 2</option>
-                        <option value="5">MOQ: 5+</option>
-                    </select>
-                </div>
-                
-                <button class="btn btn-sm" style="background: var(--primary-orange); color: white; padding: 5px 15px; border: none; border-radius: 3px;">
-                    Filtrer
-                </button>
-            </div>
+    <!-- Barre de catégories horizontale défilante -->
+    <div class="categories-scroll">
+        <div class="categories-container">
+            <a href="#" class="category-item active">
+                <i class="fas fa-th-large"></i> Tous
+            </a>
+            <a href="#" class="category-item" data-category="ordinateur">
+                <i class="fas fa-laptop"></i> Ordinateurs
+            </a>
+            <a href="#" class="category-item" data-category="telephone">
+                <i class="fas fa-mobile-alt"></i> Téléphones
+            </a>
+            <a href="#" class="category-item" data-category="tablette">
+                <i class="fas fa-tablet-alt"></i> Tablettes
+            </a>
+            <a href="#" class="category-item" data-category="accessoire">
+                <i class="fas fa-keyboard"></i> Accessoires
+            </a>
+            <a href="#" class="category-item" data-category="sac">
+                <i class="fas fa-briefcase"></i> Sacs & Bagages
+            </a>
+            <a href="#" class="category-item" data-category="gaming">
+                <i class="fas fa-gamepad"></i> Gaming
+            </a>
+            <a href="#" class="category-item" data-category="vetement">
+                <i class="fas fa-tshirt"></i> Vêtements
+            </a>
+            <a href="#" class="category-item" data-category="montre">
+                <i class="fas fa-clock"></i> Montres
+            </a>
+            <a href="#" class="category-item" data-category="beaute">
+                <i class="fas fa-spa"></i> Beauté
+            </a>
         </div>
     </div>
 
-    <!-- Bannière -->
-    <div class="container">
-        <div class="banner">
-            <div class="banner-title">🎉 Ventes Flash ! Économisez jusqu'à 50%</div>
-            <div class="banner-text">Profitez de nos offres spéciales sur une sélection de produits. Offre valable jusqu'à épuisement des stocks.</div>
+    <!-- Filtres horizontaux simplifiés -->
+    <div class="filters-horizontal">
+        <div class="container">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <span class="filter-label">Prix :</span>
+                    <div class="price-slider-container">
+                        <input type="range" class="price-slider" id="priceSlider" min="1000" max="500000" step="1000" value="500000">
+                        <div class="price-values">
+                            <span class="price-value">1 000 FCFA</span>
+                            <span class="price-value" id="currentPrice">500 000 FCFA</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-label">Trier par :</span>
+                    <select class="sort-select" id="sortProducts">
+                        <option value="relevance">Pertinence</option>
+                        <option value="price_asc">Prix croissant</option>
+                        <option value="price_desc">Prix décroissant</option>
+                        <option value="newest">Plus récents</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-sm" style="background: var(--primary-orange); color: white; padding: 6px 20px; border: none; border-radius: 3px;" id="applyFilters">
+                    Appliquer
+                </button>
+            </div>
         </div>
     </div>
 
@@ -662,89 +668,43 @@
             <aside class="sidebar-categories">
                 <div class="category-box">
                     <div class="category-header">
-                        <i class="fas fa-list me-2"></i> Catégories
+                        <i class="fas fa-list me-2"></i> Catégories populaires
                     </div>
                     <ul class="category-list">
-                        <li class="category-item">
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link">
                                 <span>Vêtements & Accessoires</span>
                                 <span class="category-count">1.2k</span>
                             </a>
                         </li>
-                        <li class="category-item">
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link">
                                 <span>Électronique grand public</span>
                                 <span class="category-count">856</span>
                             </a>
                         </li>
-                        <li class="category-item">
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link">
                                 <span>Maison & Jardin</span>
                                 <span class="category-count">742</span>
                             </a>
                         </li>
-                        <li class="category-item">
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link">
                                 <span>Sports & Loisirs</span>
                                 <span class="category-count">512</span>
                             </a>
                         </li>
-                        <li class="category-item">
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link">
                                 <span>Produits de beauté</span>
                                 <span class="category-count">398</span>
                             </a>
                         </li>
-                        <li class="category-item">
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link">
                                 <span>Bijoux, Lunettes & Montres</span>
                                 <span class="category-count">287</span>
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>Chaussures & Accessoires</span>
-                                <span class="category-count">423</span>
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>Auto & Motos</span>
-                                <span class="category-count">156</span>
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>Équipement industriel</span>
-                                <span class="category-count">89</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="category-box">
-                    <div class="category-header">
-                        <i class="fas fa-star me-2"></i> Pour vous
-                    </div>
-                    <ul class="category-list">
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>En vedette</span>
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>Offres spéciales</span>
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>Nouveautés</span>
-                            </a>
-                        </li>
-                        <li class="category-item">
-                            <a href="#" class="category-link">
-                                <span>Meilleures ventes</span>
                             </a>
                         </li>
                     </ul>
@@ -754,17 +714,7 @@
             <!-- Grille de produits -->
             <main class="products-grid">
                 <div class="products-header">
-                    <div class="products-count" id="productsCount">1,234 produits trouvés</div>
-                    <div class="filter-group">
-                        <span class="filter-label me-2">Trier par:</span>
-                        <select class="sort-select" id="sortProducts">
-                            <option value="relevance">Pertinence</option>
-                            <option value="price_asc">Prix croissant</option>
-                            <option value="price_desc">Prix décroissant</option>
-                            <option value="newest">Plus récents</option>
-                            <option value="orders">Commandes</option>
-                        </select>
-                    </div>
+                    <div class="products-count" id="productsCount">24 produits trouvés</div>
                 </div>
                 
                 <div class="products-container" id="productsContainer">
@@ -787,7 +737,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
+    <!-- Footer avec navigation fonctionnelle -->
     <footer class="footer-kdo">
         <div class="container">
             <nav class="footer-nav">
@@ -803,9 +753,10 @@
                     <i class="far fa-comment-dots footer-icon"></i>
                     <span class="footer-label">Messagerie</span>
                 </a>
-                <a href="panier.html" class="footer-item">
+                <a href="panier.html" class="footer-item" id="footerCart">
                     <i class="fas fa-shopping-cart footer-icon"></i>
                     <span class="footer-label">Panier</span>
+                    <span id="footerCartCount" class="cart-count-badge">0</span>
                 </a>
                 <a href="profil.html" class="footer-item">
                     <i class="far fa-user footer-icon"></i>
@@ -833,49 +784,58 @@
 
     <!-- Script principal -->
     <script>
-        // Données des produits (avec MOQ et fournisseur)
+        // Données des produits
         const products = [
             // ORDINATEURS
-            { id: 1, name: "HP EliteBook 840 G5 i7 16Go RAM 512Go SSD", price: 450000, category: "ordinateur", moq: 1, supplier: "Verified 3 ans · CN", image: "laptop", badge: "TOP", orders: 156 },
-            { id: 2, name: "Dell Latitude 5490 i5 8Go RAM 256Go SSD", price: 380000, category: "ordinateur", moq: 1, supplier: "Verified 2 ans · CN", image: "laptop", badge: "", orders: 89 },
-            { id: 3, name: "MacBook Air M1 2020 256Go SSD", price: 850000, category: "ordinateur", moq: 1, supplier: "Verified 4 ans · US", image: "laptop", badge: "NEW", orders: 234 },
-            { id: 4, name: "PC Bureau Gaming Ryzen 5 RTX 3060", price: 720000, category: "ordinateur", moq: 1, supplier: "Verified 5 ans · CN", image: "desktop", badge: "HOT", orders: 187 },
+            { id: 1, name: "HP EliteBook 840 G5 i7 16Go RAM 512Go SSD", price: 450000, category: "ordinateur", verified: true, image: "laptop", orders: 156 },
+            { id: 2, name: "Dell Latitude 5490 i5 8Go RAM 256Go SSD", price: 380000, category: "ordinateur", verified: true, image: "laptop", orders: 89 },
+            { id: 3, name: "MacBook Air M1 2020 256Go SSD", price: 850000, category: "ordinateur", verified: true, image: "laptop", orders: 234 },
+            { id: 4, name: "PC Bureau Gaming Ryzen 5 RTX 3060", price: 720000, category: "ordinateur", verified: true, image: "desktop", orders: 187 },
             
             // TÉLÉPHONES
-            { id: 5, name: "iPhone 12 128Go Noir Reconditionné", price: 420000, category: "telephone", moq: 2, supplier: "Verified 3 ans · CN", image: "mobile", badge: "TOP", orders: 312 },
-            { id: 6, name: "Samsung Galaxy S21 5G 128Go", price: 380000, category: "telephone", moq: 2, supplier: "Verified 2 ans · KR", image: "mobile", badge: "", orders: 198 },
-            { id: 7, name: "Xiaomi Redmi Note 12 128Go", price: 145000, category: "telephone", moq: 5, supplier: "Verified 4 ans · CN", image: "mobile", badge: "SALE", orders: 456 },
-            { id: 8, name: "Tecno Spark 10 128Go 5000mAh", price: 85000, category: "telephone", moq: 10, supplier: "Verified 1 an · CN", image: "mobile", badge: "", orders: 321 },
+            { id: 5, name: "iPhone 12 128Go Noir Reconditionné", price: 420000, category: "telephone", verified: true, image: "mobile", orders: 312 },
+            { id: 6, name: "Samsung Galaxy S21 5G 128Go", price: 380000, category: "telephone", verified: true, image: "mobile", orders: 198 },
+            { id: 7, name: "Xiaomi Redmi Note 12 128Go", price: 145000, category: "telephone", verified: true, image: "mobile", orders: 456 },
+            { id: 8, name: "Tecno Spark 10 128Go 5000mAh", price: 85000, category: "telephone", verified: true, image: "mobile", orders: 321 },
             
             // TABLETTES
-            { id: 9, name: "iPad Air 5 64Go WiFi M1 Chip", price: 520000, category: "tablette", moq: 1, supplier: "Verified 5 ans · US", image: "tablet", badge: "TOP", orders: 123 },
-            { id: 10, name: "Samsung Galaxy Tab S8 128Go", price: 480000, category: "tablette", moq: 1, supplier: "Verified 3 ans · KR", image: "tablet", badge: "", orders: 87 },
+            { id: 9, name: "iPad Air 5 64Go WiFi M1 Chip", price: 520000, category: "tablette", verified: true, image: "tablet", orders: 123 },
+            { id: 10, name: "Samsung Galaxy Tab S8 128Go", price: 480000, category: "tablette", verified: true, image: "tablet", orders: 87 },
             
             // ACCESSOIRES
-            { id: 11, name: "Souris Gaming RGB 6400 DPI", price: 15000, category: "accessoire", moq: 10, supplier: "Verified 2 ans · CN", image: "mouse", badge: "CHEAP", orders: 654 },
-            { id: 12, name: "Clavier Mécanique Gaming RGB", price: 25000, category: "accessoire", moq: 5, supplier: "Verified 3 ans · CN", image: "keyboard", badge: "", orders: 432 },
-            { id: 13, name: "Power Bank 30000mAh PD 30W", price: 18000, category: "accessoire", moq: 20, supplier: "Verified 1 an · CN", image: "battery", badge: "BEST", orders: 789 },
+            { id: 11, name: "Souris Gaming RGB 6400 DPI", price: 15000, category: "accessoire", verified: true, image: "mouse", orders: 654 },
+            { id: 12, name: "Clavier Mécanique Gaming RGB", price: 25000, category: "accessoire", verified: true, image: "keyboard", orders: 432 },
+            { id: 13, name: "Power Bank 30000mAh PD 30W", price: 18000, category: "accessoire", verified: true, image: "battery", orders: 789 },
             
             // SACS
-            { id: 14, name: "Sac à Dos Gaming 17\" Waterproof", price: 22000, category: "sac", moq: 50, supplier: "Verified 2 ans · CN", image: "bag", badge: "", orders: 345 },
-            { id: 15, name: "Sacoche Professionnelle Cuir", price: 18000, category: "sac", moq: 30, supplier: "Verified 3 ans · CN", image: "briefcase", badge: "NEW", orders: 234 },
+            { id: 14, name: "Sac à Dos Gaming 17\" Waterproof", price: 22000, category: "sac", verified: true, image: "bag", orders: 345 },
+            { id: 15, name: "Sacoche Professionnelle Cuir", price: 18000, category: "sac", verified: true, image: "briefcase", orders: 234 },
             
             // GAMING
-            { id: 16, name: "Manette Xbox Series X Sans Fil", price: 35000, category: "gaming", moq: 20, supplier: "Verified 4 ans · US", image: "gamepad", badge: "HOT", orders: 567 },
-            { id: 17, name: "Casque Gaming 7.1 Surround RGB", price: 35000, category: "gaming", moq: 10, supplier: "Verified 2 ans · CN", image: "headphones", badge: "", orders: 432 },
+            { id: 16, name: "Manette Xbox Series X Sans Fil", price: 35000, category: "gaming", verified: true, image: "gamepad", orders: 567 },
+            { id: 17, name: "Casque Gaming 7.1 Surround RGB", price: 35000, category: "gaming", verified: true, image: "headphones", orders: 432 },
             
-            // NOUVEAUX PRODUITS (Inspirés des images)
-            { id: 18, name: "Monture de Lunettes de Vue Ronde Style", price: 533, category: "accessoire", moq: 100, supplier: "Verified 3 ans · CN", image: "glasses", badge: "MOQ", orders: 1234 },
-            { id: 19, name: "Faux Ongles en Gel Professionnels", price: 387, category: "beauty", moq: 500, supplier: "Verified 1 an · CN", image: "spa", badge: "CHEAP", orders: 2345 },
-            { id: 20, name: "Poncho de Pluie Réutilisable Léger", price: 362, category: "clothing", moq: 200, supplier: "Verified 5 ans · CN", image: "tshirt", badge: "ECO", orders: 3456 },
-            { id: 21, name: "T-shirt Homme Coton 100% Design", price: 1500, category: "clothing", moq: 50, supplier: "Verified 4 ans · BD", image: "tshirt", badge: "", orders: 4567 },
-            { id: 22, name: "Montre Mécanique Homme Luxe", price: 25000, category: "watch", moq: 10, supplier: "Verified 5 ans · CH", image: "clock", badge: "LUXURY", orders: 123 },
-            { id: 23, name: "Maillot de Football Équipe 2024", price: 4500, category: "sports", moq: 25, supplier: "Verified 2 ans · PK", image: "tshirt", badge: "NEW", orders: 678 },
-            { id: 24, name: "Mini-Ordinateur Windows 11 Pro", price: 120000, category: "ordinateur", moq: 5, supplier: "Verified 3 ans · CN", image: "desktop", badge: "SMALL", orders: 89 }
+            // VÊTEMENTS
+            { id: 18, name: "T-shirt Homme Coton 100% Design Moderne", price: 3500, category: "vetement", verified: true, image: "tshirt", orders: 1234 },
+            { id: 19, name: "Poncho de Pluie Réutilisable Léger", price: 7500, category: "vetement", verified: true, image: "tshirt", orders: 567 },
+            
+            // MONTRES
+            { id: 20, name: "Montre Mécanique Homme Luxe Cuir", price: 45000, category: "montre", verified: true, image: "clock", orders: 123 },
+            
+            // BEAUTÉ
+            { id: 21, name: "Kit Faux Ongles en Gel Professionnels", price: 8500, category: "beaute", verified: true, image: "spa", orders: 456 },
+            
+            // NOUVEAUX PRODUITS
+            { id: 22, name: "Monture de Lunettes de Vue Ronde Style", price: 12000, category: "accessoire", verified: true, image: "glasses", orders: 789 },
+            { id: 23, name: "Maillot de Football Équipe 2024", price: 8500, category: "vetement", verified: true, image: "tshirt", orders: 345 },
+            { id: 24, name: "Mini-Ordinateur Windows 11 Pro 8Go RAM", price: 185000, category: "ordinateur", verified: true, image: "desktop", orders: 89 }
         ];
 
-        const cart = [];
+        // Panier stocké dans localStorage
+        let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
         let filteredProducts = [...products];
+        let currentCategory = "all";
+        let maxPrice = 500000;
 
         // Formatage des prix
         function formatPrice(price) {
@@ -922,23 +882,22 @@
             
             filteredProducts.forEach(p => {
                 const productCard = `
-                    <div class="product-card" data-category="${p.category}" data-price="${p.price}" data-moq="${p.moq}">
-                        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+                    <div class="product-card" data-category="${p.category}" data-price="${p.price}">
+                        ${p.verified ? `<div class="product-badge"><i class="fas fa-check"></i> VÉRIFIÉ</div>` : ''}
                         <div class="product-image">
                             <i class="fas ${getProductImage(p.image)} fa-4x text-muted"></i>
                         </div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
                             <div class="product-price">${formatPrice(p.price)}</div>
-                            <div class="product-moq">MOQ: ${p.moq} pièce(s)</div>
                             <div class="product-supplier">
                                 <i class="fas fa-check-circle verified-badge"></i>
-                                ${p.supplier}
+                                Fournisseur vérifié · CN
                             </div>
                             <div class="product-actions">
-                                <button class="btn-contact">
+                                <a href="contact.html?product=${p.id}" class="btn-contact">
                                     <i class="fas fa-comment-dots"></i> Contacter
-                                </button>
+                                </a>
                                 <button class="btn-cart" data-id="${p.id}">
                                     <i class="fas fa-cart-plus"></i> Panier
                                 </button>
@@ -949,37 +908,27 @@
                 container.append(productCard);
             });
             
-            $('#productsCount').text(`${filteredProducts.length} produits trouvés`);
+            $('#productsCount').text(`${filteredProducts.length} produit(s) trouvé(s)`);
         }
 
         // Filtrage des produits
         function filterProducts() {
-            const category = $('#categoryFilter').val();
-            const priceMin = $('#priceMinFilter').val() ? parseInt($('#priceMinFilter').val()) : 0;
-            const supplier = $('#supplierFilter').val();
-            const moq = $('#moqFilter').val();
+            const priceMax = parseInt($('#priceSlider').val());
+            const sortBy = $('#sortProducts').val();
+            
+            $('#currentPrice').text(formatPrice(priceMax));
             
             filteredProducts = products.filter(p => {
                 // Filtre par catégorie
-                if (category !== 'all' && p.category !== category) return false;
+                if (currentCategory !== "all" && p.category !== currentCategory) return false;
                 
-                // Filtre par prix minimum
-                if (p.price < priceMin) return false;
-                
-                // Filtre par MOQ
-                if (moq !== 'all') {
-                    const minMoq = parseInt(moq);
-                    if (p.moq < minMoq) return false;
-                }
-                
-                // Filtre par fournisseur (simplifié)
-                if (supplier === 'verified' && !p.supplier.includes('Verified')) return false;
+                // Filtre par prix maximum
+                if (p.price > priceMax) return false;
                 
                 return true;
             });
             
             // Tri
-            const sortBy = $('#sortProducts').val();
             switch(sortBy) {
                 case 'price_asc':
                     filteredProducts.sort((a, b) => a.price - b.price);
@@ -990,55 +939,85 @@
                 case 'newest':
                     filteredProducts.sort((a, b) => b.id - a.id);
                     break;
-                case 'orders':
-                    filteredProducts.sort((a, b) => b.orders - a.orders);
-                    break;
             }
             
             renderProducts();
         }
 
         // Ajout au panier
-        $(document).on('click', '.btn-cart', function() {
-            const id = parseInt($(this).data('id'));
-            const product = products.find(p => p.id === id);
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
             
-            cart.push(product);
+            // Vérifier si le produit est déjà dans le panier
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || 1) + 1;
+            } else {
+                product.quantity = 1;
+                cart.push(product);
+            }
+            
+            // Sauvegarder dans localStorage
+            localStorage.setItem('kdo_cart', JSON.stringify(cart));
+            
+            // Mettre à jour l'affichage
             updateCartCount();
             
             // Notification
             $('#cartProductName').text(product.name);
-            $('#cartAlert').addClass('show');
+            const alert = $('#cartAlert');
+            alert.addClass('show');
+            
             setTimeout(() => {
-                $('#cartAlert').removeClass('show');
+                alert.removeClass('show');
             }, 3000);
-        });
+        }
 
         // Mise à jour du compteur panier
         function updateCartCount() {
-            $('#cartCount').text(cart.length);
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            $('#footerCartCount').text(totalItems);
         }
 
         // Initialisation
         $(document).ready(function() {
             renderProducts();
+            updateCartCount();
             
-            // Filtrage
-            $('#categoryFilter, #priceMinFilter, #supplierFilter, #moqFilter, #sortProducts').on('change', filterProducts);
+            // Gestion du slider de prix
+            $('#priceSlider').on('input', function() {
+                $('#currentPrice').text(formatPrice($(this).val()));
+            });
+            
+            // Appliquer les filtres
+            $('#applyFilters').on('click', filterProducts);
             
             // Recherche
             $('.search-btn').on('click', function() {
-                const term = $('.search-input').val().toLowerCase();
+                const term = $('.search-input').val().toLowerCase().trim();
+                
                 if (term) {
                     filteredProducts = products.filter(p => 
                         p.name.toLowerCase().includes(term) ||
-                        p.category.toLowerCase().includes(term) ||
-                        p.supplier.toLowerCase().includes(term)
+                        p.category.toLowerCase().includes(term)
                     );
-                    renderProducts();
+                    
+                    if (filteredProducts.length === 0) {
+                        $('#productsContainer').html(`
+                            <div class="col-12 text-center py-5">
+                                <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                                <h5 class="text-muted">Aucun résultat pour "${term}"</h5>
+                                <p class="text-muted">Essayez d'autres mots-clés</p>
+                            </div>
+                        `);
+                        $('#productsCount').text('0 produit(s) trouvé(s)');
+                    } else {
+                        renderProducts();
+                    }
                 } else {
                     filteredProducts = [...products];
-                    renderProducts();
+                    filterProducts();
                 }
             });
             
@@ -1048,21 +1027,38 @@
                 }
             });
             
+            // Gestion des catégories
+            $('.category-item').on('click', function(e) {
+                e.preventDefault();
+                
+                // Mettre à jour l'état actif
+                $('.category-item').removeClass('active');
+                $(this).addClass('active');
+                
+                // Mettre à jour la catégorie courante
+                currentCategory = $(this).data('category') || "all";
+                
+                // Appliquer les filtres
+                filterProducts();
+            });
+            
+            // Ajout au panier
+            $(document).on('click', '.btn-cart', function() {
+                const productId = parseInt($(this).data('id'));
+                addToCart(productId);
+            });
+            
+            // Tri des produits
+            $('#sortProducts').on('change', filterProducts);
+            
             // Navigation footer
             $('.footer-item').on('click', function(e) {
-                e.preventDefault();
+                // Mettre à jour l'état actif
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
                 
-                // Simuler la navigation vers différentes pages
-                const page = $(this).attr('href');
-                if (page !== 'index.html') {
-                    alert(`Navigation vers ${page} (page à créer séparément)`);
-                }
+                // La navigation se fait via les liens href
             });
-            
-            // Initialiser le panier
-            updateCartCount();
         });
     </script>
 </body>
