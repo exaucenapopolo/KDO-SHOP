@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDO SHOP - Tableau de bord</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS personnalisé -->
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --secondary-blue: #007bff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        /* En-tête fixe */
+        .navbar-kdo {
+            background-color: var(--primary-blue);
+            box-shadow: var(--shadow);
+        }
+        .navbar-kdo .logo {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white;
+        }
+        .search-box {
+            max-width: 600px;
+        }
+        .search-box .form-control:focus {
+            border-color: var(--secondary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+        /* Sidebar des filtres */
+        .sidebar-filter {
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            padding: 1.5rem;
+            position: sticky;
+            top: 20px;
+        }
+        .sidebar-filter h5 {
+            color: var(--dark-gray);
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 0.5rem;
+        }
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+        /* Carte produit */
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            height: 100%;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .product-img {
+            height: 180px;
+            object-fit: cover;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+        .product-title {
+            font-weight: 600;
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-price {
+            color: var(--primary-blue);
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .product-category {
+            font-size: 0.85rem;
+            color: #6c757d;
+            background-color: #e9ecef;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .btn-add-to-cart {
+            background-color: var(--secondary-blue);
+            color: white;
+            font-weight: 600;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-add-to-cart:hover {
+            background-color: #0056b3;
+        }
+        /* Pagination */
+        .pagination-kdo .page-item.active .page-link {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+        /* Notification d'ajout au panier */
+        #cartAlert {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 1050;
+            display: none;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar-filter {
+                margin-bottom: 2rem;
+                position: static;
+            }
+            .product-card {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation principale (inspirée d'Alibaba.com) -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-kdo sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand logo" href="#"><i class="fas fa-gift me-2"></i>KDO SHOP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <div class="d-flex w-100 search-box mx-auto my-2 my-lg-0">
+                    <input class="form-control me-2" type="search" placeholder="Rechercher des produits, fournisseurs..." id="searchInput">
+                    <button class="btn btn-light" type="button" id="searchButton"><i class="fas fa-search"></i></button>
+                </div>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-th-large me-1"></i> Tableau de bord</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart me-1"></i> Panier <span id="cartCount" class="badge bg-light text-dark">0</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user me-1"></i> Mon compte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Sidebar des filtres (à gauche) -->
+            <div class="col-lg-3 col-xl-2">
+                <div class="sidebar-filter">
+                    <h5><i class="fas fa-filter me-2"></i>Filtres</h5>
+                    <div class="filter-section">
+                        <h6>Catégories</h6>
+                        <div class="form-check">
+                            <input class="form-check-input category-filter" type="checkbox" value="all" id="catAll" checked>
+                            <label class="form-check-label" for="catAll">Tous les produits</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input category-filter" type="checkbox" value="ordinateur" id="catOrdinateur">
+                            <label class="form-check-label" for="catOrdinateur">Ordinateurs</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input category-filter" type="checkbox" value="accessoire" id="catAccessoire">
+                            <label class="form-check-label" for="catAccessoire">Accessoires</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input category-filter" type="checkbox" value="sac" id="catSac">
+                            <label class="form-check-label" for="catSac">Sacs & Bagages</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input category-filter" type="checkbox" value="telephone" id="catTelephone">
+                            <label class="form-check-label" for="catTelephone">Téléphones & Tablettes</label>
+                        </div>
+                    </div>
+                    <div class="filter-section">
+                        <h6>Prix (XAF)</h6>
+                        <div class="d-flex justify-content-between">
+                            <span id="priceMinLabel">50 000</span>
+                            <span id="priceMaxLabel">500 000</span>
+                        </div>
+                        <input type="range" class="form-range" min="50000" max="500000" step="10000" id="priceRange">
+                    </div>
+                    <div class="filter-section">
+                        <h6>Tri par</h6>
+                        <select class="form-select" id="sortSelect">
+                            <option value="default">Pertinence</option>
+                            <option value="price_asc">Prix croissant</option>
+                            <option value="price_desc">Prix décroissant</option>
+                            <option value="name_asc">Nom A-Z</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline-primary w-100 mt-3" id="resetFilters"><i class="fas fa-redo me-1"></i> Réinitialiser</button>
+                </div>
+            </div>
+
+            <!-- Zone principale des produits -->
+            <div class="col-lg-9 col-xl-10">
+                <div class="row mb-3">
+                    <div class="col">
+                        <h4 class="text-dark">Catalogue des produits <small class="text-muted" id="productCount">(12 produits)</small></h4>
+                        <p class="text-muted">Inspiré des catégories de <strong>chezkdo.com</strong> avec la disposition <strong>Alibaba.com</strong></p>
+                    </div>
+                    <div class="col-auto">
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-secondary active" data-view="grid"><i class="fas fa-th-large"></i></button>
+                            <button type="button" class="btn btn-outline-secondary" data-view="list"><i class="fas fa-list"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grille de produits (données fictives) -->
+                <div class="row g-4" id="productGrid">
+                    <!-- Les produits sont générés dynamiquement par JavaScript -->
+                </div>
+
+                <!-- Pagination fictive -->
+                <nav aria-label="Navigation des pages" class="mt-5">
+                    <ul class="pagination pagination-kdo justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#">Précédent</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification d'ajout au panier -->
+    <div class="alert alert-success alert-dismissible fade show" id="cartAlert" role="alert">
+        <strong><i class="fas fa-check-circle me-1"></i> Produit ajouté au panier !</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script de l'application -->
+    <script>
+        // Données fictives basées sur les catégories de chezkdo.com
+        const products = [
+            { id: 1, name: "Ordinateur Portable HP EliteBook", price: "250 000", category: "ordinateur", image: "", desc: "Portable professionnel remis à neuf, 8 Go RAM, 256 Go SSD." },
+            { id: 2, name: "Souris Gaming RGB", price: "15 000", category: "accessoire", image: "", desc: "Souris filaire avec rétroéclairage LED, 6400 DPI." },
+            { id: 3, name: "Sac à Dos pour Ordinateur 15.6\"", price: "18 000", category: "sac", image: "", desc: "Sac waterproof avec compartiment rembourré." },
+            { id: 4, name: "iPhone 12 Reconditionné", price: "380 000", category: "telephone", image: "", desc: "État comme neuf, batterie à 95%, 128 Go." },
+            { id: 5, name: "Disque Dur Externe 1 To", price: "55 000", category: "accessoire", image: "", desc: "Portable USB 3.0, compatible PC et Mac." },
+            { id: 6, name: "Clavier Mécanique Bluetooth", price: "22 000", category: "accessoire", image: "", desc: "Clavier sans fil avec switches bleus." },
+            { id: 7, name: "Tablette Samsung Galaxy Tab A8", price: "120 000", category: "telephone", image: "", desc: "Écran 10.5\", 64 Go, parfait pour la lecture." },
+            { id: 8, name: "PC Bureau Gaming (Config de base)", price: "450 000", category: "ordinateur", image: "", desc: "Processeur Intel i5, GTX 1660, 16 Go RAM." },
+            { id: 9, name: "Power Bank 20000 mAh", price: "12 000", category: "accessoire", image: "", desc: "Double port USB, charge rapide." },
+            { id: 10, name: "Sacoche Professionnelle", price: "25 000", category: "sac", image: "", desc: "Cuir synthétique, compartiments multiples." },
+            { id: 11, name: "MacBook Air M1 2020", price: "520 000", category: "ordinateur", image: "", desc: "Batterie longue durée, 256 Go SSD." },
+            { id: 12, name: "Écran 24\" Full HD", price: "90 000", category: "accessoire", image: "", desc: "Écran LED avec ports HDMI et VGA." }
+        ];
+
+        let cart = [];
+        let filteredProducts = [...products];
+
+        // Fonction pour afficher les produits
+        function renderProducts(productsArray) {
+            const container = $('#productGrid');
+            container.empty();
+            if (productsArray.length === 0) {
+                container.html('<div class="col-12 text-center py-5"><h5 class="text-muted">Aucun produit ne correspond aux filtres.</h5></div>');
+                return;
+            }
+            productsArray.forEach(p => {
+                const productCard = `
+                <div class="col-md-6 col-xl-4 col-xxl-3 product-item" data-category="${p.category}">
+                    <div class="product-card p-3 h-100">
+                        <div class="product-img mb-3">
+                            <i class="fas fa-laptop fa-3x"></i>
+                        </div>
+                        <h5 class="product-title">${p.name}</h5>
+                        <p class="text-muted small mb-2">${p.desc}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="product-price">${p.price} XAF</span>
+                            <span class="product-category">${p.category}</span>
+                        </div>
+                        <button class="btn btn-add-to-cart w-100 mt-2" data-id="${p.id}">
+                            <i class="fas fa-cart-plus me-2"></i> Ajouter au panier
+                        </button>
+                    </div>
+                </div>`;
+                container.append(productCard);
+            });
+            $('#productCount').text(`(${productsArray.length} produits)`);
+        }
+
+        // Filtrage par catégorie
+        $('.category-filter').on('change', function() {
+            if ($(this).val() === 'all' && $(this).is(':checked')) {
+                $('.category-filter').not(this).prop('checked', false);
+            } else {
+                $('#catAll').prop('checked', false);
+            }
+            applyFilters();
+        });
+
+        // Filtrage par prix
+        $('#priceRange').on('input', function() {
+            $('#priceMinLabel').text((this.valueAsNumber).toLocaleString('fr-FR'));
+            applyFilters();
+        });
+
+        // Tri
+        $('#sortSelect').on('change', applyFilters);
+
+        // Recherche
+        $('#searchButton').on('click', applyFilters);
+        $('#searchInput').on('keyup', function(e) {
+            if (e.key === 'Enter') applyFilters();
+        });
+
+        // Réinitialisation
+        $('#resetFilters').on('click', function() {
+            $('.category-filter').prop('checked', false);
+            $('#catAll').prop('checked', true);
+            $('#priceRange').val(250000);
+            $('#priceMinLabel').text('250 000');
+            $('#sortSelect').val('default');
+            $('#searchInput').val('');
+            applyFilters();
+        });
+
+        // Vue grid/list
+        $('[data-view]').on('click', function() {
+            $('[data-view]').removeClass('active');
+            $(this).addClass('active');
+            if ($(this).data('view') === 'list') {
+                $('#productGrid').addClass('row-cols-1');
+                $('.product-card').addClass('d-flex');
+            } else {
+                $('#productGrid').removeClass('row-cols-1');
+                $('.product-card').removeClass('d-flex');
+            }
+        });
+
+        // Ajout au panier
+        $(document).on('click', '.btn-add-to-cart', function() {
+            const id = $(this).data('id');
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            $('#cartCount').text(cart.length);
+            $('#cartAlert').fadeIn().delay(2000).fadeOut();
+        });
+
+        // Fonction principale de filtrage
+        function applyFilters() {
+            let result = [...products];
+
+            // Filtre par catégorie
+            const checkedCategories = $('.category-filter:checked').map(function() {
+                return $(this).val();
+            }).get();
+            if (!checkedCategories.includes('all')) {
+                result = result.filter(p => checkedCategories.includes(p.category));
+            }
+
+            // Filtre par prix
+            const maxPrice = $('#priceRange').val();
+            result = result.filter(p => {
+                const price = parseInt(p.price.replace(/\s/g, ''));
+                return price <= maxPrice;
+            });
+
+            // Filtre par recherche
+            const searchTerm = $('#searchInput').val().toLowerCase();
+            if (searchTerm) {
+                result = result.filter(p => p.name.toLowerCase().includes(searchTerm) || p.desc.toLowerCase().includes(searchTerm));
+            }
+
+            // Tri
+            const sortVal = $('#sortSelect').val();
+            if (sortVal === 'price_asc') {
+                result.sort((a,b) => parseInt(a.price.replace(/\s/g, '')) - parseInt(b.price.replace(/\s/g, '')));
+            } else if (sortVal === 'price_desc') {
+                result.sort((a,b) => parseInt(b.price.replace(/\s/g, '')) - parseInt(a.price.replace(/\s/g, '')));
+            } else if (sortVal === 'name_asc') {
+                result.sort((a,b) => a.name.localeCompare(b.name));
+            }
+
+            filteredProducts = result;
+            renderProducts(result);
+        }
+
+        // Initialisation
+        $(document).ready(function() {
+            renderProducts(products);
+            $('#priceMinLabel').text(($('#priceRange').val()).toLocaleString('fr-FR'));
+        });
+    </script>
+</body>
+</html>
