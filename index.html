@@ -11,278 +11,343 @@
     <!-- CSS personnalisé -->
     <style>
         :root {
-            --primary-blue: #1E3A8A;    /* Bleu foncé du logo */
-            --secondary-orange: #F97316; /* Orange du logo */
-            --accent-blue: #3B82F6;     /* Bleu clair */
-            --light-gray: #F8FAFC;
-            --dark-gray: #1F2937;
-            --medium-gray: #6B7280;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
-            --radius: 12px;
+            --primary-orange: #FF6B00;    /* Orange principal du logo */
+            --secondary-blue: #0066CC;     /* Bleu pour les boutons */
+            --accent-gray: #F5F5F5;        /* Gris clair */
+            --text-dark: #333333;          /* Texte foncé */
+            --text-medium: #666666;        /* Texte moyen */
+            --text-light: #999999;         /* Texte clair */
+            --border-color: #E0E0E0;       /* Couleur des bordures */
+            --white: #FFFFFF;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            font-size: 13px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: var(--light-gray);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            padding-bottom: 80px; /* Pour le footer */
+            background-color: var(--white);
+            color: var(--text-dark);
+            padding-bottom: 60px; /* Pour le footer */
         }
         
-        /* En-tête amélioré */
-        .navbar-kdo {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #1E40AF 100%);
-            box-shadow: var(--shadow);
-            padding: 12px 0;
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+        }
+        
+        /* Header */
+        .header-kdo {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            padding: 8px 0;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         
         .logo-img {
-            height: 42px;
+            height: 36px;
             width: auto;
             object-fit: contain;
         }
         
         .logo-text {
-            color: white;
+            color: var(--primary-orange);
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 18px;
             letter-spacing: -0.5px;
         }
         
-        .search-box {
-            max-width: 650px;
+        /* Barre de recherche Alibaba-like */
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .search-wrapper {
             position: relative;
         }
         
-        .search-box .form-control {
-            border-radius: 25px;
-            padding: 12px 20px 12px 45px;
-            border: 2px solid transparent;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-        
-        .search-box .form-control:focus {
-            border-color: var(--secondary-orange);
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--medium-gray);
-            z-index: 10;
+        .search-input {
+            border: 2px solid var(--primary-orange);
+            border-radius: 4px;
+            padding: 8px 50px 8px 15px;
+            font-size: 13px;
+            width: 100%;
+            height: 40px;
         }
         
         .search-btn {
-            background: var(--secondary-orange);
-            border: none;
-            border-radius: 0 25px 25px 0;
-            color: white;
-            padding: 0 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
             position: absolute;
             right: 0;
             top: 0;
             height: 100%;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 20px;
+            font-size: 14px;
+            cursor: pointer;
         }
         
-        .search-btn:hover {
-            background: #EA580C;
-        }
-        
-        /* Navigation */
-        .nav-link-custom {
-            color: white !important;
-            font-weight: 500;
-            padding: 8px 15px !important;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            margin: 0 3px;
-        }
-        
-        .nav-link-custom:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-        }
-        
-        /* Section de filtres améliorée */
-        .filters-section {
-            background: white;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .category-buttons {
+        .search-categories {
+            margin-top: 5px;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 1.5rem;
+            gap: 15px;
+            font-size: 12px;
         }
         
-        .category-btn {
-            background: white;
-            border: 2px solid #E5E7EB;
-            border-radius: 30px;
-            padding: 10px 20px;
-            font-weight: 600;
-            color: var(--dark-gray);
-            transition: all 0.3s ease;
+        .search-category {
+            color: var(--text-medium);
+            text-decoration: none;
+        }
+        
+        .search-category:hover {
+            color: var(--primary-orange);
+        }
+        
+        /* Navigation droite */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-item {
+            font-size: 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .nav-icon {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        
+        /* Filtres horizontaux */
+        .filters-horizontal {
+            background: var(--accent-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+            margin-bottom: 15px;
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .filter-group {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .category-btn:hover, .category-btn.active {
-            background: var(--primary-blue);
-            color: white;
-            border-color: var(--primary-blue);
-            transform: translateY(-2px);
+        .filter-label {
+            color: var(--text-medium);
+            font-size: 12px;
+            white-space: nowrap;
         }
         
-        .price-filter-container {
-            background: #F9FAFB;
-            border-radius: 10px;
-            padding: 1.2rem;
+        .filter-select {
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 5px 10px;
+            font-size: 12px;
+            background: var(--white);
+            color: var(--text-dark);
+            min-width: 150px;
         }
         
-        .price-range-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
+        .price-min-input {
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 5px 10px;
+            font-size: 12px;
+            width: 120px;
         }
         
-        .price-label {
-            background: white;
-            padding: 5px 12px;
-            border-radius: 6px;
+        /* Bannière */
+        .banner {
+            background: linear-gradient(to right, #FFE5D0, #FFD5B0);
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #FFD0A0;
+        }
+        
+        .banner-title {
+            color: var(--primary-orange);
             font-weight: 600;
-            color: var(--primary-blue);
-            border: 1px solid #E5E7EB;
+            font-size: 14px;
+            margin-bottom: 5px;
         }
         
-        /* Sections de produits par catégorie */
-        .category-section {
-            margin-bottom: 3rem;
+        .banner-text {
+            color: var(--text-dark);
+            font-size: 12px;
         }
         
-        .section-header {
+        /* Conteneur principal */
+        .main-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--secondary-orange);
+            gap: 20px;
         }
         
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--dark-gray);
+        /* Sidebar des catégories */
+        .sidebar-categories {
+            width: 220px;
+            flex-shrink: 0;
+        }
+        
+        .category-box {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--white);
+            margin-bottom: 15px;
+        }
+        
+        .category-header {
+            background: var(--accent-gray);
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+        
+        .category-list {
+            list-style: none;
+            padding: 10px 0;
             margin: 0;
         }
         
-        .view-all-link {
-            color: var(--accent-blue);
-            font-weight: 600;
+        .category-item {
+            padding: 8px 15px;
+            border-bottom: 1px solid var(--accent-gray);
+        }
+        
+        .category-item:last-child {
+            border-bottom: none;
+        }
+        
+        .category-link {
+            color: var(--text-dark);
             text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .view-all-link:hover {
-            color: var(--primary-blue);
-            text-decoration: underline;
-        }
-        
-        /* Grille de produits horizontale */
-        .products-horizontal {
+            font-size: 12px;
             display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 15px 5px;
-            scroll-behavior: smooth;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .products-horizontal::-webkit-scrollbar {
-            height: 6px;
+        .category-link:hover {
+            color: var(--primary-orange);
         }
         
-        .products-horizontal::-webkit-scrollbar-track {
-            background: #F1F1F1;
-            border-radius: 10px;
+        .category-count {
+            color: var(--text-light);
+            font-size: 11px;
         }
         
-        .products-horizontal::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
-            border-radius: 10px;
+        /* Grille de produits */
+        .products-grid {
+            flex: 1;
         }
         
-        /* Carte produit améliorée */
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .products-count {
+            color: var(--text-medium);
+            font-size: 12px;
+        }
+        
+        .sort-select {
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 5px 10px;
+            font-size: 12px;
+            background: var(--white);
+        }
+        
+        /* Carte produit Alibaba-like */
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
         .product-card {
-            background: white;
-            border-radius: var(--radius);
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            box-shadow: var(--shadow);
-            width: 280px;
-            flex-shrink: 0;
-            border: 1px solid #F1F5F9;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--white);
+            transition: all 0.2s ease;
             position: relative;
+            overflow: hidden;
         }
         
         .product-card:hover {
-            transform: translateY(-10px);
+            border-color: var(--primary-orange);
             box-shadow: var(--shadow-hover);
+        }
+        
+        .product-image {
+            height: 180px;
+            background: var(--accent-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .product-img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
         }
         
         .product-badge {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            background: var(--secondary-orange);
+            top: 10px;
+            left: 10px;
+            background: var(--primary-orange);
             color: white;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            z-index: 2;
-        }
-        
-        .product-img {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
-            overflow: hidden;
-        }
-        
-        .product-img i {
-            font-size: 4rem;
-            color: var(--accent-blue);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 2px;
         }
         
         .product-info {
-            padding: 1.5rem;
+            padding: 12px;
+            border-top: 1px solid var(--accent-gray);
         }
         
         .product-title {
-            font-weight: 700;
-            color: var(--dark-gray);
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
+            font-size: 12px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
             line-height: 1.4;
-            height: 40px;
+            height: 34px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -290,68 +355,112 @@
         }
         
         .product-price {
-            color: var(--primary-blue);
-            font-weight: 800;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .product-specs {
-            font-size: 0.85rem;
-            color: var(--medium-gray);
-            margin-bottom: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .spec-item {
-            background: #F1F5F9;
-            padding: 3px 10px;
-            border-radius: 12px;
-        }
-        
-        .btn-add-to-cart {
-            background: linear-gradient(to right, var(--primary-blue), var(--accent-blue));
-            color: white;
+            color: var(--primary-orange);
             font-weight: 700;
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            width: 100%;
-            transition: all 0.3s ease;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .product-moq {
+            color: var(--text-medium);
+            font-size: 11px;
+            margin-bottom: 3px;
+        }
+        
+        .product-supplier {
+            color: var(--text-light);
+            font-size: 11px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .verified-badge {
+            color: #52C41A;
+            font-size: 10px;
+        }
+        
+        .product-actions {
+            display: flex;
             gap: 8px;
         }
         
-        .btn-add-to-cart:hover {
-            background: linear-gradient(to right, #1E40AF, #2563EB);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        .btn-contact {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--secondary-blue);
+            color: var(--secondary-blue);
+            border-radius: 3px;
+            padding: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
         
-        /* Notification */
-        #cartAlert {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            z-index: 9999;
-            min-width: 300px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-            border-left: 5px solid var(--secondary-orange);
-        }
-        
-        /* Footer */
-        .footer-kdo {
-            background: var(--dark-gray);
+        .btn-contact:hover {
+            background: var(--secondary-blue);
             color: white;
-            padding: 2rem 0;
+        }
+        
+        .btn-cart {
+            flex: 1;
+            background: var(--secondary-blue);
+            border: 1px solid var(--secondary-blue);
+            color: white;
+            border-radius: 3px;
+            padding: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-cart:hover {
+            background: #0052A3;
+        }
+        
+        /* Pagination */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .pagination {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .page-item {
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+        }
+        
+        .page-link {
+            padding: 5px 10px;
+            font-size: 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            display: block;
+        }
+        
+        .page-item.active {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+        }
+        
+        .page-item.active .page-link {
+            color: white;
+        }
+        
+        /* Footer Alibaba-like */
+        .footer-kdo {
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
             position: fixed;
             bottom: 0;
             width: 100%;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
             z-index: 1000;
         }
         
@@ -366,277 +475,350 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #D1D5DB;
-            transition: all 0.3s ease;
-            padding: 10px 15px;
-            border-radius: 10px;
-            min-width: 80px;
+            color: var(--text-medium);
+            transition: all 0.2s;
+            padding: 5px;
+            min-width: 60px;
         }
         
-        .footer-item:hover, .footer-item.active {
-            color: white;
-            background: rgba(255, 255, 255, 0.1);
+        .footer-item.active {
+            color: var(--primary-orange);
         }
         
         .footer-icon {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
+            font-size: 18px;
+            margin-bottom: 3px;
         }
         
         .footer-label {
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-size: 11px;
+        }
+        
+        /* Notification */
+        #cartAlert {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 280px;
+            box-shadow: var(--shadow-hover);
+            border-left: 3px solid var(--primary-orange);
+            display: none;
         }
         
         /* Responsive */
+        @media (max-width: 992px) {
+            .sidebar-categories {
+                display: none;
+            }
+            
+            .products-container {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
+            .products-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-right {
+                gap: 10px;
+            }
+            
+            .filter-container {
+                gap: 10px;
+            }
+            
+            .search-categories {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+            
             .logo-text {
                 display: none;
             }
             
-            .products-horizontal {
-                gap: 15px;
+            .search-container {
+                margin: 0 10px;
             }
-            
-            .product-card {
-                width: 240px;
-            }
-            
-            .footer-nav {
-                justify-content: space-between;
-                padding: 0 10px;
-            }
-            
-            .footer-item {
-                min-width: 60px;
-                padding: 8px 5px;
-            }
-            
-            .footer-label {
-                font-size: 0.75rem;
-            }
-        }
-        
-        /* Animation pour l'ajout au panier */
-        @keyframes cartBounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-        
-        .cart-bounce {
-            animation: cartBounce 0.5s ease;
-        }
-        
-        /* Animation d'apparition des produits */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .product-item {
-            animation: fadeInUp 0.5s ease forwards;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation principale -->
-    <nav class="navbar navbar-expand-lg navbar-kdo sticky-top">
+    <!-- Header -->
+    <header class="header-kdo">
         <div class="container">
-            <a class="navbar-brand p-0" href="#">
-                <div class="logo-container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="index.html" class="logo-container text-decoration-none">
                     <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
                          alt="KDO SHOP" 
-                         class="logo-img"
-                         onerror="this.onerror=null; this.style.display='none'; document.querySelector('.logo-text').style.display='block';">
+                         class="logo-img">
                     <span class="logo-text">KDO SHOP</span>
-                </div>
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <div class="d-flex w-100 search-box mx-auto my-3 my-lg-0">
-                    <i class="fas fa-search search-icon"></i>
-                    <input class="form-control" type="search" placeholder="Rechercher des produits, fournisseurs, catégories..." id="searchInput">
-                    <button class="search-btn" type="button" id="searchButton">Rechercher</button>
+                </a>
+                
+                <!-- Barre de recherche -->
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <input type="text" class="search-input" placeholder="Rechercher des produits, fournisseurs, catégories...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="search-categories">
+                        <a href="#" class="search-category">Vêtements & Accessoires</a>
+                        <a href="#" class="search-category">Électronique</a>
+                        <a href="#" class="search-category">Maison & Jardin</a>
+                        <a href="#" class="search-category">Sports & Loisirs</a>
+                        <a href="#" class="search-category">Auto & Motos</a>
+                    </div>
                 </div>
                 
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#"><i class="fas fa-home me-1"></i> Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#categories"><i class="fas fa-th-large me-1"></i> Catégories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#"><i class="fas fa-shopping-cart me-1"></i> Panier 
-                            <span id="cartCount" class="badge bg-danger ms-1">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-custom" href="#"><i class="fas fa-user me-1"></i> Mon Compte</a>
-                    </li>
-                </ul>
+                <!-- Navigation droite -->
+                <div class="nav-right">
+                    <a href="messagerie.html" class="nav-item">
+                        <i class="far fa-comment-dots nav-icon"></i>
+                        <span>Messagerie</span>
+                    </a>
+                    <a href="panier.html" class="nav-item">
+                        <i class="fas fa-shopping-cart nav-icon"></i>
+                        <span>Panier <span id="cartCount" class="badge bg-danger">0</span></span>
+                    </a>
+                    <a href="profil.html" class="nav-item">
+                        <i class="far fa-user nav-icon"></i>
+                        <span>Mon KDO</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </nav>
+    </header>
+
+    <!-- Filtres horizontaux -->
+    <div class="filters-horizontal">
+        <div class="container">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <span class="filter-label">Catégorie:</span>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all">Toutes les catégories</option>
+                        <option value="ordinateur">Ordinateurs & PC</option>
+                        <option value="telephone">Téléphones & Smartphones</option>
+                        <option value="tablette">Tablettes</option>
+                        <option value="accessoire">Accessoires Informatiques</option>
+                        <option value="sac">Sacs & Bagages</option>
+                        <option value="gaming">Équipement Gaming</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-label">Prix min (FCFA):</span>
+                    <input type="number" class="price-min-input" id="priceMinFilter" placeholder="Prix minimum" min="0">
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-label">Fournisseur:</span>
+                    <select class="filter-select" id="supplierFilter">
+                        <option value="all">Tous les fournisseurs</option>
+                        <option value="verified">Vérifiés seulement</option>
+                        <option value="gold">Fournisseurs Gold</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <span class="filter-label">Commande min:</span>
+                    <select class="filter-select" id="moqFilter">
+                        <option value="all">Tous les MOQ</option>
+                        <option value="1">MOQ: 1</option>
+                        <option value="2">MOQ: 2</option>
+                        <option value="5">MOQ: 5+</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-sm" style="background: var(--primary-orange); color: white; padding: 5px 15px; border: none; border-radius: 3px;">
+                    Filtrer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bannière -->
+    <div class="container">
+        <div class="banner">
+            <div class="banner-title">🎉 Ventes Flash ! Économisez jusqu'à 50%</div>
+            <div class="banner-text">Profitez de nos offres spéciales sur une sélection de produits. Offre valable jusqu'à épuisement des stocks.</div>
+        </div>
+    </div>
 
     <!-- Contenu principal -->
-    <div class="container mt-4">
-        <!-- Filtres par catégorie -->
-        <div class="filters-section">
-            <h5 class="mb-3"><i class="fas fa-filter me-2"></i>Filtrer par catégorie</h5>
-            <div class="category-buttons">
-                <button class="category-btn active" data-category="all">
-                    <i class="fas fa-th"></i> Tous les produits
-                </button>
-                <button class="category-btn" data-category="ordinateur">
-                    <i class="fas fa-laptop"></i> Ordinateurs
-                </button>
-                <button class="category-btn" data-category="accessoire">
-                    <i class="fas fa-keyboard"></i> Accessoires
-                </button>
-                <button class="category-btn" data-category="sac">
-                    <i class="fas fa-briefcase"></i> Sacs & Bagages
-                </button>
-                <button class="category-btn" data-category="telephone">
-                    <i class="fas fa-mobile-alt"></i> Téléphones & Tablettes
-                </button>
-                <button class="category-btn" data-category="tablette">
-                    <i class="fas fa-tablet-alt"></i> Tablettes
-                </button>
-                <button class="category-btn" data-category="gaming">
-                    <i class="fas fa-gamepad"></i> Gaming
-                </button>
-            </div>
+    <div class="container">
+        <div class="main-container">
+            <!-- Sidebar des catégories -->
+            <aside class="sidebar-categories">
+                <div class="category-box">
+                    <div class="category-header">
+                        <i class="fas fa-list me-2"></i> Catégories
+                    </div>
+                    <ul class="category-list">
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Vêtements & Accessoires</span>
+                                <span class="category-count">1.2k</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Électronique grand public</span>
+                                <span class="category-count">856</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Maison & Jardin</span>
+                                <span class="category-count">742</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Sports & Loisirs</span>
+                                <span class="category-count">512</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Produits de beauté</span>
+                                <span class="category-count">398</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Bijoux, Lunettes & Montres</span>
+                                <span class="category-count">287</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Chaussures & Accessoires</span>
+                                <span class="category-count">423</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Auto & Motos</span>
+                                <span class="category-count">156</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Équipement industriel</span>
+                                <span class="category-count">89</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="category-box">
+                    <div class="category-header">
+                        <i class="fas fa-star me-2"></i> Pour vous
+                    </div>
+                    <ul class="category-list">
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>En vedette</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Offres spéciales</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Nouveautés</span>
+                            </a>
+                        </li>
+                        <li class="category-item">
+                            <a href="#" class="category-link">
+                                <span>Meilleures ventes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
             
-            <!-- Filtre de prix dynamique -->
-            <div class="price-filter-container">
-                <h6><i class="fas fa-tag me-1"></i> Fourchette de prix (FCFA)</h6>
-                <div class="d-flex justify-content-between mb-2">
-                    <span id="priceMinLabel" class="price-label">5 000</span>
-                    <span id="priceMaxLabel" class="price-label">1 500 000</span>
+            <!-- Grille de produits -->
+            <main class="products-grid">
+                <div class="products-header">
+                    <div class="products-count" id="productsCount">1,234 produits trouvés</div>
+                    <div class="filter-group">
+                        <span class="filter-label me-2">Trier par:</span>
+                        <select class="sort-select" id="sortProducts">
+                            <option value="relevance">Pertinence</option>
+                            <option value="price_asc">Prix croissant</option>
+                            <option value="price_desc">Prix décroissant</option>
+                            <option value="newest">Plus récents</option>
+                            <option value="orders">Commandes</option>
+                        </select>
+                    </div>
                 </div>
-                <input type="range" class="form-range" min="1000" max="1500000" step="1000" id="priceRange">
-                <div class="price-range-labels">
-                    <small>Min</small>
-                    <small>Max</small>
+                
+                <div class="products-container" id="productsContainer">
+                    <!-- Produits chargés dynamiquement -->
                 </div>
-            </div>
-        </div>
-        
-        <!-- Sections de produits par catégorie -->
-        <div id="categories">
-            <!-- Section Ordinateurs -->
-            <div class="category-section" id="ordinateurs-section">
-                <div class="section-header">
-                    <h2 class="section-title"><i class="fas fa-laptop me-2"></i> Ordinateurs & PC Portables</h2>
-                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
+                
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>
+                    </ul>
                 </div>
-                <div class="products-horizontal" id="ordinateurs-container">
-                    <!-- Rempli dynamiquement -->
-                </div>
-            </div>
-            
-            <!-- Section Téléphones -->
-            <div class="category-section" id="telephones-section">
-                <div class="section-header">
-                    <h2 class="section-title"><i class="fas fa-mobile-alt me-2"></i> Téléphones & Smartphones</h2>
-                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
-                </div>
-                <div class="products-horizontal" id="telephones-container">
-                    <!-- Rempli dynamiquement -->
-                </div>
-            </div>
-            
-            <!-- Section Tablettes -->
-            <div class="category-section" id="tablettes-section">
-                <div class="section-header">
-                    <h2 class="section-title"><i class="fas fa-tablet-alt me-2"></i> Tablettes</h2>
-                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
-                </div>
-                <div class="products-horizontal" id="tablettes-container">
-                    <!-- Rempli dynamiquement -->
-                </div>
-            </div>
-            
-            <!-- Section Accessoires -->
-            <div class="category-section" id="accessoires-section">
-                <div class="section-header">
-                    <h2 class="section-title"><i class="fas fa-keyboard me-2"></i> Accessoires Informatiques</h2>
-                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
-                </div>
-                <div class="products-horizontal" id="accessoires-container">
-                    <!-- Rempli dynamiquement -->
-                </div>
-            </div>
-            
-            <!-- Section Sacs -->
-            <div class="category-section" id="sacs-section">
-                <div class="section-header">
-                    <h2 class="section-title"><i class="fas fa-briefcase me-2"></i> Sacs & Bagages</h2>
-                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
-                </div>
-                <div class="products-horizontal" id="sacs-container">
-                    <!-- Rempli dynamiquement -->
-                </div>
-            </div>
-            
-            <!-- Section Gaming -->
-            <div class="category-section" id="gaming-section">
-                <div class="section-header">
-                    <h2 class="section-title"><i class="fas fa-gamepad me-2"></i> Équipement Gaming</h2>
-                    <a href="#" class="view-all-link">Voir tout <i class="fas fa-arrow-right ms-1"></i></a>
-                </div>
-                <div class="products-horizontal" id="gaming-container">
-                    <!-- Rempli dynamiquement -->
-                </div>
-            </div>
+            </main>
         </div>
     </div>
 
     <!-- Footer -->
-    <div class="footer-kdo">
+    <footer class="footer-kdo">
         <div class="container">
-            <div class="footer-nav">
-                <a href="#" class="footer-item active">
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-item active">
                     <i class="fas fa-home footer-icon"></i>
                     <span class="footer-label">Accueil</span>
                 </a>
-                <a href="#categories" class="footer-item">
+                <a href="categories.html" class="footer-item">
                     <i class="fas fa-th-large footer-icon"></i>
                     <span class="footer-label">Catégories</span>
                 </a>
-                <a href="#" class="footer-item">
-                    <i class="fas fa-comments footer-icon"></i>
+                <a href="messagerie.html" class="footer-item">
+                    <i class="far fa-comment-dots footer-icon"></i>
                     <span class="footer-label">Messagerie</span>
-                    <span class="badge bg-danger position-absolute top-0 end-0 translate-middle">3</span>
                 </a>
-                <a href="#" class="footer-item" id="footer-cart">
+                <a href="panier.html" class="footer-item">
                     <i class="fas fa-shopping-cart footer-icon"></i>
                     <span class="footer-label">Panier</span>
-                    <span id="footerCartCount" class="badge bg-danger position-absolute top-0 end-0 translate-middle">0</span>
                 </a>
-                <a href="#" class="footer-item">
-                    <i class="fas fa-user footer-icon"></i>
+                <a href="profil.html" class="footer-item">
+                    <i class="far fa-user footer-icon"></i>
                     <span class="footer-label">Mon KDO</span>
                 </a>
-            </div>
+            </nav>
         </div>
-    </div>
+    </footer>
 
     <!-- Notification -->
-    <div class="alert alert-success alert-dismissible fade show" id="cartAlert" role="alert">
+    <div class="alert alert-success alert-dismissible fade" id="cartAlert" role="alert">
         <div class="d-flex align-items-center">
-            <i class="fas fa-check-circle me-3 fs-4"></i>
+            <i class="fas fa-check-circle me-3" style="color: var(--primary-orange);"></i>
             <div>
                 <strong>Produit ajouté au panier !</strong>
                 <p class="mb-0 small" id="cartProductName"></p>
@@ -651,333 +833,237 @@
 
     <!-- Script principal -->
     <script>
-        // Données complètes des produits
+        // Données des produits (avec MOQ et fournisseur)
         const products = [
-            // ORDINATEURS (min: 35000 FCFA)
-            { id: 1, name: "HP EliteBook 840 G5", price: 450000, category: "ordinateur", specs: ["i7 8ème gen", "16Go RAM", "512Go SSD"], desc: "PC portable professionnel reconditionné" },
-            { id: 2, name: "Dell Latitude 5490", price: 380000, category: "ordinateur", specs: ["i5 8ème gen", "8Go RAM", "256Go SSD"], desc: "Excellent état, batterie neuve" },
-            { id: 3, name: "Lenovo ThinkPad T480", price: 420000, category: "ordinateur", specs: ["i5 8ème gen", "16Go RAM", "512Go SSD"], desc: "Robuste et fiable" },
-            { id: 4, name: "MacBook Air M1 2020", price: 850000, category: "ordinateur", specs: ["Apple M1", "8Go RAM", "256Go SSD"], desc: "Comme neuf, garantie 6 mois" },
-            { id: 5, name: "Asus VivoBook 15", price: 350000, category: "ordinateur", specs: ["i3 10ème gen", "8Go RAM", "256Go SSD"], desc: "Neuf sous blister" },
-            { id: 6, name: "PC Bureau Gaming", price: 720000, category: "ordinateur", specs: ["Ryzen 5", "16Go RAM", "RTX 3060"], desc: "Configuration gaming complète" },
-            { id: 7, name: "Microsoft Surface Laptop 4", price: 690000, category: "ordinateur", specs: ["i7 11ème gen", "16Go RAM", "512Go SSD"], desc: "Écran tactile, ultra-léger" },
-            { id: 8, name: "Acer Swift 3", price: 390000, category: "ordinateur", specs: ["i5 11ème gen", "8Go RAM", "512Go SSD"], desc: "Design métallique, fin" },
+            // ORDINATEURS
+            { id: 1, name: "HP EliteBook 840 G5 i7 16Go RAM 512Go SSD", price: 450000, category: "ordinateur", moq: 1, supplier: "Verified 3 ans · CN", image: "laptop", badge: "TOP", orders: 156 },
+            { id: 2, name: "Dell Latitude 5490 i5 8Go RAM 256Go SSD", price: 380000, category: "ordinateur", moq: 1, supplier: "Verified 2 ans · CN", image: "laptop", badge: "", orders: 89 },
+            { id: 3, name: "MacBook Air M1 2020 256Go SSD", price: 850000, category: "ordinateur", moq: 1, supplier: "Verified 4 ans · US", image: "laptop", badge: "NEW", orders: 234 },
+            { id: 4, name: "PC Bureau Gaming Ryzen 5 RTX 3060", price: 720000, category: "ordinateur", moq: 1, supplier: "Verified 5 ans · CN", image: "desktop", badge: "HOT", orders: 187 },
             
-            // TÉLÉPHONES (min: 24900 FCFA)
-            { id: 9, name: "iPhone 12 128Go", price: 420000, category: "telephone", specs: ["Écran 6.1\"", "128Go", "Double caméra"], desc: "Reconditionné grade A" },
-            { id: 10, name: "Samsung Galaxy S21", price: 380000, category: "telephone", specs: ["Écran 6.2\"", "128Go", "Triple caméra"], desc: "État impeccable" },
-            { id: 11, name: "iPhone 11 64Go", price: 280000, category: "telephone", specs: ["Écran 6.1\"", "64Go", "Double caméra"], desc: "Batterie à 95%" },
-            { id: 12, name: "Xiaomi Redmi Note 12", price: 145000, category: "telephone", specs: ["Écran 6.67\"", "128Go", "108MP"], desc: "Neuf sous garantie" },
-            { id: 13, name: "Samsung Galaxy A54", price: 220000, category: "telephone", specs: ["Écran 6.4\"", "256Go", "5G"], desc: "Nouveau modèle 2023" },
-            { id: 14, name: "iPhone XR 64Go", price: 190000, category: "telephone", specs: ["Écran 6.1\"", "64Go", "Face ID"], desc: "Fonctionne parfaitement" },
-            { id: 15, name: "Tecno Spark 10", price: 85000, category: "telephone", specs: ["Écran 6.6\"", "128Go", "5000mAh"], desc: "Autonomie exceptionnelle" },
-            { id: 16, name: "OnePlus Nord CE 3", price: 260000, category: "telephone", specs: ["Écran 6.7\"", "256Go", "120Hz"], desc: "Fluide et rapide" },
+            // TÉLÉPHONES
+            { id: 5, name: "iPhone 12 128Go Noir Reconditionné", price: 420000, category: "telephone", moq: 2, supplier: "Verified 3 ans · CN", image: "mobile", badge: "TOP", orders: 312 },
+            { id: 6, name: "Samsung Galaxy S21 5G 128Go", price: 380000, category: "telephone", moq: 2, supplier: "Verified 2 ans · KR", image: "mobile", badge: "", orders: 198 },
+            { id: 7, name: "Xiaomi Redmi Note 12 128Go", price: 145000, category: "telephone", moq: 5, supplier: "Verified 4 ans · CN", image: "mobile", badge: "SALE", orders: 456 },
+            { id: 8, name: "Tecno Spark 10 128Go 5000mAh", price: 85000, category: "telephone", moq: 10, supplier: "Verified 1 an · CN", image: "mobile", badge: "", orders: 321 },
             
             // TABLETTES
-            { id: 17, name: "iPad Air 5 64Go", price: 520000, category: "tablette", specs: ["M1 Chip", "10.9\"", "WiFi"], desc: "Performance extrême" },
-            { id: 18, name: "Samsung Tab S8", price: 480000, category: "tablette", specs: ["Snapdragon 8", "11\"", "Stylus inclus"], desc: "Parfaite pour créateurs" },
-            { id: 19, name: "iPad 10.2\" 64Go", price: 320000, category: "tablette", specs: ["A13 Bionic", "10.2\"", "Apple Pencil"], desc: "Idéal pour étudiants" },
-            { id: 20, name: "Lenovo Tab P11 Pro", price: 280000, category: "tablette", specs: ["Snapdragon 730G", "11.5\"", "4K OLED"], desc: "Écran exceptionnel" },
-            { id: 21, name: "Xiaomi Pad 6", price: 240000, category: "tablette", specs: ["Snapdragon 870", "11\"", "144Hz"], desc: "Gaming et productivité" },
+            { id: 9, name: "iPad Air 5 64Go WiFi M1 Chip", price: 520000, category: "tablette", moq: 1, supplier: "Verified 5 ans · US", image: "tablet", badge: "TOP", orders: 123 },
+            { id: 10, name: "Samsung Galaxy Tab S8 128Go", price: 480000, category: "tablette", moq: 1, supplier: "Verified 3 ans · KR", image: "tablet", badge: "", orders: 87 },
             
-            // ACCESSOIRES (min: 1000 FCFA)
-            { id: 22, name: "Souris Gaming RGB", price: 15000, category: "accessoire", specs: ["6400 DPI", "RGB", "Filaire"], desc: "Précision extrême" },
-            { id: 23, name: "Clavier Mécanique", price: 25000, category: "accessoire", specs: ["Switches bleus", "RGB", "Anti-ghosting"], desc: "Tactile et cliquetant" },
-            { id: 24, name: "Casque Gaming 7.1", price: 35000, category: "accessoire", specs: ["7.1 surround", "Micro", "LED RGB"], desc: "Immersif et confortable" },
-            { id: 25, name: "Disque Dur 1To", price: 55000, category: "accessoire", specs: ["USB 3.0", "Portable", "2.5\""], desc: "Sauvegarde facile" },
-            { id: 26, name: "Power Bank 30000mAh", price: 18000, category: "accessoire", specs: ["PD 30W", "3 ports", "Quick Charge"], desc: "Charge ultra-rapide" },
-            { id: 27, name: "Webcam 4K", price: 42000, category: "accessoire", specs: ["4K UHD", "Micro", "Auto-focus"], desc: "Qualité professionnelle" },
-            { id: 28, name: "Écran 24\" Full HD", price: 120000, category: "accessoire", specs: ["1080p", "75Hz", "HDMI/VGA"], desc: "Couleurs vibrantes" },
-            { id: 29, name: "Hub USB-C 7-en-1", price: 12500, category: "accessoire", specs: ["HDMI 4K", "USB 3.0", "SD Card"], desc: "Connectivité complète" },
-            { id: 30, name: "Station d'accueil Dell", price: 65000, category: "accessoire", specs: ["Dual Display", "Ethernet", "Audio"], desc: "Bureau en un câble" },
+            // ACCESSOIRES
+            { id: 11, name: "Souris Gaming RGB 6400 DPI", price: 15000, category: "accessoire", moq: 10, supplier: "Verified 2 ans · CN", image: "mouse", badge: "CHEAP", orders: 654 },
+            { id: 12, name: "Clavier Mécanique Gaming RGB", price: 25000, category: "accessoire", moq: 5, supplier: "Verified 3 ans · CN", image: "keyboard", badge: "", orders: 432 },
+            { id: 13, name: "Power Bank 30000mAh PD 30W", price: 18000, category: "accessoire", moq: 20, supplier: "Verified 1 an · CN", image: "battery", badge: "BEST", orders: 789 },
             
-            // SACS (min: 5000 FCFA)
-            { id: 31, name: "Sac à Dos Gaming", price: 22000, category: "sac", specs: ["17\"", "Waterproof", "USB Charging"], desc: "Style gamer, pratique" },
-            { id: 32, name: "Sacoche Professionnelle", price: 18000, category: "sac", specs: ["Cuir synthétique", "Multicompartiments"], desc: "Élégant et spacieux" },
-            { id: 33, name: "Valise Cabine 20\"", price: 45000, category: "sac", specs: ["4 roues", "TSA Lock", "Léger"], desc: "Voyage en toute sérénité" },
-            { id: 34, name: "Sac Messager Cuir", price: 32000, category: "sac", specs: ["Cuir véritable", "Réglable", "Style vintage"], desc: "Pour urbain chic" },
-            { id: 35, name: "Sac Sport 30L", price: 15000, category: "sac", specs: ["Respirable", "Poche eau", "Ceinture"], desc: "Randonnée et sport" },
+            // SACS
+            { id: 14, name: "Sac à Dos Gaming 17\" Waterproof", price: 22000, category: "sac", moq: 50, supplier: "Verified 2 ans · CN", image: "bag", badge: "", orders: 345 },
+            { id: 15, name: "Sacoche Professionnelle Cuir", price: 18000, category: "sac", moq: 30, supplier: "Verified 3 ans · CN", image: "briefcase", badge: "NEW", orders: 234 },
             
             // GAMING
-            { id: 36, name: "Manette Xbox Series X", price: 35000, category: "gaming", specs: ["Sans fil", "Bluetooth", "Batterie"], desc: "Compatibilité large" },
-            { id: 37, name: "Volant Racing Logitech", price: 280000, category: "gaming", specs: ["Force Feedback", "900°", "3 pédales"], desc: "Expérience réaliste" },
-            { id: 38, name: "Chaise Gaming Ergonomique", price: 185000, category: "gaming", specs: ["Accoudoirs 4D", "Coussin lombaire", "Inclinable"], desc: "Confort longue session" },
-            { id: 39, name: "Casque VR Oculus Quest 2", price: 320000, category: "gaming", specs: ["128Go", "Sans fil", "Contrôleurs"], desc: "Réalité virtuelle complète" },
-            { id: 40, name: "Clavier Gaming 60%", price: 38000, category: "gaming", specs: ["Switches rouges", "RGB", "Compact"], desc: "Minimaliste et performant" },
-            { id: 41, name: "SSD NVMe 1To Gaming", price: 75000, category: "gaming", specs: ["3500MB/s", "M.2", "Dissipateur"], desc: "Chargement ultra-rapide" },
-            { id: 42, name: "Kit Streaming", price: 89000, category: "gaming", specs: ["Micro", "Lumière", "Support"], desc: "Pour streamers débutants" },
-            { id: 43, name: "Tapis de Souris XXL", price: 12000, category: "gaming", specs: ["900x400mm", "Anti-dérapant", "Bordure"], desc: "Espace illimité" }
+            { id: 16, name: "Manette Xbox Series X Sans Fil", price: 35000, category: "gaming", moq: 20, supplier: "Verified 4 ans · US", image: "gamepad", badge: "HOT", orders: 567 },
+            { id: 17, name: "Casque Gaming 7.1 Surround RGB", price: 35000, category: "gaming", moq: 10, supplier: "Verified 2 ans · CN", image: "headphones", badge: "", orders: 432 },
+            
+            // NOUVEAUX PRODUITS (Inspirés des images)
+            { id: 18, name: "Monture de Lunettes de Vue Ronde Style", price: 533, category: "accessoire", moq: 100, supplier: "Verified 3 ans · CN", image: "glasses", badge: "MOQ", orders: 1234 },
+            { id: 19, name: "Faux Ongles en Gel Professionnels", price: 387, category: "beauty", moq: 500, supplier: "Verified 1 an · CN", image: "spa", badge: "CHEAP", orders: 2345 },
+            { id: 20, name: "Poncho de Pluie Réutilisable Léger", price: 362, category: "clothing", moq: 200, supplier: "Verified 5 ans · CN", image: "tshirt", badge: "ECO", orders: 3456 },
+            { id: 21, name: "T-shirt Homme Coton 100% Design", price: 1500, category: "clothing", moq: 50, supplier: "Verified 4 ans · BD", image: "tshirt", badge: "", orders: 4567 },
+            { id: 22, name: "Montre Mécanique Homme Luxe", price: 25000, category: "watch", moq: 10, supplier: "Verified 5 ans · CH", image: "clock", badge: "LUXURY", orders: 123 },
+            { id: 23, name: "Maillot de Football Équipe 2024", price: 4500, category: "sports", moq: 25, supplier: "Verified 2 ans · PK", image: "tshirt", badge: "NEW", orders: 678 },
+            { id: 24, name: "Mini-Ordinateur Windows 11 Pro", price: 120000, category: "ordinateur", moq: 5, supplier: "Verified 3 ans · CN", image: "desktop", badge: "SMALL", orders: 89 }
         ];
 
-        let cart = [];
-        let currentCategory = "all";
-        const priceRanges = {
-            "all": { min: 1000, max: 1500000 },
-            "ordinateur": { min: 35000, max: 1500000 },
-            "telephone": { min: 24900, max: 500000 },
-            "tablette": { min: 240000, max: 600000 },
-            "accessoire": { min: 1000, max: 150000 },
-            "sac": { min: 5000, max: 50000 },
-            "gaming": { min: 12000, max: 350000 }
-        };
+        const cart = [];
+        let filteredProducts = [...products];
 
         // Formatage des prix
         function formatPrice(price) {
             return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
         }
 
-        // Rendu des produits par catégorie
-        function renderProductsByCategory() {
-            const containers = {
-                "ordinateur": "#ordinateurs-container",
-                "telephone": "#telephones-container",
-                "tablette": "#tablettes-container",
-                "accessoire": "#accessoires-container",
-                "sac": "#sacs-container",
-                "gaming": "#gaming-container"
-            };
-            
-            // Vider tous les conteneurs
-            Object.values(containers).forEach(selector => {
-                $(selector).empty();
-            });
-            
-            // Filtrer les produits selon la catégorie active et le prix
-            const minPrice = parseInt($("#priceRange").attr("min"));
-            const maxPrice = parseInt($("#priceRange").attr("max"));
-            
-            const filteredProducts = products.filter(p => {
-                if (currentCategory !== "all" && p.category !== currentCategory) return false;
-                if (p.price < minPrice || p.price > maxPrice) return false;
-                return true;
-            });
-            
-            // Grouper par catégorie
-            const groupedProducts = {};
-            filteredProducts.forEach(p => {
-                if (!groupedProducts[p.category]) {
-                    groupedProducts[p.category] = [];
-                }
-                groupedProducts[p.category].push(p);
-            });
-            
-            // Remplir chaque conteneur
-            Object.keys(groupedProducts).forEach(category => {
-                const container = containers[category];
-                if (container) {
-                    groupedProducts[category].forEach(p => {
-                        const productCard = `
-                            <div class="product-item">
-                                <div class="product-card">
-                                    <div class="product-badge">TOP</div>
-                                    <div class="product-img">
-                                        <i class="fas fa-${getProductIcon(p.category)}"></i>
-                                    </div>
-                                    <div class="product-info">
-                                        <h5 class="product-title">${p.name}</h5>
-                                        <p class="text-muted small mb-2">${p.desc}</p>
-                                        <div class="product-specs">
-                                            ${p.specs.map(spec => `<span class="spec-item">${spec}</span>`).join('')}
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="product-price">${formatPrice(p.price)}</span>
-                                        </div>
-                                        <button class="btn-add-to-cart" data-id="${p.id}">
-                                            <i class="fas fa-cart-plus"></i> Ajouter au panier
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>`;
-                        $(container).append(productCard);
-                    });
-                }
-            });
-            
-            // Masquer les sections vides
-            Object.keys(containers).forEach(category => {
-                const section = $(`#${category}s-section`);
-                const container = containers[category];
-                if ($(container).children().length === 0) {
-                    section.hide();
-                } else {
-                    section.show();
-                }
-            });
-        }
-
-        // Obtenir l'icône appropriée
-        function getProductIcon(category) {
+        // Obtenir l'icône d'image
+        function getProductImage(type) {
             const icons = {
-                "ordinateur": "laptop",
-                "telephone": "mobile-alt",
-                "tablette": "tablet-alt",
-                "accessoire": "keyboard",
-                "sac": "briefcase",
-                "gaming": "gamepad"
+                "laptop": "fa-laptop",
+                "mobile": "fa-mobile-alt",
+                "tablet": "fa-tablet-alt",
+                "mouse": "fa-mouse",
+                "keyboard": "fa-keyboard",
+                "battery": "fa-battery-full",
+                "bag": "fa-briefcase",
+                "briefcase": "fa-suitcase",
+                "gamepad": "fa-gamepad",
+                "headphones": "fa-headphones",
+                "glasses": "fa-glasses",
+                "spa": "fa-spa",
+                "tshirt": "fa-tshirt",
+                "clock": "fa-clock",
+                "desktop": "fa-desktop"
             };
-            return icons[category] || "box";
+            return icons[type] || "fa-box";
         }
 
-        // Mettre à jour le filtre de prix selon la catégorie
-        function updatePriceRangeForCategory(category) {
-            const range = priceRanges[category] || priceRanges.all;
-            $("#priceRange").attr("min", range.min).attr("max", range.max).val(range.max);
-            $("#priceMinLabel").text(formatPrice(range.min));
-            $("#priceMaxLabel").text(formatPrice(range.max));
-        }
-
-        // Gestionnaires d'événements
-        $(document).ready(function() {
-            // Initialisation
-            renderProductsByCategory();
+        // Rendu des produits
+        function renderProducts() {
+            const container = $('#productsContainer');
+            container.empty();
             
-            // Catégorie clic
-            $(".category-btn").on("click", function() {
-                $(".category-btn").removeClass("active");
-                $(this).addClass("active");
-                currentCategory = $(this).data("category");
-                updatePriceRangeForCategory(currentCategory);
-                renderProductsByCategory();
-                $('html, body').animate({ scrollTop: $('#categories').offset().top - 20 }, 500);
-            });
-            
-            // Changement de prix
-            $("#priceRange").on("input", function() {
-                $("#priceMaxLabel").text(formatPrice(this.value));
-                renderProductsByCategory();
-            });
-            
-            // Recherche
-            $("#searchButton").on("click", performSearch);
-            $("#searchInput").on("keyup", function(e) {
-                if (e.key === "Enter") performSearch();
-            });
-            
-            // Ajout au panier
-            $(document).on("click", ".btn-add-to-cart", function() {
-                const id = parseInt($(this).data("id"));
-                const product = products.find(p => p.id === id);
-                
-                cart.push(product);
-                updateCartCount();
-                
-                // Notification
-                $("#cartProductName").text(product.name);
-                $("#cartAlert").addClass("show").removeClass("fade");
-                setTimeout(() => {
-                    $("#cartAlert").removeClass("show").addClass("fade");
-                }, 3000);
-                
-                // Animation du badge
-                $("#footerCartCount").addClass("cart-bounce");
-                setTimeout(() => {
-                    $("#footerCartCount").removeClass("cart-bounce");
-                }, 500);
-            });
-            
-            // Footer navigation
-            $(".footer-item").on("click", function(e) {
-                e.preventDefault();
-                $(".footer-item").removeClass("active");
-                $(this).addClass("active");
-                
-                if ($(this).attr("href") === "#categories") {
-                    $('html, body').animate({ scrollTop: $('#categories').offset().top - 20 }, 500);
-                }
-            });
-            
-            // Initialiser le compteur panier
-            updateCartCount();
-        });
-        
-        // Fonction de recherche
-        function performSearch() {
-            const term = $("#searchInput").val().toLowerCase().trim();
-            
-            if (term === "") {
-                renderProductsByCategory();
+            if (filteredProducts.length === 0) {
+                container.html(`
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                        <h5 class="text-muted">Aucun produit trouvé</h5>
+                        <p class="text-muted">Essayez de modifier vos filtres de recherche</p>
+                    </div>
+                `);
                 return;
             }
             
-            // Filtrer les produits
-            const searchResults = products.filter(p => 
-                p.name.toLowerCase().includes(term) || 
-                p.desc.toLowerCase().includes(term) ||
-                p.specs.some(spec => spec.toLowerCase().includes(term))
-            );
-            
-            // Afficher les résultats
-            const containers = {
-                "ordinateur": "#ordinateurs-container",
-                "telephone": "#telephones-container",
-                "tablette": "#tablettes-container",
-                "accessoire": "#accessoires-container",
-                "sac": "#sacs-container",
-                "gaming": "#gaming-container"
-            };
-            
-            // Vider tous les conteneurs
-            Object.values(containers).forEach(selector => $(selector).empty());
-            
-            // Grouper les résultats par catégorie
-            const groupedResults = {};
-            searchResults.forEach(p => {
-                if (!groupedResults[p.category]) {
-                    groupedResults[p.category] = [];
-                }
-                groupedResults[p.category].push(p);
+            filteredProducts.forEach(p => {
+                const productCard = `
+                    <div class="product-card" data-category="${p.category}" data-price="${p.price}" data-moq="${p.moq}">
+                        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+                        <div class="product-image">
+                            <i class="fas ${getProductImage(p.image)} fa-4x text-muted"></i>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-price">${formatPrice(p.price)}</div>
+                            <div class="product-moq">MOQ: ${p.moq} pièce(s)</div>
+                            <div class="product-supplier">
+                                <i class="fas fa-check-circle verified-badge"></i>
+                                ${p.supplier}
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn-contact">
+                                    <i class="fas fa-comment-dots"></i> Contacter
+                                </button>
+                                <button class="btn-cart" data-id="${p.id}">
+                                    <i class="fas fa-cart-plus"></i> Panier
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.append(productCard);
             });
             
-            // Afficher les résultats groupés
-            Object.keys(groupedResults).forEach(category => {
-                const container = containers[category];
-                if (container) {
-                    groupedResults[category].forEach(p => {
-                        const productCard = `
-                            <div class="product-item">
-                                <div class="product-card">
-                                    <div class="product-badge">RECHERCHE</div>
-                                    <div class="product-img">
-                                        <i class="fas fa-${getProductIcon(p.category)}"></i>
-                                    </div>
-                                    <div class="product-info">
-                                        <h5 class="product-title">${p.name}</h5>
-                                        <p class="text-muted small mb-2">${p.desc}</p>
-                                        <div class="product-specs">
-                                            ${p.specs.map(spec => `<span class="spec-item">${spec}</span>`).join('')}
-                                        </div>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="product-price">${formatPrice(p.price)}</span>
-                                        </div>
-                                        <button class="btn-add-to-cart" data-id="${p.id}">
-                                            <i class="fas fa-cart-plus"></i> Ajouter au panier
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>`;
-                        $(container).append(productCard);
-                    });
-                }
-            });
-            
-            // Masquer les sections vides
-            Object.keys(containers).forEach(category => {
-                const section = $(`#${category}s-section`);
-                const container = containers[category];
-                if ($(container).children().length === 0) {
-                    section.hide();
-                } else {
-                    section.show();
-                    section.find(".section-title").html(`<i class="fas fa-search me-2"></i> Résultats pour "${term}"`);
-                }
-            });
+            $('#productsCount').text(`${filteredProducts.length} produits trouvés`);
         }
-        
-        // Mettre à jour le compteur panier
+
+        // Filtrage des produits
+        function filterProducts() {
+            const category = $('#categoryFilter').val();
+            const priceMin = $('#priceMinFilter').val() ? parseInt($('#priceMinFilter').val()) : 0;
+            const supplier = $('#supplierFilter').val();
+            const moq = $('#moqFilter').val();
+            
+            filteredProducts = products.filter(p => {
+                // Filtre par catégorie
+                if (category !== 'all' && p.category !== category) return false;
+                
+                // Filtre par prix minimum
+                if (p.price < priceMin) return false;
+                
+                // Filtre par MOQ
+                if (moq !== 'all') {
+                    const minMoq = parseInt(moq);
+                    if (p.moq < minMoq) return false;
+                }
+                
+                // Filtre par fournisseur (simplifié)
+                if (supplier === 'verified' && !p.supplier.includes('Verified')) return false;
+                
+                return true;
+            });
+            
+            // Tri
+            const sortBy = $('#sortProducts').val();
+            switch(sortBy) {
+                case 'price_asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price_desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                case 'orders':
+                    filteredProducts.sort((a, b) => b.orders - a.orders);
+                    break;
+            }
+            
+            renderProducts();
+        }
+
+        // Ajout au panier
+        $(document).on('click', '.btn-cart', function() {
+            const id = parseInt($(this).data('id'));
+            const product = products.find(p => p.id === id);
+            
+            cart.push(product);
+            updateCartCount();
+            
+            // Notification
+            $('#cartProductName').text(product.name);
+            $('#cartAlert').addClass('show');
+            setTimeout(() => {
+                $('#cartAlert').removeClass('show');
+            }, 3000);
+        });
+
+        // Mise à jour du compteur panier
         function updateCartCount() {
-            $("#cartCount").text(cart.length);
-            $("#footerCartCount").text(cart.length);
+            $('#cartCount').text(cart.length);
         }
+
+        // Initialisation
+        $(document).ready(function() {
+            renderProducts();
+            
+            // Filtrage
+            $('#categoryFilter, #priceMinFilter, #supplierFilter, #moqFilter, #sortProducts').on('change', filterProducts);
+            
+            // Recherche
+            $('.search-btn').on('click', function() {
+                const term = $('.search-input').val().toLowerCase();
+                if (term) {
+                    filteredProducts = products.filter(p => 
+                        p.name.toLowerCase().includes(term) ||
+                        p.category.toLowerCase().includes(term) ||
+                        p.supplier.toLowerCase().includes(term)
+                    );
+                    renderProducts();
+                } else {
+                    filteredProducts = [...products];
+                    renderProducts();
+                }
+            });
+            
+            $('.search-input').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    $('.search-btn').click();
+                }
+            });
+            
+            // Navigation footer
+            $('.footer-item').on('click', function(e) {
+                e.preventDefault();
+                $('.footer-item').removeClass('active');
+                $(this).addClass('active');
+                
+                // Simuler la navigation vers différentes pages
+                const page = $(this).attr('href');
+                if (page !== 'index.html') {
+                    alert(`Navigation vers ${page} (page à créer séparément)`);
+                }
+            });
+            
+            // Initialiser le panier
+            updateCartCount();
+        });
     </script>
 </body>
 </html>
