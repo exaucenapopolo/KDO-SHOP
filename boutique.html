@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutiques - KDO SHOP</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #FF6B00;
+            --secondary-blue: #0066CC;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
+            --white: #FFFFFF;
+            --success-green: #52C41A;
+        }
+        
+        * {
+            font-size: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            padding-bottom: 70px;
+        }
+        
+        /* Header */
+        .header-kdo {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8E3C 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        
+        .logo-text {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .user-role {
+            font-size: 11px;
+            opacity: 0.9;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        /* Navigation */
+        .nav-kdo {
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        
+        .nav-kdo .nav-link {
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 13px;
+            padding: 15px 20px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .nav-kdo .nav-link:hover,
+        .nav-kdo .nav-link.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+            background: rgba(255, 107, 0, 0.05);
+        }
+        
+        /* Filtres pays */
+        .country-filters {
+            background: var(--accent-gray);
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .country-badge {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .country-badge:hover,
+        .country-badge.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        /* Titre section */
+        .section-title {
+            color: var(--text-dark);
+            font-size: 20px;
+            font-weight: 700;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-gray);
+        }
+        
+        .city-subtitle {
+            color: var(--primary-orange);
+            font-size: 16px;
+            font-weight: 600;
+            margin: 20px 0 15px;
+            padding-left: 10px;
+            border-left: 4px solid var(--primary-orange);
+        }
+        
+        /* Cartes boutique */
+        .boutiques-container {
+            margin-bottom: 40px;
+        }
+        
+        .boutique-card {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: var(--white);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .boutique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-color: var(--primary-orange);
+        }
+        
+        .boutique-header {
+            background: linear-gradient(135deg, #FF6B00 0%, #FF8E3C 100%);
+            color: white;
+            padding: 15px;
+        }
+        
+        .boutique-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .boutique-category {
+            font-size: 11px;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .boutique-body {
+            padding: 20px;
+        }
+        
+        .boutique-info {
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .info-icon {
+            color: var(--primary-orange);
+            font-size: 14px;
+            width: 20px;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+        
+        .info-text {
+            flex: 1;
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #128C7E;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .call-btn {
+            background: var(--secondary-blue);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .call-btn:hover {
+            background: #0052A3;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .boutique-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--success-green);
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        
+        /* Footer */
+        .footer-kdo {
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-medium);
+            transition: all 0.2s;
+            padding: 4px;
+            min-width: 60px;
+            position: relative;
+        }
+        
+        .footer-item:hover,
+        .footer-item.active {
+            color: var(--primary-orange);
+            text-decoration: none;
+        }
+        
+        .footer-icon {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        
+        .footer-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+        .cart-count-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-user .user-info {
+                display: none;
+            }
+            
+            .nav-kdo .nav-link {
+                padding: 10px 15px;
+                font-size: 12px;
+            }
+            
+            .country-badge {
+                font-size: 11px;
+                padding: 6px 12px;
+                margin-right: 5px;
+            }
+        }
+        
+        .border-color {
+            border-color: #E0E0E0;
+        }
+        
+        .text-medium {
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-kdo">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="dashboard.html" class="logo-container text-decoration-none">
+                    <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                         alt="KDO SHOP" 
+                         class="logo-img">
+                    <span class="logo-text">KDO SHOP</span>
+                </a>
+                
+                <!-- Info utilisateur -->
+                <div class="header-user">
+                    <div class="user-info">
+                        <div class="user-name" id="userName">Jean Dupont</div>
+                        <div class="user-role">Compte Professionnel</div>
+                    </div>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-kdo">
+        <div class="container">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboard.html">
+                        <i class="fas fa-home me-2"></i> Tableau de bord
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="boutique.html">
+                        <i class="fas fa-store me-2"></i> Boutiques
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="panier.html">
+                        <i class="fas fa-shopping-cart me-2"></i> Mon panier
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profil.html">
+                        <i class="fas fa-user me-2"></i> Mon profil
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="commandes.html">
+                        <i class="fas fa-box me-2"></i> Mes commandes
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Filtres par pays -->
+    <div class="country-filters">
+        <div class="container">
+            <div class="d-flex flex-wrap">
+                <a href="#" class="country-badge active" data-country="all">Tous les pays</a>
+                <a href="#" class="country-badge" data-country="cameroun">Cameroun</a>
+                <a href="#" class="country-badge" data-country="congo">Congo</a>
+                <a href="#" class="country-badge" data-country="tchad">Tchad</a>
+                <a href="#" class="country-badge" data-country="centrafrique">Centrafrique</a>
+                <a href="#" class="country-badge" data-country="gabon">Gabon</a>
+                <a href="#" class="country-badge" data-country="guinee">Guinée Éq.</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <h2 class="section-title">Nos boutiques partenaires</h2>
+        
+        <!-- Cameroun -->
+        <div class="country-section" data-country="cameroun">
+            <h3 class="city-subtitle"><i class="fas fa-map-marker-alt me-2"></i> Cameroun</h3>
+            
+            <div class="row boutiques-container">
+                <!-- Yaoundé -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Tech Import Yaoundé</h3>
+                            <span class="boutique-category">Électronique & High-Tech</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Rue 1234, Quartier Bastos, Yaoundé
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +237 6 81 14 46 38
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-18h, Dim: 9h-13h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Ordinateurs, téléphones, accessoires
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/237681144638?text=Bonjour%20Tech%20Import%20Yaoundé,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+237681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Douala -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Fashion Center Douala</h3>
+                            <span class="boutique-category">Mode & Accessoires</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Boulevard de la Liberté, Akwa, Douala
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +237 6 81 14 46 38
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-19h, Dim: 10h-16h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Vêtements, chaussures, sacs
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/237681144638?text=Bonjour%20Fashion%20Center%20Douala,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+237681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bafoussam -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Agro Market Bafoussam</h3>
+                            <span class="boutique-category">Produits Agricoles</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Marché Central, Bafoussam
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +237 6 81 14 46 38
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Tous les jours: 6h-18h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Café, cacao, produits frais
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/237681144638?text=Bonjour%20Agro%20Market%20Bafoussam,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+237681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Garoua -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Nord Tech Garoua</h3>
+                            <span class="boutique-category">Électronique & Téléphonie</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Avenue du Marché, Garoua
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +237 6 81 14 46 38
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-17h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Téléphones, tablettes, solar
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/237681144638?text=Bonjour%20Nord%20Tech%20Garoua,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+237681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Maroua -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Sahel Market Maroua</h3>
+                            <span class="boutique-category">Produits Divers</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Centre Ville, Maroua
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +237 6 81 14 46 38
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 7h-17h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Produits alimentaires, textiles
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/237681144638?text=Bonjour%20Sahel%20Market%20Maroua,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+237681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bertoua -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Est Import Bertoua</h3>
+                            <span class="boutique-category">Import-Export</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Route de Batouri, Bertoua
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +237 6 81 14 46 38
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-18h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Produits forestiers, équipements
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/237681144638?text=Bonjour%20Est%20Import%20Bertoua,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+237681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Congo -->
+        <div class="country-section" data-country="congo">
+            <h3 class="city-subtitle"><i class="fas fa-map-marker-alt me-2"></i> Congo Brazzaville</h3>
+            
+            <div class="row boutiques-container">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Congo Tech Brazzaville</h3>
+                            <span class="boutique-category">High-Tech & Électronique</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Centre Ville, Brazzaville
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +242 06 811 44 638
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-18h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Ordinateurs, matériel réseau
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/2420681144638?text=Bonjour%20Congo%20Tech%20Brazzaville,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+2420681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Mode Congo Fashion</h3>
+                            <span class="boutique-category">Mode & Textile</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Marché Total, Brazzaville
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +242 06 811 44 638
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-19h, Dim: 9h-14h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Vêtements traditionnels, tissus
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/2420681144638?text=Bonjour%20Mode%20Congo%20Fashion,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+2420681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tchad -->
+        <div class="country-section" data-country="tchad">
+            <h3 class="city-subtitle"><i class="fas fa-map-marker-alt me-2"></i> Tchad (N'Djamena)</h3>
+            
+            <div class="row boutiques-container">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Sahel Import N'Djamena</h3>
+                            <span class="boutique-category">Import-Export Général</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Avenue Charles de Gaulle, N'Djamena
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +235 68 11 44 638
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-17h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Produits divers, équipements
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/235681144638?text=Bonjour%20Sahel%20Import%20N'Djamena,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+235681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Centrafrique -->
+        <div class="country-section" data-country="centrafrique">
+            <h3 class="city-subtitle"><i class="fas fa-map-marker-alt me-2"></i> Centrafrique (Bangui)</h3>
+            
+            <div class="row boutiques-container">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Centrafrique Market Bangui</h3>
+                            <span class="boutique-category">Produits Divers</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Centre Ville, Bangui
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +236 68 11 44 638
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-16h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Produits alimentaires, articles ménagers
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/236681144638?text=Bonjour%20Centrafrique%20Market%20Bangui,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+236681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gabon -->
+        <div class="country-section" data-country="gabon">
+            <h3 class="city-subtitle"><i class="fas fa-map-marker-alt me-2"></i> Gabon (Libreville)</h3>
+            
+            <div class="row boutiques-container">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Gabon Import Libreville</h3>
+                            <span class="boutique-category">Import-Export</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Quartier Louis, Libreville
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +241 06 811 44 638
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-18h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Matériel médical, équipements
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/2410681144638?text=Bonjour%20Gabon%20Import%20Libreville,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+2410681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Guinée Équatoriale -->
+        <div class="country-section" data-country="guinee">
+            <h3 class="city-subtitle"><i class="fas fa-map-marker-alt me-2"></i> Guinée Équatoriale (Malabo)</h3>
+            
+            <div class="row boutiques-container">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="boutique-card">
+                        <div class="boutique-header">
+                            <h3 class="boutique-name">Équatorial Market Malabo</h3>
+                            <span class="boutique-category">Produits Divers</span>
+                        </div>
+                        <div class="boutique-body">
+                            <div class="boutique-info">
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Localisation:</strong> Centre Ville, Malabo
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Téléphone:</strong> +240 68 11 44 638
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Horaires:</strong> Lun-Sam: 8h-17h
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-star info-icon"></i>
+                                    <div class="info-text">
+                                        <strong>Spécialité:</strong> Produits pétroliers, articles divers
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="https://wa.me/240681144638?text=Bonjour%20Équatorial%20Market%20Malabo,%20je%20suis%20intéressé%20par%20vos%20produits" 
+                               class="whatsapp-btn" target="_blank">
+                                <i class="fab fa-whatsapp"></i> Contacter sur WhatsApp
+                            </a>
+                            <a href="tel:+240681144638" class="call-btn">
+                                <i class="fas fa-phone"></i> Appeler maintenant
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Message si aucune boutique -->
+        <div id="noBoutiquesMessage" style="display: none;">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>
+                Aucune boutique trouvée pour ce pays. Veuillez sélectionner un autre pays.
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer avec navigation -->
+    <footer class="footer-kdo">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="dashboard.html" class="footer-item">
+                    <i class="fas fa-home footer-icon"></i>
+                    <span class="footer-label">Accueil</span>
+                </a>
+                <a href="boutique.html" class="footer-item active">
+                    <i class="fas fa-store footer-icon"></i>
+                    <span class="footer-label">Boutiques</span>
+                </a>
+                <a href="panier.html" class="footer-item">
+                    <i class="fas fa-shopping-cart footer-icon"></i>
+                    <span class="footer-label">Panier</span>
+                    <span id="footerCartCount" class="cart-count-badge">0</span>
+                </a>
+                <a href="profil.html" class="footer-item">
+                    <i class="far fa-user footer-icon"></i>
+                    <span class="footer-label">Profil</span>
+                </a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Charger le compteur du panier
+            const cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            $('#footerCartCount').text(totalItems);
+            
+            // Charger les informations utilisateur
+            const user = JSON.parse(localStorage.getItem('kdo_user')) || {
+                firstName: 'Jean',
+                lastName: 'Dupont',
+                accountType: 'acheteur'
+            };
+            $('#userName').text(user.firstName + ' ' + user.lastName);
+            
+            // Filtrage par pays
+            $('.country-badge').on('click', function(e) {
+                e.preventDefault();
+                
+                const country = $(this).data('country');
+                
+                // Mettre à jour les badges actifs
+                $('.country-badge').removeClass('active');
+                $(this).addClass('active');
+                
+                // Afficher/masquer les sections
+                if (country === 'all') {
+                    $('.country-section').show();
+                    $('#noBoutiquesMessage').hide();
+                } else {
+                    $('.country-section').hide();
+                    $(`.country-section[data-country="${country}"]`).show();
+                    
+                    // Vérifier s'il y a des boutiques
+                    const hasBoutiques = $(`.country-section[data-country="${country}"] .boutique-card`).length > 0;
+                    
+                    if (hasBoutiques) {
+                        $('#noBoutiquesMessage').hide();
+                    } else {
+                        $('#noBoutiquesMessage').show();
+                    }
+                }
+                
+                // Faire défiler vers le haut
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Navigation footer
+            $('.footer-item').on('click', function(e) {
+                $('.footer-item').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+</body>
+</html>
