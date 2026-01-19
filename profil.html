@@ -4,21 +4,1576 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Profil - KDO SHOP</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS personnalisé -->
     <style>
-        /* Mêmes styles que dans index.html */
-        /* Ajouter les styles spécifiques au profil */
+        :root {
+            --primary-orange: #FF6B00;
+            --secondary-blue: #0066CC;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --border-color: #E0E0E0;
+            --white: #FFFFFF;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
+            --success-green: #52C41A;
+            --warning-yellow: #FAAD14;
+        }
+        
+        * {
+            font-size: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            padding-bottom: 50px;
+        }
+        
+        /* Header simplifié */
+        .header-kdo {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            padding: 8px 0;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            color: var(--primary-orange);
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Barre de recherche */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        /* Barre de navigation */
+        .nav-scroll {
+            background: var(--accent-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .nav-container {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 12px;
+        }
+        
+        .nav-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 6px 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 11px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        .nav-item i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        
+        /* Titre de page */
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 15px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Conteneur principal */
+        .profile-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* Sidebar profil */
+        .profile-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+        
+        .profile-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            background: var(--white);
+            margin-bottom: 20px;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8B00 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 auto 15px;
+        }
+        
+        .profile-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 5px;
+        }
+        
+        .profile-role {
+            font-size: 12px;
+            color: var(--text-medium);
+            margin: 0 0 10px;
+        }
+        
+        .profile-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(82, 196, 26, 0.1);
+            color: var(--success-green);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-medium);
+        }
+        
+        .profile-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .menu-item {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--accent-gray);
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 13px;
+            padding: 8px 0;
+            transition: all 0.2s;
+        }
+        
+        .menu-link:hover,
+        .menu-link.active {
+            color: var(--primary-orange);
+        }
+        
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        /* Contenu principal */
+        .profile-content {
+            flex: 1;
+        }
+        
+        /* Onglets */
+        .profile-tabs {
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .tabs-container {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            font-size: 13px;
+            color: var(--text-medium);
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn:hover {
+            color: var(--primary-orange);
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+            font-weight: 600;
+        }
+        
+        /* Contenu des onglets */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Section */
+        .section {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Formulaire */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 5px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-orange);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #E55A00;
+        }
+        
+        /* Commandes */
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .order-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            background: var(--white);
+            transition: all 0.2s;
+        }
+        
+        .order-card:hover {
+            border-color: var(--primary-orange);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .order-id {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .order-date {
+            font-size: 11px;
+            color: var(--text-medium);
+        }
+        
+        .order-status {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: rgba(250, 173, 20, 0.1);
+            color: var(--warning-yellow);
+        }
+        
+        .status-processing {
+            background: rgba(24, 144, 255, 0.1);
+            color: #1890FF;
+        }
+        
+        .status-completed {
+            background: rgba(82, 196, 26, 0.1);
+            color: var(--success-green);
+        }
+        
+        .status-cancelled {
+            background: rgba(255, 77, 79, 0.1);
+            color: #FF4D4F;
+        }
+        
+        .order-items {
+            margin: 10px 0;
+            padding: 10px 0;
+            border-top: 1px solid var(--accent-gray);
+            border-bottom: 1px solid var(--accent-gray);
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .order-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .order-item-name {
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .order-item-price {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .order-total {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-orange);
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .order-btn {
+            padding: 5px 10px;
+            font-size: 11px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .order-btn.view {
+            background: var(--accent-gray);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+        
+        .order-btn.track {
+            background: var(--secondary-blue);
+            color: white;
+            border: 1px solid var(--secondary-blue);
+        }
+        
+        /* Adresses */
+        .addresses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .address-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            background: var(--white);
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .address-card:hover {
+            border-color: var(--primary-orange);
+        }
+        
+        .address-card.default {
+            border-color: var(--primary-orange);
+            background: rgba(255, 107, 0, 0.05);
+        }
+        
+        .address-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .address-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0;
+        }
+        
+        .address-type {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+        }
+        
+        .address-body {
+            margin-bottom: 15px;
+        }
+        
+        .address-text {
+            font-size: 12px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .address-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .address-btn {
+            padding: 4px 8px;
+            font-size: 11px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .address-btn.edit {
+            background: var(--accent-gray);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+        
+        .address-btn.delete {
+            background: none;
+            color: #FF4D4F;
+            border: 1px solid #FF4D4F;
+        }
+        
+        /* Footer avec navigation fonctionnelle */
+        .footer-kdo {
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-medium);
+            transition: all 0.2s;
+            padding: 4px;
+            min-width: 60px;
+            position: relative;
+        }
+        
+        .footer-item:hover,
+        .footer-item.active {
+            color: var(--primary-orange);
+            text-decoration: none;
+        }
+        
+        .footer-icon {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        
+        .footer-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .profile-container {
+                flex-direction: column;
+            }
+            
+            .profile-sidebar {
+                width: 100%;
+            }
+            
+            .addresses-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .addresses-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .order-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .order-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo-text {
+                display: none;
+            }
+            
+            .search-wrapper {
+                margin: 0 5px;
+                max-width: 100%;
+            }
+            
+            .tabs-container {
+                gap: 5px;
+            }
+            
+            .tab-btn {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+        
+        /* Style pour le panier dans le footer */
+        .cart-count-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <!-- Même header que index.html -->
-    
-    <div class="container mt-4">
-        <h1>Mon Profil KDO</h1>
-        <!-- Informations du profil, commandes, etc. -->
+    <!-- Header simplifié -->
+    <header class="header-kdo">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="index.html" class="logo-container text-decoration-none">
+                    <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                         alt="KDO SHOP" 
+                         class="logo-img">
+                    <span class="logo-text">KDO SHOP</span>
+                </a>
+                
+                <!-- Barre de recherche -->
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Rechercher...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barre de navigation -->
+    <div class="nav-scroll">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i> Accueil
+            </a>
+            <a href="categories.html" class="nav-item">
+                <i class="fas fa-th-large"></i> Catégories
+            </a>
+            <a href="messagerie.html" class="nav-item">
+                <i class="far fa-comment-dots"></i> Messagerie
+            </a>
+            <a href="panier.html" class="nav-item">
+                <i class="fas fa-shopping-cart"></i> Panier
+            </a>
+            <a href="profil.html" class="nav-item active">
+                <i class="far fa-user"></i> Profil
+            </a>
+        </div>
     </div>
-    
-    <!-- Même footer que index.html -->
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <h1 class="page-title">
+            <i class="far fa-user me-2"></i> Mon Profil
+        </h1>
+        
+        <div class="profile-container">
+            <!-- Sidebar profil -->
+            <aside class="profile-sidebar">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="userAvatar">JD</div>
+                        <h2 class="profile-name" id="userName">John Doe</h2>
+                        <p class="profile-role">Client professionnel</p>
+                        <span class="profile-verified">
+                            <i class="fas fa-check-circle"></i> Compte vérifié
+                        </span>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="ordersCount">12</span>
+                            <span class="stat-label">Commandes</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="messagesCount">8</span>
+                            <span class="stat-label">Messages</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="favoritesCount">5</span>
+                            <span class="stat-label">Favoris</span>
+                        </div>
+                    </div>
+                    
+                    <ul class="profile-menu">
+                        <li class="menu-item">
+                            <a href="#" class="menu-link active" data-tab="overview">
+                                <span class="menu-icon"><i class="fas fa-user-circle"></i></span>
+                                <span>Vue d'ensemble</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link" data-tab="orders">
+                                <span class="menu-icon"><i class="fas fa-shopping-bag"></i></span>
+                                <span>Mes commandes</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link" data-tab="profile">
+                                <span class="menu-icon"><i class="fas fa-user-edit"></i></span>
+                                <span>Informations personnelles</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link" data-tab="addresses">
+                                <span class="menu-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <span>Adresses</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link" data-tab="security">
+                                <span class="menu-icon"><i class="fas fa-shield-alt"></i></span>
+                                <span>Sécurité</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link" data-tab="notifications">
+                                <span class="menu-icon"><i class="fas fa-bell"></i></span>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="profile-card">
+                    <h3 class="section-title">Statut du compte</h3>
+                    <div class="mb-3">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span style="font-size: 12px;">Niveau: <strong>Silver</strong></span>
+                            <span style="font-size: 11px; color: var(--primary-orange);">75%</span>
+                        </div>
+                        <div style="height: 6px; background: var(--accent-gray); border-radius: 3px; overflow: hidden;">
+                            <div style="width: 75%; height: 100%; background: var(--primary-orange);"></div>
+                        </div>
+                        <p style="font-size: 11px; color: var(--text-medium); margin-top: 8px;">
+                            <i class="fas fa-info-circle me-1"></i> 25 000 FCFA avant le niveau Gold
+                        </p>
+                    </div>
+                    <button class="btn-primary w-100">
+                        <i class="fas fa-crown me-2"></i> Voir les avantages
+                    </button>
+                </div>
+            </aside>
+            
+            <!-- Contenu principal -->
+            <main class="profile-content">
+                <!-- Onglets -->
+                <div class="profile-tabs">
+                    <div class="tabs-container" id="tabsContainer">
+                        <!-- Onglets générés dynamiquement -->
+                    </div>
+                </div>
+                
+                <!-- Contenu des onglets -->
+                <div id="tabContents">
+                    <!-- Vue d'ensemble -->
+                    <div class="tab-content active" id="overviewContent">
+                        <div class="section">
+                            <h3 class="section-title">Activité récente</h3>
+                            <div class="orders-list" id="recentOrders">
+                                <!-- Commandes récentes chargées dynamiquement -->
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="#" class="btn-primary" data-tab="orders">
+                                    <i class="fas fa-list me-2"></i> Voir toutes les commandes
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="section">
+                            <h3 class="section-title">Statistiques</h3>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div style="background: rgba(255, 107, 0, 0.05); padding: 15px; border-radius: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                            <span style="font-size: 12px; font-weight: 500;">Dépenses totales</span>
+                                            <i class="fas fa-chart-line" style="color: var(--primary-orange);"></i>
+                                        </div>
+                                        <div style="font-size: 20px; font-weight: 700; color: var(--text-dark);">2 450 500 FCFA</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">+15% ce mois-ci</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div style="background: rgba(0, 102, 204, 0.05); padding: 15px; border-radius: 6px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                            <span style="font-size: 12px; font-weight: 500;">Fournisseurs suivis</span>
+                                            <i class="fas fa-store" style="color: var(--secondary-blue);"></i>
+                                        </div>
+                                        <div style="font-size: 20px; font-weight: 700; color: var(--text-dark);">8</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">+2 ce mois-ci</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Commandes -->
+                    <div class="tab-content" id="ordersContent">
+                        <div class="section">
+                            <h3 class="section-title">Historique des commandes</h3>
+                            <div class="orders-list" id="allOrders">
+                                <!-- Toutes les commandes chargées dynamiquement -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Informations personnelles -->
+                    <div class="tab-content" id="profileContent">
+                        <div class="section">
+                            <h3 class="section-title">Informations personnelles</h3>
+                            <form id="profileForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label class="form-label">Prénom</label>
+                                        <input type="text" class="form-control" id="firstName" value="John">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Nom</label>
+                                        <input type="text" class="form-control" id="lastName" value="Doe">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" value="john.doe@example.com">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Téléphone</label>
+                                    <input type="tel" class="form-control" id="phone" value="+225 01 23 45 67 89">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Entreprise</label>
+                                    <input type="text" class="form-control" id="company" value="Tech Solutions SARL">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Type de compte</label>
+                                    <select class="form-control" id="accountType">
+                                        <option value="individual">Particulier</option>
+                                        <option value="professional" selected>Professionnel</option>
+                                        <option value="business">Entreprise</option>
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" class="btn-primary">
+                                    <i class="fas fa-save me-2"></i> Enregistrer les modifications
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Adresses -->
+                    <div class="tab-content" id="addressesContent">
+                        <div class="section">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <h3 class="section-title" style="margin: 0;">Mes adresses</h3>
+                                <button class="btn-primary" id="addAddressBtn">
+                                    <i class="fas fa-plus me-2"></i> Ajouter une adresse
+                                </button>
+                            </div>
+                            <div class="addresses-grid" id="addressesList">
+                                <!-- Adresses chargées dynamiquement -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sécurité -->
+                    <div class="tab-content" id="securityContent">
+                        <div class="section">
+                            <h3 class="section-title">Sécurité du compte</h3>
+                            
+                            <div class="mb-4">
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Changer le mot de passe</h4>
+                                <form id="passwordForm">
+                                    <div class="form-group">
+                                        <label class="form-label">Mot de passe actuel</label>
+                                        <input type="password" class="form-control" id="currentPassword">
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label class="form-label">Nouveau mot de passe</label>
+                                            <input type="password" class="form-control" id="newPassword">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Confirmer le mot de passe</label>
+                                            <input type="password" class="form-control" id="confirmPassword">
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn-primary">
+                                        <i class="fas fa-key me-2"></i> Changer le mot de passe
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div>
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Sécurité avancée</h4>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--accent-gray);">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Authentification à deux facteurs</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">Ajoutez une couche de sécurité supplémentaire</div>
+                                    </div>
+                                    <label class="toggle-switch" style="margin: 0;">
+                                        <input type="checkbox" id="twoFactorToggle">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Sessions actives</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">2 appareils connectés</div>
+                                    </div>
+                                    <button class="btn-primary" style="padding: 5px 10px; font-size: 11px;">
+                                        Voir tout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notifications -->
+                    <div class="tab-content" id="notificationsContent">
+                        <div class="section">
+                            <h3 class="section-title">Préférences de notifications</h3>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Notifications par email</h4>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--accent-gray);">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Commandes et livraisons</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">Suivi de commande et mises à jour</div>
+                                    </div>
+                                    <label class="toggle-switch" style="margin: 0;">
+                                        <input type="checkbox" id="orderNotifications" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--accent-gray);">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Promotions et offres</div>
+                                        <div style="font-size: 11px; color: var (--text-medium);">Offres spéciales et réductions</div>
+                                    </div>
+                                    <label class="toggle-switch" style="margin: 0;">
+                                        <input type="checkbox" id="promoNotifications" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Nouveaux produits</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">Alertes sur les nouveaux produits</div>
+                                    </div>
+                                    <label class="toggle-switch" style="margin: 0;">
+                                        <input type="checkbox" id="productNotifications">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 style="font-size: 14px; margin-bottom: 10px;">Notifications push</h4>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--accent-gray);">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Messages</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">Notifications de messagerie</div>
+                                    </div>
+                                    <label class="toggle-switch" style="margin: 0;">
+                                        <input type="checkbox" id="messageNotifications" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+                                    <div>
+                                        <div style="font-size: 12px; font-weight: 500;">Rappels</div>
+                                        <div style="font-size: 11px; color: var(--text-medium);">Rappels de panier et de commande</div>
+                                    </div>
+                                    <label class="toggle-switch" style="margin: 0;">
+                                        <input type="checkbox" id="reminderNotifications">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer avec navigation fonctionnelle -->
+    <footer class="footer-kdo">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-item">
+                    <i class="fas fa-home footer-icon"></i>
+                    <span class="footer-label">Accueil</span>
+                </a>
+                <a href="categories.html" class="footer-item">
+                    <i class="fas fa-th-large footer-icon"></i>
+                    <span class="footer-label">Catégories</span>
+                </a>
+                <a href="messagerie.html" class="footer-item">
+                    <i class="far fa-comment-dots footer-icon"></i>
+                    <span class="footer-label">Messagerie</span>
+                </a>
+                <a href="panier.html" class="footer-item" id="footerCart">
+                    <i class="fas fa-shopping-cart footer-icon"></i>
+                    <span class="footer-label">Panier</span>
+                    <span id="footerCartCount" class="cart-count-badge">0</span>
+                </a>
+                <a href="profil.html" class="footer-item active">
+                    <i class="far fa-user footer-icon"></i>
+                    <span class="footer-label">Mon KDO</span>
+                </a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script principal -->
+    <script>
+        // Données de l'utilisateur
+        const userData = {
+            firstName: "John",
+            lastName: "Doe",
+            email: "john.doe@example.com",
+            phone: "+225 01 23 45 67 89",
+            company: "Tech Solutions SARL",
+            accountType: "professional",
+            avatarInitials: "JD"
+        };
+
+        // Commandes
+        const orders = [
+            {
+                id: "CMD-2024-001",
+                date: "15 mai 2024",
+                status: "completed",
+                items: [
+                    { name: "HP EliteBook 840 G5", quantity: 1, price: 450000 },
+                    { name: "Souris Gaming RGB", quantity: 2, price: 15000 }
+                ],
+                total: 480000
+            },
+            {
+                id: "CMD-2024-002",
+                date: "10 mai 2024",
+                status: "processing",
+                items: [
+                    { name: "iPhone 12 128Go Noir", quantity: 1, price: 420000 }
+                ],
+                total: 420000
+            },
+            {
+                id: "CMD-2024-003",
+                date: "5 mai 2024",
+                status: "pending",
+                items: [
+                    { name: "T-shirt Homme Coton", quantity: 5, price: 3500 },
+                    { name: "Sac à Dos Gaming", quantity: 1, price: 22000 }
+                ],
+                total: 39500
+            },
+            {
+                id: "CMD-2024-004",
+                date: "28 avril 2024",
+                status: "cancelled",
+                items: [
+                    { name: "Casque Gaming 7.1", quantity: 1, price: 35000 }
+                ],
+                total: 35000
+            }
+        ];
+
+        // Adresses
+        const addresses = [
+            {
+                id: 1,
+                title: "Domicile",
+                type: "home",
+                name: "John Doe",
+                street: "123 Rue du Commerce",
+                city: "Abidjan",
+                postalCode: "00225",
+                country: "Côte d'Ivoire",
+                phone: "+225 01 23 45 67 89",
+                default: true
+            },
+            {
+                id: 2,
+                title: "Bureau",
+                type: "work",
+                name: "John Doe - Tech Solutions",
+                street: "456 Avenue des affaires",
+                city: "Abidjan",
+                postalCode: "00225",
+                country: "Côte d'Ivoire",
+                phone: "+225 05 67 89 01 23",
+                default: false
+            }
+        ];
+
+        // Panier
+        let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
+
+        // Mise à jour du compteur panier
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            $('#footerCartCount').text(totalItems);
+        }
+
+        // Formatage des prix
+        function formatPrice(price) {
+            return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
+        }
+
+        // Mettre à jour l'interface utilisateur
+        function updateUserInterface() {
+            // Mettre à jour les informations utilisateur
+            $('#userAvatar').text(userData.avatarInitials);
+            $('#userName').text(`${userData.firstName} ${userData.lastName}`);
+            
+            // Mettre à jour le formulaire
+            $('#firstName').val(userData.firstName);
+            $('#lastName').val(userData.lastName);
+            $('#email').val(userData.email);
+            $('#phone').val(userData.phone);
+            $('#company').val(userData.company);
+            $('#accountType').val(userData.accountType);
+            
+            // Mettre à jour les statistiques
+            $('#ordersCount').text(orders.length);
+            $('#messagesCount').text('8');
+            $('#favoritesCount').text('5');
+        }
+
+        // Rendu des commandes
+        function renderOrders(containerId, limit = null) {
+            const container = $(`#${containerId}`);
+            container.empty();
+            
+            const ordersToShow = limit ? orders.slice(0, limit) : orders;
+            
+            if (ordersToShow.length === 0) {
+                container.html(`
+                    <div class="text-center py-4">
+                        <i class="fas fa-shopping-bag fa-2x mb-3 text-muted"></i>
+                        <p class="text-muted">Aucune commande trouvée</p>
+                    </div>
+                `);
+                return;
+            }
+            
+            ordersToShow.forEach(order => {
+                const statusText = {
+                    'pending': 'En attente',
+                    'processing': 'En traitement',
+                    'completed': 'Terminée',
+                    'cancelled': 'Annulée'
+                };
+                
+                const statusClass = {
+                    'pending': 'status-pending',
+                    'processing': 'status-processing',
+                    'completed': 'status-completed',
+                    'cancelled': 'status-cancelled'
+                };
+                
+                const orderCard = `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <div class="order-id">${order.id}</div>
+                                <div class="order-date">${order.date}</div>
+                            </div>
+                            <span class="order-status ${statusClass[order.status]}">${statusText[order.status]}</span>
+                        </div>
+                        
+                        <div class="order-items">
+                            ${order.items.map(item => `
+                                <div class="order-item">
+                                    <span class="order-item-name">${item.name} × ${item.quantity}</span>
+                                    <span class="order-item-price">${formatPrice(item.price * item.quantity)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="order-footer">
+                            <div class="order-total">Total: ${formatPrice(order.total)}</div>
+                            <div class="order-actions">
+                                <button class="order-btn view" data-id="${order.id}">
+                                    <i class="fas fa-eye me-1"></i> Détails
+                                </button>
+                                ${order.status === 'processing' ? `
+                                    <button class="order-btn track" data-id="${order.id}">
+                                        <i class="fas fa-shipping-fast me-1"></i> Suivre
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.append(orderCard);
+            });
+        }
+
+        // Rendu des adresses
+        function renderAddresses() {
+            const container = $('#addressesList');
+            container.empty();
+            
+            addresses.forEach(address => {
+                const addressCard = `
+                    <div class="address-card ${address.default ? 'default' : ''}">
+                        <div class="address-header">
+                            <h4 class="address-title">${address.title}</h4>
+                            <span class="address-type">${address.type === 'home' ? 'Domicile' : 'Bureau'}</span>
+                        </div>
+                        <div class="address-body">
+                            <p class="address-text">
+                                ${address.name}<br>
+                                ${address.street}<br>
+                                ${address.postalCode} ${address.city}<br>
+                                ${address.country}<br>
+                                Tél: ${address.phone}
+                            </p>
+                        </div>
+                        <div class="address-actions">
+                            <button class="address-btn edit" data-id="${address.id}">
+                                <i class="fas fa-edit me-1"></i> Modifier
+                            </button>
+                            ${!address.default ? `
+                                <button class="address-btn delete" data-id="${address.id}">
+                                    <i class="fas fa-trash me-1"></i> Supprimer
+                                </button>
+                            ` : ''}
+                        </div>
+                        ${address.default ? `
+                            <div style="position: absolute; top: 10px; right: 10px;">
+                                <span style="background: var(--primary-orange); color: white; font-size: 9px; padding: 2px 6px; border-radius: 10px;">
+                                    <i class="fas fa-check me-1"></i> Par défaut
+                                </span>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.append(addressCard);
+            });
+        }
+
+        // Changer d'onglet
+        function switchTab(tabId) {
+            // Mettre à jour les liens du menu
+            $('.menu-link').removeClass('active');
+            $(`.menu-link[data-tab="${tabId}"]`).addClass('active');
+            
+            // Mettre à jour les boutons d'onglets
+            $('.tab-btn').removeClass('active');
+            $(`.tab-btn[data-tab="${tabId}"]`).addClass('active');
+            
+            // Mettre à jour le contenu
+            $('.tab-content').removeClass('active');
+            $(`#${tabId}Content`).addClass('active');
+        }
+
+        // Initialiser les onglets
+        function initTabs() {
+            const tabs = [
+                { id: 'overview', name: 'Vue d\'ensemble', icon: 'fa-user-circle' },
+                { id: 'orders', name: 'Commandes', icon: 'fa-shopping-bag' },
+                { id: 'profile', name: 'Profil', icon: 'fa-user-edit' },
+                { id: 'addresses', name: 'Adresses', icon: 'fa-map-marker-alt' },
+                { id: 'security', name: 'Sécurité', icon: 'fa-shield-alt' },
+                { id: 'notifications', name: 'Notifications', icon: 'fa-bell' }
+            ];
+            
+            const container = $('#tabsContainer');
+            container.empty();
+            
+            tabs.forEach(tab => {
+                const tabBtn = `
+                    <button class="tab-btn ${tab.id === 'overview' ? 'active' : ''}" data-tab="${tab.id}">
+                        <i class="fas ${tab.icon} me-2"></i> ${tab.name}
+                    </button>
+                `;
+                container.append(tabBtn);
+            });
+        }
+
+        // Initialisation
+        $(document).ready(function() {
+            // Initialiser l'interface
+            updateUserInterface();
+            updateCartCount();
+            initTabs();
+            renderOrders('recentOrders', 2);
+            renderOrders('allOrders');
+            renderAddresses();
+            
+            // Navigation par onglets (menu)
+            $('.menu-link').on('click', function(e) {
+                e.preventDefault();
+                const tabId = $(this).data('tab');
+                switchTab(tabId);
+            });
+            
+            // Navigation par onglets (boutons)
+            $(document).on('click', '.tab-btn', function() {
+                const tabId = $(this).data('tab');
+                switchTab(tabId);
+            });
+            
+            // Formulaire de profil
+            $('#profileForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                // Mettre à jour les données utilisateur
+                userData.firstName = $('#firstName').val();
+                userData.lastName = $('#lastName').val();
+                userData.email = $('#email').val();
+                userData.phone = $('#phone').val();
+                userData.company = $('#company').val();
+                userData.accountType = $('#accountType').val();
+                userData.avatarInitials = userData.firstName.charAt(0) + userData.lastName.charAt(0);
+                
+                // Mettre à jour l'interface
+                updateUserInterface();
+                
+                // Afficher une confirmation
+                alert('Profil mis à jour avec succès !');
+            });
+            
+            // Formulaire de mot de passe
+            $('#passwordForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const currentPassword = $('#currentPassword').val();
+                const newPassword = $('#newPassword').val();
+                const confirmPassword = $('#confirmPassword').val();
+                
+                if (newPassword !== confirmPassword) {
+                    alert('Les mots de passe ne correspondent pas.');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    alert('Le mot de passe doit contenir au moins 6 caractères.');
+                    return;
+                }
+                
+                // Réinitialiser le formulaire
+                $('#currentPassword').val('');
+                $('#newPassword').val('');
+                $('#confirmPassword').val('');
+                
+                // Afficher une confirmation
+                alert('Mot de passe changé avec succès !');
+            });
+            
+            // Ajouter une adresse
+            $('#addAddressBtn').on('click', function() {
+                const newAddress = {
+                    id: addresses.length + 1,
+                    title: "Nouvelle adresse",
+                    type: "home",
+                    name: `${userData.firstName} ${userData.lastName}`,
+                    street: "",
+                    city: "",
+                    postalCode: "",
+                    country: "Côte d'Ivoire",
+                    phone: userData.phone,
+                    default: false
+                };
+                
+                addresses.push(newAddress);
+                renderAddresses();
+                
+                // Basculer vers l'onglet des adresses
+                switchTab('addresses');
+                
+                // Afficher un message
+                alert('Nouvelle adresse ajoutée. Veuillez la modifier pour ajouter les détails.');
+            });
+            
+            // Modifier une adresse
+            $(document).on('click', '.address-btn.edit', function() {
+                const addressId = parseInt($(this).data('id'));
+                alert(`Modifier l'adresse ${addressId} - Cette fonctionnalité sera bientôt disponible.`);
+            });
+            
+            // Supprimer une adresse
+            $(document).on('click', '.address-btn.delete', function() {
+                const addressId = parseInt($(this).data('id'));
+                
+                if (confirm('Voulez-vous vraiment supprimer cette adresse ?')) {
+                    const index = addresses.findIndex(addr => addr.id === addressId);
+                    if (index !== -1) {
+                        addresses.splice(index, 1);
+                        renderAddresses();
+                    }
+                }
+            });
+            
+            // Voir les détails d'une commande
+            $(document).on('click', '.order-btn.view', function() {
+                const orderId = $(this).data('id');
+                alert(`Détails de la commande ${orderId} - Cette fonctionnalité sera bientôt disponible.`);
+            });
+            
+            // Suivre une commande
+            $(document).on('click', '.order-btn.track', function() {
+                const orderId = $(this).data('id');
+                alert(`Suivi de la commande ${orderId} - Cette fonctionnalité sera bientôt disponible.`);
+            });
+            
+            // Recherche
+            $('.search-btn').on('click', function() {
+                const term = $('.search-input').val().toLowerCase().trim();
+                
+                if (term) {
+                    // Rediriger vers la page d'accueil avec recherche
+                    window.location.href = `index.html?search=${encodeURIComponent(term)}`;
+                }
+            });
+            
+            $('.search-input').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    $('.search-btn').click();
+                }
+            });
+            
+            // Navigation footer
+            $('.footer-item').on('click', function(e) {
+                $('.footer-item').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
 </body>
 </html>

@@ -4,21 +4,1052 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie - KDO SHOP</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS personnalisé -->
     <style>
-        /* Mêmes styles que dans index.html */
-        /* Ajouter les styles spécifiques à la messagerie */
+        :root {
+            --primary-orange: #FF6B00;
+            --secondary-blue: #0066CC;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --border-color: #E0E0E0;
+            --white: #FFFFFF;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
+            --success-green: #52C41A;
+            --message-blue: #E3F2FD;
+            --message-gray: #F5F5F5;
+        }
+        
+        * {
+            font-size: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            padding-bottom: 50px;
+        }
+        
+        /* Header simplifié */
+        .header-kdo {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            padding: 8px 0;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            color: var(--primary-orange);
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Barre de recherche */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        /* Barre de navigation */
+        .nav-scroll {
+            background: var(--accent-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .nav-container {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 12px;
+        }
+        
+        .nav-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 6px 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 11px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        .nav-item i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        
+        /* Titre de page */
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 15px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Conteneur de messagerie */
+        .messaging-container {
+            display: flex;
+            height: calc(100vh - 220px);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--white);
+        }
+        
+        /* Liste des conversations */
+        .conversations-sidebar {
+            width: 320px;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            background: var(--accent-gray);
+        }
+        
+        .conversations-header {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+        }
+        
+        .conversations-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 10px;
+        }
+        
+        .conversations-search {
+            position: relative;
+        }
+        
+        .conversations-search input {
+            width: 100%;
+            padding: 8px 12px 8px 35px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        .conversations-search i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 12px;
+        }
+        
+        .conversations-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .conversation-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--white);
+        }
+        
+        .conversation-item:hover {
+            background: var(--accent-gray);
+        }
+        
+        .conversation-item.active {
+            background: var(--message-blue);
+            border-left: 3px solid var(--primary-orange);
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5px;
+        }
+        
+        .conversation-user {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--primary-orange);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .user-info h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .user-info p {
+            font-size: 11px;
+            color: var(--text-medium);
+            margin: 0;
+        }
+        
+        .conversation-time {
+            font-size: 10px;
+            color: var(--text-light);
+        }
+        
+        .conversation-preview {
+            font-size: 12px;
+            color: var(--text-medium);
+            line-height: 1.4;
+            margin: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .unread-badge {
+            background: var(--primary-orange);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        
+        /* Zone de conversation */
+        .conversation-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+        }
+        
+        .conversation-header-main {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+        }
+        
+        .conversation-user-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .conversation-actions button {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 11px;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .conversation-actions button:hover {
+            background: var(--accent-gray);
+        }
+        
+        .messages-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: var(--message-gray);
+        }
+        
+        .message {
+            max-width: 70%;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+        }
+        
+        .message.received {
+            align-self: flex-start;
+        }
+        
+        .message-content {
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .message.sent .message-content {
+            background: var(--primary-orange);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.received .message-content {
+            background: var(--white);
+            color: var(--text-dark);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .message-time {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .message.received .message-time {
+            text-align: left;
+        }
+        
+        .message-input-container {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            background: var(--white);
+        }
+        
+        .message-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .message-input {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 13px;
+            resize: none;
+            min-height: 40px;
+            max-height: 100px;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+        }
+        
+        .send-button {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .send-button:hover {
+            background: #E55A00;
+        }
+        
+        .send-button:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+        
+        /* État vide */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            color: var(--border-color);
+            margin-bottom: 15px;
+        }
+        
+        .empty-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-medium);
+            margin-bottom: 8px;
+        }
+        
+        .empty-text {
+            font-size: 12px;
+            color: var(--text-light);
+            max-width: 300px;
+        }
+        
+        /* Footer avec navigation fonctionnelle */
+        .footer-kdo {
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-medium);
+            transition: all 0.2s;
+            padding: 4px;
+            min-width: 60px;
+            position: relative;
+        }
+        
+        .footer-item:hover,
+        .footer-item.active {
+            color: var(--primary-orange);
+            text-decoration: none;
+        }
+        
+        .footer-icon {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        
+        .footer-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .conversations-sidebar {
+                width: 280px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .conversations-sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .messaging-container {
+                flex-direction: column;
+                height: calc(100vh - 280px);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .logo-text {
+                display: none;
+            }
+            
+            .search-wrapper {
+                margin: 0 5px;
+                max-width: 100%;
+            }
+            
+            .conversations-header h3 {
+                font-size: 13px;
+            }
+            
+            .message {
+                max-width: 85%;
+            }
+        }
+        
+        /* Style pour le panier dans le footer */
+        .cart-count-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        
+        /* Notification badge */
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: var(--secondary-blue);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <!-- Même header que index.html -->
-    
-    <div class="container mt-4">
-        <h1>Messagerie</h1>
-        <!-- Contenu de la messagerie -->
+    <!-- Header simplifié -->
+    <header class="header-kdo">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="index.html" class="logo-container text-decoration-none">
+                    <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO SHOP/refs/heads/main/logos.png" 
+                         alt="KDO SHOP" 
+                         class="logo-img">
+                    <span class="logo-text">KDO SHOP</span>
+                </a>
+                
+                <!-- Barre de recherche -->
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Rechercher dans les messages...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barre de navigation -->
+    <div class="nav-scroll">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item">
+                <i class="fas fa-home"></i> Accueil
+            </a>
+            <a href="categories.html" class="nav-item">
+                <i class="fas fa-th-large"></i> Catégories
+            </a>
+            <a href="messagerie.html" class="nav-item active">
+                <i class="far fa-comment-dots"></i> Messagerie
+            </a>
+            <a href="panier.html" class="nav-item">
+                <i class="fas fa-shopping-cart"></i> Panier
+            </a>
+            <a href="profil.html" class="nav-item">
+                <i class="far fa-user"></i> Profil
+            </a>
+        </div>
     </div>
-    
-    <!-- Même footer que index.html -->
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <h1 class="page-title">
+            <i class="far fa-comment-dots me-2"></i> Messagerie
+        </h1>
+        
+        <!-- Conteneur de messagerie -->
+        <div class="messaging-container" id="messagingContainer">
+            <!-- Liste des conversations -->
+            <div class="conversations-sidebar">
+                <div class="conversations-header">
+                    <h3>Conversations</h3>
+                    <div class="conversations-search">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher une conversation..." id="searchConversations">
+                    </div>
+                </div>
+                <div class="conversations-list" id="conversationsList">
+                    <!-- Conversations chargées dynamiquement -->
+                </div>
+            </div>
+            
+            <!-- Zone de conversation -->
+            <div class="conversation-main" id="conversationMain">
+                <!-- État vide au début -->
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">
+                        <i class="far fa-comment-dots"></i>
+                    </div>
+                    <h3 class="empty-title">Aucune conversation sélectionnée</h3>
+                    <p class="empty-text">Sélectionnez une conversation dans la liste pour commencer à discuter avec un fournisseur ou un client.</p>
+                </div>
+                
+                <!-- Conversation active (cachée par défaut) -->
+                <div id="activeConversation" style="display: none; height: 100%; flex-direction: column;">
+                    <div class="conversation-header-main">
+                        <div class="conversation-user-main">
+                            <div class="user-avatar" id="activeUserAvatar">JD</div>
+                            <div>
+                                <h4 id="activeUserName">John Doe</h4>
+                                <p id="activeUserStatus">Fournisseur vérifié • En ligne</p>
+                            </div>
+                        </div>
+                        <div class="conversation-actions">
+                            <button id="viewProfileBtn">
+                                <i class="fas fa-user"></i> Profil
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Messages chargés dynamiquement -->
+                    </div>
+                    
+                    <div class="message-input-container">
+                        <div class="message-input-wrapper">
+                            <textarea class="message-input" id="messageInput" placeholder="Tapez votre message ici..." rows="1"></textarea>
+                            <button class="send-button" id="sendButton">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer avec navigation fonctionnelle -->
+    <footer class="footer-kdo">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-item">
+                    <i class="fas fa-home footer-icon"></i>
+                    <span class="footer-label">Accueil</span>
+                </a>
+                <a href="categories.html" class="footer-item">
+                    <i class="fas fa-th-large footer-icon"></i>
+                    <span class="footer-label">Catégories</span>
+                </a>
+                <a href="messagerie.html" class="footer-item active">
+                    <i class="far fa-comment-dots footer-icon"></i>
+                    <span class="footer-label">Messagerie</span>
+                    <span id="messageNotification" class="notification-badge" style="display: none;">3</span>
+                </a>
+                <a href="panier.html" class="footer-item" id="footerCart">
+                    <i class="fas fa-shopping-cart footer-icon"></i>
+                    <span class="footer-label">Panier</span>
+                    <span id="footerCartCount" class="cart-count-badge">0</span>
+                </a>
+                <a href="profil.html" class="footer-item">
+                    <i class="far fa-user footer-icon"></i>
+                    <span class="footer-label">Mon KDO</span>
+                </a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script principal -->
+    <script>
+        // Données des conversations
+        const conversations = [
+            { 
+                id: 1, 
+                userId: 101, 
+                userName: "Tech Import Ltd", 
+                userInitials: "TI", 
+                userType: "Fournisseur vérifié", 
+                lastMessage: "Bonjour, nous avons reçu votre commande #4587. Elle sera expédiée demain.", 
+                time: "10:30", 
+                date: "Aujourd'hui", 
+                unread: 3,
+                messages: [
+                    { id: 1, text: "Bonjour, je suis intéressé par votre produit HP EliteBook.", sender: "user", time: "09:15" },
+                    { id: 2, text: "Bonjour, nous avons ce produit en stock. Combien d'unités souhaitez-vous ?", sender: "supplier", time: "09:20" },
+                    { id: 3, text: "J'aurais besoin de 5 unités. Quel est le prix pour cette quantité ?", sender: "user", time: "09:45" },
+                    { id: 4, text: "Pour 5 unités, nous pouvons vous faire un prix de 425 000 FCFA par unité.", sender: "supplier", time: "10:00" },
+                    { id: 5, text: "Très bien. Pouvez-vous inclure les frais de port dans ce prix ?", sender: "user", time: "10:15" },
+                    { id: 6, text: "Oui, les frais de port sont inclus pour les commandes de plus de 2 000 000 FCFA.", sender: "supplier", time: "10:30" }
+                ]
+            },
+            { 
+                id: 2, 
+                userId: 102, 
+                userName: "Electro Mobile", 
+                userInitials: "EM", 
+                userType: "Fournisseur vérifié", 
+                lastMessage: "Les iPhone 12 sont disponibles en plusieurs couleurs.", 
+                time: "Hier", 
+                date: "Hier", 
+                unread: 0,
+                messages: [
+                    { id: 1, text: "Bonjour, avez-vous l'iPhone 12 en stock ?", sender: "user", time: "14:20" },
+                    { id: 2, text: "Oui, nous avons l'iPhone 12 en stock. Quelle couleur préférez-vous ?", sender: "supplier", time: "14:35" },
+                    { id: 3, text: "Je préfère le noir. Quel est le prix ?", sender: "user", time: "15:10" },
+                    { id: 4, text: "L'iPhone 12 128Go noir est à 420 000 FCFA.", sender: "supplier", time: "15:30" }
+                ]
+            },
+            { 
+                id: 3, 
+                userId: 103, 
+                userName: "Gaming Store Pro", 
+                userInitials: "GS", 
+                userType: "Fournisseur", 
+                lastMessage: "Nous avons reçu les nouveaux casques gaming.", 
+                time: "15/05", 
+                date: "15 mai", 
+                unread: 1,
+                messages: [
+                    { id: 1, text: "Bonjour, quand serez-vous réapprovisionnés en casques gaming ?", sender: "user", time: "11:05" },
+                    { id: 2, text: "Nous recevons une nouvelle livraison la semaine prochaine.", sender: "supplier", time: "11:20" },
+                    { id: 3, text: "Parfait. Pouvez-vous me prévenir quand ils seront disponibles ?", sender: "user", time: "11:25" },
+                    { id: 4, text: "Bien sûr, je vous tiendrai informé.", sender: "supplier", time: "11:30" }
+                ]
+            },
+            { 
+                id: 4, 
+                userId: 104, 
+                userName: "Fashion Wear", 
+                userInitials: "FW", 
+                userType: "Fournisseur vérifié", 
+                lastMessage: "Les T-shirts sont disponibles en toutes tailles.", 
+                time: "14/05", 
+                date: "14 mai", 
+                unread: 0,
+                messages: [
+                    { id: 1, text: "Je cherche des T-shirts en coton pour homme.", sender: "user", time: "16:40" },
+                    { id: 2, text: "Nous avons plusieurs modèles. Quelle quantité souhaitez-vous ?", sender: "supplier", time: "16:55" }
+                ]
+            }
+        ];
+
+        // Variables globales
+        let currentConversation = null;
+        let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
+        let filteredConversations = [...conversations];
+
+        // Rendu des conversations
+        function renderConversations() {
+            const container = $('#conversationsList');
+            container.empty();
+            
+            if (filteredConversations.length === 0) {
+                container.html(`
+                    <div class="text-center py-4">
+                        <p class="text-muted">Aucune conversation trouvée</p>
+                    </div>
+                `);
+                return;
+            }
+            
+            filteredConversations.forEach(conv => {
+                const conversationItem = `
+                    <div class="conversation-item ${currentConversation?.id === conv.id ? 'active' : ''}" data-id="${conv.id}">
+                        <div class="conversation-header">
+                            <div class="conversation-user">
+                                <div class="user-avatar">${conv.userInitials}</div>
+                                <div class="user-info">
+                                    <h4>${conv.userName}</h4>
+                                    <p>${conv.userType}</p>
+                                </div>
+                            </div>
+                            <div class="conversation-time">${conv.time}</div>
+                        </div>
+                        <p class="conversation-preview">${conv.lastMessage}</p>
+                        ${conv.unread > 0 ? `<div class="unread-badge">${conv.unread}</div>` : ''}
+                    </div>
+                `;
+                container.append(conversationItem);
+            });
+            
+            // Mettre à jour la notification
+            updateMessageNotification();
+        }
+
+        // Rendu des messages
+        function renderMessages(conversation) {
+            const container = $('#messagesContainer');
+            container.empty();
+            
+            conversation.messages.forEach(msg => {
+                const messageClass = msg.sender === 'user' ? 'sent' : 'received';
+                const messageDiv = `
+                    <div class="message ${messageClass}">
+                        <div class="message-content">${msg.text}</div>
+                        <div class="message-time">${msg.time}</div>
+                    </div>
+                `;
+                container.append(messageDiv);
+            });
+            
+            // Faire défiler vers le bas
+            container.scrollTop(container[0].scrollHeight);
+        }
+
+        // Afficher une conversation
+        function showConversation(conversationId) {
+            const conversation = conversations.find(c => c.id === conversationId);
+            if (!conversation) return;
+            
+            currentConversation = conversation;
+            
+            // Mettre à jour l'interface
+            $('#emptyState').hide();
+            $('#activeConversation').show();
+            $('#activeUserAvatar').text(conversation.userInitials);
+            $('#activeUserName').text(conversation.userName);
+            $('#activeUserStatus').text(conversation.userType);
+            
+            // Rendre les messages
+            renderMessages(conversation);
+            
+            // Marquer comme lu
+            conversation.unread = 0;
+            
+            // Mettre à jour la liste des conversations
+            renderConversations();
+            updateMessageNotification();
+        }
+
+        // Mettre à jour la notification des messages
+        function updateMessageNotification() {
+            const totalUnread = conversations.reduce((sum, conv) => sum + conv.unread, 0);
+            const badge = $('#messageNotification');
+            
+            if (totalUnread > 0) {
+                badge.text(totalUnread).show();
+            } else {
+                badge.hide();
+            }
+        }
+
+        // Envoyer un message
+        function sendMessage() {
+            const input = $('#messageInput');
+            const text = input.val().trim();
+            
+            if (!text || !currentConversation) return;
+            
+            // Ajouter le message à la conversation
+            const newMessage = {
+                id: currentConversation.messages.length + 1,
+                text: text,
+                sender: 'user',
+                time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+            };
+            
+            currentConversation.messages.push(newMessage);
+            currentConversation.lastMessage = text;
+            currentConversation.time = newMessage.time;
+            currentConversation.date = "Aujourd'hui";
+            
+            // Mettre à jour l'affichage
+            renderMessages(currentConversation);
+            renderConversations();
+            
+            // Réinitialiser l'input
+            input.val('');
+            input.css('height', 'auto');
+            
+            // Simuler une réponse automatique après 2 secondes
+            setTimeout(() => {
+                const responses = [
+                    "Merci pour votre message, je vous réponds dans les plus brefs délais.",
+                    "Message reçu, je traite votre demande.",
+                    "Je vais vérifier cela et vous répondre rapidement.",
+                    "Très bien, je prends note de votre demande."
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                const autoReply = {
+                    id: currentConversation.messages.length + 1,
+                    text: randomResponse,
+                    sender: 'supplier',
+                    time: new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
+                };
+                
+                currentConversation.messages.push(autoReply);
+                currentConversation.lastMessage = randomResponse;
+                currentConversation.unread = 1;
+                
+                renderMessages(currentConversation);
+                renderConversations();
+                updateMessageNotification();
+            }, 2000);
+        }
+
+        // Mise à jour du compteur panier
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            $('#footerCartCount').text(totalItems);
+        }
+
+        // Initialisation
+        $(document).ready(function() {
+            // Initialiser les conversations
+            renderConversations();
+            updateCartCount();
+            updateMessageNotification();
+            
+            // Recherche de conversations
+            $('#searchConversations').on('input', function() {
+                const term = $(this).val().toLowerCase().trim();
+                
+                if (term) {
+                    filteredConversations = conversations.filter(conv => 
+                        conv.userName.toLowerCase().includes(term) ||
+                        conv.lastMessage.toLowerCase().includes(term)
+                    );
+                } else {
+                    filteredConversations = [...conversations];
+                }
+                
+                renderConversations();
+            });
+            
+            // Sélection d'une conversation
+            $(document).on('click', '.conversation-item', function() {
+                const conversationId = parseInt($(this).data('id'));
+                showConversation(conversationId);
+            });
+            
+            // Envoi de message
+            $('#sendButton').on('click', sendMessage);
+            
+            $('#messageInput').on('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            // Auto-resize du textarea
+            $('#messageInput').on('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+                
+                // Activer/désactiver le bouton d'envoi
+                $('#sendButton').prop('disabled', !$(this).val().trim());
+            });
+            
+            // Recherche principale
+            $('.search-btn').on('click', function() {
+                const term = $('.search-input').val().toLowerCase().trim();
+                
+                if (term) {
+                    // Rechercher dans les conversations
+                    filteredConversations = conversations.filter(conv => 
+                        conv.userName.toLowerCase().includes(term) ||
+                        conv.lastMessage.toLowerCase().includes(term) ||
+                        conv.messages.some(msg => msg.text.toLowerCase().includes(term))
+                    );
+                    
+                    renderConversations();
+                } else {
+                    filteredConversations = [...conversations];
+                    renderConversations();
+                }
+            });
+            
+            $('.search-input').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    $('.search-btn').click();
+                }
+            });
+            
+            // Navigation footer
+            $('.footer-item').on('click', function(e) {
+                $('.footer-item').removeClass('active');
+                $(this).addClass('active');
+            });
+            
+            // Bouton voir profil
+            $('#viewProfileBtn').on('click', function() {
+                if (currentConversation) {
+                    alert(`Profil de ${currentConversation.userName}\n\nType: ${currentConversation.userType}\n\nCette fonctionnalité sera bientôt disponible.`);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
