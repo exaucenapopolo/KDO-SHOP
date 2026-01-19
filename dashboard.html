@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord - KDO SHOP</title>
+    <title>KDO SHOP - Marketplace professionnelle</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS personnalisé -->
     <style>
         :root {
             --primary-orange: #FF6B00;
             --secondary-blue: #0066CC;
             --accent-gray: #F5F5F5;
             --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --border-color: #E0E0E0;
             --white: #FFFFFF;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
             --success-green: #52C41A;
         }
         
@@ -26,141 +32,89 @@
         body {
             background-color: var(--white);
             color: var(--text-dark);
-            padding-bottom: 70px;
+            padding-bottom: 50px;
         }
         
-        /* Header Dashboard */
-        .header-dashboard {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8E3C 100%);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* Header simplifié */
+        .header-kdo {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            padding: 8px 0;
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .logo-img {
-            height: 40px;
+            height: 32px;
             width: auto;
             object-fit: contain;
-            filter: brightness(0) invert(1);
         }
         
         .logo-text {
+            color: var(--primary-orange);
             font-weight: 700;
-            font-size: 22px;
+            font-size: 16px;
             letter-spacing: -0.5px;
         }
         
-        .header-user {
+        /* Carrousel de promotions */
+        .promo-carousel-container {
+            background: linear-gradient(90deg, #FFF8F3 0%, #FFF 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .promo-carousel {
+            display: flex;
+            animation: slidePromo 25s infinite linear;
+            width: max-content;
+        }
+        
+        .promo-slide {
             display: flex;
             align-items: center;
-            gap: 15px;
+            padding: 8px 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
-        .user-info {
-            text-align: right;
-        }
-        
-        .user-name {
+        .promo-badge {
+            background: var(--primary-orange);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 10px;
+            margin-right: 10px;
         }
         
-        .user-role {
-            font-size: 11px;
-            opacity: 0.9;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-        
-        /* Navigation Dashboard */
-        .nav-dashboard {
-            background: var(--white);
-            border-bottom: 1px solid #E0E0E0;
-            padding: 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        
-        .nav-dashboard .nav-link {
+        .promo-text {
             color: var(--text-dark);
-            font-weight: 500;
-            font-size: 13px;
-            padding: 15px 20px;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-        
-        .nav-dashboard .nav-link:hover,
-        .nav-dashboard .nav-link.active {
-            color: var(--primary-orange);
-            border-bottom-color: var(--primary-orange);
-            background: rgba(255, 107, 0, 0.05);
-        }
-        
-        /* Stats Dashboard */
-        .stats-container {
-            padding: 25px 0;
-            background: var(--accent-gray);
-            margin-bottom: 25px;
-        }
-        
-        .stat-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .stat-icon {
-            font-size: 30px;
-            margin-bottom: 15px;
-            color: var(--primary-orange);
-        }
-        
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
             font-size: 12px;
-            color: #666;
             font-weight: 500;
         }
         
-        /* Dashboard Content */
-        .dashboard-title {
-            color: var(--text-dark);
-            font-size: 22px;
+        .promo-price {
+            color: var(--primary-orange);
             font-weight: 700;
-            margin: 25px 0 20px;
+            margin-left: 5px;
         }
         
-        /* Le reste du CSS est identique à l'ancien index.html (produits) */
-        /* ... (copier tout le CSS de l'ancien index.html à partir de .search-wrapper) ... */
+        @keyframes slidePromo {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
         
         /* Barre de recherche */
         .search-wrapper {
@@ -170,7 +124,7 @@
         }
         
         .search-input {
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             padding: 8px 40px 8px 12px;
             font-size: 12px;
@@ -189,7 +143,7 @@
             top: 0;
             height: 100%;
             background: var(--accent-gray);
-            color: #666;
+            color: var(--text-medium);
             border: none;
             border-radius: 0 4px 4px 0;
             padding: 0 15px;
@@ -205,7 +159,7 @@
         /* Barre de catégories horizontale défilante */
         .categories-scroll {
             background: var(--accent-gray);
-            border-bottom: 1px solid #E0E0E0;
+            border-bottom: 1px solid var(--border-color);
             padding: 8px 0;
             margin-bottom: 12px;
             overflow-x: auto;
@@ -221,7 +175,7 @@
         
         .category-item {
             background: var(--white);
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 6px 12px;
             color: var(--text-dark);
@@ -246,7 +200,7 @@
         /* Filtres horizontaux simplifiés */
         .filters-horizontal {
             background: var(--white);
-            border-bottom: 1px solid #E0E0E0;
+            border-bottom: 1px solid var(--border-color);
             padding: 12px 0;
             margin-bottom: 12px;
         }
@@ -265,7 +219,7 @@
         }
         
         .filter-label {
-            color: #666;
+            color: var(--text-medium);
             font-size: 11px;
             white-space: nowrap;
         }
@@ -359,7 +313,7 @@
         
         .price-value {
             font-size: 10px;
-            color: #666;
+            color: var(--text-medium);
         }
         
         /* Conteneur principal */
@@ -375,7 +329,7 @@
         }
         
         .category-box {
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             background: var(--white);
             margin-bottom: 12px;
@@ -384,7 +338,7 @@
         .category-header {
             background: var(--accent-gray);
             padding: 8px 12px;
-            border-bottom: 1px solid #E0E0E0;
+            border-bottom: 1px solid var(--border-color);
             font-weight: 600;
             font-size: 12px;
             color: var(--text-dark);
@@ -420,7 +374,7 @@
         
         .category-count {
             background: var(--accent-gray);
-            color: #666;
+            color: var(--text-medium);
             padding: 1px 6px;
             border-radius: 10px;
             font-size: 9px;
@@ -437,16 +391,16 @@
             align-items: center;
             margin-bottom: 12px;
             padding-bottom: 8px;
-            border-bottom: 1px solid #E0E0E0;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .products-count {
-            color: #666;
+            color: var(--text-medium);
             font-size: 11px;
         }
         
         .sort-select {
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-color);
             border-radius: 3px;
             padding: 5px 8px;
             font-size: 11px;
@@ -463,7 +417,7 @@
         }
         
         .product-card {
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             background: var(--white);
             transition: all 0.2s ease;
@@ -473,7 +427,7 @@
         
         .product-card:hover {
             border-color: var(--primary-orange);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
         }
         
         .product-image {
@@ -553,7 +507,7 @@
         }
         
         .product-supplier {
-            color: #999;
+            color: var(--text-light);
             font-size: 10px;
             display: flex;
             align-items: center;
@@ -568,7 +522,7 @@
         
         .product-orders {
             font-size: 10px;
-            color: #666;
+            color: var(--text-medium);
             margin-bottom: 8px;
         }
         
@@ -653,7 +607,7 @@
         }
         
         .page-item {
-            border: 1px solid #E0E0E0;
+            border: 1px solid var(--border-color);
             border-radius: 3px;
             transition: all 0.2s;
         }
@@ -687,13 +641,13 @@
         }
         
         .page-item.disabled .page-link {
-            color: #999;
+            color: var(--text-light);
         }
         
         /* Footer avec navigation fonctionnelle */
         .footer-kdo {
             background: var(--white);
-            border-top: 1px solid #E0E0E0;
+            border-top: 1px solid var(--border-color);
             position: fixed;
             bottom: 0;
             width: 100%;
@@ -713,7 +667,7 @@
             flex-direction: column;
             align-items: center;
             text-decoration: none;
-            color: #666;
+            color: var(--text-medium);
             transition: all 0.2s;
             padding: 4px;
             min-width: 60px;
@@ -739,11 +693,11 @@
         /* Notification */
         #cartAlert {
             position: fixed;
-            top: 150px;
+            top: 70px;
             right: 15px;
             z-index: 9999;
             min-width: 250px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
             border-left: 3px solid var(--primary-orange);
             display: none;
         }
@@ -797,6 +751,10 @@
             .products-container {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
+            
+            .promo-carousel {
+                animation: slidePromo 20s infinite linear;
+            }
         }
         
         @media (max-width: 768px) {
@@ -816,8 +774,12 @@
                 font-size: 14px;
             }
             
-            .header-user .user-info {
-                display: none;
+            .promo-carousel {
+                animation: slidePromo 15s infinite linear;
+            }
+            
+            .promo-slide {
+                padding: 8px 15px;
             }
         }
         
@@ -845,9 +807,12 @@
                 gap: 10px;
             }
             
-            .nav-dashboard .nav-link {
-                padding: 10px 15px;
-                font-size: 12px;
+            .promo-carousel {
+                animation: slidePromo 12s infinite linear;
+            }
+            
+            .promo-slide {
+                padding: 8px 12px;
             }
         }
         
@@ -870,110 +835,29 @@
     </style>
 </head>
 <body>
-    <!-- Header Dashboard -->
-    <header class="header-dashboard">
+    <!-- Header simplifié -->
+    <header class="header-kdo">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <!-- Logo -->
-                <a href="dashboard.html" class="logo-container text-decoration-none">
+                <a href="index.html" class="logo-container text-decoration-none">
                     <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
                          alt="KDO SHOP" 
                          class="logo-img">
                     <span class="logo-text">KDO SHOP</span>
                 </a>
                 
-                <!-- Info utilisateur -->
-                <div class="header-user">
-                    <div class="user-info">
-                        <div class="user-name" id="userName">Jean Dupont</div>
-                        <div class="user-role">Compte Professionnel</div>
-                    </div>
-                    <div class="user-avatar">
-                        <i class="fas fa-user"></i>
-                    </div>
+                <!-- Barre de recherche -->
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Rechercher produits, fournisseurs...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Navigation Dashboard -->
-    <nav class="nav-dashboard">
-        <div class="container">
-            <ul class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="dashboard.html">
-                        <i class="fas fa-home me-2"></i> Tableau de bord
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="boutique.html">
-                        <i class="fas fa-store me-2"></i> Boutiques
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="panier.html">
-                        <i class="fas fa-shopping-cart me-2"></i> Mon panier
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profil.html">
-                        <i class="fas fa-user me-2"></i> Mon profil
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="commandes.html">
-                        <i class="fas fa-box me-2"></i> Mes commandes
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Statistiques Dashboard -->
-    <div class="stats-container">
-        <div class="container">
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="stat-value" id="totalOrders">0</div>
-                        <div class="stat-label">Commandes totales</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-cart-plus"></i>
-                        </div>
-                        <div class="stat-value" id="cartItems">0</div>
-                        <div class="stat-label">Articles en panier</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <div class="stat-value">24</div>
-                        <div class="stat-label">Boutiques actives</div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="stat-value">+12%</div>
-                        <div class="stat-label">Croissance mensuelle</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Le reste du contenu (identique à l'ancien index.html) -->
     <!-- Carrousel de promotions -->
     <div class="promo-carousel-container">
         <div class="promo-carousel">
@@ -1097,8 +981,6 @@
 
     <!-- Contenu principal -->
     <div class="container">
-        <h2 class="dashboard-title">Nos produits en vedette</h2>
-        
         <div class="main-container">
             <!-- Sidebar des catégories -->
             <aside class="sidebar-categories">
@@ -1194,26 +1076,30 @@
         </div>
     </div>
 
-    <!-- Footer avec navigation -->
+    <!-- Footer avec navigation fonctionnelle -->
     <footer class="footer-kdo">
         <div class="container">
             <nav class="footer-nav">
-                <a href="dashboard.html" class="footer-item active">
+                <a href="index.html" class="footer-item active">
                     <i class="fas fa-home footer-icon"></i>
                     <span class="footer-label">Accueil</span>
                 </a>
+                <a href="categories.html" class="footer-item">
+                    <i class="fas fa-th-large footer-icon"></i>
+                    <span class="footer-label">Catégories</span>
+                </a>
                 <a href="boutique.html" class="footer-item">
                     <i class="fas fa-store footer-icon"></i>
-                    <span class="footer-label">Boutiques</span>
+                    <span class="footer-label">Boutique</span>
                 </a>
-                <a href="panier.html" class="footer-item">
+                <a href="panier.html" class="footer-item" id="footerCart">
                     <i class="fas fa-shopping-cart footer-icon"></i>
                     <span class="footer-label">Panier</span>
                     <span id="footerCartCount" class="cart-count-badge">0</span>
                 </a>
                 <a href="profil.html" class="footer-item">
                     <i class="far fa-user footer-icon"></i>
-                    <span class="footer-label">Profil</span>
+                    <span class="footer-label">Mon KDO</span>
                 </a>
             </nav>
         </div>
@@ -1236,10 +1122,12 @@
 
     <!-- Firebase SDK -->
     <script type="module">
+        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDa6Sdrlbem4IXElDm6ItaRfxNOLBljFFk",
             authDomain: "kdo-shop-a1680.firebaseapp.com",
@@ -1250,15 +1138,24 @@
             measurementId: "G-0HC2NWRTX2"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getFirestore(app);
-
-        window.firebaseAuth = auth;
+        const auth = getAuth(app);
+        
+        // Variables globales accessibles
+        window.firebaseApp = app;
         window.firebaseDb = db;
+        window.firebaseAuth = auth;
+        window.firebaseCollection = collection;
         window.firebaseDoc = doc;
+        window.firebaseSetDoc = setDoc;
         window.firebaseGetDoc = getDoc;
+        window.firebaseUpdateDoc = updateDoc;
+        window.firebaseArrayUnion = arrayUnion;
+        window.firebaseArrayRemove = arrayRemove;
         window.onAuthStateChanged = onAuthStateChanged;
+        window.signInAnonymously = signInAnonymously;
     </script>
 
     <!-- Bootstrap & jQuery -->
@@ -1267,7 +1164,7 @@
 
     <!-- Script principal -->
     <script>
-        // Données des produits (identique à l'ancien)
+        // Données des produits
         const products = [
             // ORDINATEURS
             { id: 1, name: "HP EliteBook 840 G5 i7 16Go RAM 512Go SSD", price: 450000, category: "ordinateur", verified: true, image: "laptop", orders: 156 },
@@ -1315,7 +1212,7 @@
         ];
 
         // Variables globales
-        let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
+        let cart = [];
         let filteredProducts = [...products];
         let currentCategory = "all";
         let priceFilterActive = false;
@@ -1544,24 +1441,18 @@
         // Initialiser Firebase et charger le panier
         async function initializeFirebase() {
             try {
+                // Se connecter anonymement
+                await signInAnonymously(auth);
+                
                 onAuthStateChanged(auth, async (user) => {
                     if (user) {
                         currentUser = user;
                         console.log("Utilisateur connecté:", user.uid);
                         
-                        // Charger les informations utilisateur depuis Firestore
-                        const userDoc = await getDoc(doc(db, "users", user.uid));
-                        if (userDoc.exists()) {
-                            const userData = userDoc.data();
-                            localStorage.setItem('kdo_user', JSON.stringify(userData));
-                            $('#userName').text(userData.firstName + ' ' + userData.lastName);
-                        }
-                        
-                        // Charger le panier de l'utilisateur
+                        // Charger le panier de l'utilisateur depuis Firestore
                         await loadUserCart();
                     } else {
-                        // Rediriger vers la page de connexion si non connecté
-                        window.location.href = 'index.html';
+                        console.log("Pas d'utilisateur connecté");
                     }
                 });
             } catch (error) {
@@ -1594,11 +1485,8 @@
                         }
                     }
                     console.log("Panier chargé:", userCart);
-                    
-                    // Mettre à jour les statistiques
-                    updateDashboardStats();
                 } else {
-                    // Créer un nouveau panier vide
+                    // Créer un nouveau panier
                     userCart = {
                         userId: currentUser.uid,
                         items: {},
@@ -1606,6 +1494,8 @@
                         totalAmount: 0,
                         updatedAt: new Date().toISOString()
                     };
+                    await setDoc(cartRef, userCart);
+                    console.log("Nouveau panier créé");
                 }
                 
                 updateCartCount();
@@ -1615,25 +1505,41 @@
             }
         }
 
-        // Mettre à jour les statistiques du dashboard
-        function updateDashboardStats() {
-            // Total des commandes (simulation)
-            const totalOrders = Math.floor(Math.random() * 50) + 10;
-            $('#totalOrders').text(totalOrders);
+        // Sauvegarder le panier dans Firestore
+        async function saveCartToFirestore() {
+            if (!currentUser) return;
             
-            // Articles dans le panier
-            const cartItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            $('#cartItems').text(cartItems);
+            try {
+                const cartRef = doc(db, "carts", currentUser.uid);
+                
+                // Calculer le total
+                let totalItems = 0;
+                let totalAmount = 0;
+                
+                for (const productId in userCart.items) {
+                    const item = userCart.items[productId];
+                    totalItems += item.quantity;
+                    totalAmount += item.price * item.quantity;
+                }
+                
+                userCart.totalItems = totalItems;
+                userCart.totalAmount = totalAmount;
+                userCart.updatedAt = new Date().toISOString();
+                
+                await setDoc(cartRef, userCart);
+                console.log("Panier sauvegardé dans Firestore");
+            } catch (error) {
+                console.error("Erreur lors de la sauvegarde du panier:", error);
+            }
         }
 
-        // Mise à jour du compteur panier
-        function updateCartCount() {
-            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            $('#footerCartCount').text(totalItems);
-        }
-
-        // Ajout au panier (simplifié pour le dashboard)
-        function addToCart(productId, buttonElement) {
+        // Ajout au panier avec Firebase
+        async function addToCart(productId, buttonElement) {
+            if (!currentUser) {
+                console.error("Utilisateur non connecté");
+                return;
+            }
+            
             const product = products.find(p => p.id === productId);
             
             // Animation du bouton
@@ -1647,22 +1553,38 @@
             animateAddToCart(buttonElement, product);
             
             // Mettre à jour le panier local
-            const existingItem = cart.find(item => item.id === productId);
+            if (!userCart.items) {
+                userCart.items = {};
+            }
             
+            if (userCart.items[productId]) {
+                userCart.items[productId].quantity += 1;
+            } else {
+                userCart.items[productId] = {
+                    productId: productId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1,
+                    addedAt: new Date().toISOString()
+                };
+            }
+            
+            // Mettre à jour le panier global (pour la compatibilité)
+            const existingItem = cart.find(item => item.id === productId);
             if (existingItem) {
-                existingItem.quantity = (existingItem.quantity || 1) + 1;
+                existingItem.quantity += 1;
             } else {
                 const productCopy = {...product};
                 productCopy.quantity = 1;
                 cart.push(productCopy);
             }
             
-            // Sauvegarder dans localStorage
-            localStorage.setItem('kdo_cart', JSON.stringify(cart));
+            // Sauvegarder dans Firestore
+            await saveCartToFirestore();
             
             // Mettre à jour l'affichage
             updateCartCount();
-            updateDashboardStats();
             
             // Mettre à jour la quantité sur le produit
             renderProducts();
@@ -1675,6 +1597,12 @@
             setTimeout(() => {
                 alert.removeClass('show').addClass('fade');
             }, 3000);
+        }
+
+        // Mise à jour du compteur panier
+        function updateCartCount() {
+            const totalItems = userCart.totalItems || cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            $('#footerCartCount').text(totalItems);
         }
 
         // Initialisation
@@ -1798,6 +1726,8 @@
             
             // Navigation footer
             $('.footer-item').on('click', function(e) {
+                // La navigation se fait via les liens href
+                // On met à jour l'état actif
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
             });
