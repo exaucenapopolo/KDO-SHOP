@@ -61,6 +61,61 @@
             letter-spacing: -0.5px;
         }
         
+        /* Carrousel de promotions */
+        .promo-carousel-container {
+            background: linear-gradient(90deg, #FFF8F3 0%, #FFF 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .promo-carousel {
+            display: flex;
+            animation: slidePromo 25s infinite linear;
+            width: max-content;
+        }
+        
+        .promo-slide {
+            display: flex;
+            align-items: center;
+            padding: 8px 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .promo-badge {
+            background: var(--primary-orange);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 10px;
+            margin-right: 10px;
+        }
+        
+        .promo-text {
+            color: var(--text-dark);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .promo-price {
+            color: var(--primary-orange);
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        
+        @keyframes slidePromo {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
         /* Barre de recherche */
         .search-wrapper {
             position: relative;
@@ -409,6 +464,24 @@
             font-size: 8px;
         }
         
+        .cart-quantity-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: var(--primary-orange);
+            color: white;
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            z-index: 2;
+        }
+        
         .product-info {
             padding: 10px;
             border-top: 1px solid var(--accent-gray);
@@ -492,10 +565,33 @@
             align-items: center;
             justify-content: center;
             gap: 4px;
+            position: relative;
         }
         
         .btn-cart:hover {
             background: #0052A3;
+        }
+        
+        .btn-cart.adding {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+        }
+        
+        /* Animation pour le bouton panier */
+        @keyframes bounce {
+            0%, 20%, 60%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-5px);
+            }
+            80% {
+                transform: translateY(-2px);
+            }
+        }
+        
+        .btn-cart.adding i {
+            animation: bounce 0.5s;
         }
         
         /* Pagination */
@@ -606,6 +702,46 @@
             display: none;
         }
         
+        /* Animation de l'article vers le panier */
+        .cart-animation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+        
+        .cart-animation-item {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            z-index: 9999;
+            animation: flyToCart 1s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+        }
+        
+        @keyframes flyToCart {
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0.2) translate(var(--endX), var(--endY));
+                opacity: 0;
+            }
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .sidebar-categories {
@@ -614,6 +750,10 @@
             
             .products-container {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 20s infinite linear;
             }
         }
         
@@ -632,6 +772,14 @@
             
             .logo-text {
                 font-size: 14px;
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 15s infinite linear;
+            }
+            
+            .promo-slide {
+                padding: 8px 15px;
             }
         }
         
@@ -657,6 +805,14 @@
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 12s infinite linear;
+            }
+            
+            .promo-slide {
+                padding: 8px 12px;
             }
         }
         
@@ -701,6 +857,54 @@
             </div>
         </div>
     </header>
+
+    <!-- Carrousel de promotions -->
+    <div class="promo-carousel-container">
+        <div class="promo-carousel">
+            <!-- Les promotions défilent automatiquement -->
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Ordinateur portable à partir de <span class="promo-price">350 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Smartphone dernière génération <span class="promo-price">150 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Tablette Android 64Go <span class="promo-price">85 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Accessoires Gaming <span class="promo-price">-30%</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Sacs professionnels <span class="promo-price">20 000 FCFA</span></span>
+            </div>
+            <!-- Doubler pour créer l'effet infini -->
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Ordinateur portable à partir de <span class="promo-price">350 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Smartphone dernière génération <span class="promo-price">150 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Tablette Android 64Go <span class="promo-price">85 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Accessoires Gaming <span class="promo-price">-30%</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Sacs professionnels <span class="promo-price">20 000 FCFA</span></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Barre de catégories horizontale défilante -->
     <div class="categories-scroll">
@@ -884,9 +1088,9 @@
                     <i class="fas fa-th-large footer-icon"></i>
                     <span class="footer-label">Catégories</span>
                 </a>
-                <a href="messagerie.html" class="footer-item">
-                    <i class="far fa-comment-dots footer-icon"></i>
-                    <span class="footer-label">Messagerie</span>
+                <a href="boutique.html" class="footer-item">
+                    <i class="fas fa-store footer-icon"></i>
+                    <span class="footer-label">Boutique</span>
                 </a>
                 <a href="panier.html" class="footer-item" id="footerCart">
                     <i class="fas fa-shopping-cart footer-icon"></i>
@@ -901,6 +1105,9 @@
         </div>
     </footer>
 
+    <!-- Conteneur pour animation du panier -->
+    <div class="cart-animation-container" id="cartAnimationContainer"></div>
+
     <!-- Notification -->
     <div class="alert alert-success alert-dismissible fade" id="cartAlert" role="alert">
         <div class="d-flex align-items-center">
@@ -912,6 +1119,44 @@
         </div>
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDa6Sdrlbem4IXElDm6ItaRfxNOLBljFFk",
+            authDomain: "kdo-shop-a1680.firebaseapp.com",
+            projectId: "kdo-shop-a1680",
+            storageBucket: "kdo-shop-a1680.firebasestorage.app",
+            messagingSenderId: "34520735960",
+            appId: "1:34520735960:web:f67cebf61f19cb01c937ad",
+            measurementId: "G-0HC2NWRTX2"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        // Variables globales accessibles
+        window.firebaseApp = app;
+        window.firebaseDb = db;
+        window.firebaseAuth = auth;
+        window.firebaseCollection = collection;
+        window.firebaseDoc = doc;
+        window.firebaseSetDoc = setDoc;
+        window.firebaseGetDoc = getDoc;
+        window.firebaseUpdateDoc = updateDoc;
+        window.firebaseArrayUnion = arrayUnion;
+        window.firebaseArrayRemove = arrayRemove;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.signInAnonymously = signInAnonymously;
+    </script>
 
     <!-- Bootstrap & jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -967,13 +1212,15 @@
         ];
 
         // Variables globales
-        let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
+        let cart = [];
         let filteredProducts = [...products];
         let currentCategory = "all";
         let priceFilterActive = false;
         let currentPage = 1;
         let itemsPerPage = 20;
         let totalPages = 1;
+        let currentUser = null;
+        let userCart = {};
 
         // Formatage des prix
         function formatPrice(price) {
@@ -1002,6 +1249,42 @@
             return icons[type] || "fa-box";
         }
 
+        // Animation d'ajout au panier
+        function animateAddToCart(startElement, product) {
+            const startRect = startElement.getBoundingClientRect();
+            const cartIcon = document.getElementById('footerCart');
+            const endRect = cartIcon.getBoundingClientRect();
+            
+            const startX = startRect.left + startRect.width / 2;
+            const startY = startRect.top + startRect.height / 2;
+            const endX = endRect.left + endRect.width / 2 - startX;
+            const endY = endRect.top + endRect.height / 2 - startY;
+            
+            const animationContainer = document.getElementById('cartAnimationContainer');
+            const animationItem = document.createElement('div');
+            animationItem.className = 'cart-animation-item';
+            animationItem.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+            animationItem.style.setProperty('--endX', `${endX}px`);
+            animationItem.style.setProperty('--endY', `${endY}px`);
+            animationItem.style.left = `${startX}px`;
+            animationItem.style.top = `${startY}px`;
+            
+            animationContainer.appendChild(animationItem);
+            
+            // Supprimer l'élément après l'animation
+            setTimeout(() => {
+                animationItem.remove();
+            }, 1000);
+        }
+
+        // Récupérer la quantité dans le panier pour un produit
+        function getCartQuantity(productId) {
+            if (userCart.items && userCart.items[productId]) {
+                return userCart.items[productId].quantity;
+            }
+            return 0;
+        }
+
         // Rendu des produits
         function renderProducts() {
             const container = $('#productsContainer');
@@ -1024,9 +1307,11 @@
             }
             
             productsToShow.forEach(p => {
+                const cartQuantity = getCartQuantity(p.id);
                 const productCard = `
                     <div class="product-card" data-category="${p.category}" data-price="${p.price}">
                         ${p.verified ? `<div class="product-badge"><i class="fas fa-check"></i> VÉRIFIÉ</div>` : ''}
+                        ${cartQuantity > 0 ? `<div class="cart-quantity-badge">${cartQuantity}</div>` : ''}
                         <div class="product-image">
                             <i class="fas ${getProductImage(p.image)} fa-3x text-muted"></i>
                         </div>
@@ -1153,26 +1438,156 @@
             renderProducts();
         }
 
-        // Ajout au panier
-        function addToCart(productId) {
+        // Initialiser Firebase et charger le panier
+        async function initializeFirebase() {
+            try {
+                // Se connecter anonymement
+                await signInAnonymously(auth);
+                
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        currentUser = user;
+                        console.log("Utilisateur connecté:", user.uid);
+                        
+                        // Charger le panier de l'utilisateur depuis Firestore
+                        await loadUserCart();
+                    } else {
+                        console.log("Pas d'utilisateur connecté");
+                    }
+                });
+            } catch (error) {
+                console.error("Erreur Firebase:", error);
+            }
+        }
+
+        // Charger le panier utilisateur depuis Firestore
+        async function loadUserCart() {
+            if (!currentUser) return;
+            
+            try {
+                const cartRef = doc(db, "carts", currentUser.uid);
+                const cartSnap = await getDoc(cartRef);
+                
+                if (cartSnap.exists()) {
+                    userCart = cartSnap.data();
+                    // Convertir l'objet items en array pour la compatibilité
+                    cart = [];
+                    if (userCart.items) {
+                        for (const productId in userCart.items) {
+                            const item = userCart.items[productId];
+                            const product = products.find(p => p.id == productId);
+                            if (product) {
+                                cart.push({
+                                    ...product,
+                                    quantity: item.quantity
+                                });
+                            }
+                        }
+                    }
+                    console.log("Panier chargé:", userCart);
+                } else {
+                    // Créer un nouveau panier
+                    userCart = {
+                        userId: currentUser.uid,
+                        items: {},
+                        totalItems: 0,
+                        totalAmount: 0,
+                        updatedAt: new Date().toISOString()
+                    };
+                    await setDoc(cartRef, userCart);
+                    console.log("Nouveau panier créé");
+                }
+                
+                updateCartCount();
+                renderProducts(); // Re-render pour afficher les quantités
+            } catch (error) {
+                console.error("Erreur lors du chargement du panier:", error);
+            }
+        }
+
+        // Sauvegarder le panier dans Firestore
+        async function saveCartToFirestore() {
+            if (!currentUser) return;
+            
+            try {
+                const cartRef = doc(db, "carts", currentUser.uid);
+                
+                // Calculer le total
+                let totalItems = 0;
+                let totalAmount = 0;
+                
+                for (const productId in userCart.items) {
+                    const item = userCart.items[productId];
+                    totalItems += item.quantity;
+                    totalAmount += item.price * item.quantity;
+                }
+                
+                userCart.totalItems = totalItems;
+                userCart.totalAmount = totalAmount;
+                userCart.updatedAt = new Date().toISOString();
+                
+                await setDoc(cartRef, userCart);
+                console.log("Panier sauvegardé dans Firestore");
+            } catch (error) {
+                console.error("Erreur lors de la sauvegarde du panier:", error);
+            }
+        }
+
+        // Ajout au panier avec Firebase
+        async function addToCart(productId, buttonElement) {
+            if (!currentUser) {
+                console.error("Utilisateur non connecté");
+                return;
+            }
+            
             const product = products.find(p => p.id === productId);
             
-            // Vérifier si le produit est déjà dans le panier
-            const existingItem = cart.find(item => item.id === productId);
+            // Animation du bouton
+            const $button = $(buttonElement);
+            $button.addClass('adding');
+            setTimeout(() => {
+                $button.removeClass('adding');
+            }, 500);
             
+            // Animation vers le panier
+            animateAddToCart(buttonElement, product);
+            
+            // Mettre à jour le panier local
+            if (!userCart.items) {
+                userCart.items = {};
+            }
+            
+            if (userCart.items[productId]) {
+                userCart.items[productId].quantity += 1;
+            } else {
+                userCart.items[productId] = {
+                    productId: productId,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1,
+                    addedAt: new Date().toISOString()
+                };
+            }
+            
+            // Mettre à jour le panier global (pour la compatibilité)
+            const existingItem = cart.find(item => item.id === productId);
             if (existingItem) {
-                existingItem.quantity = (existingItem.quantity || 1) + 1;
+                existingItem.quantity += 1;
             } else {
                 const productCopy = {...product};
                 productCopy.quantity = 1;
                 cart.push(productCopy);
             }
             
-            // Sauvegarder dans localStorage
-            localStorage.setItem('kdo_cart', JSON.stringify(cart));
+            // Sauvegarder dans Firestore
+            await saveCartToFirestore();
             
             // Mettre à jour l'affichage
             updateCartCount();
+            
+            // Mettre à jour la quantité sur le produit
+            renderProducts();
             
             // Notification
             $('#cartProductName').text(product.name);
@@ -1186,14 +1601,14 @@
 
         // Mise à jour du compteur panier
         function updateCartCount() {
-            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const totalItems = userCart.totalItems || cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
             $('#footerCartCount').text(totalItems);
         }
 
         // Initialisation
-        $(document).ready(function() {
-            // Initialiser le compteur du panier
-            updateCartCount();
+        $(document).ready(async function() {
+            // Initialiser Firebase
+            await initializeFirebase();
             
             // Initialiser le filtre de prix désactivé
             $('#priceToggle').prop('checked', false);
@@ -1280,9 +1695,10 @@
             });
             
             // Ajout au panier
-            $(document).on('click', '.btn-cart', function() {
+            $(document).on('click', '.btn-cart', function(e) {
+                e.preventDefault();
                 const productId = parseInt($(this).data('id'));
-                addToCart(productId);
+                addToCart(productId, this);
             });
             
             // Tri des produits
