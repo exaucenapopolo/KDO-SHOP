@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catégories - KDO SHOP</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS personnalisé -->
+    <style>
+        :root {
+            --primary-orange: #FF6B00;
+            --secondary-blue: #0066CC;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
+            --text-medium: #666666;
+            --text-light: #999999;
+            --border-color: #E0E0E0;
+            --white: #FFFFFF;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
+            --success-green: #52C41A;
+        }
+        
+        * {
+            font-size: 12px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--text-dark);
+            padding-bottom: 50px;
+        }
+        
+        /* Header simplifié */
+        .header-kdo {
+            border-bottom: 1px solid var(--border-color);
+            background: var(--white);
+            padding: 8px 0;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            color: var(--primary-orange);
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Barre de recherche */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        /* Barre de catégories horizontale défilante */
+        .categories-scroll {
+            background: var(--accent-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .categories-container {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 12px;
+        }
+        
+        .category-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 6px 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 11px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .category-item:hover,
+        .category-item.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        .category-item i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        
+        /* Titre de page */
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 15px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* Grille de catégories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .category-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--white);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-orange);
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .category-icon {
+            height: 100px;
+            background: linear-gradient(135deg, var(--accent-gray) 0%, #e8e8e8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--primary-orange);
+        }
+        
+        .category-info {
+            padding: 12px;
+            border-top: 1px solid var(--accent-gray);
+        }
+        
+        .category-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .category-count {
+            font-size: 11px;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* Liste des sous-catégories */
+        .subcategories-container {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .subcategories-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+        
+        .subcategories-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .subcategory-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--accent-gray);
+        }
+        
+        .subcategory-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .subcategory-link:hover {
+            color: var(--primary-orange);
+        }
+        
+        .subcategory-count {
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+        
+        /* Statistiques */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary-orange);
+        }
+        
+        .stat-info h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-dark);
+        }
+        
+        .stat-info p {
+            font-size: 11px;
+            color: var(--text-medium);
+            margin: 0;
+        }
+        
+        /* Footer avec navigation fonctionnelle */
+        .footer-kdo {
+            background: var(--white);
+            border-top: 1px solid var(--border-color);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-medium);
+            transition: all 0.2s;
+            padding: 4px;
+            min-width: 60px;
+            position: relative;
+        }
+        
+        .footer-item:hover,
+        .footer-item.active {
+            color: var(--primary-orange);
+            text-decoration: none;
+        }
+        
+        .footer-icon {
+            font-size: 18px;
+            margin-bottom: 2px;
+        }
+        
+        .footer-label {
+            font-size: 10px;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .categories-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .subcategories-list {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .subcategories-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .subcategories-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .search-wrapper {
+                margin: 0 5px;
+                max-width: 100%;
+            }
+        }
+        
+        /* Style pour le panier dans le footer */
+        .cart-count-badge {
+            position: absolute;
+            top: 0;
+            right: 5px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header simplifié -->
+    <header class="header-kdo">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Logo -->
+                <a href="index.html" class="logo-container text-decoration-none">
+                    <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                         alt="KDO SHOP" 
+                         class="logo-img">
+                    <span class="logo-text">KDO SHOP</span>
+                </a>
+                
+                <!-- Barre de recherche -->
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Rechercher des catégories...">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Barre de catégories horizontale défilante -->
+    <div class="categories-scroll">
+        <div class="categories-container">
+            <a href="index.html" class="category-item">
+                <i class="fas fa-home"></i> Accueil
+            </a>
+            <a href="categories.html" class="category-item active">
+                <i class="fas fa-th-large"></i> Catégories
+            </a>
+            <a href="messagerie.html" class="category-item">
+                <i class="far fa-comment-dots"></i> Messagerie
+            </a>
+            <a href="panier.html" class="category-item">
+                <i class="fas fa-shopping-cart"></i> Panier
+            </a>
+            <a href="profil.html" class="category-item">
+                <i class="far fa-user"></i> Profil
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <h1 class="page-title">
+            <i class="fas fa-th-large me-2"></i> Catégories
+        </h1>
+        
+        <!-- Statistiques -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-boxes"></i>
+                </div>
+                <div class="stat-info">
+                    <h4 id="totalCategories">24</h4>
+                    <p>Catégories</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-info">
+                    <h4 id="totalProducts">856</h4>
+                    <p>Produits</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="stat-info">
+                    <h4 id="totalSuppliers">128</h4>
+                    <p>Fournisseurs</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="stat-info">
+                    <h4 id="verifiedSuppliers">89</h4>
+                    <p>Fournisseurs vérifiés</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toutes les catégories -->
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Catégories chargées dynamiquement -->
+        </div>
+        
+        <!-- Sous-catégories populaires -->
+        <div class="subcategories-container">
+            <h3 class="subcategories-title">
+                <i class="fas fa-tags me-2"></i> Sous-catégories populaires
+            </h3>
+            <ul class="subcategories-list" id="subcategoriesList">
+                <!-- Sous-catégories chargées dynamiquement -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer avec navigation fonctionnelle -->
+    <footer class="footer-kdo">
+        <div class="container">
+            <nav class="footer-nav">
+                <a href="index.html" class="footer-item">
+                    <i class="fas fa-home footer-icon"></i>
+                    <span class="footer-label">Accueil</span>
+                </a>
+                <a href="categories.html" class="footer-item active">
+                    <i class="fas fa-th-large footer-icon"></i>
+                    <span class="footer-label">Catégories</span>
+                </a>
+                <a href="messagerie.html" class="footer-item">
+                    <i class="far fa-comment-dots footer-icon"></i>
+                    <span class="footer-label">Messagerie</span>
+                </a>
+                <a href="panier.html" class="footer-item" id="footerCart">
+                    <i class="fas fa-shopping-cart footer-icon"></i>
+                    <span class="footer-label">Panier</span>
+                    <span id="footerCartCount" class="cart-count-badge">0</span>
+                </a>
+                <a href="profil.html" class="footer-item">
+                    <i class="far fa-user footer-icon"></i>
+                    <span class="footer-label">Mon KDO</span>
+                </a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script principal -->
+    <script>
+        // Données des catégories
+        const categories = [
+            { id: 1, name: "Électronique", icon: "fa-laptop", count: 124, color: "#FF6B00", subcategories: ["Ordinateurs", "Téléphones", "Tablettes", "Accessoires"] },
+            { id: 2, name: "Vêtements", icon: "fa-tshirt", count: 89, color: "#0066CC", subcategories: ["Homme", "Femme", "Enfant", "Sport"] },
+            { id: 3, name: "Maison & Jardin", icon: "fa-home", count: 76, color: "#52C41A", subcategories: ["Meubles", "Décoration", "Jardinage", "Cuisine"] },
+            { id: 4, name: "Beauté & Santé", icon: "fa-spa", count: 65, color: "#FF4081", subcategories: ["Soins visage", "Maquillage", "Parfums", "Soins corps"] },
+            { id: 5, name: "Sports & Loisirs", icon: "fa-futbol", count: 58, color: "#4CAF50", subcategories: ["Fitness", "Vélos", "Camping", "Pêche"] },
+            { id: 6, name: "Automobile", icon: "fa-car", count: 42, color: "#9C27B0", subcategories: ["Pièces", "Accessoires", "Entretien", "Pneus"] },
+            { id: 7, name: "Bureau", icon: "fa-briefcase", count: 37, color: "#FF9800", subcategories: ["Fournitures", "Mobilier", "Matériel", "Organisation"] },
+            { id: 8, name: "Alimentation", icon: "fa-utensils", count: 123, color: "#8BC34A", subcategories: ["Épicerie", "Boissons", "Snacks", "Bio"] },
+            { id: 9, name: "Bébé & Enfant", icon: "fa-baby", count: 45, color: "#00BCD4", subcategories: ["Vêtements", "Jouets", "Puériculture", "Éducation"] },
+            { id: 10, name: "Loisirs créatifs", icon: "fa-palette", count: 32, color: "#E91E63", subcategories: ["Dessin", "Couture", "Bricolage", "Modelage"] },
+            { id: 11, name: "Informatique", icon: "fa-desktop", count: 78, color: "#3F51B5", subcategories: ["Composants", "Périphériques", "Logiciels", "Réseau"] },
+            { id: 12, name: "Immobilier", icon: "fa-building", count: 19, color: "#795548", subcategories: ["Location", "Vente", "Bureau", "Terrain"] }
+        ];
+
+        // Sous-catégories populaires
+        const popularSubcategories = [
+            { name: "Smartphones", count: 156, category: "Électronique" },
+            { name: "T-shirts", count: 234, category: "Vêtements" },
+            { name: "Meubles salon", count: 89, category: "Maison & Jardin" },
+            { name: "Produits cheveux", count: 67, category: "Beauté & Santé" },
+            { name: "Vélos", count: 45, category: "Sports & Loisirs" },
+            { name: "Pièces moteur", count: 32, category: "Automobile" },
+            { name: "Papeterie", count: 128, category: "Bureau" },
+            { name: "Boissons énergisantes", count: 56, category: "Alimentation" },
+            { name: "Jouets éducatifs", count: 78, category: "Bébé & Enfant" },
+            { name: "Matériel dessin", count: 43, category: "Loisirs créatifs" },
+            { name: "Disques durs", count: 65, category: "Informatique" },
+            { name: "Appartements", count: 34, category: "Immobilier" }
+        ];
+
+        // Panier
+        let cart = JSON.parse(localStorage.getItem('kdo_cart')) || [];
+
+        // Rendu des catégories
+        function renderCategories() {
+            const container = $('#categoriesGrid');
+            container.empty();
+            
+            categories.forEach(cat => {
+                const categoryCard = `
+                    <a href="index.html?category=${cat.id}" class="category-card">
+                        <div class="category-icon" style="background: linear-gradient(135deg, ${cat.color}20 0%, ${cat.color}10 100%);">
+                            <i class="fas ${cat.icon}" style="color: ${cat.color};"></i>
+                        </div>
+                        <div class="category-info">
+                            <div class="category-name">${cat.name}</div>
+                            <div class="category-count">
+                                <i class="fas fa-box"></i> ${cat.count} produits
+                            </div>
+                        </div>
+                    </a>
+                `;
+                container.append(categoryCard);
+            });
+            
+            // Mettre à jour les statistiques
+            $('#totalCategories').text(categories.length);
+            $('#totalProducts').text(categories.reduce((sum, cat) => sum + cat.count, 0));
+            $('#totalSuppliers').text('128');
+            $('#verifiedSuppliers').text('89');
+        }
+
+        // Rendu des sous-catégories
+        function renderSubcategories() {
+            const container = $('#subcategoriesList');
+            container.empty();
+            
+            popularSubcategories.forEach(sub => {
+                const subcategoryItem = `
+                    <li class="subcategory-item">
+                        <a href="index.html?subcategory=${sub.name}" class="subcategory-link">
+                            <span>${sub.name}</span>
+                            <span class="subcategory-count">${sub.count}</span>
+                        </a>
+                    </li>
+                `;
+                container.append(subcategoryItem);
+            });
+        }
+
+        // Mise à jour du compteur panier
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            $('#footerCartCount').text(totalItems);
+        }
+
+        // Initialisation
+        $(document).ready(function() {
+            // Initialiser les catégories
+            renderCategories();
+            renderSubcategories();
+            updateCartCount();
+            
+            // Recherche de catégories
+            $('.search-btn').on('click', performSearch);
+            
+            $('.search-input').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                const term = $('.search-input').val().toLowerCase().trim();
+                
+                if (term) {
+                    // Filtrer les catégories
+                    const filteredCategories = categories.filter(cat => 
+                        cat.name.toLowerCase().includes(term) ||
+                        cat.subcategories.some(sub => sub.toLowerCase().includes(term))
+                    );
+                    
+                    // Filtrer les sous-catégories
+                    const filteredSubcategories = popularSubcategories.filter(sub => 
+                        sub.name.toLowerCase().includes(term) ||
+                        sub.category.toLowerCase().includes(term)
+                    );
+                    
+                    // Mettre à jour l'affichage
+                    const container = $('#categoriesGrid');
+                    container.empty();
+                    
+                    if (filteredCategories.length === 0) {
+                        container.html(`
+                            <div class="col-12 text-center py-5">
+                                <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                                <h5 class="text-muted">Aucune catégorie trouvée</h5>
+                                <p class="text-muted">Essayez d'autres mots-clés</p>
+                            </div>
+                        `);
+                    } else {
+                        filteredCategories.forEach(cat => {
+                            const categoryCard = `
+                                <a href="index.html?category=${cat.id}" class="category-card">
+                                    <div class="category-icon" style="background: linear-gradient(135deg, ${cat.color}20 0%, ${cat.color}10 100%);">
+                                        <i class="fas ${cat.icon}" style="color: ${cat.color};"></i>
+                                    </div>
+                                    <div class="category-info">
+                                        <div class="category-name">${cat.name}</div>
+                                        <div class="category-count">
+                                            <i class="fas fa-box"></i> ${cat.count} produits
+                                        </div>
+                                    </div>
+                                </a>
+                            `;
+                            container.append(categoryCard);
+                        });
+                    }
+                    
+                    // Mettre à jour les sous-catégories
+                    const subContainer = $('#subcategoriesList');
+                    subContainer.empty();
+                    
+                    filteredSubcategories.forEach(sub => {
+                        const subcategoryItem = `
+                            <li class="subcategory-item">
+                                <a href="index.html?subcategory=${sub.name}" class="subcategory-link">
+                                    <span>${sub.name}</span>
+                                    <span class="subcategory-count">${sub.count}</span>
+                                </a>
+                            </li>
+                        `;
+                        subContainer.append(subcategoryItem);
+                    });
+                } else {
+                    // Réinitialiser l'affichage
+                    renderCategories();
+                    renderSubcategories();
+                }
+            }
+            
+            // Navigation footer
+            $('.footer-item').on('click', function(e) {
+                $('.footer-item').removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+</body>
+</html>
