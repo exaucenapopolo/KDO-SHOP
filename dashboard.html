@@ -22,6 +22,7 @@
             --shadow: 0 1px 3px rgba(0,0,0,0.08);
             --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
             --success-green: #52C41A;
+            --danger-red: #FF4D4F;
         }
         
         * {
@@ -411,7 +412,7 @@
         /* Carte produit */
         .products-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 12px;
             margin-bottom: 25px;
         }
@@ -431,7 +432,7 @@
         }
         
         .product-image {
-            height: 150px;
+            height: 160px;
             background: var(--accent-gray);
             display: flex;
             align-items: center;
@@ -464,9 +465,21 @@
             font-size: 8px;
         }
         
-        .cart-quantity-badge {
+        .discount-badge {
             position: absolute;
             top: 6px;
+            right: 6px;
+            background: var(--danger-red);
+            color: white;
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 2px;
+            font-weight: bold;
+        }
+        
+        .cart-quantity-badge {
+            position: absolute;
+            top: 30px;
             right: 6px;
             background: var(--primary-orange);
             color: white;
@@ -499,11 +512,23 @@
             -webkit-box-orient: vertical;
         }
         
+        .product-price-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 4px;
+        }
+        
         .product-price {
             color: var(--primary-orange);
             font-weight: 700;
             font-size: 14px;
-            margin-bottom: 4px;
+        }
+        
+        .product-old-price {
+            color: var(--text-light);
+            font-size: 11px;
+            text-decoration: line-through;
         }
         
         .product-supplier {
@@ -518,6 +543,16 @@
         .verified-badge {
             color: var(--success-green);
             font-size: 9px;
+        }
+        
+        .product-specs {
+            font-size: 10px;
+            color: var(--text-medium);
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         
         .product-orders {
@@ -749,7 +784,7 @@
             }
             
             .products-container {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             }
             
             .promo-carousel {
@@ -864,44 +899,44 @@
             <!-- Les promotions défilent automatiquement -->
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Ordinateur portable à partir de <span class="promo-price">350 000 FCFA</span></span>
+                <span class="promo-text">Clé USB 64Go à partir de <span class="promo-price">5 000 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Smartphone dernière génération <span class="promo-price">150 000 FCFA</span></span>
+                <span class="promo-text">PC Portable HP i5 <span class="promo-price">350 000 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Tablette Android 64Go <span class="promo-price">85 000 FCFA</span></span>
+                <span class="promo-text">Samsung A14 128Go <span class="promo-price">85 000 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Accessoires Gaming <span class="promo-price">-30%</span></span>
+                <span class="promo-text">Clavier Gaming RGB <span class="promo-price">-25%</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Sacs professionnels <span class="promo-price">20 000 FCFA</span></span>
+                <span class="promo-text">Souris Sans Fil <span class="promo-price">3 500 FCFA</span></span>
             </div>
             <!-- Doubler pour créer l'effet infini -->
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Ordinateur portable à partir de <span class="promo-price">350 000 FCFA</span></span>
+                <span class="promo-text">Clé USB 64Go à partir de <span class="promo-price">5 000 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Smartphone dernière génération <span class="promo-price">150 000 FCFA</span></span>
+                <span class="promo-text">PC Portable HP i5 <span class="promo-price">350 000 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Tablette Android 64Go <span class="promo-price">85 000 FCFA</span></span>
+                <span class="promo-text">Samsung A14 128Go <span class="promo-price">85 000 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Accessoires Gaming <span class="promo-price">-30%</span></span>
+                <span class="promo-text">Clavier Gaming RGB <span class="promo-price">-25%</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">PROMO</span>
-                <span class="promo-text">Sacs professionnels <span class="promo-price">20 000 FCFA</span></span>
+                <span class="promo-text">Souris Sans Fil <span class="promo-price">3 500 FCFA</span></span>
             </div>
         </div>
     </div>
@@ -912,6 +947,9 @@
             <a href="#" class="category-item active">
                 <i class="fas fa-th-large"></i> Tous
             </a>
+            <a href="#" class="category-item" data-category="usb">
+                <i class="fas fa-usb"></i> Clés USB
+            </a>
             <a href="#" class="category-item" data-category="ordinateur">
                 <i class="fas fa-laptop"></i> Ordinateurs
             </a>
@@ -921,23 +959,20 @@
             <a href="#" class="category-item" data-category="tablette">
                 <i class="fas fa-tablet-alt"></i> Tablettes
             </a>
-            <a href="#" class="category-item" data-category="accessoire">
-                <i class="fas fa-keyboard"></i> Accessoires
+            <a href="#" class="category-item" data-category="clavier">
+                <i class="fas fa-keyboard"></i> Claviers
             </a>
-            <a href="#" class="category-item" data-category="sac">
-                <i class="fas fa-briefcase"></i> Sacs & Bagages
+            <a href="#" class="category-item" data-category="souris">
+                <i class="fas fa-mouse"></i> Souris
             </a>
-            <a href="#" class="category-item" data-category="gaming">
-                <i class="fas fa-gamepad"></i> Gaming
+            <a href="#" class="category-item" data-category="modem">
+                <i class="fas fa-wifi"></i> Modems
             </a>
-            <a href="#" class="category-item" data-category="vetement">
-                <i class="fas fa-tshirt"></i> Vêtements
+            <a href="#" class="category-item" data-category="ram">
+                <i class="fas fa-memory"></i> RAM
             </a>
-            <a href="#" class="category-item" data-category="montre">
-                <i class="fas fa-clock"></i> Montres
-            </a>
-            <a href="#" class="category-item" data-category="beaute">
-                <i class="fas fa-spa"></i> Beauté
+            <a href="#" class="category-item" data-category="desktop">
+                <i class="fas fa-desktop"></i> Desktop
             </a>
         </div>
     </div>
@@ -958,10 +993,10 @@
                 </div>
                 
                 <div class="price-slider-container" id="priceSliderContainer">
-                    <input type="range" class="price-slider" id="priceSlider" min="1000" max="500000" step="1000" value="500000">
+                    <input type="range" class="price-slider" id="priceSlider" min="1000" max="1000000" step="1000" value="1000000">
                     <div class="price-values">
                         <span class="price-value">1 000 FCFA</span>
-                        <span class="price-value" id="currentPrice">500 000 FCFA</span>
+                        <span class="price-value" id="currentPrice">1 000 000 FCFA</span>
                     </div>
                 </div>
                 
@@ -990,57 +1025,87 @@
                     </div>
                     <ul class="category-list">
                         <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="usb">
+                                <span>Clés USB</span>
+                                <span class="category-count">90</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
                             <a href="#" class="category-link" data-category="ordinateur">
                                 <span>Ordinateurs</span>
-                                <span class="category-count">4</span>
+                                <span class="category-count">90</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
                             <a href="#" class="category-link" data-category="telephone">
                                 <span>Téléphones</span>
-                                <span class="category-count">4</span>
+                                <span class="category-count">80</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
                             <a href="#" class="category-link" data-category="tablette">
                                 <span>Tablettes</span>
-                                <span class="category-count">2</span>
+                                <span class="category-count">50</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
-                            <a href="#" class="category-link" data-category="accessoire">
-                                <span>Accessoires</span>
-                                <span class="category-count">3</span>
+                            <a href="#" class="category-link" data-category="clavier">
+                                <span>Claviers</span>
+                                <span class="category-count">50</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="souris">
+                                <span>Souris</span>
+                                <span class="category-count">60</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="modem">
+                                <span>Modems</span>
+                                <span class="category-count">60</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="ram">
+                                <span>RAM</span>
+                                <span class="category-count">80</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="desktop">
+                                <span>Desktop</span>
+                                <span class="category-count">80</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="videoprojecteur">
+                                <span>Vidéoprojecteurs</span>
+                                <span class="category-count">50</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="adaptateur">
+                                <span>Adaptateurs</span>
+                                <span class="category-count">55</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="television">
+                                <span>Télévisions</span>
+                                <span class="category-count">40</span>
+                            </a>
+                        </li>
+                        <li class="category-item-sidebar">
+                            <a href="#" class="category-link" data-category="chargeur">
+                                <span>Chargeurs</span>
+                                <span class="category-count">60</span>
                             </a>
                         </li>
                         <li class="category-item-sidebar">
                             <a href="#" class="category-link" data-category="sac">
-                                <span>Sacs & Bagages</span>
-                                <span class="category-count">2</span>
-                            </a>
-                        </li>
-                        <li class="category-item-sidebar">
-                            <a href="#" class="category-link" data-category="gaming">
-                                <span>Gaming</span>
-                                <span class="category-count">2</span>
-                            </a>
-                        </li>
-                        <li class="category-item-sidebar">
-                            <a href="#" class="category-link" data-category="vetement">
-                                <span>Vêtements</span>
-                                <span class="category-count">3</span>
-                            </a>
-                        </li>
-                        <li class="category-item-sidebar">
-                            <a href="#" class="category-link" data-category="montre">
-                                <span>Montres</span>
-                                <span class="category-count">1</span>
-                            </a>
-                        </li>
-                        <li class="category-item-sidebar">
-                            <a href="#" class="category-link" data-category="beaute">
-                                <span>Beauté</span>
-                                <span class="category-count">1</span>
+                                <span>Sacs</span>
+                                <span class="category-count">50</span>
                             </a>
                         </li>
                     </ul>
@@ -1164,51 +1229,87 @@
 
     <!-- Script principal -->
     <script>
-        // Données des produits
+        // Données des produits basées sur chezkdo.com
         const products = [
-            // ORDINATEURS
-            { id: 1, name: "HP EliteBook 840 G5 i7 16Go RAM 512Go SSD", price: 450000, category: "ordinateur", verified: true, image: "laptop", orders: 156 },
-            { id: 2, name: "Dell Latitude 5490 i5 8Go RAM 256Go SSD", price: 380000, category: "ordinateur", verified: true, image: "laptop", orders: 89 },
-            { id: 3, name: "MacBook Air M1 2020 256Go SSD", price: 850000, category: "ordinateur", verified: true, image: "laptop", orders: 234 },
-            { id: 4, name: "PC Bureau Gaming Ryzen 5 RTX 3060", price: 720000, category: "ordinateur", verified: true, image: "desktop", orders: 187 },
+            // CLÉS USB (90 produits - exemples)
+            { id: 1, name: "Clé USB Kingston DataTraveler 64Go USB 3.0", price: 8000, oldPrice: 12000, category: "usb", verified: true, image: "usb", orders: 245, specs: "USB 3.0, 64Go, Transfert rapide" },
+            { id: 2, name: "Clé USB SanDisk Ultra Flair 128Go USB 3.0", price: 15000, oldPrice: 20000, category: "usb", verified: true, image: "usb", orders: 189, specs: "USB 3.0, 128Go, Sécurisée" },
+            { id: 3, name: "Clé USB Samsung BAR Plus 32Go USB 3.1", price: 5000, oldPrice: 8000, category: "usb", verified: true, image: "usb", orders: 456, specs: "USB 3.1, 32Go, Métal" },
+            { id: 4, name: "Clé USB Lexar JumpDrive S75 256Go USB 3.0", price: 35000, oldPrice: 45000, category: "usb", verified: true, image: "usb", orders: 78, specs: "USB 3.0, 256Go, Haut débit" },
+            { id: 5, name: "Clé USB PNY Turbo 16Go USB 3.0", price: 3000, oldPrice: 5000, category: "usb", verified: true, image: "usb", orders: 567, specs: "USB 3.0, 16Go, Compacte" },
             
-            // TÉLÉPHONES
-            { id: 5, name: "iPhone 12 128Go Noir Reconditionné", price: 420000, category: "telephone", verified: true, image: "mobile", orders: 312 },
-            { id: 6, name: "Samsung Galaxy S21 5G 128Go", price: 380000, category: "telephone", verified: true, image: "mobile", orders: 198 },
-            { id: 7, name: "Xiaomi Redmi Note 12 128Go", price: 145000, category: "telephone", verified: true, image: "mobile", orders: 456 },
-            { id: 8, name: "Tecno Spark 10 128Go 5000mAh", price: 85000, category: "telephone", verified: true, image: "mobile", orders: 321 },
+            // ORDINATEURS (90 produits - exemples)
+            { id: 6, name: "PC Portable HP 15s i5 11e Gen 8Go RAM 512Go SSD", price: 450000, oldPrice: 520000, category: "ordinateur", verified: true, image: "laptop", orders: 134, specs: "i5 11e Gen, 8Go RAM, 512Go SSD" },
+            { id: 7, name: "PC Portable Dell Inspiron 15 3501 i3 10e Gen 4Go RAM 1To HDD", price: 320000, oldPrice: 380000, category: "ordinateur", verified: true, image: "laptop", orders: 189, specs: "i3 10e Gen, 4Go RAM, 1To HDD" },
+            { id: 8, name: "PC Portable Lenovo IdeaPad 3 i7 12e Gen 16Go RAM 1To SSD", price: 750000, oldPrice: 850000, category: "ordinateur", verified: true, image: "laptop", orders: 67, specs: "i7 12e Gen, 16Go RAM, 1To SSD" },
+            { id: 9, name: "PC Portable Acer Aspire 5 Ryzen 5 8Go RAM 256Go SSD", price: 380000, oldPrice: 450000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Ryzen 5, 8Go RAM, 256Go SSD" },
+            { id: 10, name: "PC Portable ASUS VivoBook 15 i5 10e Gen 8Go RAM 512Go SSD", price: 420000, oldPrice: 480000, category: "ordinateur", verified: true, image: "laptop", orders: 98, specs: "i5 10e Gen, 8Go RAM, 512Go SSD" },
             
-            // TABLETTES
-            { id: 9, name: "iPad Air 5 64Go WiFi M1 Chip", price: 520000, category: "tablette", verified: true, image: "tablet", orders: 123 },
-            { id: 10, name: "Samsung Galaxy Tab S8 128Go", price: 480000, category: "tablette", verified: true, image: "tablet", orders: 87 },
+            // TÉLÉPHONES (80 produits - exemples)
+            { id: 11, name: "Smartphone Samsung Galaxy A14 4G 128Go 4Go RAM", price: 85000, oldPrice: 110000, category: "telephone", verified: true, image: "mobile", orders: 345, specs: "128Go, 4Go RAM, Triple caméra" },
+            { id: 12, name: "Smartphone Tecno Spark 10 Pro 256Go 8Go RAM", price: 120000, oldPrice: 150000, category: "telephone", verified: true, image: "mobile", orders: 267, specs: "256Go, 8Go RAM, 5000mAh" },
+            { id: 13, name: "Smartphone iPhone 12 128Go Reconditionné", price: 420000, oldPrice: 500000, category: "telephone", verified: true, image: "mobile", orders: 89, specs: "128Go, 5G, iOS" },
+            { id: 14, name: "Smartphone Xiaomi Redmi Note 12 128Go 6Go RAM", price: 145000, oldPrice: 180000, category: "telephone", verified: true, image: "mobile", orders: 198, specs: "128Go, 6Go RAM, AMOLED" },
+            { id: 15, name: "Smartphone Infinix Hot 30 128Go 8Go RAM", price: 95000, oldPrice: 120000, category: "telephone", verified: true, image: "mobile", orders: 156, specs: "128Go, 8Go RAM, 5000mAh" },
             
-            // ACCESSOIRES
-            { id: 11, name: "Souris Gaming RGB 6400 DPI", price: 15000, category: "accessoire", verified: true, image: "mouse", orders: 654 },
-            { id: 12, name: "Clavier Mécanique Gaming RGB", price: 25000, category: "accessoire", verified: true, image: "keyboard", orders: 432 },
-            { id: 13, name: "Power Bank 30000mAh PD 30W", price: 18000, category: "accessoire", verified: true, image: "battery", orders: 789 },
+            // TABLETTES (50 produits - exemples)
+            { id: 16, name: "Tablette Samsung Galaxy Tab A8 64Go 4Go RAM WiFi", price: 150000, oldPrice: 180000, category: "tablette", verified: true, image: "tablet", orders: 78, specs: "64Go, 4Go RAM, 10.5\"" },
+            { id: 17, name: "Tablette Lenovo Tab M10 64Go 4Go RAM WiFi", price: 120000, oldPrice: 150000, category: "tablette", verified: true, image: "tablet", orders: 56, specs: "64Go, 4Go RAM, 10.1\"" },
             
-            // SACS
-            { id: 14, name: "Sac à Dos Gaming 17\" Waterproof", price: 22000, category: "sac", verified: true, image: "bag", orders: 345 },
-            { id: 15, name: "Sacoche Professionnelle Cuir", price: 18000, category: "sac", verified: true, image: "briefcase", orders: 234 },
+            // CLAVIERS (50 produits - exemples)
+            { id: 18, name: "Clavier Gaming RGB Mécanique Redragon K552", price: 25000, oldPrice: 35000, category: "clavier", verified: true, image: "keyboard", orders: 189, specs: "RGB, Mécanique, Anti-ghosting" },
+            { id: 19, name: "Clavier Sans Fil Logitech MK235", price: 15000, oldPrice: 20000, category: "clavier", verified: true, image: "keyboard", orders: 245, specs: "Sans fil, Silencieux, 2 ans batterie" },
+            { id: 20, name: "Clavier Microsoft Wired Keyboard 600", price: 12000, oldPrice: 18000, category: "clavier", verified: true, image: "keyboard", orders: 167, specs: "Filaire, Bureau, Touches silencieuses" },
             
-            // GAMING
-            { id: 16, name: "Manette Xbox Series X Sans Fil", price: 35000, category: "gaming", verified: true, image: "gamepad", orders: 567 },
-            { id: 17, name: "Casque Gaming 7.1 Surround RGB", price: 35000, category: "gaming", verified: true, image: "headphones", orders: 432 },
+            // SOURIS (60 produits - exemples)
+            { id: 21, name: "Souris Gaming RGB Logitech G102 Lightsync", price: 12000, oldPrice: 18000, category: "souris", verified: true, image: "mouse", orders: 289, specs: "RGB, 8000 DPI, 6 boutons" },
+            { id: 22, name: "Souris Sans Fil Microsoft Mobile Mouse 1850", price: 8000, oldPrice: 12000, category: "souris", verified: true, image: "mouse", orders: 345, specs: "Sans fil, Bluetooth, Compacte" },
             
-            // VÊTEMENTS
-            { id: 18, name: "T-shirt Homme Coton 100% Design Moderne", price: 3500, category: "vetement", verified: true, image: "tshirt", orders: 1234 },
-            { id: 19, name: "Poncho de Pluie Réutilisable Léger", price: 7500, category: "vetement", verified: true, image: "tshirt", orders: 567 },
-            { id: 23, name: "Maillot de Football Équipe 2024", price: 8500, category: "vetement", verified: true, image: "tshirt", orders: 345 },
+            // MODEMS (60 produits - exemples)
+            { id: 23, name: "Modem 4G TP-Link Archer MR600", price: 75000, oldPrice: 90000, category: "modem", verified: true, image: "wifi", orders: 45, specs: "4G, WiFi AC1200, 4 ports LAN" },
+            { id: 24, name: "Modem WiFi D-Link DIR-819", price: 35000, oldPrice: 45000, category: "modem", verified: true, image: "wifi", orders: 67, specs: "WiFi N300, 4 ports, Antennes" },
             
-            // MONTRES
-            { id: 20, name: "Montre Mécanique Homme Luxe Cuir", price: 45000, category: "montre", verified: true, image: "clock", orders: 123 },
+            // RAM (80 produits - exemples)
+            { id: 25, name: "RAM DDR4 8Go 3200MHz Corsair Vengeance", price: 25000, oldPrice: 32000, category: "ram", verified: true, image: "memory", orders: 123, specs: "DDR4, 8Go, 3200MHz" },
+            { id: 26, name: "RAM DDR4 16Go 3200MHz Kingston Fury", price: 45000, oldPrice: 55000, category: "ram", verified: true, image: "memory", orders: 78, specs: "DDR4, 16Go, 3200MHz" },
             
-            // BEAUTÉ
-            { id: 21, name: "Kit Faux Ongles en Gel Professionnels", price: 8500, category: "beaute", verified: true, image: "spa", orders: 456 },
+            // DESKTOP (80 produits - exemples)
+            { id: 27, name: "PC Desktop HP ProDesk 600 i5 8Go RAM 256Go SSD", price: 380000, oldPrice: 450000, category: "desktop", verified: true, image: "desktop", orders: 56, specs: "i5, 8Go RAM, 256Go SSD" },
+            { id: 28, name: "PC Desktop Gaming Ryzen 5 RTX 3060 16Go RAM 1To SSD", price: 850000, oldPrice: 950000, category: "desktop", verified: true, image: "desktop", orders: 34, specs: "Ryzen 5, RTX 3060, 16Go RAM" },
             
-            // AUTRES
-            { id: 22, name: "Monture de Lunettes de Vue Ronde Style", price: 12000, category: "accessoire", verified: true, image: "glasses", orders: 789 },
-            { id: 24, name: "Mini-Ordinateur Windows 11 Pro 8Go RAM", price: 185000, category: "ordinateur", verified: true, image: "desktop", orders: 89 }
+            // VIDÉOPROJECTEURS (50 produits - exemples)
+            { id: 29, name: "Vidéoprojecteur Epson EB-X41 3600 Lumens", price: 450000, oldPrice: 520000, category: "videoprojecteur", verified: true, image: "projector", orders: 23, specs: "3600 lumens, Full HD, HDMI" },
+            
+            // ADAPTATEURS (55 produits - exemples)
+            { id: 30, name: "Adaptateur HDMI vers VGA avec Audio", price: 5000, oldPrice: 8000, category: "adaptateur", verified: true, image: "adapter", orders: 145, specs: "HDMI vers VGA, Audio intégré" },
+            
+            // TÉLÉVISIONS (40 produits - exemples)
+            { id: 31, name: "Télévision LG 43\" Smart TV 4K UHD", price: 350000, oldPrice: 420000, category: "television", verified: true, image: "tv", orders: 45, specs: "43\", 4K UHD, Smart TV" },
+            
+            // CHARGEURS (60 produits - exemples)
+            { id: 32, name: "Chargeur Rapide USB-C 65W PD 3.0", price: 15000, oldPrice: 22000, category: "chargeur", verified: true, image: "charger", orders: 189, specs: "65W, PD 3.0, USB-C" },
+            
+            // SACS (50 produits - exemples)
+            { id: 33, name: "Sac à Dos Gaming Targus 17\" avec Port USB", price: 25000, oldPrice: 35000, category: "sac", verified: true, image: "bag", orders: 156, specs: "17\", Port USB, Étanche" },
+            
+            // Ajout de plus de produits pour atteindre environ 100 produits
+            { id: 34, name: "Clé USB Kingston DTX 32Go USB 3.2", price: 4000, oldPrice: 6000, category: "usb", verified: true, image: "usb", orders: 321, specs: "USB 3.2, 32Go, Design compact" },
+            { id: 35, name: "Clé USB Sandisk Cruzer Blade 16Go USB 2.0", price: 2500, oldPrice: 4000, category: "usb", verified: true, image: "usb", orders: 432, specs: "USB 2.0, 16Go, Classique" },
+            { id: 36, name: "PC Portable Lenovo ThinkPad E14 i5 11e Gen 16Go RAM 512Go SSD", price: 550000, oldPrice: 650000, category: "ordinateur", verified: true, image: "laptop", orders: 89, specs: "i5 11e Gen, 16Go RAM, 512Go SSD" },
+            { id: 37, name: "PC Portable ASUS TUF Gaming F15 i7 11e Gen 16Go RAM 1To SSD RTX 3050", price: 950000, oldPrice: 1100000, category: "ordinateur", verified: true, image: "laptop", orders: 45, specs: "i7 11e Gen, RTX 3050, 1To SSD" },
+            { id: 38, name: "Smartphone Samsung Galaxy S21 FE 256Go 8Go RAM", price: 380000, oldPrice: 450000, category: "telephone", verified: true, image: "mobile", orders: 78, specs: "256Go, 8Go RAM, 5G" },
+            { id: 39, name: "Smartphone iPhone 13 128Go Reconditionné", price: 550000, oldPrice: 650000, category: "telephone", verified: true, image: "mobile", orders: 56, specs: "128Go, 5G, iOS 16" },
+            { id: 40, name: "Tablette Huawei MatePad 11 128Go 6Go RAM", price: 280000, oldPrice: 350000, category: "tablette", verified: true, image: "tablet", orders: 34, specs: "128Go, 6Go RAM, 120Hz" },
+            { id: 41, name: "Clavier Mécanique Gaming SteelSeries Apex Pro", price: 85000, oldPrice: 100000, category: "clavier", verified: true, image: "keyboard", orders: 45, specs: "Mécanique, RGB, OLED" },
+            { id: 42, name: "Souris Gaming Razer DeathAdder V2 20000 DPI", price: 25000, oldPrice: 35000, category: "souris", verified: true, image: "mouse", orders: 123, specs: "20000 DPI, 8 boutons, Optique" },
+            { id: 43, name: "Modem 5G Huawei 5G CPE Pro 2", price: 450000, oldPrice: 550000, category: "modem", verified: true, image: "wifi", orders: 12, specs: "5G, WiFi 6, 4 ports" },
+            { id: 44, name: "RAM DDR5 32Go 5200MHz Corsair Dominator", price: 120000, oldPrice: 150000, category: "ram", verified: true, image: "memory", orders: 23, specs: "DDR5, 32Go, 5200MHz" },
+            { id: 45, name: "PC Desktop Dell OptiPlex 3090 i7 16Go RAM 512Go SSD", price: 650000, oldPrice: 750000, category: "desktop", verified: true, image: "desktop", orders: 34, specs: "i7, 16Go RAM, 512Go SSD" },
+            { id: 46, name: "Vidéoprojecteur BenQ TH685 3500 Lumens Gaming", price: 550000, oldPrice: 650000, category: "videoprojecteur", verified: true, image: "projector", orders: 18, specs: "3500 lumens, 120Hz, HDR" },
+            { id: 47, name: "Adaptateur USB-C vers HDMI 4K 60Hz", price: 8000, oldPrice: 12000, category: "adaptateur", verified: true, image: "adapter", orders: 89, specs: "USB-C vers HDMI, 4K 60Hz" },
+            { id: 48, name: "Télévision Samsung 55\" QLED 4K Smart TV", price: 650000, oldPrice: 750000, category: "television", verified: true, image: "tv", orders: 29, specs: "55\", QLED, 4K" },
+            { id: 49, name: "Chargeur MagSafe iPhone 15W", price: 18000, oldPrice: 25000, category: "chargeur", verified: true, image: "charger", orders: 156, specs: "MagSafe, 15W, iPhone" },
+            { id: 50, name: "Sac Professionnel Samsonite Classic", price: 35000, oldPrice: 45000, category: "sac", verified: true, image: "bag", orders: 89, specs: "Professionnel, Cuir, Ordinateur 15\"" }
         ];
 
         // Variables globales
@@ -1235,16 +1336,23 @@
                 "tablet": "fa-tablet-alt",
                 "mouse": "fa-mouse",
                 "keyboard": "fa-keyboard",
-                "battery": "fa-battery-full",
+                "usb": "fa-usb",
+                "wifi": "fa-wifi",
+                "memory": "fa-memory",
+                "desktop": "fa-desktop",
+                "projector": "fa-video",
+                "adapter": "fa-plug",
+                "tv": "fa-tv",
+                "charger": "fa-bolt",
                 "bag": "fa-briefcase",
+                "battery": "fa-battery-full",
                 "briefcase": "fa-suitcase",
                 "gamepad": "fa-gamepad",
                 "headphones": "fa-headphones",
                 "glasses": "fa-glasses",
                 "spa": "fa-spa",
                 "tshirt": "fa-tshirt",
-                "clock": "fa-clock",
-                "desktop": "fa-desktop"
+                "clock": "fa-clock"
             };
             return icons[type] || "fa-box";
         }
@@ -1308,20 +1416,26 @@
             
             productsToShow.forEach(p => {
                 const cartQuantity = getCartQuantity(p.id);
+                const discount = p.oldPrice ? Math.round(((p.oldPrice - p.price) / p.oldPrice) * 100) : 0;
                 const productCard = `
                     <div class="product-card" data-category="${p.category}" data-price="${p.price}">
                         ${p.verified ? `<div class="product-badge"><i class="fas fa-check"></i> VÉRIFIÉ</div>` : ''}
+                        ${discount > 0 ? `<div class="discount-badge">-${discount}%</div>` : ''}
                         ${cartQuantity > 0 ? `<div class="cart-quantity-badge">${cartQuantity}</div>` : ''}
                         <div class="product-image">
                             <i class="fas ${getProductImage(p.image)} fa-3x text-muted"></i>
                         </div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
-                            <div class="product-price">${formatPrice(p.price)}</div>
+                            <div class="product-price-container">
+                                <div class="product-price">${formatPrice(p.price)}</div>
+                                ${p.oldPrice ? `<div class="product-old-price">${formatPrice(p.oldPrice)}</div>` : ''}
+                            </div>
                             <div class="product-supplier">
                                 <i class="fas fa-check-circle verified-badge"></i>
                                 Fournisseur vérifié
                             </div>
+                            <div class="product-specs">${p.specs || ''}</div>
                             <div class="product-orders">
                                 <i class="fas fa-shopping-cart"></i> ${p.orders} commandes
                             </div>
@@ -1649,7 +1763,8 @@
                 if (term) {
                     filteredProducts = products.filter(p => 
                         p.name.toLowerCase().includes(term) ||
-                        p.category.toLowerCase().includes(term)
+                        p.category.toLowerCase().includes(term) ||
+                        (p.specs && p.specs.toLowerCase().includes(term))
                     );
                     
                     currentPage = 1;
