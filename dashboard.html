@@ -449,12 +449,13 @@
         .product-img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition: transform 0.3s ease;
+            padding: 10px;
         }
         
         .product-card:hover .product-img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
         
         .product-badge {
@@ -907,6 +908,10 @@
                 left: 10px;
                 min-width: auto;
             }
+            
+            .product-image {
+                height: 160px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -949,6 +954,14 @@
             .footer-kdo .container {
                 padding: 0 5px;
             }
+            
+            .product-image {
+                height: 180px;
+            }
+            
+            .product-img {
+                padding: 15px;
+            }
         }
         
         /* Style pour le panier dans le footer */
@@ -984,7 +997,7 @@
             }
             
             .product-image {
-                height: 150px;
+                height: 170px;
             }
             
             .logo-text {
@@ -1004,6 +1017,10 @@
             
             .products-container {
                 grid-template-columns: 1fr;
+            }
+            
+            .product-image {
+                height: 160px;
             }
         }
     </style>
@@ -1401,8 +1418,80 @@
 
     <!-- Script principal -->
     <script>
-        // URL unique pour toutes les images
-        const UNIQUE_IMAGE_URL = "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
+        // Images pour chaque catégorie
+        const categoryImages = {
+            // Images spécifiques pour les ordinateurs (38 images)
+            ordinateur: [
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/2.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/3.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/4.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/5.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/6.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/7.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/8.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/9.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/10.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/11.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/12.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/13.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/14.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/15.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/16.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/17.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/18.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/19.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/20.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/21.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/22.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/23.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/24.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/25.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/26.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/27.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/28.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/29.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/30.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/31_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/32_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/33_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/34_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/35_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/36_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/39_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/42_1.jpeg"
+            ],
+            // Images pour les autres catégories
+            disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
+            usb: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/cle.png",
+            souris: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/souris.jpg",
+            clavier: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/clavier.jpeg",
+            modem: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/modems.jpeg",
+            desktop: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/desktops.jpeg",
+            ram: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/RAM.png",
+            antivirus: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/virus.png",
+            videoprojecteur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/projeteur.jpg",
+            telephone: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/phone.jpeg",
+            adaptateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/adaptateur.jpeg",
+            television: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/t%C3%A9l%C3%A9vision.jpg",
+            chargeur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/chargeur.png",
+            sac: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/sacs.png"
+        };
+
+        // Fonction pour obtenir l'URL de l'image d'un produit
+        function getProductImageUrl(product, index) {
+            if (product.category === "ordinateur") {
+                // Pour les ordinateurs, utiliser l'index pour sélectionner l'image
+                const imageIndex = (product.id - 1) % categoryImages.ordinateur.length;
+                return categoryImages.ordinateur[imageIndex];
+            } else if (categoryImages[product.category]) {
+                // Pour les autres catégories, utiliser l'image de la catégorie
+                return categoryImages[product.category];
+            } else {
+                // Image par défaut si aucune image n'est trouvée
+                return "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
+            }
+        }
 
         // Modèles de description pour chaque catégorie
         const categoryDetails = {
@@ -1833,10 +1922,11 @@
                 return;
             }
             
-            productsToShow.forEach(p => {
+            productsToShow.forEach((p, index) => {
                 const cartQuantity = getCartQuantity(p.id);
                 const discount = calculateDiscount(p.price, p.oldPrice);
                 const hasDetails = p.details && p.details.length > 0;
+                const imageUrl = getProductImageUrl(p, index);
                 
                 const productCard = `
                     <div class="product-card" data-category="${p.category}" data-price="${p.price}">
@@ -1844,7 +1934,7 @@
                         ${discount > 0 ? `<div class="discount-badge">-${discount}%</div>` : ''}
                         ${cartQuantity > 0 ? `<div class="cart-quantity-badge">${cartQuantity}</div>` : ''}
                         <div class="product-image">
-                            <img src="${UNIQUE_IMAGE_URL}" alt="${p.name}" class="product-img">
+                            <img src="${imageUrl}" alt="${p.name}" class="product-img">
                         </div>
                         <div class="product-info">
                             <div class="product-title">${p.name}</div>
