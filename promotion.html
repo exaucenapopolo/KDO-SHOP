@@ -475,6 +475,48 @@
             text-align: center;
         }
         
+        /* Cadeaux inclus */
+        .promo-gifts {
+            background: linear-gradient(90deg, #E8F5E9, #F1F8E9);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--success-green);
+        }
+        
+        .gifts-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--success-green);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .gifts-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .gift-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+        }
+        
+        .gift-item i {
+            color: var(--success-green);
+            font-size: 10px;
+        }
+        
         .promo-availability {
             font-size: 11px;
             color: var(--text-medium);
@@ -637,6 +679,11 @@
             .specs-list {
                 grid-template-columns: 1fr;
             }
+            
+            .gifts-list {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
         
         @media (max-width: 768px) {
@@ -727,7 +774,7 @@
             <!-- Les promotions défilent automatiquement -->
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">ACER CHROMEBOOK à <span class="promo-price">59 900 FCFA</span></span>
+                <span class="promo-text">ACER CHROMEBOOK à <span class="promo-price">39 900 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
@@ -735,20 +782,16 @@
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">HP Elitebook 840 G3 <span class="promo-price">160 000 FCFA</span></span>
+                <span class="promo-text">HUAWEI NOVA PLUS <span class="promo-price">24 900 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">TOSHIBA Disque Dur 500Go <span class="promo-price">15 000 FCFA</span></span>
-            </div>
-            <div class="promo-slide">
-                <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">FASTER Clé USB 64Go <span class="promo-price">-25%</span></span>
+                <span class="promo-text">SAMSUNG <span class="promo-price">35 000 FCFA</span></span>
             </div>
             <!-- Doubler pour créer l'effet infini -->
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">ACER CHROMEBOOK à <span class="promo-price">59 900 FCFA</span></span>
+                <span class="promo-text">ACER CHROMEBOOK à <span class="promo-price">39 900 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
@@ -756,15 +799,11 @@
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">HP Elitebook 840 G3 <span class="promo-price">160 000 FCFA</span></span>
+                <span class="promo-text">HUAWEI NOVA PLUS <span class="promo-price">24 900 FCFA</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">TOSHIBA Disque Dur 500Go <span class="promo-price">15 000 FCFA</span></span>
-            </div>
-            <div class="promo-slide">
-                <span class="promo-badge">🔥 PROMO</span>
-                <span class="promo-text">FASTER Clé USB 64Go <span class="promo-price">-25%</span></span>
+                <span class="promo-text">SAMSUNG <span class="promo-price">35 000 FCFA</span></span>
             </div>
         </div>
     </div>
@@ -778,20 +817,11 @@
             <a href="#" class="category-item" data-category="ordinateur">
                 <i class="fas fa-laptop"></i> Ordinateurs
             </a>
-            <a href="#" class="category-item" data-category="disquedur">
-                <i class="fas fa-hdd"></i> Disques Durs
-            </a>
-            <a href="#" class="category-item" data-category="usb">
-                <i class="fas fa-usb"></i> Clés USB
-            </a>
-            <a href="#" class="category-item" data-category="souris">
-                <i class="fas fa-mouse"></i> Souris
-            </a>
             <a href="#" class="category-item" data-category="telephone">
                 <i class="fas fa-mobile-alt"></i> Téléphones
             </a>
-            <a href="#" class="category-item" data-category="tablette">
-                <i class="fas fa-tablet-alt"></i> Tablettes
+            <a href="#" class="category-item" data-category="samsung">
+                <i class="fas fa-star"></i> Samsung
             </a>
         </div>
     </div>
@@ -875,13 +905,13 @@
             {
                 id: 1,
                 name: "ACER CHROMEBOOK",
-                price: 59900,
+                price: 39900,
                 oldPrice: 89900,
-                discount: 33,
+                discount: 56,
                 category: "ordinateur",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/IMG-20260206-WA0063.jpg",
                 stockLimit: true,
-                stockCount: 3,
+                stockCount: 4,
                 description: "💻 Ordinateur Portable Professionnel Slim – Marque ACER\n\n🔧 Spécifications techniques :\n- Processeur : Intel Celeron Quad-Core 1.4 GHz\n- Stockage : SSD 128 Go (rapide et fluide)\n- RAM : 2 Go ou 4 Go\n- Connectivité : Wi-Fi, Bluetooth, Port HDMI, Ports USB, Lecteur de carte TF (MicroSD)\n- Webcam intégrée\n- Écran : 12 pouces, slim et élégant\n- Autonomie : + de 7 heures\n- Chargeur d'origine inclus\n\n💼 Convient pour :\n- Étudiants, enseignants\n- Travailleurs, freelance\n- Entrepreneurs, commerçants\n- Tâches bureautiques, navigation, cours en ligne\n\n🇺🇸 Importé des États-Unis\n🎁 Une vraie opportunité à petit prix !",
                 specs: [
                     "SSD 128 Go",
@@ -904,7 +934,7 @@
                 category: "ordinateur",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/IMG-20260206-WA0064.jpg",
                 stockLimit: true,
-                stockCount: 5,
+                stockCount: 3,
                 description: "🔥 PROMO SPÉCIALE – DELL LATITUDE 3190 🔥\n💻 Laptop professionnel – Ultra slim & rapide\n\n✅ Idéal pour étudiants, informaticiens, infographes, bureautique, télétravail et navigation fluide.\n\n⚙️ Caractéristiques clés :\n- Intel Quad Core (Celeron N4120)\n- 4 Go RAM\n- 256 Go SSD ⚡ (démarrage ultra rapide)\n- Écran 12 pouces Ultra Slim\n- Webcam – HDMI – USB – Wi-Fi – Bluetooth\n- Windows 10 Pro\n- Pack Office + logiciels installés ✅\n\n📍 Disponible chez KDO INFORMATIC & TECHNOLOGY\n📌 Yaoundé | Douala | Bafoussam | Dschang | Bertoua | Maroua.",
                 specs: [
                     "SSD 256 Go",
@@ -916,52 +946,52 @@
                     "Ports HDMI & USB",
                     "Webcam intégrée"
                 ],
-                availability: "Disponible à Yaoundé, Douala, Bafoussam, Dschang, Bertoua, Maroua"
+                availability: "Disponible à Yaoundé, Douala, Bafoussam, Dschang, Bertoua, Maroua",
+                gifts: ["Sac professionnel", "Clé USB 64 Go", "Souris sans fil"]
             },
             {
                 id: 3,
-                name: "HP Elitebook 840 G3",
-                price: 160000,
-                oldPrice: 195000,
-                discount: 18,
-                category: "ordinateur",
-                image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg",
-                stockLimit: false,
-                stockCount: 8,
-                description: "💼 Ordinateur Portable Professionnel HP Elitebook 840 G3\n\n🚀 Performances professionnelles pour vos projets les plus exigeants\n\n⚡ Caractéristiques premium :\n- Processeur : Intel Core i5 de 6ème génération\n- Mémoire RAM : 8 Go DDR4\n- Stockage : SSD 256 Go haute vitesse\n- Écran : 14 pouces Full HD\n- Graphiques : Intel HD Graphics 520\n- Connectivité complète : USB 3.0, HDMI, Ethernet\n- Sécurité : Lecteur d'empreintes digitales\n- Système : Windows 10 Professionnel\n\n🎯 Idéal pour :\n- Professionnels en déplacement\n- Développeurs et ingénieurs\n- Éditeurs vidéo et graphistes\n- Entrepreneurs et consultants\n\n🔒 Garantie 3 mois + support technique inclus",
+                name: "HUAWEI NOVA PLUS",
+                price: 24900,
+                oldPrice: 49900,
+                discount: 50,
+                category: "telephone",
+                image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/IMG-20251021-WA0003(2).jpg",
+                stockLimit: true,
+                stockCount: 6,
+                description: "Offre exceptionnelle chez KDO !\n\nVous cherchez un smartphone puissant, élégant et pas cher ?\nCraquez pour le Huawei Nova Plus – 64 Go de mémoire interne, 4 Go de RAM, grand écran Full HD, appareil photo impeccable, batterie solide, et design premium !\n\nIdéal pour les appels, WhatsApp, YouTube, photos, et toutes vos applis préférées.\n\nDisponible maintenant à seulement 24 900 FCFA !\n\nQuantité très limitée – Premier arrivé, premier servi !\n\nCommandez dès maintenant chez KDO",
                 specs: [
-                    "SSD 256 Go",
-                    "RAM 8 Go DDR4",
-                    "Intel Core i5 6ème gén",
-                    "Écran 14\" Full HD",
-                    "Windows 10 Pro",
-                    "Lecteur empreintes",
-                    "Connectivité complète",
-                    "Autonomie 8h"
+                    "64 Go mémoire interne",
+                    "4 Go RAM",
+                    "Caméra 16MP OIS",
+                    "Batterie 3340 mAh",
+                    "Écran Full HD",
+                    "Design premium",
+                    "Couleurs multiples"
                 ],
-                availability: "Disponible dans toutes les villes"
+                availability: "Disponible dans toutes les villes principales"
             },
             {
                 id: 4,
-                name: "TOSHIBA Disque Dur 500Go",
-                price: 15000,
-                oldPrice: 22000,
-                discount: 32,
-                category: "disquedur",
+                name: "SAMSUNG",
+                price: 35000,
+                oldPrice: 50000,
+                discount: 30,
+                category: "samsung",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg",
                 stockLimit: true,
-                stockCount: 2,
-                description: "💾 Disque Dur Externe TOSHIBA 500Go - Solution de stockage fiable\n\n⚡ Transfert rapide USB 3.0 pour sauvegarder vos données en un clin d'œil\n\n🔧 Caractéristiques :\n- Capacité : 500 Go\n- Interface : USB 3.0 (compatible USB 2.0)\n- Vitesse de transfert : jusqu'à 5 Gb/s\n- Design compact et portable\n- Compatible PC et Mac\n- Plug & Play - pas besoin d'installation\n\n🎯 Utilisations :\n- Sauvegarde de fichiers importants\n- Stockage de photos et vidéos\n- Transfert de données entre ordinateurs\n- Solution de stockage supplémentaire\n\n🛡️ Garantie 1 an - Qualité Toshiba",
+                stockCount: 5,
+                description: "🔥 PROMOTION EXCLUSIVE - SMARTPHONE SAMSUNG 🔥\n\n📱 Smartphone Samsung performant à un prix incroyable !\n\n⚡ Caractéristiques principales :\n- Écran lumineux et net\n- Mémoire interne généreuse\n- RAM performante pour multitâche\n- Caméra de qualité pour vos photos\n- Batterie longue durée\n- Design moderne et élégant\n\n🎯 Parfait pour :\n- Communication quotidienne\n- Navigation internet\n- Photos et vidéos\n- Réseaux sociaux\n- Applications de productivité\n\n💎 Offre limitée - Ne manquez pas cette opportunité !",
                 specs: [
-                    "Capacité 500 Go",
-                    "USB 3.0",
-                    "Transfert rapide",
-                    "Compact & portable",
-                    "Compatible PC/Mac",
-                    "Plug & Play",
-                    "Garantie 1 an"
+                    "Écran haute qualité",
+                    "Mémoire interne ample",
+                    "RAM performante",
+                    "Caméra avancée",
+                    "Batterie longue durée",
+                    "Design moderne",
+                    "Connectivité complète"
                 ],
-                availability: "Disponible à Yaoundé et Douala"
+                availability: "Disponible à Yaoundé, Douala, Bafoussam, Dschang"
             }
         ];
 
@@ -1035,6 +1065,20 @@
                                     ${p.specs.map(spec => `<li><i class="fas fa-check"></i> ${spec}</li>`).join('')}
                                 </ul>
                             </div>
+                            ${p.gifts ? `
+                                <div class="promo-gifts">
+                                    <div class="gifts-title">
+                                        <i class="fas fa-gift"></i> Cadeaux inclus gratuitement
+                                    </div>
+                                    <div class="gifts-list">
+                                        ${p.gifts.map(gift => `
+                                            <div class="gift-item">
+                                                <i class="fas fa-check-circle"></i> ${gift}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
                             <div class="promo-availability">
                                 <div class="availability-dot"></div>
                                 ${p.availability}
