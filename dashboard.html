@@ -1404,7 +1404,6 @@
         // Initialiser Firebase
         let firebaseApp, firebaseDb, firebaseAuth;
         let currentUser = null;
-        let userDocument = null;
         
         // Images pour chaque catégorie
         const categoryImages = {
@@ -2086,11 +2085,23 @@
             renderProducts();
         }
 
-        // Initialiser Firebase avec authentification réelle
+        // Initialiser Firebase avec gestion d'erreur améliorée
         async function initializeFirebase() {
             try {
-                // Initialiser Firebase
-                firebaseApp = firebase.initializeApp(firebaseConfig);
+                // Vérifier si Firebase est déjà initialisé
+                if (typeof firebase === 'undefined') {
+                    console.error("Firebase SDK n'est pas chargé");
+                    alert("Erreur: Firebase SDK n'est pas chargé. Vérifiez votre connexion internet.");
+                    return;
+                }
+                
+                // Vérifier si l'application Firebase est déjà initialisée
+                if (firebase.apps.length === 0) {
+                    firebaseApp = firebase.initializeApp(firebaseConfig);
+                } else {
+                    firebaseApp = firebase.apps[0];
+                }
+                
                 firebaseAuth = firebase.auth();
                 firebaseDb = firebase.firestore();
                 
@@ -2106,14 +2117,20 @@
                         $('#userIndicator').show();
                         $('#userEmail').text(user.email);
                         
-                        // Vérifier/Créer le document utilisateur
-                        await checkUserDocument();
-                        
-                        // Charger le panier de l'utilisateur
-                        await loadUserCart();
-                        
-                        // Afficher les produits
-                        renderProducts();
+                        try {
+                            // Vérifier/Créer le document utilisateur
+                            await checkUserDocument();
+                            
+                            // Charger le panier de l'utilisateur
+                            await loadUserCart();
+                            
+                            // Initialiser les produits
+                            filterProducts();
+                        } catch (error) {
+                            console.error("Erreur lors du chargement des données:", error);
+                            // Afficher les produits même en cas d'erreur
+                            filterProducts();
+                        }
                     } else {
                         console.log("Utilisateur non connecté - Redirection vers login");
                         // Rediriger vers la page de connexion
@@ -2121,20 +2138,30 @@
                     }
                 });
                 
-                // Vérifier si un utilisateur est déjà connecté
-                const currentUser = firebaseAuth.currentUser;
-                if (!currentUser) {
-                    console.log("Pas d'utilisateur connecté, redirection...");
-                    window.location.href = "login.html";
+            } catch (error) {
+                console.error("Erreur Firebase détaillée:", error);
+                
+                // Afficher un message d'erreur plus utile
+                let errorMessage = "Erreur d'initialisation de la base de données. ";
+                
+                if (error.code === 'failed-precondition') {
+                    errorMessage += "Firebase est déjà initialisé avec des paramètres différents.";
+                } else if (error.code === 'invalid-api-key') {
+                    errorMessage += "Clé API Firebase invalide.";
+                } else if (error.code) {
+                    errorMessage += `Code: ${error.code}`;
                 }
                 
-            } catch (error) {
-                console.error("Erreur Firebase:", error);
-                alert("Erreur d'initialisation de la base de données. Veuillez recharger la page.");
+                console.error(errorMessage);
+                // Ne pas afficher d'alerte immédiate pour ne pas bloquer l'interface
+                // L'utilisateur pourra quand même voir les produits
+                
+                // Initialiser les produits même sans Firebase
+                filterProducts();
             }
         }
 
-        // Vérifier et créer le document utilisateur si nécessaire
+        // Vérifier et créer le document utilisateur si nécessaire - VERSION SIMPLIFIÉE
         async function checkUserDocument() {
             if (!currentUser) return;
             
@@ -2143,52 +2170,39 @@
                 const userDoc = await userRef.get();
                 
                 if (!userDoc.exists) {
-                    // Créer le document utilisateur avec tous les champs nécessaires
+                    // Créer le document utilisateur avec des champs simples
                     const userData = {
                         uid: currentUser.uid,
                         email: currentUser.email,
                         displayName: currentUser.displayName || "",
-                        phoneNumber: currentUser.phoneNumber || "",
                         photoURL: currentUser.photoURL || "",
-                        address: "",
-                        city: "",
-                        country: "Cameroun",
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
                         isActive: true,
-                        role: "client",
-                        preferences: {
-                            notifications: true,
-                            newsletter: true
-                        },
-                        stats: {
-                            totalOrders: 0,
-                            totalSpent: 0,
-                            favoriteCategories: []
-                        }
+                        role: "client"
                     };
                     
                     await userRef.set(userData);
                     console.log("Document utilisateur créé avec succès");
-                    userDocument = userData;
                 } else {
-                    userDocument = userDoc.data();
                     // Mettre à jour la dernière connexion
                     await userRef.update({
-                        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                        lastLogin: new Date().toISOString()
                     });
-                    console.log("Document utilisateur existant chargé");
+                    console.log("Document utilisateur existant mis à jour");
                 }
             } catch (error) {
                 console.error("Erreur lors de la vérification du document utilisateur:", error);
+                // Ne pas bloquer l'application si cette opération échoue
             }
         }
 
-        // Charger le panier utilisateur depuis Firestore
+        // Charger le panier utilisateur depuis Firestore - VERSION ROBUSTE
         async function loadUserCart() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour charger le panier");
+                userCartItems = {};
                 return;
             }
             
@@ -2199,20 +2213,9 @@
                 if (cartDoc.exists) {
                     const cartData = cartDoc.data();
                     userCart = cartData;
-                    
-                    // Initialiser userCartItems à partir des données
                     userCartItems = cartData.items || {};
                     
-                    // Calculer le total d'articles
-                    let totalItems = 0;
-                    if (userCartItems) {
-                        for (const productId in userCartItems) {
-                            totalItems += userCartItems[productId].quantity;
-                        }
-                    }
-                    
-                    userCart.totalItems = totalItems;
-                    console.log("Panier chargé:", userCart);
+                    console.log("Panier chargé:", cartData);
                 } else {
                     // Créer un nouveau panier
                     userCart = {
@@ -2220,14 +2223,14 @@
                         items: {},
                         totalItems: 0,
                         totalAmount: 0,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
                     };
                     
                     userCartItems = {};
                     
-                    await cartRef.set(userCart);
-                    console.log("Nouveau panier créé pour l'utilisateur");
+                    // Ne pas créer le panier immédiatement, seulement quand un produit est ajouté
+                    console.log("Panier vide initialisé");
                 }
                 
                 updateCartCount();
@@ -2235,7 +2238,7 @@
                 console.error("Erreur lors du chargement du panier:", error);
                 // Initialiser un panier vide en cas d'erreur
                 userCart = {
-                    userId: currentUser.uid,
+                    userId: currentUser ? currentUser.uid : null,
                     items: {},
                     totalItems: 0,
                     totalAmount: 0
@@ -2245,7 +2248,7 @@
             }
         }
 
-        // Sauvegarder le panier dans Firestore
+        // Sauvegarder le panier dans Firestore - VERSION SIMPLIFIÉE
         async function saveCartToFirestore() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour sauvegarder le panier");
@@ -2265,13 +2268,25 @@
                     totalAmount += item.price * item.quantity;
                 }
                 
-                userCart.items = userCartItems;
-                userCart.totalItems = totalItems;
-                userCart.totalAmount = totalAmount;
-                userCart.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
+                const cartData = {
+                    userId: currentUser.uid,
+                    items: userCartItems,
+                    totalItems: totalItems,
+                    totalAmount: totalAmount,
+                    updatedAt: new Date().toISOString()
+                };
                 
-                await cartRef.set(userCart, { merge: true });
+                // Si le panier n'existe pas encore, ajouter createdAt
+                if (!userCart.createdAt) {
+                    cartData.createdAt = new Date().toISOString();
+                }
+                
+                await cartRef.set(cartData, { merge: true });
                 console.log("Panier sauvegardé dans Firestore");
+                
+                // Mettre à jour l'objet userCart
+                userCart = cartData;
+                
             } catch (error) {
                 console.error("Erreur lors de la sauvegarde du panier:", error);
             }
@@ -2337,21 +2352,26 @@
 
         // Mise à jour du compteur panier
         function updateCartCount() {
-            const totalItems = userCart.totalItems || 0;
+            const totalItems = userCart.totalItems || Object.keys(userCartItems || {}).reduce((total, key) => {
+                return total + (userCartItems[key].quantity || 0);
+            }, 0);
             $('#footerCartCount').text(totalItems);
         }
 
         // Initialisation
         $(document).ready(async function() {
-            // Initialiser Firebase
-            await initializeFirebase();
+            // Initialiser Firebase de manière asynchrone
+            setTimeout(async () => {
+                await initializeFirebase();
+            }, 100);
             
             // Initialiser le filtre de prix désactivé
             $('#priceToggle').prop('checked', false);
             $('#toggleLabel').text('Désactivé');
             $('#priceSliderContainer').removeClass('active');
             
-            // Initialiser les produits (sera fait après la connexion)
+            // Initialiser les produits même si Firebase n'est pas encore chargé
+            filterProducts();
             
             // Gestion du toggle du filtre de prix
             $('#priceToggle').on('change', function() {
