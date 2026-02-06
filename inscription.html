@@ -664,13 +664,13 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Firebase SDK - Version compatibilité (identique à login.html) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // Nouvelle configuration Firebase
+        // Configuration Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
             authDomain: "kdo-cameroun.firebaseapp.com",
@@ -727,44 +727,70 @@
             }, 3000);
         }
         
-        // Fonction pour créer un document utilisateur complet dans Firestore
+        // FONCTION MODIFIÉE : Créer un document utilisateur complet avec TOUS les champs
         async function createUserDocument(user, additionalData) {
             try {
                 const userRef = db.collection("users").doc(user.uid);
                 
-                // Créer un document utilisateur complet avec tous les champs
+                // Extraire firstName et lastName du displayName pour Google
+                let firstName = additionalData.firstName || '';
+                let lastName = additionalData.lastName || '';
+                
+                if (!firstName && !lastName && user.displayName) {
+                    const names = user.displayName.split(' ');
+                    firstName = names[0] || '';
+                    lastName = names.slice(1).join(' ') || '';
+                }
+                
+                // Créer l'objet utilisateur avec TOUS les champs nécessaires
                 const userData = {
+                    // Champs de base
                     uid: user.uid,
-                    firstName: additionalData.firstName || '',
-                    lastName: additionalData.lastName || '',
+                    firstName: firstName,
+                    lastName: lastName,
                     email: user.email,
-                    phone: additionalData.phone || '',
+                    phone: additionalData.phone || user.phoneNumber || '',
                     photoURL: user.photoURL || '',
+                    
+                    // Champs d'adresse (vides par défaut)
                     address: '',
                     city: '',
                     country: 'Cameroun',
+                    
+                    // Champs de timestamp
                     createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString(),
                     lastLogin: new Date().toISOString(),
+                    
+                    // Champs de statut
                     isActive: true,
+                    status: 'active',
+                    emailVerified: user.emailVerified || false,
+                    
+                    // Type de compte et rôle
+                    accountType: additionalData.accountType || 'acheteur',
                     role: additionalData.accountType || 'acheteur',
+                    
+                    // Fournisseur d'authentification
+                    provider: additionalData.provider || 'email',
+                    
+                    // Préférences utilisateur
                     preferences: {
                         notifications: true,
                         newsletter: true
                     },
+                    
+                    // Statistiques utilisateur
                     stats: {
                         totalOrders: 0,
                         totalSpent: 0,
                         favoriteCategories: []
-                    },
-                    accountType: additionalData.accountType || 'acheteur',
-                    status: 'active',
-                    emailVerified: user.emailVerified || false,
-                    provider: additionalData.provider || 'email'
+                    }
                 };
                 
+                // Écrire dans Firestore
                 await userRef.set(userData);
-                console.log("✅ Document utilisateur créé avec tous les champs dans Firestore");
+                console.log("✅ Document utilisateur créé avec tous les champs:", user.uid);
                 
                 // Créer également un panier vide pour l'utilisateur
                 const cartData = {
@@ -777,7 +803,7 @@
                 };
                 
                 await db.collection("carts").doc(user.uid).set(cartData);
-                console.log("✅ Panier vide créé pour l'utilisateur dans Firestore");
+                console.log("✅ Panier vide créé pour l'utilisateur");
                 
                 return userData;
                 
@@ -807,12 +833,12 @@
                     displayName: `${firstName} ${lastName}`
                 });
                 
-                // Créer le document utilisateur complet dans Firestore
+                // APPEL À LA FONCTION MODIFIÉE : Créer le document avec tous les champs
                 await createUserDocument(user, {
-                    firstName,
-                    lastName,
-                    phone,
-                    accountType,
+                    firstName: firstName,
+                    lastName: lastName,
+                    phone: phone,
+                    accountType: accountType,
                     provider: 'email'
                 });
                 
@@ -860,7 +886,7 @@
             }
         }
         
-        // Inscription avec Google
+        // Inscription avec Google (MODIFIÉE)
         async function signupWithGoogle() {
             try {
                 const provider = new firebase.auth.GoogleAuthProvider();
@@ -885,12 +911,12 @@
                     lastName = names.slice(1).join(' ') || '';
                 }
                 
-                // Créer le document utilisateur complet dans Firestore
+                // APPEL À LA FONCTION MODIFIÉE : Créer le document avec tous les champs
                 await createUserDocument(user, {
-                    firstName,
-                    lastName,
+                    firstName: firstName,
+                    lastName: lastName,
                     phone: user.phoneNumber || '',
-                    accountType: 'acheteur', // Par défaut pour les inscriptions Google
+                    accountType: 'acheteur', // Par défaut pour Google
                     provider: 'google'
                 });
                 
