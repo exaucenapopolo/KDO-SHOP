@@ -921,7 +921,7 @@
                 const userDoc = await db.collection("users").doc(user.uid).get();
                 
                 if (!userDoc.exists) {
-                    // Créer un nouvel utilisateur dans Firestore
+                    // Créer un nouvel utilisateur dans Firestore avec TOUS les champs nécessaires
                     const userData = {
                         uid: user.uid,
                         firstName: user.displayName?.split(' ')[0] || '',
@@ -938,23 +938,46 @@
                         country: '',
                         city: '',
                         address: '',
-                        businessName: ''
+                        businessName: '',
+                        
+                        // CHAMPS NÉCESSAIRES POUR LE TABLEAU DE BORD
+                        displayName: user.displayName || '',
+                        phoneNumber: user.phoneNumber || '',
+                        isActive: true,
+                        role: "client",
+                        preferences: {
+                            notifications: true,
+                            newsletter: true
+                        },
+                        stats: {
+                            totalOrders: 0,
+                            totalSpent: 0,
+                            favoriteCategories: []
+                        },
+                        // Champs supplémentaires pour compatibilité
+                        address: '',
+                        city: '',
+                        country: 'Cameroun',
+                        updatedAt: new Date().toISOString()
                     };
                     
                     await db.collection("users").doc(user.uid).set(userData);
                     
-                    // Créer un panier vide
+                    console.log("✅ Nouvel utilisateur Google créé dans Firestore avec tous les champs nécessaires");
+                    
+                    // Créer un panier vide avec la structure attendue par le tableau de bord
                     const cartData = {
                         userId: user.uid,
                         items: {},
                         totalItems: 0,
                         totalAmount: 0,
-                        updatedAt: new Date().toISOString()
+                        updatedAt: new Date().toISOString(),
+                        createdAt: new Date().toISOString()
                     };
                     
                     await db.collection("carts").doc(user.uid).set(cartData);
                     
-                    console.log("✅ Nouvel utilisateur Google créé dans Firestore");
+                    console.log("✅ Panier créé avec succès pour l'utilisateur Google");
                     
                     // Afficher le message de succès
                     currentStep = 5;
@@ -965,7 +988,26 @@
                         window.location.href = 'dashboard.html';
                     }, 3000);
                 } else {
-                    // Si l'utilisateur existe déjà, rediriger vers le dashboard
+                    // Si l'utilisateur existe déjà, mettre à jour les champs manquants
+                    const existingData = userDoc.data();
+                    const updateData = {};
+                    
+                    // Vérifier et ajouter les champs manquants
+                    if (!existingData.displayName) updateData.displayName = user.displayName || '';
+                    if (!existingData.phoneNumber) updateData.phoneNumber = user.phoneNumber || '';
+                    if (!existingData.isActive) updateData.isActive = true;
+                    if (!existingData.role) updateData.role = "client";
+                    if (!existingData.preferences) updateData.preferences = { notifications: true, newsletter: true };
+                    if (!existingData.stats) updateData.stats = { totalOrders: 0, totalSpent: 0, favoriteCategories: [] };
+                    if (!existingData.updatedAt) updateData.updatedAt = new Date().toISOString();
+                    
+                    // Mettre à jour si nécessaire
+                    if (Object.keys(updateData).length > 0) {
+                        await db.collection("users").doc(user.uid).update(updateData);
+                        console.log("✅ Champs manquants mis à jour pour l'utilisateur Google");
+                    }
+                    
+                    // Rediriger vers le dashboard
                     showNotification("Info", "Vous êtes déjà inscrit, redirection vers le tableau de bord...", "info");
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
@@ -993,7 +1035,7 @@
         }
         
         async function submitRegistration() {
-            console.log("Début de l'inscription...");
+            console.log("Début de l'inscription par email...");
             
             if (!validateStep(4)) {
                 console.log("Validation échouée");
@@ -1008,54 +1050,84 @@
             
             try {
                 // Récupérer les données du formulaire
-                const userData = {
-                    firstName: document.getElementById('firstName').value.trim(),
-                    lastName: document.getElementById('lastName').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
-                    country: document.getElementById('country').value,
-                    city: document.getElementById('city').value.trim(),
-                    address: document.getElementById('address').value.trim(),
-                    accountType: document.querySelector('input[name="accountType"]:checked').value,
-                    businessName: document.getElementById('businessName').value.trim(),
-                    createdAt: new Date().toISOString(),
-                    status: 'active',
-                    emailVerified: false,
-                    provider: 'email'
-                };
+                const firstName = document.getElementById('firstName').value.trim();
+                const lastName = document.getElementById('lastName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const country = document.getElementById('country').value;
+                const city = document.getElementById('city').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const accountType = document.querySelector('input[name="accountType"]:checked').value;
+                const businessName = document.getElementById('businessName').value.trim();
                 
                 const password = document.getElementById('password').value;
                 
-                console.log("Données utilisateur:", userData);
-                console.log("Tentative de création de compte avec email:", userData.email);
+                console.log("Données utilisateur récupérées:", { firstName, lastName, email, phone, country, city, address, accountType, businessName });
+                console.log("Tentative de création de compte avec email:", email);
                 
                 // 1. Créer l'utilisateur dans Firebase Authentication
                 console.log("Étape 1: Création de l'utilisateur dans Firebase Auth...");
-                const userCredential = await auth.createUserWithEmailAndPassword(userData.email, password);
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
                 const user = userCredential.user;
                 
                 console.log("✅ Utilisateur créé avec UID:", user.uid);
                 showNotification("Succès", "Compte créé dans l'authentification", "success");
                 
-                // 2. Ajouter l'UID aux données utilisateur
-                userData.uid = user.uid;
-                userData.lastLogin = new Date().toISOString();
+                // 2. Créer l'objet utilisateur avec TOUS les champs nécessaires pour le tableau de bord
+                const userData = {
+                    // Champs de base du formulaire
+                    uid: user.uid,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    country: country,
+                    city: city,
+                    address: address,
+                    accountType: accountType,
+                    businessName: businessName,
+                    createdAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString(),
+                    status: 'active',
+                    emailVerified: user.emailVerified,
+                    provider: 'email',
+                    
+                    // CHAMPS NÉCESSAIRES POUR LE TABLEAU DE BORD
+                    displayName: firstName + ' ' + lastName,
+                    photoURL: "",
+                    phoneNumber: phone, // Même valeur que phone
+                    isActive: true,
+                    role: "client",
+                    preferences: {
+                        notifications: true,
+                        newsletter: true
+                    },
+                    stats: {
+                        totalOrders: 0,
+                        totalSpent: 0,
+                        favoriteCategories: []
+                    },
+                    updatedAt: new Date().toISOString()
+                };
                 
-                // 3. Enregistrer les informations supplémentaires dans Firestore
+                console.log("Données utilisateur complètes pour Firestore:", userData);
+                
+                // 3. Enregistrer les informations dans Firestore
                 console.log("Étape 2: Enregistrement dans Firestore...");
                 await db.collection("users").doc(user.uid).set(userData);
                 
-                console.log("✅ Utilisateur enregistré dans Firestore avec succès!");
+                console.log("✅ Utilisateur enregistré dans Firestore avec tous les champs nécessaires!");
                 showNotification("Succès", "Données utilisateur enregistrées", "success");
                 
-                // 4. Créer un panier vide pour l'utilisateur
+                // 4. Créer un panier vide pour l'utilisateur avec la structure attendue par le tableau de bord
                 console.log("Étape 3: Création du panier...");
                 const cartData = {
                     userId: user.uid,
                     items: {},
                     totalItems: 0,
                     totalAmount: 0,
-                    updatedAt: new Date().toISOString()
+                    updatedAt: new Date().toISOString(),
+                    createdAt: new Date().toISOString()
                 };
                 
                 await db.collection("carts").doc(user.uid).set(cartData);
