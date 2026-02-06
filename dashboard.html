@@ -414,7 +414,7 @@
             min-width: 140px;
         }
         
-        /* Carte produit */
+        /* Carte produit - NOUVEAU STYLE POUR LES IMAGES */
         .products-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -437,7 +437,7 @@
         }
         
         .product-image {
-            height: 180px;
+            height: 200px;
             background: var(--accent-gray);
             display: flex;
             align-items: center;
@@ -451,11 +451,10 @@
             height: 100%;
             object-fit: contain;
             transition: transform 0.3s ease;
-            padding: 10px;
         }
         
         .product-card:hover .product-img {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         
         .product-badge {
@@ -872,6 +871,10 @@
                 grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             }
             
+            .product-image {
+                height: 180px;
+            }
+            
             .promo-carousel {
                 animation: slidePromo 20s infinite linear;
             }
@@ -880,6 +883,10 @@
         @media (max-width: 768px) {
             .products-container {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .product-image {
+                height: 200px;
             }
             
             .filter-row {
@@ -908,15 +915,15 @@
                 left: 10px;
                 min-width: auto;
             }
-            
-            .product-image {
-                height: 160px;
-            }
         }
         
         @media (max-width: 576px) {
             .products-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .product-image {
+                height: 180px;
             }
             
             .logo-text {
@@ -954,14 +961,6 @@
             .footer-kdo .container {
                 padding: 0 5px;
             }
-            
-            .product-image {
-                height: 180px;
-            }
-            
-            .product-img {
-                padding: 15px;
-            }
         }
         
         /* Style pour le panier dans le footer */
@@ -997,7 +996,7 @@
             }
             
             .product-image {
-                height: 170px;
+                height: 160px;
             }
             
             .logo-text {
@@ -1020,7 +1019,7 @@
             }
             
             .product-image {
-                height: 160px;
+                height: 200px;
             }
         }
     </style>
@@ -1374,14 +1373,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    <!-- Firebase SDK - CORRIGÉ POUR ÉVITER L'ERREUR -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
 
-        // Your web app's Firebase configuration
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script principal -->
+    <script>
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyDa6Sdrlbem4IXElDm6ItaRfxNOLBljFFk",
             authDomain: "kdo-shop-a1680.firebaseapp.com",
@@ -1392,32 +1395,10 @@
             measurementId: "G-0HC2NWRTX2"
         };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const auth = getAuth(app);
+        // Initialiser Firebase
+        let firebaseApp, firebaseDb, firebaseAuth;
+        let currentUser = null;
         
-        // Variables globales accessibles
-        window.firebaseApp = app;
-        window.firebaseDb = db;
-        window.firebaseAuth = auth;
-        window.firebaseCollection = collection;
-        window.firebaseDoc = doc;
-        window.firebaseSetDoc = setDoc;
-        window.firebaseGetDoc = getDoc;
-        window.firebaseUpdateDoc = updateDoc;
-        window.firebaseArrayUnion = arrayUnion;
-        window.firebaseArrayRemove = arrayRemove;
-        window.onAuthStateChanged = onAuthStateChanged;
-        window.signInAnonymously = signInAnonymously;
-    </script>
-
-    <!-- Bootstrap & jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script principal -->
-    <script>
         // Images pour chaque catégorie
         const categoryImages = {
             // Images spécifiques pour les ordinateurs (38 images)
@@ -1851,7 +1832,6 @@
         let currentPage = 1;
         let itemsPerPage = 20;
         let totalPages = 1;
-        let currentUser = null;
         let userCart = {};
 
         // Formatage des prix
@@ -2098,13 +2078,24 @@
             renderProducts();
         }
 
-        // Initialiser Firebase et charger le panier
+        // Initialiser Firebase - CORRIGÉ POUR ÉVITER L'ERREUR
         async function initializeFirebase() {
             try {
-                // Se connecter anonymement
-                await signInAnonymously(auth);
+                // Vérifier si Firebase est déjà initialisé
+                if (typeof firebase === 'undefined') {
+                    console.error("Firebase n'est pas chargé");
+                    return;
+                }
                 
-                onAuthStateChanged(auth, async (user) => {
+                // Initialiser Firebase
+                firebaseApp = firebase.initializeApp(firebaseConfig);
+                firebaseAuth = firebase.auth();
+                firebaseDb = firebase.firestore();
+                
+                // Se connecter anonymement
+                await firebaseAuth.signInAnonymously();
+                
+                firebaseAuth.onAuthStateChanged(async (user) => {
                     if (user) {
                         currentUser = user;
                         console.log("Utilisateur connecté:", user.uid);
@@ -2117,16 +2108,23 @@
                 });
             } catch (error) {
                 console.error("Erreur Firebase:", error);
+                // Si Firebase échoue, utiliser le panier local
+                console.log("Utilisation du panier local");
+                updateCartCount();
+                renderProducts();
             }
         }
 
         // Charger le panier utilisateur depuis Firestore
         async function loadUserCart() {
-            if (!currentUser) return;
+            if (!currentUser) {
+                console.log("Pas d'utilisateur pour charger le panier");
+                return;
+            }
             
             try {
-                const cartRef = doc(db, "carts", currentUser.uid);
-                const cartSnap = await getDoc(cartRef);
+                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
+                const cartSnap = await cartRef.get();
                 
                 if (cartSnap.exists()) {
                     userCart = cartSnap.data();
@@ -2154,7 +2152,7 @@
                         totalAmount: 0,
                         updatedAt: new Date().toISOString()
                     };
-                    await setDoc(cartRef, userCart);
+                    await cartRef.set(userCart);
                     console.log("Nouveau panier créé");
                 }
                 
@@ -2162,15 +2160,20 @@
                 renderProducts(); // Re-render pour afficher les quantités
             } catch (error) {
                 console.error("Erreur lors du chargement du panier:", error);
+                updateCartCount();
+                renderProducts();
             }
         }
 
         // Sauvegarder le panier dans Firestore
         async function saveCartToFirestore() {
-            if (!currentUser) return;
+            if (!currentUser) {
+                console.log("Pas d'utilisateur pour sauvegarder le panier");
+                return;
+            }
             
             try {
-                const cartRef = doc(db, "carts", currentUser.uid);
+                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
                 
                 // Calculer le total
                 let totalItems = 0;
@@ -2186,7 +2189,7 @@
                 userCart.totalAmount = totalAmount;
                 userCart.updatedAt = new Date().toISOString();
                 
-                await setDoc(cartRef, userCart);
+                await cartRef.set(userCart);
                 console.log("Panier sauvegardé dans Firestore");
             } catch (error) {
                 console.error("Erreur lors de la sauvegarde du panier:", error);
@@ -2195,19 +2198,14 @@
 
         // Ajout au panier avec Firebase
         async function addToCart(productId, buttonElement) {
-            if (!currentUser) {
-                console.error("Utilisateur non connecté");
-                return;
-            }
-            
-            const product = products.find(p => p.id === productId);
-            
             // Animation du bouton
             const $button = $(buttonElement);
             $button.addClass('adding');
             setTimeout(() => {
                 $button.removeClass('adding');
             }, 500);
+            
+            const product = products.find(p => p.id === productId);
             
             // Animation vers le panier
             animateAddToCart(buttonElement, product);
@@ -2240,8 +2238,10 @@
                 cart.push(productCopy);
             }
             
-            // Sauvegarder dans Firestore
-            await saveCartToFirestore();
+            // Sauvegarder dans Firestore si connecté
+            if (currentUser) {
+                await saveCartToFirestore();
+            }
             
             // Mettre à jour l'affichage
             updateCartCount();
