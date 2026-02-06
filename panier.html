@@ -589,6 +589,24 @@
             margin-top: 4px;
         }
         
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .form-check-input {
+            margin-top: 3px;
+        }
+        
+        .form-check-label {
+            font-size: 12px;
+            color: var(--text-medium);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        
         /* Étape 3 - Paiement */
         .payment-options {
             margin-bottom: 25px;
@@ -1423,7 +1441,7 @@
                     <div class="step-header">
                         <h3 class="step-title">
                             <span class="step-number">2</span>
-                            Livraison
+                            Informations de Livraison
                         </h3>
                     </div>
                     
@@ -1482,7 +1500,33 @@
                     </div>
                     
                     <div class="address-form">
-                        <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Adresse de livraison</h4>
+                        <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Informations de contact et d'adresse</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Nom complet *</label>
+                                <input type="text" class="form-control" id="deliveryName" placeholder="Votre nom complet" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Nom de l'entreprise (optionnel)</label>
+                                <input type="text" class="form-control" id="deliveryCompany" placeholder="Nom de votre entreprise">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Téléphone *</label>
+                                <input type="tel" class="form-control" id="deliveryPhone" placeholder="Ex: 6XX XXX XXX" required>
+                                <div class="form-hint">Pour vous contacter pour la livraison</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email (optionnel)</label>
+                                <input type="email" class="form-control" id="deliveryEmail" placeholder="votre@email.com">
+                                <div class="form-hint">Pour recevoir les confirmations par email</div>
+                            </div>
+                        </div>
                         
                         <div class="form-row">
                             <div class="form-group">
@@ -1515,22 +1559,23 @@
                             <div class="form-hint">Donnez le maximum de détails pour faciliter la livraison</div>
                         </div>
                         
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Nom complet *</label>
-                                <input type="text" class="form-control" id="deliveryName" placeholder="Votre nom complet" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Téléphone *</label>
-                                <input type="tel" class="form-control" id="deliveryPhone" placeholder="Ex: 6XX XXX XXX" required>
-                                <div class="form-hint">Pour vous contacter pour la livraison</div>
-                            </div>
-                        </div>
-                        
                         <div class="form-group">
                             <label class="form-label">Instructions spéciales (optionnel)</label>
                             <textarea class="form-control form-textarea" id="deliveryInstructions" placeholder="Ex: Appeler avant de livrer, laisser chez le gardien, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="setAsDefaultAddress">
+                            <label class="form-check-label" for="setAsDefaultAddress">
+                                Définir cette adresse comme mon adresse par défaut pour toutes mes futures commandes
+                            </label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="saveContactInfo">
+                            <label class="form-check-label" for="saveContactInfo">
+                                Enregistrer mes informations de contact pour mes prochaines commandes
+                            </label>
                         </div>
                     </div>
                     
@@ -2004,7 +2049,7 @@
 
     <!-- Script principal -->
     <script>
-        // Firebase configuration
+        // Firebase configuration (identique au dashboard)
         const firebaseConfig = {
             apiKey: "AIzaSyDa6Sdrlbem4IXElDm6ItaRfxNOLBljFFk",
             authDomain: "kdo-shop-a1680.firebaseapp.com",
@@ -2018,78 +2063,139 @@
         // Initialiser Firebase
         let firebaseApp, firebaseDb, firebaseAuth;
         let currentUser = null;
-        let userCart = {};
+        let userCart = { items: {}, totalItems: 0, totalAmount: 0 };
+        let userAddresses = [];
+        let defaultAddress = null;
         let currentStep = 1;
         let deliveryOption = 'express';
         let paymentMethod = 'mobile_money';
         let deliveryInfo = {};
         let orderDetails = {};
         let appliedDiscount = null;
-
-        // Données des produits (exemple - devrait correspondre à celles du dashboard)
-        const products = [
-            { id: 1, name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", image: "laptop", specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go" },
-            { id: 2, name: "HP Elitebook 840 G3", price: 160000, oldPrice: 175000, category: "ordinateur", image: "laptop", specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go" },
-            { id: 39, name: "TOSHIBA Disque Dur", price: 15000, oldPrice: 18500, category: "disquedur", image: "hdd", specs: "Taille: 500 Go" },
-            { id: 66, name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", image: "mouse", specs: "Type de souris: SANS FIL" }
-        ];
-
-        // Obtenir l'URL de l'image d'un produit
-        function getProductImageUrl(product) {
-            // Cette fonction devrait correspondre à celle du dashboard
-            const categoryImages = {
-                ordinateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
-                disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
-                usb: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/cle.png",
-                souris: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/souris.jpg"
-            };
-            
-            return categoryImages[product.category] || "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
-        }
+        let allProducts = [];
 
         // Formatage des prix
         function formatPrice(price) {
             return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
         }
 
-        // Initialiser Firebase
+        // Obtenir l'URL de l'image d'un produit
+        function getProductImageUrl(product) {
+            // Images par catégorie
+            const categoryImages = {
+                ordinateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
+                disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
+                usb: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/cle.png",
+                souris: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/souris.jpg",
+                clavier: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/clavier.jpeg",
+                modem: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/modems.jpeg",
+                desktop: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/desktops.jpeg",
+                ram: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/RAM.png",
+                antivirus: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/virus.png",
+                videoprojecteur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/projeteur.jpg",
+                telephone: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/phone.jpeg",
+                adaptateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/adaptateur.jpeg",
+                television: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/t%C3%A9l%C3%A9vision.jpg",
+                chargeur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/chargeur.png",
+                sac: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/sacs.png"
+            };
+            
+            return categoryImages[product.category] || "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
+        }
+
+        // Initialiser Firebase et récupérer les données
         async function initializeFirebase() {
             try {
                 if (typeof firebase === 'undefined') {
                     console.error("Firebase n'est pas chargé");
+                    loadFromLocalStorage();
                     return;
                 }
                 
-                firebaseApp = firebase.initializeApp(firebaseConfig);
+                // Initialiser Firebase
+                if (!firebase.apps.length) {
+                    firebaseApp = firebase.initializeApp(firebaseConfig);
+                } else {
+                    firebaseApp = firebase.app();
+                }
+                
                 firebaseAuth = firebase.auth();
                 firebaseDb = firebase.firestore();
                 
-                // Se connecter anonymement
-                await firebaseAuth.signInAnonymously();
+                // Essayer de récupérer l'utilisateur existant ou se connecter anonymement
+                let user = firebaseAuth.currentUser;
                 
-                firebaseAuth.onAuthStateChanged(async (user) => {
-                    if (user) {
-                        currentUser = user;
-                        console.log("Utilisateur connecté:", user.uid);
-                        await loadUserCart();
-                    } else {
-                        console.log("Pas d'utilisateur connecté");
+                if (!user) {
+                    // Se connecter anonymement
+                    try {
+                        const result = await firebaseAuth.signInAnonymously();
+                        user = result.user;
+                        console.log("Nouvel utilisateur anonyme créé:", user.uid);
+                    } catch (authError) {
+                        console.error("Erreur d'authentification anonyme:", authError);
+                        loadFromLocalStorage();
+                        return;
                     }
-                });
+                }
+                
+                currentUser = user;
+                console.log("Utilisateur connecté:", currentUser.uid);
+                
+                // Charger le panier depuis Firestore
+                await loadCartFromFirestore();
+                
+                // Charger les adresses de l'utilisateur
+                await loadUserAddresses();
+                
+                // Charger tous les produits
+                await loadAllProducts();
+                
+                // Mettre à jour l'affichage
+                updateCartDisplay();
+                updateSummary();
+                
             } catch (error) {
                 console.error("Erreur Firebase:", error);
-                // Charger le panier depuis localStorage si Firebase échoue
-                loadCartFromLocalStorage();
+                loadFromLocalStorage();
                 updateCartDisplay();
                 updateSummary();
             }
         }
 
-        // Charger le panier utilisateur depuis Firestore
-        async function loadUserCart() {
+        // Charger tous les produits depuis Firestore
+        async function loadAllProducts() {
+            try {
+                const productsRef = firebaseDb.collection("products");
+                const snapshot = await productsRef.get();
+                
+                allProducts = [];
+                snapshot.forEach(doc => {
+                    allProducts.push({ id: doc.id, ...doc.data() });
+                });
+                
+                console.log("Produits chargés:", allProducts.length);
+            } catch (error) {
+                console.error("Erreur lors du chargement des produits:", error);
+                // Utiliser des données par défaut si échec
+                allProducts = getDefaultProducts();
+            }
+        }
+
+        // Données par défaut des produits (en cas d'échec de chargement)
+        function getDefaultProducts() {
+            return [
+                { id: 1, name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go" },
+                { id: 2, name: "HP Elitebook 840 G3", price: 160000, oldPrice: 175000, category: "ordinateur", specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go" },
+                { id: 39, name: "TOSHIBA Disque Dur", price: 15000, oldPrice: 18500, category: "disquedur", specs: "Taille: 500 Go" },
+                { id: 66, name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", specs: "Type de souris: SANS FIL" }
+            ];
+        }
+
+        // Charger le panier depuis Firestore
+        async function loadCartFromFirestore() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour charger le panier");
-                loadCartFromLocalStorage();
+                loadFromLocalStorage();
                 return;
             }
             
@@ -2098,10 +2204,11 @@
                 const cartSnap = await cartRef.get();
                 
                 if (cartSnap.exists()) {
-                    userCart = cartSnap.data();
+                    const cartData = cartSnap.data();
+                    userCart = cartData;
                     console.log("Panier chargé depuis Firestore:", userCart);
                 } else {
-                    // Créer un nouveau panier
+                    // Créer un nouveau panier vide
                     userCart = {
                         userId: currentUser.uid,
                         items: {},
@@ -2113,44 +2220,183 @@
                     console.log("Nouveau panier créé dans Firestore");
                 }
                 
-                updateCartDisplay();
-                updateSummary();
+                saveToLocalStorage();
             } catch (error) {
                 console.error("Erreur lors du chargement du panier:", error);
-                loadCartFromLocalStorage();
-                updateCartDisplay();
-                updateSummary();
+                loadFromLocalStorage();
             }
         }
 
-        // Charger le panier depuis localStorage (fallback)
-        function loadCartFromLocalStorage() {
+        // Charger les adresses de l'utilisateur
+        async function loadUserAddresses() {
+            if (!currentUser) return;
+            
+            try {
+                const addressesRef = firebaseDb.collection("userAddresses").where("userId", "==", currentUser.uid);
+                const snapshot = await addressesRef.get();
+                
+                userAddresses = [];
+                snapshot.forEach(doc => {
+                    const address = { id: doc.id, ...doc.data() };
+                    userAddresses.push(address);
+                    
+                    if (address.isDefault) {
+                        defaultAddress = address;
+                        // Préremplir le formulaire avec l'adresse par défaut
+                        prefillAddressForm(address);
+                    }
+                });
+                
+                console.log("Adresses chargées:", userAddresses.length);
+            } catch (error) {
+                console.error("Erreur lors du chargement des adresses:", error);
+            }
+        }
+
+        // Préremplir le formulaire d'adresse
+        function prefillAddressForm(address) {
+            if (!address) return;
+            
+            $('#deliveryName').val(address.name || '');
+            $('#deliveryCompany').val(address.company || '');
+            $('#deliveryPhone').val(address.phone || '');
+            $('#deliveryEmail').val(address.email || '');
+            $('#deliveryCity').val(address.city || '');
+            $('#deliveryDistrict').val(address.district || '');
+            $('#deliveryAddress').val(address.address || '');
+            $('#deliveryInstructions').val(address.instructions || '');
+            
+            if (address.isDefault) {
+                $('#setAsDefaultAddress').prop('checked', true);
+            }
+        }
+
+        // Sauvegarder l'adresse dans Firestore
+        async function saveUserAddress(addressData, isDefault = false) {
+            if (!currentUser) {
+                saveAddressToLocalStorage(addressData, isDefault);
+                return null;
+            }
+            
+            try {
+                const addressesRef = firebaseDb.collection("userAddresses");
+                
+                // Si c'est l'adresse par défaut, désactiver les autres adresses par défaut
+                if (isDefault) {
+                    // Mettre à jour toutes les autres adresses pour qu'elles ne soient plus par défaut
+                    const batch = firebaseDb.batch();
+                    
+                    userAddresses.forEach(addr => {
+                        if (addr.isDefault) {
+                            const addrRef = addressesRef.doc(addr.id);
+                            batch.update(addrRef, { isDefault: false });
+                        }
+                    });
+                    
+                    await batch.commit();
+                }
+                
+                // Ajouter la nouvelle adresse
+                const addressToSave = {
+                    userId: currentUser.uid,
+                    ...addressData,
+                    isDefault: isDefault,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                
+                const docRef = await addressesRef.add(addressToSave);
+                console.log("Adresse sauvegardée dans Firestore:", docRef.id);
+                
+                // Mettre à jour la liste locale
+                addressToSave.id = docRef.id;
+                userAddresses.push(addressToSave);
+                
+                if (isDefault) {
+                    defaultAddress = addressToSave;
+                }
+                
+                return docRef.id;
+            } catch (error) {
+                console.error("Erreur lors de la sauvegarde de l'adresse:", error);
+                saveAddressToLocalStorage(addressData, isDefault);
+                return null;
+            }
+        }
+
+        // Sauvegarder l'adresse dans localStorage
+        function saveAddressToLocalStorage(addressData, isDefault = false) {
+            let addresses = JSON.parse(localStorage.getItem('kdo_addresses') || '[]');
+            
+            // Si c'est l'adresse par défaut, désactiver les autres
+            if (isDefault) {
+                addresses = addresses.map(addr => ({ ...addr, isDefault: false }));
+            }
+            
+            const newAddress = {
+                ...addressData,
+                isDefault: isDefault,
+                id: 'local_' + Date.now()
+            };
+            
+            addresses.push(newAddress);
+            localStorage.setItem('kdo_addresses', JSON.stringify(addresses));
+            
+            // Mettre à jour la liste locale
+            userAddresses = addresses;
+            if (isDefault) {
+                defaultAddress = newAddress;
+            }
+            
+            return newAddress.id;
+        }
+
+        // Charger depuis localStorage
+        function loadFromLocalStorage() {
+            // Panier
             const savedCart = localStorage.getItem('kdo_cart');
             if (savedCart) {
                 try {
                     userCart = JSON.parse(savedCart);
-                    if (!userCart.items) {
-                        userCart.items = {};
-                    }
+                    if (!userCart.items) userCart.items = {};
                 } catch (e) {
                     userCart = { items: {} };
                 }
-            } else {
-                userCart = { items: {} };
+            }
+            
+            // Adresses
+            const savedAddresses = localStorage.getItem('kdo_addresses');
+            if (savedAddresses) {
+                try {
+                    userAddresses = JSON.parse(savedAddresses);
+                    defaultAddress = userAddresses.find(addr => addr.isDefault) || null;
+                } catch (e) {
+                    userAddresses = [];
+                }
+            }
+            
+            // Préremplir le formulaire avec l'adresse par défaut
+            if (defaultAddress) {
+                prefillAddressForm(defaultAddress);
             }
         }
 
-        // Sauvegarder le panier dans Firestore
-        async function saveCartToFirestore() {
+        // Sauvegarder dans localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('kdo_cart', JSON.stringify(userCart));
+        }
+
+        // Mettre à jour le panier dans Firestore
+        async function updateCartInFirestore() {
             if (!currentUser) {
-                saveCartToLocalStorage();
+                saveToLocalStorage();
                 return;
             }
             
             try {
                 const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
                 
-                // Calculer le total
+                // Calculer les totaux
                 let totalItems = 0;
                 let totalAmount = 0;
                 
@@ -2165,16 +2411,13 @@
                 userCart.updatedAt = new Date().toISOString();
                 
                 await cartRef.set(userCart);
-                console.log("Panier sauvegardé dans Firestore");
+                console.log("Panier mis à jour dans Firestore");
+                
+                saveToLocalStorage();
             } catch (error) {
-                console.error("Erreur lors de la sauvegarde du panier:", error);
-                saveCartToLocalStorage();
+                console.error("Erreur lors de la mise à jour du panier:", error);
+                saveToLocalStorage();
             }
-        }
-
-        // Sauvegarder le panier dans localStorage
-        function saveCartToLocalStorage() {
-            localStorage.setItem('kdo_cart', JSON.stringify(userCart));
         }
 
         // Mettre à jour l'affichage du panier
@@ -2204,7 +2447,7 @@
             // Rendre chaque article du panier
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
-                const product = products.find(p => p.id == productId) || item;
+                const product = allProducts.find(p => p.id == productId) || item;
                 const totalPrice = item.price * item.quantity;
                 const imageUrl = getProductImageUrl(product);
                 itemsCount += item.quantity;
@@ -2341,7 +2584,7 @@
             
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
-                const product = products.find(p => p.id == productId) || item;
+                const product = allProducts.find(p => p.id == productId) || item;
                 const totalPrice = item.price * item.quantity;
                 
                 confirmationItems.append(`
@@ -2386,7 +2629,7 @@
             `);
             
             // Adresse (si remplie)
-            if (deliveryInfo.city) {
+            if (deliveryInfo.name) {
                 const cityNames = {
                     'yaounde': 'Yaoundé',
                     'douala': 'Douala',
@@ -2400,16 +2643,27 @@
                     'dchang': 'Dchang'
                 };
                 
-                $('#confirmationAddress').html(`
-                    <div class="address-name">${deliveryInfo.name || 'Non spécifié'}</div>
+                let addressHTML = `<div class="address-name">${deliveryInfo.name || ''}`;
+                
+                if (deliveryInfo.company) {
+                    addressHTML += ` (${deliveryInfo.company})`;
+                }
+                
+                addressHTML += `</div>
                     <div class="address-details">
                         ${deliveryInfo.address || ''}<br>
                         ${deliveryInfo.district || ''}, ${cityNames[deliveryInfo.city] || deliveryInfo.city}
                     </div>
                     <div class="address-contact">
-                        <span><i class="fas fa-phone"></i> ${deliveryInfo.phone || ''}</span>
-                    </div>
-                `);
+                        <span><i class="fas fa-phone"></i> ${deliveryInfo.phone || ''}</span>`;
+                
+                if (deliveryInfo.email) {
+                    addressHTML += `<span><i class="fas fa-envelope"></i> ${deliveryInfo.email}</span>`;
+                }
+                
+                addressHTML += `</div>`;
+                
+                $('#confirmationAddress').html(addressHTML);
             }
             
             // Mettre à jour le total de commande
@@ -2468,14 +2722,14 @@
 
         // Valider le formulaire de livraison
         function validateDeliveryForm() {
+            const name = $('#deliveryName').val();
+            const phone = $('#deliveryPhone').val();
             const city = $('#deliveryCity').val();
             const district = $('#deliveryDistrict').val();
             const address = $('#deliveryAddress').val();
-            const name = $('#deliveryName').val();
-            const phone = $('#deliveryPhone').val();
             
             // Validation basique
-            if (!city || !district || !address || !name || !phone) {
+            if (!name || !phone || !city || !district || !address) {
                 return false;
             }
             
@@ -2488,24 +2742,40 @@
             
             // Sauvegarder les informations
             deliveryInfo = {
+                name,
+                company: $('#deliveryCompany').val(),
+                phone: cleanPhone,
+                email: $('#deliveryEmail').val(),
                 city,
                 district,
                 address,
-                name,
-                phone: cleanPhone,
                 instructions: $('#deliveryInstructions').val()
             };
             
             return true;
         }
 
+        // Sauvegarder les informations d'adresse
+        async function saveAddressInfo() {
+            if (!validateDeliveryForm()) return false;
+            
+            const isDefault = $('#setAsDefaultAddress').is(':checked');
+            const saveContact = $('#saveContactInfo').is(':checked');
+            
+            // Sauvegarder l'adresse
+            await saveUserAddress(deliveryInfo, isDefault);
+            
+            return true;
+        }
+
         // Appliquer un code promo
         function applyDiscountCode(code) {
-            // Codes promotionnels (à remplacer par une vraie logique)
+            // Codes promotionnels
             const discountCodes = {
                 'KDO10': { type: 'percentage', value: 10, minOrder: 50000 },
                 'KDO5000': { type: 'fixed', value: 5000, minOrder: 100000 },
-                'BIENVENUE': { type: 'percentage', value: 15, minOrder: 0 }
+                'BIENVENUE': { type: 'percentage', value: 15, minOrder: 0 },
+                'LIVRAISON': { type: 'fixed', value: 1000, minOrder: 50000 }
             };
             
             const discount = discountCodes[code.toUpperCase()];
@@ -2528,6 +2798,13 @@
 
         // Finaliser la commande
         async function finalizeOrder() {
+            // Sauvegarder l'adresse d'abord
+            const addressSaved = await saveAddressInfo();
+            if (!addressSaved) {
+                alert("Veuillez vérifier vos informations d'adresse.");
+                return;
+            }
+            
             // Générer un numéro de commande
             const orderNumber = 'CMD-' + Date.now().toString().slice(-8);
             
@@ -2559,15 +2836,16 @@
                         status: 'confirmed',
                         createdAt: new Date().toISOString(),
                         estimatedDelivery: deliveryDate.toISOString(),
-                        paymentStatus: 'pending'
+                        paymentStatus: 'pending',
+                        addressId: defaultAddress ? defaultAddress.id : null
                     };
                     
                     await orderRef.set(orderData);
-                    console.log("Commande sauvegardée dans Firestore");
+                    console.log("Commande sauvegardée dans Firestore:", orderNumber);
                     
                     // Vider le panier après commande
                     userCart.items = {};
-                    await saveCartToFirestore();
+                    await updateCartInFirestore();
                     
                 } catch (error) {
                     console.error("Erreur lors de la sauvegarde de la commande:", error);
@@ -2643,8 +2921,13 @@
                 goToStep(1);
             });
             
-            $('#btnToStep3').on('click', function() {
-                goToStep(3);
+            $('#btnToStep3').on('click', async function() {
+                // Sauvegarder l'adresse avant de passer à l'étape suivante
+                const isValid = validateDeliveryForm();
+                if (isValid) {
+                    await saveAddressInfo();
+                    goToStep(3);
+                }
             });
             
             $('#btnToStep2').on('click', function() {
@@ -2683,7 +2966,7 @@
             });
             
             // Validation des formulaires
-            $('#deliveryCity, #deliveryDistrict, #deliveryAddress, #deliveryName, #deliveryPhone').on('input', function() {
+            $('#deliveryName, #deliveryPhone, #deliveryCity, #deliveryDistrict, #deliveryAddress').on('input', function() {
                 updateNavigationButtons();
             });
             
@@ -2714,7 +2997,7 @@
                 // Mettre à jour le panier
                 if (userCart.items[productId]) {
                     userCart.items[productId].quantity = quantity;
-                    saveCartToFirestore();
+                    updateCartInFirestore();
                     updateCartDisplay();
                     updateSummary();
                 }
@@ -2734,7 +3017,7 @@
                 // Mettre à jour le panier
                 if (userCart.items[productId]) {
                     userCart.items[productId].quantity = quantity;
-                    saveCartToFirestore();
+                    updateCartInFirestore();
                     updateCartDisplay();
                     updateSummary();
                 }
@@ -2745,7 +3028,7 @@
                 const productId = $(this).data('id');
                 if (confirm("Supprimer cet article du panier ?")) {
                     delete userCart.items[productId];
-                    saveCartToFirestore();
+                    updateCartInFirestore();
                     updateCartDisplay();
                     updateSummary();
                 }
