@@ -196,6 +196,58 @@
             transition: width 0.5s ease;
         }
         
+        /* Page de connexion */
+        .login-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow-hover);
+            border: 1px solid var(--border-color);
+        }
+        
+        .login-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 30px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #E55A00;
+            transform: translateY(-2px);
+        }
+        
+        .login-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .login-links a {
+            color: var(--primary-orange);
+            text-decoration: none;
+        }
+        
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+        
         /* Contenu principal */
         .checkout-container {
             max-width: 1200px;
@@ -1351,591 +1403,636 @@
         </div>
     </header>
 
-    <!-- Barre de progression du paiement -->
-    <div class="checkout-progress">
-        <div class="container">
-            <div class="progress-steps">
-                <div class="progress-line">
-                    <div class="progress-line-filled" id="progressFill"></div>
+    <!-- Contenu principal (initialement masqué jusqu'à authentification) -->
+    <div id="mainContent" style="display: none;">
+        <!-- Barre de progression du paiement -->
+        <div class="checkout-progress">
+            <div class="container">
+                <div class="progress-steps">
+                    <div class="progress-line">
+                        <div class="progress-line-filled" id="progressFill"></div>
+                    </div>
+                    
+                    <div class="progress-step active" id="step1">
+                        <div class="step-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="step-label">Panier</div>
+                    </div>
+                    
+                    <div class="progress-step" id="step2">
+                        <div class="step-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="step-label">Livraison</div>
+                    </div>
+                    
+                    <div class="progress-step" id="step3">
+                        <div class="step-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="step-label">Paiement</div>
+                    </div>
+                    
+                    <div class="progress-step" id="step4">
+                        <div class="step-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="step-label">Confirmation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenu du panier -->
+        <div class="container checkout-container">
+            <div class="checkout-content">
+                <!-- Étapes du paiement (colonne gauche) -->
+                <div class="checkout-steps">
+                    <!-- Étape 1: Panier -->
+                    <div class="checkout-step active" id="checkoutStep1">
+                        <div class="step-header">
+                            <h3 class="step-title">
+                                <span class="step-number">1</span>
+                                Votre Panier
+                            </h3>
+                            <div class="text-muted" style="font-size: 13px;">
+                                <span id="cartItemsCount">0</span> article(s)
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <div>Les prix et la disponibilité des produits sont confirmés lors de la commande.</div>
+                        </div>
+                        
+                        <div class="cart-items-container" id="cartItemsContainer">
+                            <!-- Articles chargés dynamiquement -->
+                        </div>
+                        
+                        <div class="cart-empty" id="cartEmpty" style="display: none;">
+                            <div class="cart-empty-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 class="cart-empty-title">Votre panier est vide</h3>
+                            <p class="cart-empty-text">Ajoutez des produits à votre panier pour les acheter ou les comparer avec d'autres fournisseurs.</p>
+                            <a href="dashboard.html" class="cart-empty-btn">
+                                <i class="fas fa-shopping-bag"></i> Découvrir nos produits
+                            </a>
+                        </div>
+                        
+                        <div class="step-navigation">
+                            <div></div> <!-- Espace vide à gauche -->
+                            <button class="btn-next" id="btnToStep2" disabled>
+                                Continuer vers la livraison
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 2: Livraison -->
+                    <div class="checkout-step" id="checkoutStep2">
+                        <div class="step-header">
+                            <h3 class="step-title">
+                                <span class="step-number">2</span>
+                                Informations de Livraison
+                            </h3>
+                        </div>
+                        
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div>La livraison est disponible uniquement dans les villes ci-dessous. Les délais commencent à partir de la confirmation de paiement.</div>
+                        </div>
+                        
+                        <div class="delivery-options">
+                            <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Options de livraison</h4>
+                            
+                            <div class="delivery-option selected" data-type="express">
+                                <div class="delivery-header">
+                                    <div class="delivery-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <h5 class="delivery-title">Livraison Express</h5>
+                                    <div class="delivery-price">À partir de 5 000 FCFA</div>
+                                </div>
+                                <p class="delivery-desc">Livraison rapide à domicile ou au point relai. Délai estimé: 1-3 jours ouvrables.</p>
+                                <div class="delivery-time">
+                                    <i class="fas fa-clock"></i>
+                                    Livraison en 24-72h
+                                </div>
+                            </div>
+                            
+                            <div class="delivery-option" data-type="standard">
+                                <div class="delivery-header">
+                                    <div class="delivery-icon">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <h5 class="delivery-title">Livraison Standard</h5>
+                                    <div class="delivery-price">À partir de 1 000 FCFA</div>
+                                </div>
+                                <p class="delivery-desc">Livraison économique avec suivi. Délai estimé: 3-7 jours ouvrables.</p>
+                                <div class="delivery-time">
+                                    <i class="fas fa-clock"></i>
+                                    Livraison en 3-7 jours
+                                </div>
+                            </div>
+                            
+                            <div class="delivery-option" data-type="pickup">
+                                <div class="delivery-header">
+                                    <div class="delivery-icon">
+                                        <i class="fas fa-store"></i>
+                                    </div>
+                                    <h5 class="delivery-title">Retrait en magasin</h5>
+                                    <div class="delivery-price">GRATUIT</div>
+                                </div>
+                                <p class="delivery-desc">Retirez votre commande dans l'un de nos points de vente. Présentez votre numéro de commande.</p>
+                                <div class="delivery-time">
+                                    <i class="fas fa-clock"></i>
+                                    Prêt en 24h
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="address-form">
+                            <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Informations de contact et d'adresse</h4>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Nom complet *</label>
+                                    <input type="text" class="form-control" id="deliveryName" placeholder="Votre nom complet" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Nom de l'entreprise (optionnel)</label>
+                                    <input type="text" class="form-control" id="deliveryCompany" placeholder="Nom de votre entreprise">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="deliveryPhone" placeholder="Ex: 6XX XXX XXX" required>
+                                    <div class="form-hint">Pour vous contacter pour la livraison</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="deliveryEmail" placeholder="votre@email.com" required>
+                                    <div class="form-hint">Pour recevoir les confirmations par email</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Ville *</label>
+                                    <select class="form-select" id="deliveryCity" required>
+                                        <option value="">Sélectionnez votre ville</option>
+                                        <option value="yaounde">Yaoundé</option>
+                                        <option value="douala">Douala</option>
+                                        <option value="bafoussam">Bafoussam</option>
+                                        <option value="bertoua">Bertoua</option>
+                                        <option value="maroua">Maroua</option>
+                                        <option value="garoua">Garoua</option>
+                                        <option value="ngaoundere">Ngaoundéré</option>
+                                        <option value="ebolowa">Ebolowa</option>
+                                        <option value="buea">Buéa</option>
+                                        <option value="dchang">Dchang</option>
+                                    </select>
+                                    <div class="form-hint">Nous livrons uniquement dans ces villes</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Quartier *</label>
+                                    <input type="text" class="form-control" id="deliveryDistrict" placeholder="Ex: Bastos, Bonapriso, etc." required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Adresse complète *</label>
+                                <textarea class="form-control form-textarea" id="deliveryAddress" placeholder="Numéro de maison, rue, immeuble, repères..." required></textarea>
+                                <div class="form-hint">Donnez le maximum de détails pour faciliter la livraison</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Instructions spéciales (optionnel)</label>
+                                <textarea class="form-control form-textarea" id="deliveryInstructions" placeholder="Ex: Appeler avant de livrer, laisser chez le gardien, etc."></textarea>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="setAsDefaultAddress">
+                                <label class="form-check-label" for="setAsDefaultAddress">
+                                    Définir cette adresse comme mon adresse par défaut pour toutes mes futures commandes
+                                </label>
+                            </div>
+                            
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="saveContactInfo" checked>
+                                <label class="form-check-label" for="saveContactInfo">
+                                    Enregistrer mes informations de contact pour mes prochaines commandes
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="step-navigation">
+                            <button class="btn-prev" id="btnToStep1">
+                                <i class="fas fa-arrow-left"></i>
+                                Retour au panier
+                            </button>
+                            <button class="btn-next" id="btnToStep3" disabled>
+                                Continuer vers le paiement
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 3: Paiement -->
+                    <div class="checkout-step" id="checkoutStep3">
+                        <div class="step-header">
+                            <h3 class="step-title">
+                                <span class="step-number">3</span>
+                                Paiement
+                            </h3>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-lock"></i>
+                            <div>Toutes les transactions sont sécurisées et cryptées. Vos informations de paiement ne sont jamais stockées sur nos serveurs.</div>
+                        </div>
+                        
+                        <div class="payment-options">
+                            <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Méthode de paiement</h4>
+                            
+                            <div class="payment-option selected" data-method="mobile_money">
+                                <div class="payment-header">
+                                    <div class="payment-icon orange">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <h5 class="payment-title">Mobile Money</h5>
+                                </div>
+                                <p class="payment-desc">Orange Money, MTN Mobile Money, Express Union Mobile. Paiement instantané et sécurisé.</p>
+                                <div class="payment-security">
+                                    <div class="security-badge">
+                                        <i class="fas fa-shield-alt"></i>
+                                        Paiement sécurisé
+                                    </div>
+                                    <div class="security-badge">
+                                        <i class="fas fa-bolt"></i>
+                                        Instantané
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-option" data-method="card">
+                                <div class="payment-header">
+                                    <div class="payment-icon blue">
+                                        <i class="far fa-credit-card"></i>
+                                    </div>
+                                    <h5 class="payment-title">Carte bancaire</h5>
+                                </div>
+                                <p class="payment-desc">Visa, Mastercard, UnionPay. Paiement sécurisé via notre partenaire de paiement.</p>
+                                <div class="payment-security">
+                                    <div class="security-badge">
+                                        <i class="fas fa-shield-alt"></i>
+                                        SSL 256-bit
+                                    </div>
+                                    <div class="security-badge">
+                                        <i class="fas fa-globe"></i>
+                                        International
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-option" data-method="bank">
+                                <div class="payment-header">
+                                    <div class="payment-icon green">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <h5 class="payment-title">Virement bancaire</h5>
+                                </div>
+                                <p class="payment-desc">Transfert bancaire vers notre compte. La commande est traitée après réception des fonds.</p>
+                                <div class="payment-security">
+                                    <div class="security-badge">
+                                        <i class="fas fa-file-invoice"></i>
+                                        Reçu fourni
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-option" data-method="cash">
+                                <div class="payment-header">
+                                    <div class="payment-icon purple">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                    </div>
+                                    <h5 class="payment-title">Paiement à la livraison</h5>
+                                </div>
+                                <p class="payment-desc">Payez en espèces lors de la réception. Disponible uniquement pour Yaoundé et Douala.</p>
+                                <div class="payment-security">
+                                    <div class="security-badge">
+                                        <i class="fas fa-hand-holding-usd"></i>
+                                        Payez à réception
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="payment-info">
+                            <h5 class="payment-info-title">
+                                <i class="fas fa-info-circle"></i>
+                                Informations importantes
+                            </h5>
+                            <p class="payment-info-text">
+                                • Les commandes sont traitées dans les 24h suivant la confirmation de paiement.<br>
+                                • Vous recevrez un SMS de confirmation avec votre numéro de suivi.<br>
+                                • Pour les paiements par Mobile Money, utilisez le numéro affiché à l'étape suivante.<br>
+                                • Les virements bancaires peuvent prendre 1-2 jours ouvrables pour être confirmés.
+                            </p>
+                        </div>
+                        
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="acceptTerms" required>
+                            <label class="terms-label">
+                                J'accepte les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">conditions générales de vente</a> et la <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">politique de confidentialité</a>. Je confirme que j'ai lu et compris les informations concernant ma commande.
+                            </label>
+                        </div>
+                        
+                        <div class="step-navigation">
+                            <button class="btn-prev" id="btnToStep2">
+                                <i class="fas fa-arrow-left"></i>
+                                Retour à la livraison
+                            </button>
+                            <button class="btn-next" id="btnToStep4" disabled>
+                                Confirmer la commande
+                                <i class="fas fa-check-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 4: Confirmation -->
+                    <div class="checkout-step" id="checkoutStep4">
+                        <div class="step-header">
+                            <h3 class="step-title">
+                                <span class="step-number">4</span>
+                                Confirmation
+                            </h3>
+                        </div>
+                        
+                        <div class="order-summary-section">
+                            <div class="summary-section">
+                                <h5 class="summary-section-title">
+                                    <i class="fas fa-box"></i>
+                                    Articles commandés
+                                </h5>
+                                <div id="confirmationItems">
+                                    <!-- Articles chargés dynamiquement -->
+                                </div>
+                            </div>
+                            
+                            <div class="summary-section">
+                                <h5 class="summary-section-title">
+                                    <i class="fas fa-truck"></i>
+                                    Livraison
+                                </h5>
+                                <div id="confirmationDelivery">
+                                    <!-- Détails de livraison chargés dynamiquement -->
+                                </div>
+                            </div>
+                            
+                            <div class="summary-section">
+                                <h5 class="summary-section-title">
+                                    <i class="fas fa-credit-card"></i>
+                                    Paiement
+                                </h5>
+                                <div id="confirmationPayment">
+                                    <!-- Détails de paiement chargés dynamiquement -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="address-display" id="confirmationAddress">
+                            <!-- Adresse chargée dynamiquement -->
+                        </div>
+                        
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="finalConfirmation" required>
+                            <label class="terms-label">
+                                Je confirme que toutes les informations ci-dessus sont correctes. Je comprends que toute modification après confirmation peut entraîner des frais supplémentaires ou l'annulation de la commande.
+                            </label>
+                        </div>
+                        
+                        <div class="step-navigation">
+                            <button class="btn-prev" id="btnToStep3">
+                                <i class="fas fa-arrow-left"></i>
+                                Retour au paiement
+                            </button>
+                            <button class="btn-confirm" id="btnConfirmOrder" disabled>
+                                <i class="fas fa-lock"></i>
+                                Finaliser et payer
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 5: Succès -->
+                    <div class="checkout-step" id="checkoutStep5" style="display: none;">
+                        <div class="order-success">
+                            <div class="success-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h2 class="success-title">Commande confirmée !</h2>
+                            <p class="success-subtitle">Merci pour votre commande sur KDO CAMEROUN</p>
+                            <p class="success-message">
+                                Votre commande a été enregistrée avec succès. Vous recevrez sous peu un email et un SMS de confirmation avec les détails de votre commande et les instructions de suivi.
+                            </p>
+                            
+                            <div class="order-details">
+                                <div class="order-id">
+                                    Numéro de commande
+                                    <span id="orderNumber">CMD-000000</span>
+                                </div>
+                                
+                                <div class="summary-item">
+                                    <span class="summary-label">Date de commande:</span>
+                                    <span class="summary-value" id="orderDate">--/--/----</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Montant total:</span>
+                                    <span class="summary-value" id="orderTotal">0 FCFA</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Mode de paiement:</span>
+                                    <span class="summary-value" id="orderPayment">--</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Statut:</span>
+                                    <span class="summary-value" style="color: var(--success-green); font-weight: 600;">Confirmée</span>
+                                </div>
+                            </div>
+                            
+                            <div class="order-timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">Commande confirmée</div>
+                                        <p class="timeline-desc">Votre commande a été reçue et est en cours de traitement</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">Préparation</div>
+                                        <p class="timeline-desc">Vos articles sont en cours de préparation par nos fournisseurs</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">
+                                        <i class="fas fa-shipping-fast"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">Expédition</div>
+                                        <p class="timeline-desc">Votre colis sera expédié dans les 24h</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">Livraison</div>
+                                        <p class="timeline-desc">Livraison estimée: <span id="deliveryEstimate">--/--/----</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                                <a href="dashboard.html" class="btn-prev" style="text-decoration: none;">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    Continuer mes achats
+                                </a>
+                                <button class="btn-next" id="btnTrackOrder">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Suivre ma commande
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="progress-step active" id="step1">
-                    <div class="step-icon">
-                        <i class="fas fa-shopping-cart"></i>
+                <!-- Résumé de la commande (colonne droite) -->
+                <div class="order-summary-sidebar">
+                    <div class="summary-card">
+                        <div class="summary-header">
+                            <h3 class="summary-title">
+                                <i class="fas fa-receipt"></i>
+                                Récapitulatif
+                            </h3>
+                        </div>
+                        
+                        <div class="summary-body">
+                            <div class="summary-row">
+                                <span class="label">Sous-total</span>
+                                <span class="value" id="summarySubtotal">0 FCFA</span>
+                            </div>
+                            
+                            <div class="summary-row savings" id="summarySavings" style="display: none;">
+                                <span class="label">Économies</span>
+                                <span class="value">-0 FCFA</span>
+                            </div>
+                            
+                            <div class="summary-row delivery">
+                                <span class="label">Livraison</span>
+                                <span class="value" id="summaryShipping">0 FCFA</span>
+                            </div>
+                            
+                            <div class="summary-row taxes">
+                                <span class="label">Taxes & Frais</span>
+                                <span class="value" id="summaryTaxes">500 FCFA</span>
+                            </div>
+                            
+                            <div class="summary-row total">
+                                <span class="label">Total</span>
+                                <span class="value" id="summaryTotal">0 FCFA</span>
+                            </div>
+                            
+                            <div class="summary-discount">
+                                <div class="discount-title">
+                                    <i class="fas fa-tag"></i>
+                                    Code promotionnel
+                                </div>
+                                <div class="discount-input-group">
+                                    <input type="text" class="discount-input" id="discountCode" placeholder="Entrez votre code">
+                                    <button class="discount-btn" id="applyDiscount">Appliquer</button>
+                                </div>
+                                <div id="discountMessage" style="font-size: 11px; margin-top: 8px;"></div>
+                            </div>
+                            
+                            <div style="margin-top: 20px; font-size: 11px; color: var(--text-light); text-align: center;">
+                                <i class="fas fa-shield-alt"></i>
+                                Paiement 100% sécurisé
+                            </div>
+                        </div>
                     </div>
-                    <div class="step-label">Panier</div>
-                </div>
-                
-                <div class="progress-step" id="step2">
-                    <div class="step-icon">
-                        <i class="fas fa-truck"></i>
+                    
+                    <div style="margin-top: 15px; padding: 15px; background: var(--accent-gray); border-radius: 8px; font-size: 11px; color: var(--text-medium);">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                            <i class="fas fa-info-circle" style="color: var(--secondary-blue);"></i>
+                            <strong>Informations importantes</strong>
+                        </div>
+                        <p style="margin: 0; line-height: 1.4;">
+                            • Les prix peuvent changer selon la disponibilité des fournisseurs<br>
+                            • Vous pouvez modifier votre commande avant le paiement<br>
+                            • Contactez-nous pour toute question: <strong>support@kdo-cameroun.com</strong>
+                        </p>
                     </div>
-                    <div class="step-label">Livraison</div>
-                </div>
-                
-                <div class="progress-step" id="step3">
-                    <div class="step-icon">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <div class="step-label">Paiement</div>
-                </div>
-                
-                <div class="progress-step" id="step4">
-                    <div class="step-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div class="step-label">Confirmation</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Contenu principal -->
-    <div class="container checkout-container">
-        <div class="checkout-content">
-            <!-- Étapes du paiement (colonne gauche) -->
-            <div class="checkout-steps">
-                <!-- Étape 1: Panier -->
-                <div class="checkout-step active" id="checkoutStep1">
-                    <div class="step-header">
-                        <h3 class="step-title">
-                            <span class="step-number">1</span>
-                            Votre Panier
-                        </h3>
-                        <div class="text-muted" style="font-size: 13px;">
-                            <span id="cartItemsCount">0</span> article(s)
-                        </div>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <i class="fas fa-info-circle"></i>
-                        <div>Les prix et la disponibilité des produits sont confirmés lors de la commande.</div>
-                    </div>
-                    
-                    <div class="cart-items-container" id="cartItemsContainer">
-                        <!-- Articles chargés dynamiquement -->
-                    </div>
-                    
-                    <div class="cart-empty" id="cartEmpty" style="display: none;">
-                        <div class="cart-empty-icon">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <h3 class="cart-empty-title">Votre panier est vide</h3>
-                        <p class="cart-empty-text">Ajoutez des produits à votre panier pour les acheter ou les comparer avec d'autres fournisseurs.</p>
-                        <a href="dashboard.html" class="cart-empty-btn">
-                            <i class="fas fa-shopping-bag"></i> Découvrir nos produits
-                        </a>
-                    </div>
-                    
-                    <div class="step-navigation">
-                        <div></div> <!-- Espace vide à gauche -->
-                        <button class="btn-next" id="btnToStep2" disabled>
-                            Continuer vers la livraison
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Étape 2: Livraison -->
-                <div class="checkout-step" id="checkoutStep2">
-                    <div class="step-header">
-                        <h3 class="step-title">
-                            <span class="step-number">2</span>
-                            Informations de Livraison
-                        </h3>
-                    </div>
-                    
-                    <div class="alert alert-warning">
-                        <i class="fas fa-exclamation-circle"></i>
-                        <div>La livraison est disponible uniquement dans les villes ci-dessous. Les délais commencent à partir de la confirmation de paiement.</div>
-                    </div>
-                    
-                    <div class="delivery-options">
-                        <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Options de livraison</h4>
-                        
-                        <div class="delivery-option selected" data-type="express">
-                            <div class="delivery-header">
-                                <div class="delivery-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <h5 class="delivery-title">Livraison Express</h5>
-                                <div class="delivery-price">À partir de 5 000 FCFA</div>
-                            </div>
-                            <p class="delivery-desc">Livraison rapide à domicile ou au point relai. Délai estimé: 1-3 jours ouvrables.</p>
-                            <div class="delivery-time">
-                                <i class="fas fa-clock"></i>
-                                Livraison en 24-72h
-                            </div>
-                        </div>
-                        
-                        <div class="delivery-option" data-type="standard">
-                            <div class="delivery-header">
-                                <div class="delivery-icon">
-                                    <i class="fas fa-truck"></i>
-                                </div>
-                                <h5 class="delivery-title">Livraison Standard</h5>
-                                <div class="delivery-price">À partir de 1 000 FCFA</div>
-                            </div>
-                            <p class="delivery-desc">Livraison économique avec suivi. Délai estimé: 3-7 jours ouvrables.</p>
-                            <div class="delivery-time">
-                                <i class="fas fa-clock"></i>
-                                Livraison en 3-7 jours
-                            </div>
-                        </div>
-                        
-                        <div class="delivery-option" data-type="pickup">
-                            <div class="delivery-header">
-                                <div class="delivery-icon">
-                                    <i class="fas fa-store"></i>
-                                </div>
-                                <h5 class="delivery-title">Retrait en magasin</h5>
-                                <div class="delivery-price">GRATUIT</div>
-                            </div>
-                            <p class="delivery-desc">Retirez votre commande dans l'un de nos points de vente. Présentez votre numéro de commande.</p>
-                            <div class="delivery-time">
-                                <i class="fas fa-clock"></i>
-                                Prêt en 24h
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="address-form">
-                        <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Informations de contact et d'adresse</h4>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Nom complet *</label>
-                                <input type="text" class="form-control" id="deliveryName" placeholder="Votre nom complet" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Nom de l'entreprise (optionnel)</label>
-                                <input type="text" class="form-control" id="deliveryCompany" placeholder="Nom de votre entreprise">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Téléphone *</label>
-                                <input type="tel" class="form-control" id="deliveryPhone" placeholder="Ex: 6XX XXX XXX" required>
-                                <div class="form-hint">Pour vous contacter pour la livraison</div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Email (optionnel)</label>
-                                <input type="email" class="form-control" id="deliveryEmail" placeholder="votre@email.com">
-                                <div class="form-hint">Pour recevoir les confirmations par email</div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Ville *</label>
-                                <select class="form-select" id="deliveryCity" required>
-                                    <option value="">Sélectionnez votre ville</option>
-                                    <option value="yaounde">Yaoundé</option>
-                                    <option value="douala">Douala</option>
-                                    <option value="bafoussam">Bafoussam</option>
-                                    <option value="bertoua">Bertoua</option>
-                                    <option value="maroua">Maroua</option>
-                                    <option value="garoua">Garoua</option>
-                                    <option value="ngaoundere">Ngaoundéré</option>
-                                    <option value="ebolowa">Ebolowa</option>
-                                    <option value="buea">Buéa</option>
-                                    <option value="dchang">Dchang</option>
-                                </select>
-                                <div class="form-hint">Nous livrons uniquement dans ces villes</div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Quartier *</label>
-                                <input type="text" class="form-control" id="deliveryDistrict" placeholder="Ex: Bastos, Bonapriso, etc." required>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Adresse complète *</label>
-                            <textarea class="form-control form-textarea" id="deliveryAddress" placeholder="Numéro de maison, rue, immeuble, repères..." required></textarea>
-                            <div class="form-hint">Donnez le maximum de détails pour faciliter la livraison</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">Instructions spéciales (optionnel)</label>
-                            <textarea class="form-control form-textarea" id="deliveryInstructions" placeholder="Ex: Appeler avant de livrer, laisser chez le gardien, etc."></textarea>
-                        </div>
-                        
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="setAsDefaultAddress">
-                            <label class="form-check-label" for="setAsDefaultAddress">
-                                Définir cette adresse comme mon adresse par défaut pour toutes mes futures commandes
-                            </label>
-                        </div>
-                        
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="saveContactInfo">
-                            <label class="form-check-label" for="saveContactInfo">
-                                Enregistrer mes informations de contact pour mes prochaines commandes
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="step-navigation">
-                        <button class="btn-prev" id="btnToStep1">
-                            <i class="fas fa-arrow-left"></i>
-                            Retour au panier
-                        </button>
-                        <button class="btn-next" id="btnToStep3" disabled>
-                            Continuer vers le paiement
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Étape 3: Paiement -->
-                <div class="checkout-step" id="checkoutStep3">
-                    <div class="step-header">
-                        <h3 class="step-title">
-                            <span class="step-number">3</span>
-                            Paiement
-                        </h3>
-                    </div>
-                    
-                    <div class="alert alert-info">
-                        <i class="fas fa-lock"></i>
-                        <div>Toutes les transactions sont sécurisées et cryptées. Vos informations de paiement ne sont jamais stockées sur nos serveurs.</div>
-                    </div>
-                    
-                    <div class="payment-options">
-                        <h4 style="font-size: 14px; margin-bottom: 15px; color: var(--text-dark);">Méthode de paiement</h4>
-                        
-                        <div class="payment-option selected" data-method="mobile_money">
-                            <div class="payment-header">
-                                <div class="payment-icon orange">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </div>
-                                <h5 class="payment-title">Mobile Money</h5>
-                            </div>
-                            <p class="payment-desc">Orange Money, MTN Mobile Money, Express Union Mobile. Paiement instantané et sécurisé.</p>
-                            <div class="payment-security">
-                                <div class="security-badge">
-                                    <i class="fas fa-shield-alt"></i>
-                                    Paiement sécurisé
-                                </div>
-                                <div class="security-badge">
-                                    <i class="fas fa-bolt"></i>
-                                    Instantané
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-option" data-method="card">
-                            <div class="payment-header">
-                                <div class="payment-icon blue">
-                                    <i class="far fa-credit-card"></i>
-                                </div>
-                                <h5 class="payment-title">Carte bancaire</h5>
-                            </div>
-                            <p class="payment-desc">Visa, Mastercard, UnionPay. Paiement sécurisé via notre partenaire de paiement.</p>
-                            <div class="payment-security">
-                                <div class="security-badge">
-                                    <i class="fas fa-shield-alt"></i>
-                                    SSL 256-bit
-                                </div>
-                                <div class="security-badge">
-                                    <i class="fas fa-globe"></i>
-                                    International
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-option" data-method="bank">
-                            <div class="payment-header">
-                                <div class="payment-icon green">
-                                    <i class="fas fa-university"></i>
-                                </div>
-                                <h5 class="payment-title">Virement bancaire</h5>
-                            </div>
-                            <p class="payment-desc">Transfert bancaire vers notre compte. La commande est traitée après réception des fonds.</p>
-                            <div class="payment-security">
-                                <div class="security-badge">
-                                    <i class="fas fa-file-invoice"></i>
-                                    Reçu fourni
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-option" data-method="cash">
-                            <div class="payment-header">
-                                <div class="payment-icon purple">
-                                    <i class="fas fa-money-bill-wave"></i>
-                                </div>
-                                <h5 class="payment-title">Paiement à la livraison</h5>
-                            </div>
-                            <p class="payment-desc">Payez en espèces lors de la réception. Disponible uniquement pour Yaoundé et Douala.</p>
-                            <div class="payment-security">
-                                <div class="security-badge">
-                                    <i class="fas fa-hand-holding-usd"></i>
-                                    Payez à réception
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="payment-info">
-                        <h5 class="payment-info-title">
-                            <i class="fas fa-info-circle"></i>
-                            Informations importantes
-                        </h5>
-                        <p class="payment-info-text">
-                            • Les commandes sont traitées dans les 24h suivant la confirmation de paiement.<br>
-                            • Vous recevrez un SMS de confirmation avec votre numéro de suivi.<br>
-                            • Pour les paiements par Mobile Money, utilisez le numéro affiché à l'étape suivante.<br>
-                            • Les virements bancaires peuvent prendre 1-2 jours ouvrables pour être confirmés.
-                        </p>
-                    </div>
-                    
-                    <div class="terms-checkbox">
-                        <input type="checkbox" id="acceptTerms" required>
-                        <label class="terms-label">
-                            J'accepte les <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">conditions générales de vente</a> et la <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">politique de confidentialité</a>. Je confirme que j'ai lu et compris les informations concernant ma commande.
-                        </label>
-                    </div>
-                    
-                    <div class="step-navigation">
-                        <button class="btn-prev" id="btnToStep2">
-                            <i class="fas fa-arrow-left"></i>
-                            Retour à la livraison
-                        </button>
-                        <button class="btn-next" id="btnToStep4" disabled>
-                            Confirmer la commande
-                            <i class="fas fa-check-circle"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Étape 4: Confirmation -->
-                <div class="checkout-step" id="checkoutStep4">
-                    <div class="step-header">
-                        <h3 class="step-title">
-                            <span class="step-number">4</span>
-                            Confirmation
-                        </h3>
-                    </div>
-                    
-                    <div class="order-summary-section">
-                        <div class="summary-section">
-                            <h5 class="summary-section-title">
-                                <i class="fas fa-box"></i>
-                                Articles commandés
-                            </h5>
-                            <div id="confirmationItems">
-                                <!-- Articles chargés dynamiquement -->
-                            </div>
-                        </div>
-                        
-                        <div class="summary-section">
-                            <h5 class="summary-section-title">
-                                <i class="fas fa-truck"></i>
-                                Livraison
-                            </h5>
-                            <div id="confirmationDelivery">
-                                <!-- Détails de livraison chargés dynamiquement -->
-                            </div>
-                        </div>
-                        
-                        <div class="summary-section">
-                            <h5 class="summary-section-title">
-                                <i class="fas fa-credit-card"></i>
-                                Paiement
-                            </h5>
-                            <div id="confirmationPayment">
-                                <!-- Détails de paiement chargés dynamiquement -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="address-display" id="confirmationAddress">
-                        <!-- Adresse chargée dynamiquement -->
-                    </div>
-                    
-                    <div class="terms-checkbox">
-                        <input type="checkbox" id="finalConfirmation" required>
-                        <label class="terms-label">
-                            Je confirme que toutes les informations ci-dessus sont correctes. Je comprends que toute modification après confirmation peut entraîner des frais supplémentaires ou l'annulation de la commande.
-                        </label>
-                    </div>
-                    
-                    <div class="step-navigation">
-                        <button class="btn-prev" id="btnToStep3">
-                            <i class="fas fa-arrow-left"></i>
-                            Retour au paiement
-                        </button>
-                        <button class="btn-confirm" id="btnConfirmOrder" disabled>
-                            <i class="fas fa-lock"></i>
-                            Finaliser et payer
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Étape 5: Succès -->
-                <div class="checkout-step" id="checkoutStep5" style="display: none;">
-                    <div class="order-success">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h2 class="success-title">Commande confirmée !</h2>
-                        <p class="success-subtitle">Merci pour votre commande sur KDO CAMEROUN</p>
-                        <p class="success-message">
-                            Votre commande a été enregistrée avec succès. Vous recevrez sous peu un email et un SMS de confirmation avec les détails de votre commande et les instructions de suivi.
-                        </p>
-                        
-                        <div class="order-details">
-                            <div class="order-id">
-                                Numéro de commande
-                                <span id="orderNumber">CMD-000000</span>
-                            </div>
-                            
-                            <div class="summary-item">
-                                <span class="summary-label">Date de commande:</span>
-                                <span class="summary-value" id="orderDate">--/--/----</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Montant total:</span>
-                                <span class="summary-value" id="orderTotal">0 FCFA</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Mode de paiement:</span>
-                                <span class="summary-value" id="orderPayment">--</span>
-                            </div>
-                            <div class="summary-item">
-                                <span class="summary-label">Statut:</span>
-                                <span class="summary-value" style="color: var(--success-green); font-weight: 600;">Confirmée</span>
-                            </div>
-                        </div>
-                        
-                        <div class="order-timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-check"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Commande confirmée</div>
-                                    <p class="timeline-desc">Votre commande a été reçue et est en cours de traitement</p>
-                                </div>
-                            </div>
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-box"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Préparation</div>
-                                    <p class="timeline-desc">Vos articles sont en cours de préparation par nos fournisseurs</p>
-                                </div>
-                            </div>
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-shipping-fast"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Expédition</div>
-                                    <p class="timeline-desc">Votre colis sera expédié dans les 24h</p>
-                                </div>
-                            </div>
-                            
-                            <div class="timeline-item">
-                                <div class="timeline-icon">
-                                    <i class="fas fa-home"></i>
-                                </div>
-                                <div class="timeline-content">
-                                    <div class="timeline-title">Livraison</div>
-                                    <p class="timeline-desc">Livraison estimée: <span id="deliveryEstimate">--/--/----</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
-                            <a href="dashboard.html" class="btn-prev" style="text-decoration: none;">
-                                <i class="fas fa-shopping-bag"></i>
-                                Continuer mes achats
-                            </a>
-                            <button class="btn-next" id="btnTrackOrder">
-                                <i class="fas fa-map-marker-alt"></i>
-                                Suivre ma commande
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Résumé de la commande (colonne droite) -->
-            <div class="order-summary-sidebar">
-                <div class="summary-card">
-                    <div class="summary-header">
-                        <h3 class="summary-title">
-                            <i class="fas fa-receipt"></i>
-                            Récapitulatif
-                        </h3>
-                    </div>
-                    
-                    <div class="summary-body">
-                        <div class="summary-row">
-                            <span class="label">Sous-total</span>
-                            <span class="value" id="summarySubtotal">0 FCFA</span>
-                        </div>
-                        
-                        <div class="summary-row savings" id="summarySavings" style="display: none;">
-                            <span class="label">Économies</span>
-                            <span class="value">-0 FCFA</span>
-                        </div>
-                        
-                        <div class="summary-row delivery">
-                            <span class="label">Livraison</span>
-                            <span class="value" id="summaryShipping">0 FCFA</span>
-                        </div>
-                        
-                        <div class="summary-row taxes">
-                            <span class="label">Taxes & Frais</span>
-                            <span class="value" id="summaryTaxes">500 FCFA</span>
-                        </div>
-                        
-                        <div class="summary-row total">
-                            <span class="label">Total</span>
-                            <span class="value" id="summaryTotal">0 FCFA</span>
-                        </div>
-                        
-                        <div class="summary-discount">
-                            <div class="discount-title">
-                                <i class="fas fa-tag"></i>
-                                Code promotionnel
-                            </div>
-                            <div class="discount-input-group">
-                                <input type="text" class="discount-input" id="discountCode" placeholder="Entrez votre code">
-                                <button class="discount-btn" id="applyDiscount">Appliquer</button>
-                            </div>
-                            <div id="discountMessage" style="font-size: 11px; margin-top: 8px;"></div>
-                        </div>
-                        
-                        <div style="margin-top: 20px; font-size: 11px; color: var(--text-light); text-align: center;">
-                            <i class="fas fa-shield-alt"></i>
-                            Paiement 100% sécurisé
-                        </div>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 15px; padding: 15px; background: var(--accent-gray); border-radius: 8px; font-size: 11px; color: var(--text-medium);">
-                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                        <i class="fas fa-info-circle" style="color: var(--secondary-blue);"></i>
-                        <strong>Informations importantes</strong>
-                    </div>
-                    <p style="margin: 0; line-height: 1.4;">
-                        • Les prix peuvent changer selon la disponibilité des fournisseurs<br>
-                        • Vous pouvez modifier votre commande avant le paiement<br>
-                        • Contactez-nous pour toute question: <strong>support@kdo-cameroun.com</strong>
-                    </p>
-                </div>
-            </div>
+    <!-- Page de connexion (affichée si utilisateur non connecté) -->
+    <div id="loginContent" class="login-container">
+        <h2 class="login-title">Connexion requise</h2>
+        <p class="text-center mb-4">Vous devez être connecté pour accéder à votre panier et passer commande.</p>
+        
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <div>Connectez-vous avec votre compte KDO CAMEROUN pour continuer.</div>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="loginEmail" placeholder="votre@email.com" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Votre mot de passe" required>
+        </div>
+        
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">
+                Se souvenir de moi
+            </label>
+        </div>
+        
+        <button class="login-btn" id="loginBtn">
+            <i class="fas fa-sign-in-alt me-2"></i>
+            Se connecter
+        </button>
+        
+        <div class="login-links">
+            <p class="mb-2">
+                <a href="register.html">Créer un compte</a>
+            </p>
+            <p class="mb-0">
+                <a href="forgot-password.html">Mot de passe oublié ?</a>
+            </p>
         </div>
     </div>
 
@@ -2049,21 +2146,22 @@
 
     <!-- Script principal -->
     <script>
-        // Firebase configuration (identique au dashboard)
+        // Nouvelle configuration Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyDa6Sdrlbem4IXElDm6ItaRfxNOLBljFFk",
-            authDomain: "kdo-shop-a1680.firebaseapp.com",
-            projectId: "kdo-shop-a1680",
-            storageBucket: "kdo-shop-a1680.firebasestorage.app",
-            messagingSenderId: "34520735960",
-            appId: "1:34520735960:web:f67cebf61f19cb01c937ad",
-            measurementId: "G-0HC2NWRTX2"
+            apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
+            authDomain: "kdo-cameroun.firebaseapp.com",
+            projectId: "kdo-cameroun",
+            storageBucket: "kdo-cameroun.firebasestorage.app",
+            messagingSenderId: "445876564547",
+            appId: "1:445876564547:web:26507d61bb091fa7bd1af6",
+            measurementId: "G-FX2DVSKLKZ"
         };
 
         // Initialiser Firebase
         let firebaseApp, firebaseDb, firebaseAuth;
         let currentUser = null;
         let userCart = { items: {}, totalItems: 0, totalAmount: 0 };
+        let userProfile = null;
         let userAddresses = [];
         let defaultAddress = null;
         let currentStep = 1;
@@ -2081,7 +2179,6 @@
 
         // Obtenir l'URL de l'image d'un produit
         function getProductImageUrl(product) {
-            // Images par catégorie
             const categoryImages = {
                 ordinateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
                 disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
@@ -2103,12 +2200,12 @@
             return categoryImages[product.category] || "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
         }
 
-        // Initialiser Firebase et récupérer les données
+        // Initialiser Firebase et vérifier l'authentification
         async function initializeFirebase() {
             try {
                 if (typeof firebase === 'undefined') {
                     console.error("Firebase n'est pas chargé");
-                    loadFromLocalStorage();
+                    showLoginPage();
                     return;
                 }
                 
@@ -2122,43 +2219,138 @@
                 firebaseAuth = firebase.auth();
                 firebaseDb = firebase.firestore();
                 
-                // Essayer de récupérer l'utilisateur existant ou se connecter anonymement
-                let user = firebaseAuth.currentUser;
-                
-                if (!user) {
-                    // Se connecter anonymement
-                    try {
-                        const result = await firebaseAuth.signInAnonymously();
-                        user = result.user;
-                        console.log("Nouvel utilisateur anonyme créé:", user.uid);
-                    } catch (authError) {
-                        console.error("Erreur d'authentification anonyme:", authError);
-                        loadFromLocalStorage();
-                        return;
+                // Vérifier l'état d'authentification
+                firebaseAuth.onAuthStateChanged(async (user) => {
+                    if (user) {
+                        // Utilisateur connecté
+                        currentUser = user;
+                        console.log("Utilisateur connecté:", currentUser.uid, currentUser.email);
+                        
+                        // Charger le profil utilisateur
+                        await loadUserProfile();
+                        
+                        // Charger le panier
+                        await loadCartFromFirestore();
+                        
+                        // Charger les adresses
+                        await loadUserAddresses();
+                        
+                        // Charger les produits
+                        await loadAllProducts();
+                        
+                        // Afficher le panier
+                        showCartPage();
+                        
+                        // Mettre à jour l'affichage
+                        updateCartDisplay();
+                        updateSummary();
+                        
+                    } else {
+                        // Utilisateur non connecté
+                        console.log("Utilisateur non connecté");
+                        showLoginPage();
                     }
-                }
-                
-                currentUser = user;
-                console.log("Utilisateur connecté:", currentUser.uid);
-                
-                // Charger le panier depuis Firestore
-                await loadCartFromFirestore();
-                
-                // Charger les adresses de l'utilisateur
-                await loadUserAddresses();
-                
-                // Charger tous les produits
-                await loadAllProducts();
-                
-                // Mettre à jour l'affichage
-                updateCartDisplay();
-                updateSummary();
+                });
                 
             } catch (error) {
                 console.error("Erreur Firebase:", error);
-                loadFromLocalStorage();
+                showLoginPage();
+            }
+        }
+
+        // Afficher la page de connexion
+        function showLoginPage() {
+            $('#loginContent').show();
+            $('#mainContent').hide();
+            $('.footer-kdo').show();
+        }
+
+        // Afficher la page du panier
+        function showCartPage() {
+            $('#loginContent').hide();
+            $('#mainContent').show();
+            $('.footer-kdo').show();
+        }
+
+        // Connexion de l'utilisateur
+        async function loginUser(email, password) {
+            try {
+                const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
+                currentUser = userCredential.user;
+                console.log("Connexion réussie:", currentUser.email);
+                
+                // Charger les données utilisateur
+                await loadUserProfile();
+                await loadCartFromFirestore();
+                await loadUserAddresses();
+                await loadAllProducts();
+                
+                showCartPage();
                 updateCartDisplay();
                 updateSummary();
+                
+                return true;
+            } catch (error) {
+                console.error("Erreur de connexion:", error);
+                showLoginError(error.message);
+                return false;
+            }
+        }
+
+        // Afficher les erreurs de connexion
+        function showLoginError(message) {
+            let errorMessage = "Erreur de connexion";
+            
+            if (message.includes("user-not-found")) {
+                errorMessage = "Aucun compte trouvé avec cet email";
+            } else if (message.includes("wrong-password")) {
+                errorMessage = "Mot de passe incorrect";
+            } else if (message.includes("invalid-email")) {
+                errorMessage = "Adresse email invalide";
+            } else if (message.includes("too-many-requests")) {
+                errorMessage = "Trop de tentatives échouées. Veuillez réessayer plus tard";
+            }
+            
+            alert(errorMessage);
+        }
+
+        // Charger le profil utilisateur depuis Firestore
+        async function loadUserProfile() {
+            if (!currentUser) return;
+            
+            try {
+                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
+                const userSnap = await userRef.get();
+                
+                if (userSnap.exists()) {
+                    userProfile = userSnap.data();
+                    console.log("Profil utilisateur chargé:", userProfile);
+                    
+                    // Préremplir le formulaire avec les informations du profil
+                    if (userProfile.fullName) {
+                        $('#deliveryName').val(userProfile.fullName);
+                    }
+                    if (userProfile.phone) {
+                        $('#deliveryPhone').val(userProfile.phone);
+                    }
+                    if (userProfile.email) {
+                        $('#deliveryEmail').val(userProfile.email);
+                    }
+                    if (userProfile.company) {
+                        $('#deliveryCompany').val(userProfile.company);
+                    }
+                    
+                } else {
+                    console.log("Aucun profil trouvé pour cet utilisateur");
+                    // Créer un profil de base si nécessaire
+                    userProfile = {
+                        uid: currentUser.uid,
+                        email: currentUser.email,
+                        createdAt: new Date().toISOString()
+                    };
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement du profil:", error);
             }
         }
 
@@ -2170,24 +2362,34 @@
                 
                 allProducts = [];
                 snapshot.forEach(doc => {
-                    allProducts.push({ id: doc.id, ...doc.data() });
+                    const product = { id: doc.id, ...doc.data() };
+                    
+                    // S'assurer que le produit a les champs nécessaires
+                    if (!product.category) product.category = 'other';
+                    if (!product.specs) product.specs = '';
+                    
+                    allProducts.push(product);
                 });
                 
                 console.log("Produits chargés:", allProducts.length);
+                
+                // Si aucun produit, utiliser des données par défaut
+                if (allProducts.length === 0) {
+                    allProducts = getDefaultProducts();
+                }
             } catch (error) {
                 console.error("Erreur lors du chargement des produits:", error);
-                // Utiliser des données par défaut si échec
                 allProducts = getDefaultProducts();
             }
         }
 
-        // Données par défaut des produits (en cas d'échec de chargement)
+        // Données par défaut des produits
         function getDefaultProducts() {
             return [
-                { id: 1, name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go" },
-                { id: 2, name: "HP Elitebook 840 G3", price: 160000, oldPrice: 175000, category: "ordinateur", specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go" },
-                { id: 39, name: "TOSHIBA Disque Dur", price: 15000, oldPrice: 18500, category: "disquedur", specs: "Taille: 500 Go" },
-                { id: 66, name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", specs: "Type de souris: SANS FIL" }
+                { id: "1", name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go" },
+                { id: "2", name: "HP Elitebook 840 G3", price: 160000, oldPrice: 175000, category: "ordinateur", specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go" },
+                { id: "39", name: "TOSHIBA Disque Dur", price: 15000, oldPrice: 18500, category: "disquedur", specs: "Taille: 500 Go" },
+                { id: "66", name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", specs: "Type de souris: SANS FIL" }
             ];
         }
 
@@ -2195,7 +2397,6 @@
         async function loadCartFromFirestore() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour charger le panier");
-                loadFromLocalStorage();
                 return;
             }
             
@@ -2220,10 +2421,9 @@
                     console.log("Nouveau panier créé dans Firestore");
                 }
                 
-                saveToLocalStorage();
             } catch (error) {
                 console.error("Erreur lors du chargement du panier:", error);
-                loadFromLocalStorage();
+                userCart = { items: {}, totalItems: 0, totalAmount: 0 };
             }
         }
 
@@ -2248,8 +2448,32 @@
                 });
                 
                 console.log("Adresses chargées:", userAddresses.length);
+                
+                // Si aucune adresse mais que l'utilisateur a un profil, utiliser ces informations
+                if (userAddresses.length === 0 && userProfile) {
+                    prefillWithProfileInfo();
+                }
             } catch (error) {
                 console.error("Erreur lors du chargement des adresses:", error);
+                prefillWithProfileInfo();
+            }
+        }
+
+        // Préremplir avec les informations du profil
+        function prefillWithProfileInfo() {
+            if (!userProfile) return;
+            
+            if (userProfile.fullName) {
+                $('#deliveryName').val(userProfile.fullName);
+            }
+            if (userProfile.phone) {
+                $('#deliveryPhone').val(userProfile.phone);
+            }
+            if (userProfile.email) {
+                $('#deliveryEmail').val(userProfile.email);
+            }
+            if (userProfile.company) {
+                $('#deliveryCompany').val(userProfile.company);
             }
         }
 
@@ -2274,7 +2498,6 @@
         // Sauvegarder l'adresse dans Firestore
         async function saveUserAddress(addressData, isDefault = false) {
             if (!currentUser) {
-                saveAddressToLocalStorage(addressData, isDefault);
                 return null;
             }
             
@@ -2319,77 +2542,13 @@
                 return docRef.id;
             } catch (error) {
                 console.error("Erreur lors de la sauvegarde de l'adresse:", error);
-                saveAddressToLocalStorage(addressData, isDefault);
                 return null;
             }
-        }
-
-        // Sauvegarder l'adresse dans localStorage
-        function saveAddressToLocalStorage(addressData, isDefault = false) {
-            let addresses = JSON.parse(localStorage.getItem('kdo_addresses') || '[]');
-            
-            // Si c'est l'adresse par défaut, désactiver les autres
-            if (isDefault) {
-                addresses = addresses.map(addr => ({ ...addr, isDefault: false }));
-            }
-            
-            const newAddress = {
-                ...addressData,
-                isDefault: isDefault,
-                id: 'local_' + Date.now()
-            };
-            
-            addresses.push(newAddress);
-            localStorage.setItem('kdo_addresses', JSON.stringify(addresses));
-            
-            // Mettre à jour la liste locale
-            userAddresses = addresses;
-            if (isDefault) {
-                defaultAddress = newAddress;
-            }
-            
-            return newAddress.id;
-        }
-
-        // Charger depuis localStorage
-        function loadFromLocalStorage() {
-            // Panier
-            const savedCart = localStorage.getItem('kdo_cart');
-            if (savedCart) {
-                try {
-                    userCart = JSON.parse(savedCart);
-                    if (!userCart.items) userCart.items = {};
-                } catch (e) {
-                    userCart = { items: {} };
-                }
-            }
-            
-            // Adresses
-            const savedAddresses = localStorage.getItem('kdo_addresses');
-            if (savedAddresses) {
-                try {
-                    userAddresses = JSON.parse(savedAddresses);
-                    defaultAddress = userAddresses.find(addr => addr.isDefault) || null;
-                } catch (e) {
-                    userAddresses = [];
-                }
-            }
-            
-            // Préremplir le formulaire avec l'adresse par défaut
-            if (defaultAddress) {
-                prefillAddressForm(defaultAddress);
-            }
-        }
-
-        // Sauvegarder dans localStorage
-        function saveToLocalStorage() {
-            localStorage.setItem('kdo_cart', JSON.stringify(userCart));
         }
 
         // Mettre à jour le panier dans Firestore
         async function updateCartInFirestore() {
             if (!currentUser) {
-                saveToLocalStorage();
                 return;
             }
             
@@ -2413,10 +2572,8 @@
                 await cartRef.set(userCart);
                 console.log("Panier mis à jour dans Firestore");
                 
-                saveToLocalStorage();
             } catch (error) {
                 console.error("Erreur lors de la mise à jour du panier:", error);
-                saveToLocalStorage();
             }
         }
 
@@ -2447,7 +2604,7 @@
             // Rendre chaque article du panier
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
-                const product = allProducts.find(p => p.id == productId) || item;
+                const product = allProducts.find(p => p.id === productId) || item;
                 const totalPrice = item.price * item.quantity;
                 const imageUrl = getProductImageUrl(product);
                 itemsCount += item.quantity;
@@ -2584,7 +2741,7 @@
             
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
-                const product = allProducts.find(p => p.id == productId) || item;
+                const product = allProducts.find(p => p.id === productId) || item;
                 const totalPrice = item.price * item.quantity;
                 
                 confirmationItems.append(`
@@ -2724,12 +2881,13 @@
         function validateDeliveryForm() {
             const name = $('#deliveryName').val();
             const phone = $('#deliveryPhone').val();
+            const email = $('#deliveryEmail').val();
             const city = $('#deliveryCity').val();
             const district = $('#deliveryDistrict').val();
             const address = $('#deliveryAddress').val();
             
             // Validation basique
-            if (!name || !phone || !city || !district || !address) {
+            if (!name || !phone || !email || !city || !district || !address) {
                 return false;
             }
             
@@ -2740,12 +2898,18 @@
                 return false;
             }
             
+            // Validation de l'email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                return false;
+            }
+            
             // Sauvegarder les informations
             deliveryInfo = {
                 name,
                 company: $('#deliveryCompany').val(),
                 phone: cleanPhone,
-                email: $('#deliveryEmail').val(),
+                email,
                 city,
                 district,
                 address,
@@ -2765,7 +2929,34 @@
             // Sauvegarder l'adresse
             await saveUserAddress(deliveryInfo, isDefault);
             
+            // Mettre à jour le profil utilisateur si demandé
+            if (saveContact) {
+                await updateUserProfile();
+            }
+            
             return true;
+        }
+
+        // Mettre à jour le profil utilisateur
+        async function updateUserProfile() {
+            if (!currentUser) return;
+            
+            try {
+                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
+                
+                const updateData = {
+                    fullName: deliveryInfo.name,
+                    phone: deliveryInfo.phone,
+                    email: deliveryInfo.email,
+                    company: deliveryInfo.company || '',
+                    updatedAt: new Date().toISOString()
+                };
+                
+                await userRef.set(updateData, { merge: true });
+                console.log("Profil utilisateur mis à jour");
+            } catch (error) {
+                console.error("Erreur lors de la mise à jour du profil:", error);
+            }
         }
 
         // Appliquer un code promo
@@ -2827,6 +3018,7 @@
                     const orderData = {
                         orderId: orderNumber,
                         userId: currentUser.uid,
+                        userEmail: currentUser.email,
                         items: userCart.items,
                         delivery: deliveryInfo,
                         deliveryOption: deliveryOption,
@@ -2849,6 +3041,8 @@
                     
                 } catch (error) {
                     console.error("Erreur lors de la sauvegarde de la commande:", error);
+                    alert("Erreur lors de l'enregistrement de la commande. Veuillez réessayer.");
+                    return;
                 }
             }
             
@@ -2912,6 +3106,31 @@
             // Initialiser Firebase
             await initializeFirebase();
             
+            // Connexion
+            $('#loginBtn').on('click', async function() {
+                const email = $('#loginEmail').val().trim();
+                const password = $('#loginPassword').val();
+                
+                if (!email || !password) {
+                    alert("Veuillez remplir tous les champs");
+                    return;
+                }
+                
+                $('#loginBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i> Connexion en cours...');
+                
+                const success = await loginUser(email, password);
+                
+                if (!success) {
+                    $('#loginBtn').prop('disabled', false).html('<i class="fas fa-sign-in-alt me-2"></i> Se connecter');
+                }
+            });
+            
+            $('#loginPassword').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    $('#loginBtn').click();
+                }
+            });
+            
             // Navigation entre étapes
             $('#btnToStep2').on('click', function() {
                 goToStep(2);
@@ -2927,6 +3146,8 @@
                 if (isValid) {
                     await saveAddressInfo();
                     goToStep(3);
+                } else {
+                    alert("Veuillez remplir correctement tous les champs obligatoires");
                 }
             });
             
@@ -2966,7 +3187,7 @@
             });
             
             // Validation des formulaires
-            $('#deliveryName, #deliveryPhone, #deliveryCity, #deliveryDistrict, #deliveryAddress').on('input', function() {
+            $('#deliveryName, #deliveryPhone, #deliveryEmail, #deliveryCity, #deliveryDistrict, #deliveryAddress').on('input', function() {
                 updateNavigationButtons();
             });
             
