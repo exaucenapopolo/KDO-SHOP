@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KDO SHOP - Marketplace professionnelle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>KDO CAMEROUN - Marketplace professionnelle</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -28,12 +28,17 @@
         * {
             font-size: 12px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
             background-color: var(--white);
             color: var(--text-dark);
             padding-bottom: 50px;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
         
         /* Header simplifié */
@@ -537,20 +542,6 @@
             text-decoration: line-through;
         }
         
-        .product-supplier {
-            color: var(--text-light);
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-        
-        .verified-badge {
-            color: var(--success-green);
-            font-size: 9px;
-        }
-        
         .product-specs {
             font-size: 10px;
             color: var(--text-medium);
@@ -816,6 +807,18 @@
             box-shadow: var(--shadow-hover);
             border-left: 3px solid var(--primary-orange);
             display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         
         /* Animation de l'article vers le panier */
@@ -897,6 +900,13 @@
             .promo-slide {
                 padding: 8px 15px;
             }
+            
+            #cartAlert {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
         }
         
         @media (max-width: 576px) {
@@ -905,7 +915,8 @@
             }
             
             .logo-text {
-                display: none;
+                display: block;
+                font-size: 12px;
             }
             
             .search-wrapper {
@@ -930,6 +941,14 @@
             .promo-slide {
                 padding: 8px 12px;
             }
+            
+            .header-kdo .container {
+                padding: 0 10px;
+            }
+            
+            .footer-kdo .container {
+                padding: 0 5px;
+            }
         }
         
         /* Style pour le panier dans le footer */
@@ -948,6 +967,45 @@
             font-size: 9px;
             font-weight: bold;
         }
+        
+        /* Améliorations pour mobile */
+        @media (max-width: 480px) {
+            .category-item {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+            
+            .footer-label {
+                font-size: 9px;
+            }
+            
+            .footer-icon {
+                font-size: 16px;
+            }
+            
+            .product-image {
+                height: 150px;
+            }
+            
+            .logo-text {
+                font-size: 11px;
+            }
+        }
+        
+        /* Pour les très petits écrans */
+        @media (max-width: 360px) {
+            .logo-text {
+                display: none;
+            }
+            
+            .footer-label {
+                font-size: 8px;
+            }
+            
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -958,9 +1016,9 @@
                 <!-- Logo -->
                 <a href="dashboard.html" class="logo-container text-decoration-none">
                     <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
-                         alt="KDO SHOP" 
+                         alt="KDO CAMEROUN" 
                          class="logo-img">
-                    <span class="logo-text">KDO SHOP</span>
+                    <span class="logo-text">KDO CAMEROUN</span>
                 </a>
                 
                 <!-- Barre de recherche -->
@@ -1263,9 +1321,9 @@
                     <i class="fas fa-home footer-icon"></i>
                     <span class="footer-label">Accueil</span>
                 </a>
-                <a href="categories.html" class="footer-item">
-                    <i class="fas fa-th-large footer-icon"></i>
-                    <span class="footer-label">Catégories</span>
+                <a href="promotion.html" class="footer-item">
+                    <i class="fas fa-tag footer-icon"></i>
+                    <span class="footer-label">Promotion</span>
                 </a>
                 <a href="boutique.html" class="footer-item">
                     <i class="fas fa-store footer-icon"></i>
@@ -1718,30 +1776,6 @@
             return Math.round(((oldPrice - price) / oldPrice) * 100);
         }
 
-        // Obtenir l'icône d'image
-        function getProductImage(type) {
-            const icons = {
-                "laptop": "fa-laptop",
-                "mobile": "fa-mobile-alt",
-                "mouse": "fa-mouse",
-                "keyboard": "fa-keyboard",
-                "usb": "fa-usb",
-                "wifi": "fa-wifi",
-                "memory": "fa-memory",
-                "desktop": "fa-desktop",
-                "projector": "fa-video",
-                "adapter": "fa-plug",
-                "tv": "fa-tv",
-                "charger": "fa-bolt",
-                "bag": "fa-briefcase",
-                "hdd": "fa-hdd",
-                "ssd": "fa-hdd",
-                "case": "fa-hdd",
-                "shield": "fa-shield-alt"
-            };
-            return icons[type] || "fa-box";
-        }
-
         // Animation d'ajout au panier
         function animateAddToCart(startElement, product) {
             const startRect = startElement.getBoundingClientRect();
@@ -1806,7 +1840,7 @@
                 
                 const productCard = `
                     <div class="product-card" data-category="${p.category}" data-price="${p.price}">
-                        ${p.verified ? `<div class="product-badge"><i class="fas fa-check"></i> VÉRIFIÉ</div>` : ''}
+                        ${p.verified ? `<div class="product-badge"><i class="fas fa-check"></i> DISPONIBLE</div>` : ''}
                         ${discount > 0 ? `<div class="discount-badge">-${discount}%</div>` : ''}
                         ${cartQuantity > 0 ? `<div class="cart-quantity-badge">${cartQuantity}</div>` : ''}
                         <div class="product-image">
@@ -1817,10 +1851,6 @@
                             <div class="product-price-container">
                                 <div class="product-price">${formatPrice(p.price)}</div>
                                 ${p.oldPrice ? `<div class="product-old-price">${formatPrice(p.oldPrice)}</div>` : ''}
-                            </div>
-                            <div class="product-supplier">
-                                <i class="fas fa-check-circle verified-badge"></i>
-                                Fournisseur vérifié
                             </div>
                             <div class="product-specs">${p.specs || ''}</div>
                             <div class="product-orders">
