@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - KDO SHOP Marketplace</title>
+    <title>Contact - KDO CAMEROUN Marketplace</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -74,7 +74,7 @@
         }
         
         .stepper-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
         
@@ -88,8 +88,8 @@
             content: '';
             position: absolute;
             top: 12px;
-            left: 10%;
-            width: 80%;
+            left: 5%;
+            width: 90%;
             height: 2px;
             background-color: var(--step-inactive);
             z-index: 1;
@@ -101,6 +101,8 @@
             align-items: center;
             z-index: 2;
             position: relative;
+            flex: 1;
+            max-width: 25%;
         }
         
         .step-icon {
@@ -123,6 +125,7 @@
             color: var(--text-medium);
             font-weight: 500;
             text-align: center;
+            padding: 0 5px;
         }
         
         .step-active .step-icon {
@@ -221,7 +224,87 @@
             color: var(--text-medium);
         }
         
-        /* Étape 2: Liste des agents */
+        /* Étape 2: Raison du contact */
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .reason-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--white);
+            text-align: center;
+        }
+        
+        .reason-card:hover {
+            border-color: var(--primary-orange);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .reason-card.selected {
+            border-color: var(--primary-orange);
+            background-color: rgba(255, 107, 0, 0.05);
+        }
+        
+        .reason-icon {
+            font-size: 24px;
+            color: var(--primary-orange);
+            margin-bottom: 10px;
+        }
+        
+        .reason-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        
+        .reason-desc {
+            font-size: 11px;
+            color: var(--text-medium);
+            line-height: 1.4;
+        }
+        
+        /* Champ texte personnalisé */
+        .custom-reason-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--accent-gray);
+        }
+        
+        .custom-reason-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .custom-reason-input {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 12px;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .custom-reason-input:focus {
+            border-color: var(--primary-orange);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        /* Étape 3: Liste des agents */
         .agent-list {
             display: flex;
             flex-direction: column;
@@ -300,7 +383,7 @@
             text-decoration: none;
         }
         
-        /* Étape 3: Confirmation */
+        /* Étape 4: Confirmation */
         .confirmation-box {
             text-align: center;
             padding: 30px 20px;
@@ -333,6 +416,47 @@
             max-width: 400px;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        /* Résumé de contact */
+        .contact-summary {
+            background: var(--accent-gray);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-orange);
+        }
+        
+        .summary-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .summary-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .summary-item {
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: var(--text-medium);
+            margin-bottom: 4px;
+        }
+        
+        .summary-value {
+            color: var(--text-dark);
+            font-weight: 500;
         }
         
         /* Informations produit */
@@ -511,6 +635,10 @@
                 grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
             
+            .reasons-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .agent-card {
                 flex-direction: column;
                 align-items: flex-start;
@@ -520,6 +648,10 @@
             .whatsapp-btn {
                 align-self: flex-end;
             }
+            
+            .step-label {
+                font-size: 9px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -527,12 +659,12 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .step-label {
-                font-size: 9px;
-            }
-            
             .contact-title {
                 font-size: 13px;
+            }
+            
+            .summary-details {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -545,9 +677,9 @@
                 <!-- Logo -->
                 <a href="dashboard.html" class="logo-container text-decoration-none">
                     <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
-                         alt="KDO SHOP" 
+                         alt="KDO CAMEROUN" 
                          class="logo-img">
-                    <span class="logo-text">KDO SHOP</span>
+                    <span class="logo-text">KDO CAMEROUN</span>
                 </a>
                 
                 <!-- Barre de recherche -->
@@ -572,11 +704,15 @@
                     </div>
                     <div class="stepper-step" id="step2">
                         <div class="step-icon">2</div>
-                        <div class="step-label">Choisissez un agent</div>
+                        <div class="step-label">Raison du contact</div>
                     </div>
                     <div class="stepper-step" id="step3">
                         <div class="step-icon">3</div>
-                        <div class="step-label">Contactez via WhatsApp</div>
+                        <div class="step-label">Choisissez un agent</div>
+                    </div>
+                    <div class="stepper-step" id="step4">
+                        <div class="step-icon">4</div>
+                        <div class="step-label">Contact WhatsApp</div>
                     </div>
                 </div>
             </div>
@@ -625,36 +761,90 @@
                         </div>
                     </div>
                     
-                    <!-- Étape 2: Liste des agents -->
+                    <!-- Étape 2: Raison du contact -->
                     <div id="step2Content" class="step-content" style="display: none;">
                         <div id="selectedCityInfo" style="margin-bottom: 20px;">
                             <p style="font-size: 12px; color: var(--text-dark); margin-bottom: 8px;">
                                 <strong>Ville sélectionnée :</strong> <span id="selectedCityName">--</span>
                             </p>
-                            <p style="font-size: 11px; color: var(--text-medium);">
-                                Voici la liste des agents disponibles dans cette ville. Cliquez sur "Contacter" pour ouvrir une conversation WhatsApp.
+                            <p style="font-size: 11px; color: var(--text-medium); margin-bottom: 20px;">
+                                Veuillez sélectionner la raison principale de votre contact.
                             </p>
                         </div>
+                        
+                        <div class="reasons-grid" id="reasonsGrid">
+                            <!-- Raisons chargées dynamiquement -->
+                        </div>
+                        
+                        <div class="custom-reason-container">
+                            <label class="custom-reason-label">Autre raison (précisez) :</label>
+                            <textarea class="custom-reason-input" id="customReason" placeholder="Décrivez la raison de votre contact..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 3: Liste des agents -->
+                    <div id="step3Content" class="step-content" style="display: none;">
+                        <div class="contact-summary">
+                            <div class="summary-title">
+                                <i class="fas fa-clipboard-check"></i>
+                                Récapitulatif
+                            </div>
+                            <div class="summary-details">
+                                <div class="summary-item">
+                                    <div class="summary-label">Ville</div>
+                                    <div class="summary-value" id="summaryCity">--</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Raison du contact</div>
+                                    <div class="summary-value" id="summaryReason">--</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="font-size: 12px; color: var(--text-medium); margin-bottom: 20px;">
+                            Sélectionnez l'agent que vous souhaitez contacter dans la ville de <strong id="cityForAgents">--</strong>.
+                        </p>
                         
                         <div class="agent-list" id="agentsList">
                             <!-- Agents chargés dynamiquement -->
                         </div>
                     </div>
                     
-                    <!-- Étape 3: Confirmation -->
-                    <div id="step3Content" class="step-content" style="display: none;">
+                    <!-- Étape 4: Confirmation -->
+                    <div id="step4Content" class="step-content" style="display: none;">
                         <div class="confirmation-box">
                             <div class="confirmation-icon">
                                 <i class="fab fa-whatsapp"></i>
                             </div>
                             <h2 class="confirmation-title">Prêt à contacter l'agent !</h2>
+                            
+                            <div class="contact-summary" style="text-align: left; margin-bottom: 25px;">
+                                <div class="summary-title">
+                                    <i class="fas fa-clipboard-list"></i>
+                                    Détails de votre demande
+                                </div>
+                                <div class="summary-details">
+                                    <div class="summary-item">
+                                        <div class="summary-label">Ville</div>
+                                        <div class="summary-value" id="finalCity">--</div>
+                                    </div>
+                                    <div class="summary-item">
+                                        <div class="summary-label">Raison</div>
+                                        <div class="summary-value" id="finalReason">--</div>
+                                    </div>
+                                    <div class="summary-item">
+                                        <div class="summary-label">Agent</div>
+                                        <div class="summary-value" id="finalAgent">--</div>
+                                    </div>
+                                    <div class="summary-item">
+                                        <div class="summary-label">Produit</div>
+                                        <div class="summary-value" id="finalProduct">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <p class="confirmation-text">
-                                Cliquez sur le bouton ci-dessous pour ouvrir WhatsApp et contacter 
-                                <strong id="agentNameContact">l'agent</strong> à propos du produit 
-                                <strong id="productNameContact">--</strong>.
-                            </p>
-                            <p style="font-size: 11px; color: var(--text-medium); margin-bottom: 25px;">
-                                Un message pré-rempli sera préparé pour vous faciliter la communication.
+                                Cliquez sur le bouton ci-dessous pour ouvrir WhatsApp et contacter <strong id="agentNameContact">l'agent</strong>.
                             </p>
                             
                             <div style="margin-bottom: 25px;">
@@ -664,8 +854,7 @@
                             </div>
                             
                             <p style="font-size: 10px; color: var(--text-light);">
-                                Si WhatsApp ne s'ouvre pas automatiquement, vous pouvez copier le numéro : 
-                                <strong id="agentPhoneDisplay">--</strong>
+                                Numéro de l'agent : <strong id="agentPhoneDisplay">--</strong>
                             </p>
                         </div>
                     </div>
@@ -696,9 +885,9 @@
                     <i class="fas fa-home footer-icon"></i>
                     <span class="footer-label">Accueil</span>
                 </a>
-                <a href="categories.html" class="footer-item">
-                    <i class="fas fa-th-large footer-icon"></i>
-                    <span class="footer-label">Catégories</span>
+                <a href="promotion.html" class="footer-item">
+                    <i class="fas fa-tags footer-icon"></i>
+                    <span class="footer-label">Promotions</span>
                 </a>
                 <a href="boutique.html" class="footer-item">
                     <i class="fas fa-store footer-icon"></i>
@@ -730,19 +919,9 @@
                 icon: 'fas fa-city',
                 description: 'Capitale de la région de l\'Est',
                 agents: [
-                    { name: 'Agent Bertoua 1', phone: '681144638', available: true },
-                    { name: 'Agent Bertoua 2', phone: '653386735', available: true },
-                    { name: 'Agent Bertoua 3', phone: '678338218', available: true }
-                ]
-            },
-            'DOUALA': {
-                name: 'DOUALA',
-                icon: 'fas fa-ship',
-                description: 'Capitale économique',
-                agents: [
-                    { name: 'Agent Douala 1', phone: '677889900', available: true },
-                    { name: 'Agent Douala 2', phone: '699112233', available: true },
-                    { name: 'Agent Douala 3', phone: '655667788', available: true }
+                    { name: 'KDO NUMERICA', phone: '681144638', available: true },
+                    { name: 'KDO HORIZON', phone: '653386735', available: true },
+                    { name: 'KDO ACCESS', phone: '678338218', available: true }
                 ]
             },
             'YAOUNDÉ': {
@@ -750,36 +929,16 @@
                 icon: 'fas fa-landmark',
                 description: 'Capitale politique',
                 agents: [
-                    { name: 'Agent Yaoundé 1', phone: '677554433', available: true },
-                    { name: 'Agent Yaoundé 2', phone: '699887766', available: true },
-                    { name: 'Agent Yaoundé 3', phone: '655332211', available: true }
+                    { name: 'CHEZ KDO', phone: '658327321', available: true },
+                    { name: 'KDO TABTOUCH', phone: '672472604', available: true }
                 ]
             },
-            'GAROUA': {
-                name: 'GAROUA',
-                icon: 'fas fa-sun',
-                description: 'Capitale du Nord',
+            'DOUALA': {
+                name: 'DOUALA',
+                icon: 'fas fa-ship',
+                description: 'Capitale économique',
                 agents: [
-                    { name: 'Agent Garoua 1', phone: '677123456', available: true },
-                    { name: 'Agent Garoua 2', phone: '699654321', available: true }
-                ]
-            },
-            'MAROUA': {
-                name: 'MAROUA',
-                icon: 'fas fa-mosque',
-                description: 'Capitale de l\'Extrême-Nord',
-                agents: [
-                    { name: 'Agent Maroua 1', phone: '677112233', available: true },
-                    { name: 'Agent Maroua 2', phone: '699445566', available: true }
-                ]
-            },
-            'NGAOUNDERÉ': {
-                name: 'NGAOUNDERÉ',
-                icon: 'fas fa-train',
-                description: 'Capitale de l\'Adamaoua',
-                agents: [
-                    { name: 'Agent Ngaoundéré 1', phone: '677998877', available: true },
-                    { name: 'Agent Ngaoundéré 2', phone: '699665544', available: true }
+                    { name: 'KDO SERVICE', phone: '656312299', available: true }
                 ]
             },
             'DSCHANG': {
@@ -787,8 +946,24 @@
                 icon: 'fas fa-university',
                 description: 'Ville universitaire',
                 agents: [
-                    { name: 'Agent Dschang 1', phone: '677223344', available: true },
-                    { name: 'Agent Dschang 2', phone: '699556677', available: true }
+                    { name: 'KDO TECHNO', phone: '676255068', available: true }
+                ]
+            },
+            'MAROUA': {
+                name: 'MAROUA',
+                icon: 'fas fa-mosque',
+                description: 'Capitale de l\'Extrême-Nord',
+                agents: [
+                    { name: 'KDO VISION', phone: '683533234', available: true },
+                    { name: 'KDO SAHEL', phone: '690280191', available: true }
+                ]
+            },
+            'GAROUA': {
+                name: 'GAROUA',
+                icon: 'fas fa-sun',
+                description: 'Capitale du Nord',
+                agents: [
+                    { name: 'Mr Idriss', phone: '692265070', available: true }
                 ]
             },
             'BAFOUSSAM': {
@@ -796,8 +971,15 @@
                 icon: 'fas fa-mountain',
                 description: 'Capitale de l\'Ouest',
                 agents: [
-                    { name: 'Agent Bafoussam 1', phone: '677334455', available: true },
-                    { name: 'Agent Bafoussam 2', phone: '699667788', available: true }
+                    { name: 'Flore', phone: '674056142', available: true }
+                ]
+            },
+            'NGAOUNDERÉ': {
+                name: 'NGAOUNDERÉ',
+                icon: 'fas fa-train',
+                description: 'Capitale de l\'Adamaoua',
+                agents: [
+                    { name: 'Maxime', phone: '690072808', available: true }
                 ]
             },
             'AUTRES VILLES': {
@@ -811,11 +993,65 @@
             }
         };
 
+        // Raisons de contact
+        const contactReasons = [
+            {
+                id: 'order',
+                title: 'Commander un produit',
+                description: 'Je souhaite commander ce produit',
+                icon: 'fas fa-shopping-cart'
+            },
+            {
+                id: 'store',
+                title: 'Visiter la boutique',
+                description: 'Je veux visiter la boutique physique',
+                icon: 'fas fa-store'
+            },
+            {
+                id: 'delivery',
+                title: 'Livraison/Expédition',
+                description: 'Questions sur la livraison ou suivi de commande',
+                icon: 'fas fa-truck'
+            },
+            {
+                id: 'info',
+                title: 'Informations produit',
+                description: 'Besoin de plus d\'informations sur ce produit',
+                icon: 'fas fa-info-circle'
+            },
+            {
+                id: 'price',
+                title: 'Négociation de prix',
+                description: 'Je veux discuter du prix ou obtenir une réduction',
+                icon: 'fas fa-tag'
+            },
+            {
+                id: 'warranty',
+                title: 'Garantie & SAV',
+                description: 'Questions sur la garantie ou service après-vente',
+                icon: 'fas fa-shield-alt'
+            },
+            {
+                id: 'technical',
+                title: 'Support technique',
+                description: 'Problème technique avec le produit',
+                icon: 'fas fa-tools'
+            },
+            {
+                id: 'other',
+                title: 'Autre',
+                description: 'Autre raison non listée',
+                icon: 'fas fa-ellipsis-h'
+            }
+        ];
+
         // Variables d'état
         let currentStep = 1;
         let selectedCity = null;
+        let selectedReason = null;
         let selectedAgent = null;
         let productInfo = null;
+        let customReasonText = '';
 
         // Récupérer les paramètres de l'URL
         function getUrlParams() {
@@ -843,7 +1079,7 @@
                 $('#productPrice').text(productInfo.productPrice);
                 
                 // Pour la dernière étape
-                $('#productNameContact').text(productInfo.productName);
+                $('#finalProduct').text(productInfo.productName);
             }
         }
 
@@ -862,8 +1098,16 @@
         }
 
         // Générer le message WhatsApp
-        function generateWhatsAppMessage(agentName, productName, productId, city) {
-            let message = `Bonjour ${agentName}, je suis intéressé par le produit "${productName}" (ID: ${productId}) sur KDO SHOP. Je suis à ${city}. Je souhaite avoir plus d'informations.`;
+        function generateWhatsAppMessage(agentName, productName, productId, city, reason, customReason) {
+            let message = `Bonjour ${agentName}, je suis intéressé par le produit "${productName}" (ID: ${productId}) sur KDO CAMEROUN. \n`;
+            message += `Je suis à ${city}. \n`;
+            message += `Raison du contact : ${reason}`;
+            
+            if (customReason && reason === 'Autre') {
+                message += `\nDétails : ${customReason}`;
+            }
+            
+            message += `\n\nJe souhaite avoir plus d'informations. Merci !`;
             
             return encodeURIComponent(message);
         }
@@ -908,8 +1152,9 @@
         function updateStepTitle(step) {
             const titles = {
                 1: 'Sélectionnez votre ville',
-                2: 'Choisissez un agent',
-                3: 'Contactez via WhatsApp'
+                2: 'Raison du contact',
+                3: 'Choisissez un agent',
+                4: 'Contact via WhatsApp'
             };
             
             $('#stepTitle').text(titles[step] || 'Contact');
@@ -925,12 +1170,14 @@
             }
             
             // Bouton suivant/finish
-            if (step < 3) {
+            if (step < 4) {
                 $('#btnNext').show();
                 $('#btnFinish').hide();
                 
                 // Activer/désactiver le bouton suivant
-                if ((step === 1 && selectedCity) || (step === 2 && selectedAgent)) {
+                if ((step === 1 && selectedCity) || 
+                    (step === 2 && selectedReason) || 
+                    (step === 3 && selectedAgent)) {
                     $('#btnNext').prop('disabled', false);
                 } else {
                     $('#btnNext').prop('disabled', true);
@@ -978,11 +1225,84 @@
             $('.city-card').removeClass('selected');
             $(`.city-card[data-city="${cityKey}"]`).addClass('selected');
             
+            // Mettre à jour les informations de ville
+            $('#selectedCityName').text(citiesData[cityKey].name);
+            $('#summaryCity').text(citiesData[cityKey].name);
+            $('#finalCity').text(citiesData[cityKey].name);
+            $('#cityForAgents').text(citiesData[cityKey].name);
+            
             // Activer le bouton suivant
             $('#btnNext').prop('disabled', false);
+        }
+
+        // Rendre les raisons de contact
+        function renderReasons() {
+            const reasonsGrid = $('#reasonsGrid');
+            reasonsGrid.empty();
             
-            // Mettre à jour les informations de ville pour l'étape 2
-            $('#selectedCityName').text(citiesData[cityKey].name);
+            contactReasons.forEach(reason => {
+                const isSelected = selectedReason === reason.id;
+                
+                const reasonCard = `
+                    <div class="reason-card ${isSelected ? 'selected' : ''}" data-reason="${reason.id}">
+                        <div class="reason-icon">
+                            <i class="${reason.icon}"></i>
+                        </div>
+                        <div class="reason-title">${reason.title}</div>
+                        <div class="reason-desc">${reason.description}</div>
+                    </div>
+                `;
+                
+                reasonsGrid.append(reasonCard);
+            });
+            
+            // Ajouter les événements de clic
+            $('.reason-card').on('click', function() {
+                const reasonId = $(this).data('reason');
+                selectReason(reasonId);
+                
+                // Si c'est "Autre", focus sur le champ texte
+                if (reasonId === 'other') {
+                    setTimeout(() => {
+                        $('#customReason').focus();
+                    }, 100);
+                }
+            });
+            
+            // Écouter les changements dans le champ texte personnalisé
+            $('#customReason').on('input', function() {
+                customReasonText = $(this).val();
+                
+                // Si l'utilisateur commence à taper dans le champ "Autre", sélectionner automatiquement cette raison
+                if (customReasonText.trim() !== '' && selectedReason !== 'other') {
+                    selectReason('other');
+                }
+            });
+        }
+
+        // Sélectionner une raison
+        function selectReason(reasonId) {
+            selectedReason = reasonId;
+            
+            // Mettre à jour l'affichage
+            $('.reason-card').removeClass('selected');
+            $(`.reason-card[data-reason="${reasonId}"]`).addClass('selected');
+            
+            // Trouver l'objet raison
+            const reasonObj = contactReasons.find(r => r.id === reasonId);
+            let reasonText = reasonObj ? reasonObj.title : 'Autre';
+            
+            // Si c'est "Autre" et qu'il y a du texte personnalisé
+            if (reasonId === 'other' && customReasonText.trim() !== '') {
+                reasonText = `Autre : ${customReasonText.substring(0, 50)}${customReasonText.length > 50 ? '...' : ''}`;
+            }
+            
+            // Mettre à jour les résumés
+            $('#summaryReason').text(reasonText);
+            $('#finalReason').text(reasonText);
+            
+            // Activer le bouton suivant
+            $('#btnNext').prop('disabled', false);
         }
 
         // Rendre les agents
@@ -1001,11 +1321,11 @@
                     <div class="agent-card ${isSelected ? 'selected' : ''}" data-agent-phone="${agent.phone}">
                         <div class="agent-info">
                             <div class="agent-avatar">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user-tie"></i>
                             </div>
                             <div class="agent-details">
                                 <h4>${agent.name}</h4>
-                                <p>Agent KDO SHOP - ${city.name}</p>
+                                <p>Agent KDO CAMEROUN - ${city.name}</p>
                                 <div class="agent-phone">
                                     <i class="fas fa-phone"></i>
                                     <span>+237 ${agent.phone}</span>
@@ -1013,7 +1333,7 @@
                             </div>
                         </div>
                         <button class="whatsapp-btn select-agent-btn" data-agent-name="${agent.name}" data-agent-phone="${agent.phone}">
-                            <i class="fab fa-whatsapp"></i> Contacter
+                            <i class="fab fa-whatsapp"></i> Sélectionner
                         </button>
                     </div>
                 `;
@@ -1046,19 +1366,25 @@
             // Activer le bouton suivant
             $('#btnNext').prop('disabled', false);
             
-            // Préparer le lien WhatsApp pour l'étape 3
+            // Mettre à jour les résumés
+            $('#finalAgent').text(agentName);
+            $('#agentNameContact').text(agentName);
+            $('#agentPhoneDisplay').text('+237 ' + agentPhone);
+            
+            // Préparer le lien WhatsApp
+            const reasonObj = contactReasons.find(r => r.id === selectedReason);
+            const reasonText = reasonObj ? reasonObj.title : 'Autre';
+            
             const message = generateWhatsAppMessage(
-                agentName.split(' ')[0], // Prénom seulement
+                agentName,
                 productInfo.productName,
                 productInfo.productId,
-                selectedCity
+                selectedCity,
+                reasonText,
+                customReasonText
             );
             
             const whatsappLink = generateWhatsAppLink(agentPhone, message);
-            
-            // Mettre à jour les informations pour l'étape 3
-            $('#agentNameContact').text(agentName);
-            $('#agentPhoneDisplay').text('+237 ' + agentPhone);
             $('#whatsappFinalLink').attr('href', whatsappLink);
         }
 
@@ -1073,14 +1399,19 @@
             // Rendre les villes
             renderCities();
             
+            // Rendre les raisons
+            renderReasons();
+            
             // Gestion des boutons de navigation
             $('#btnNext').on('click', function() {
                 if (currentStep === 1 && selectedCity) {
+                    showStep(2);
+                } else if (currentStep === 2 && selectedReason) {
                     // Rendre les agents pour la ville sélectionnée
                     renderAgents();
-                    showStep(2);
-                } else if (currentStep === 2 && selectedAgent) {
                     showStep(3);
+                } else if (currentStep === 3 && selectedAgent) {
+                    showStep(4);
                 }
             });
             
