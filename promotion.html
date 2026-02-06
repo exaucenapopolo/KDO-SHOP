@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - KDO SHOP Marketplace</title>
+    <title>Promotions - KDO CAMEROUN Marketplace</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -23,9 +23,8 @@
             --shadow-hover: 0 3px 10px rgba(0,0,0,0.1);
             --success-green: #52C41A;
             --danger-red: #FF4D4F;
-            --step-inactive: #E0E0E0;
-            --step-active: #FF6B00;
-            --step-completed: #52C41A;
+            --promo-red: #FF0000;
+            --promo-bg: #FFF8F3;
         }
         
         * {
@@ -65,382 +64,490 @@
             letter-spacing: -0.5px;
         }
         
-        /* Stepper (étapes) */
-        .contact-stepper {
-            background: var(--white);
+        /* Carrousel de promotions */
+        .promo-carousel-container {
+            background: linear-gradient(90deg, var(--promo-bg) 0%, #FFF 100%);
             border-bottom: 1px solid var(--border-color);
-            padding: 16px 0;
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
             margin-bottom: 16px;
         }
         
-        .stepper-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .stepper {
+        .promo-carousel {
             display: flex;
-            justify-content: space-between;
-            position: relative;
+            animation: slidePromo 25s infinite linear;
+            width: max-content;
         }
         
-        .stepper:before {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 10%;
-            width: 80%;
-            height: 2px;
-            background-color: var(--step-inactive);
-            z-index: 1;
-        }
-        
-        .stepper-step {
+        .promo-slide {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            z-index: 2;
-            position: relative;
+            padding: 8px 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
-        .step-icon {
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            background: var(--step-inactive);
+        .promo-badge {
+            background: var(--promo-red);
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 11px;
-            transition: all 0.3s ease;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 10px;
+            margin-right: 10px;
         }
         
-        .step-label {
-            font-size: 10px;
-            color: var(--text-medium);
+        .promo-text {
+            color: var(--text-dark);
+            font-size: 12px;
             font-weight: 500;
-            text-align: center;
         }
         
-        .step-active .step-icon {
-            background: var(--step-active);
-            box-shadow: 0 0 0 4px rgba(255, 107, 0, 0.1);
+        .promo-price {
+            color: var(--promo-red);
+            font-weight: 700;
+            margin-left: 5px;
         }
         
-        .step-completed .step-icon {
-            background: var(--step-completed);
+        @keyframes slidePromo {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
         }
         
-        .step-completed .step-icon i {
-            font-size: 10px;
-        }
-        
-        /* Conteneur principal */
-        .contact-container {
-            max-width: 800px;
+        /* Barre de recherche */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
             margin: 0 auto;
+        }
+        
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        /* Barre de catégories horizontale défilante */
+        .categories-scroll {
+            background: var(--accent-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .categories-container {
+            display: inline-flex;
+            gap: 8px;
             padding: 0 12px;
         }
         
-        .contact-card {
+        .category-item {
             background: var(--white);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
+            border-radius: 16px;
+            padding: 6px 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 11px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        
+        .category-item:hover,
+        .category-item.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
+        .category-item i {
+            margin-right: 4px;
+            font-size: 11px;
+        }
+        
+        /* Titre des promotions */
+        .promo-title-section {
+            background: linear-gradient(90deg, var(--primary-orange), #FF8E00);
+            color: white;
+            padding: 15px 0;
             margin-bottom: 20px;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
         }
         
-        .contact-header {
-            background: var(--accent-gray);
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
+        .promo-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin: 0;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            letter-spacing: 0.5px;
         }
         
-        .contact-title {
+        .promo-subtitle {
             font-size: 14px;
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+        
+        /* Conteneur principal */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        /* Grille de promotions */
+        .promotions-grid {
+            flex: 1;
+        }
+        
+        .promotions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        /* Carte promotion */
+        .promo-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--white);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .promo-card:hover {
+            border-color: var(--primary-orange);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+        
+        .promo-header {
+            position: relative;
+            height: 200px;
+            background: var(--accent-gray);
+            overflow: hidden;
+        }
+        
+        .promo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .promo-card:hover .promo-image {
+            transform: scale(1.05);
+        }
+        
+        .promo-badges {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 2;
+        }
+        
+        .badge-promo {
+            background: var(--promo-red);
+            color: white;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .badge-stock {
+            background: var(--danger-red);
+            color: white;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .badge-timer {
+            background: var(--text-dark);
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        
+        .promo-content {
+            padding: 16px;
+        }
+        
+        .promo-product-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .promo-price-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--accent-gray);
+        }
+        
+        .promo-current-price {
+            color: var(--promo-red);
+            font-weight: 800;
+            font-size: 20px;
+        }
+        
+        .promo-old-price {
+            color: var(--text-light);
+            font-size: 14px;
+            text-decoration: line-through;
+        }
+        
+        .promo-discount {
+            background: var(--promo-red);
+            color: white;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        
+        .promo-description {
+            font-size: 12px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            margin-bottom: 15px;
+            max-height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .promo-description.expanded {
+            max-height: none;
+            overflow: visible;
+        }
+        
+        .promo-description::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to bottom, transparent, white);
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+        
+        .promo-description.expanded::after {
+            opacity: 0;
+        }
+        
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: var(--primary-orange);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .read-more-btn:hover {
+            text-decoration: underline;
+        }
+        
+        .promo-specs {
+            background: var(--accent-gray);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        
+        .specs-title {
+            font-size: 12px;
             font-weight: 600;
             color: var(--text-dark);
-            margin: 0;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .contact-body {
-            padding: 20px 16px;
-        }
-        
-        /* Étape 1: Sélection de la ville */
-        .cities-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .city-card {
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: var(--white);
-        }
-        
-        .city-card:hover {
-            border-color: var(--primary-orange);
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-2px);
-        }
-        
-        .city-card.selected {
-            border-color: var(--primary-orange);
-            background-color: rgba(255, 107, 0, 0.05);
-        }
-        
-        .city-icon {
-            font-size: 20px;
-            color: var(--primary-orange);
-            margin-bottom: 8px;
-        }
-        
-        .city-name {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-        
-        .city-desc {
-            font-size: 10px;
-            color: var(--text-medium);
-        }
-        
-        /* Étape 2: Liste des agents */
-        .agent-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .agent-card {
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--white);
-        }
-        
-        .agent-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .agent-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--accent-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-orange);
-            font-size: 16px;
-        }
-        
-        .agent-details h4 {
-            font-size: 13px;
-            font-weight: 600;
-            margin: 0 0 4px 0;
-            color: var(--text-dark);
-        }
-        
-        .agent-details p {
-            font-size: 11px;
-            color: var(--text-medium);
+        .specs-list {
+            list-style: none;
+            padding: 0;
             margin: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
         }
         
-        .agent-phone {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        .specs-list li {
             font-size: 11px;
             color: var(--text-medium);
-            margin-top: 4px;
-        }
-        
-        .whatsapp-btn {
-            background-color: #25D366;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 8px 16px;
-            font-size: 11px;
-            font-weight: 600;
+            padding: 4px 0;
             display: flex;
             align-items: center;
             gap: 6px;
+        }
+        
+        .specs-list li i {
+            color: var(--primary-orange);
+            font-size: 10px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .promo-availability {
+            font-size: 11px;
+            color: var(--text-medium);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--accent-gray);
+            border-radius: 4px;
+        }
+        
+        .availability-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success-green);
+        }
+        
+        .promo-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-contact-promo {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--secondary-blue);
+            color: var(--secondary-blue);
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
             text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         
-        .whatsapp-btn:hover {
-            background-color: #1da851;
+        .btn-contact-promo:hover {
+            background: var(--secondary-blue);
             color: white;
             text-decoration: none;
         }
         
-        /* Étape 3: Confirmation */
-        .confirmation-box {
-            text-align: center;
-            padding: 30px 20px;
-        }
-        
-        .confirmation-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--success-green);
+        .btn-cart-promo {
+            flex: 1;
+            background: var(--secondary-blue);
+            border: 1px solid var(--secondary-blue);
             color: white;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin: 0 auto 15px;
-        }
-        
-        .confirmation-title {
-            font-size: 16px;
+            gap: 6px;
             font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 10px;
         }
         
-        .confirmation-text {
-            font-size: 12px;
-            color: var(--text-medium);
-            margin-bottom: 20px;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
+        .btn-cart-promo:hover {
+            background: #0052A3;
         }
         
-        /* Informations produit */
-        .product-info-box {
-            background: var(--accent-gray);
-            border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 20px;
-            border-left: 3px solid var(--primary-orange);
-        }
-        
-        .product-info-title {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 8px;
-        }
-        
-        .product-details {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .product-image-small {
-            width: 50px;
-            height: 50px;
-            border-radius: 4px;
-            object-fit: cover;
-            background: var(--white);
-            padding: 5px;
-            border: 1px solid var(--border-color);
-        }
-        
-        .product-text-info {
-            flex: 1;
-        }
-        
-        .product-name {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 4px;
-        }
-        
-        .product-id {
-            font-size: 10px;
-            color: var(--text-medium);
-            margin-bottom: 4px;
-        }
-        
-        .product-price {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--primary-orange);
-        }
-        
-        /* Boutons de navigation */
-        .contact-navigation {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 25px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .btn-prev {
-            background: var(--white);
-            border: 1px solid var(--border-color);
-            color: var(--text-dark);
-            border-radius: 4px;
-            padding: 8px 16px;
-            font-size: 11px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .btn-prev:hover {
-            background: var(--accent-gray);
-            border-color: var(--text-medium);
-        }
-        
-        .btn-next, .btn-finish {
+        .btn-cart-promo.adding {
             background: var(--primary-orange);
-            border: 1px solid var(--primary-orange);
-            color: white;
-            border-radius: 4px;
-            padding: 8px 24px;
-            font-size: 11px;
-            font-weight: 500;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .btn-next:hover, .btn-finish:hover {
-            background: #e65c00;
-            border-color: #e65c00;
-        }
-        
-        .btn-next:disabled, .btn-finish:disabled {
-            background: var(--text-light);
-            border-color: var(--text-light);
-            cursor: not-allowed;
+            border-color: var(--primary-orange);
         }
         
         /* Footer avec navigation fonctionnelle */
@@ -505,34 +612,87 @@
             font-weight: bold;
         }
         
+        /* Notification */
+        #cartAlert {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            z-index: 9999;
+            min-width: 250px;
+            box-shadow: var(--shadow-hover);
+            border-left: 3px solid var(--primary-orange);
+            display: none;
+        }
+        
         /* Responsive */
+        @media (max-width: 992px) {
+            .promotions-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 20s infinite linear;
+            }
+            
+            .specs-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .cities-grid {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            .promotions-container {
+                grid-template-columns: repeat(2, 1fr);
             }
             
-            .agent-card {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
+            .promo-title {
+                font-size: 20px;
             }
             
-            .whatsapp-btn {
-                align-self: flex-end;
+            .promo-subtitle {
+                font-size: 12px;
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 15s infinite linear;
+            }
+            
+            .promo-slide {
+                padding: 8px 15px;
             }
         }
         
         @media (max-width: 576px) {
-            .cities-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .promotions-container {
+                grid-template-columns: 1fr;
             }
             
-            .step-label {
-                font-size: 9px;
+            .logo-text {
+                display: none;
             }
             
-            .contact-title {
-                font-size: 13px;
+            .search-wrapper {
+                margin: 0 5px;
+                max-width: 100%;
+            }
+            
+            .promo-title {
+                font-size: 18px;
+            }
+            
+            .promo-subtitle {
+                display: none;
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 12s infinite linear;
+            }
+            
+            .promo-slide {
+                padding: 8px 12px;
+            }
+            
+            .promo-actions {
+                flex-direction: column;
             }
         }
     </style>
@@ -545,14 +705,14 @@
                 <!-- Logo -->
                 <a href="dashboard.html" class="logo-container text-decoration-none">
                     <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
-                         alt="KDO SHOP" 
+                         alt="KDO CAMEROUN" 
                          class="logo-img">
-                    <span class="logo-text">KDO SHOP</span>
+                    <span class="logo-text">KDO CAMEROUN</span>
                 </a>
                 
                 <!-- Barre de recherche -->
-                <div class="search-wrapper" style="max-width: 300px;">
-                    <input type="text" class="search-input" placeholder="Rechercher produits, fournisseurs...">
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="Rechercher produits en promotion...">
                     <button class="search-btn">
                         <i class="fas fa-search"></i>
                     </button>
@@ -561,130 +721,105 @@
         </div>
     </header>
 
-    <!-- Stepper (étapes) -->
-    <div class="contact-stepper">
-        <div class="container">
-            <div class="stepper-container">
-                <div class="stepper">
-                    <div class="stepper-step step-active" id="step1">
-                        <div class="step-icon">1</div>
-                        <div class="step-label">Sélectionnez votre ville</div>
-                    </div>
-                    <div class="stepper-step" id="step2">
-                        <div class="step-icon">2</div>
-                        <div class="step-label">Choisissez un agent</div>
-                    </div>
-                    <div class="stepper-step" id="step3">
-                        <div class="step-icon">3</div>
-                        <div class="step-label">Contactez via WhatsApp</div>
-                    </div>
-                </div>
+    <!-- Carrousel de promotions -->
+    <div class="promo-carousel-container">
+        <div class="promo-carousel">
+            <!-- Les promotions défilent automatiquement -->
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">ACER CHROMEBOOK à <span class="promo-price">59 900 FCFA</span></span>
             </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">DELL LATITUDE 3190 <span class="promo-price">59 900 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">HP Elitebook 840 G3 <span class="promo-price">160 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">TOSHIBA Disque Dur 500Go <span class="promo-price">15 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">FASTER Clé USB 64Go <span class="promo-price">-25%</span></span>
+            </div>
+            <!-- Doubler pour créer l'effet infini -->
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">ACER CHROMEBOOK à <span class="promo-price">59 900 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">DELL LATITUDE 3190 <span class="promo-price">59 900 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">HP Elitebook 840 G3 <span class="promo-price">160 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">TOSHIBA Disque Dur 500Go <span class="promo-price">15 000 FCFA</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">🔥 PROMO</span>
+                <span class="promo-text">FASTER Clé USB 64Go <span class="promo-price">-25%</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre de catégories horizontale défilante -->
+    <div class="categories-scroll">
+        <div class="categories-container">
+            <a href="#" class="category-item active">
+                <i class="fas fa-th-large"></i> Toutes les promos
+            </a>
+            <a href="#" class="category-item" data-category="ordinateur">
+                <i class="fas fa-laptop"></i> Ordinateurs
+            </a>
+            <a href="#" class="category-item" data-category="disquedur">
+                <i class="fas fa-hdd"></i> Disques Durs
+            </a>
+            <a href="#" class="category-item" data-category="usb">
+                <i class="fas fa-usb"></i> Clés USB
+            </a>
+            <a href="#" class="category-item" data-category="souris">
+                <i class="fas fa-mouse"></i> Souris
+            </a>
+            <a href="#" class="category-item" data-category="telephone">
+                <i class="fas fa-mobile-alt"></i> Téléphones
+            </a>
+            <a href="#" class="category-item" data-category="tablette">
+                <i class="fas fa-tablet-alt"></i> Tablettes
+            </a>
+        </div>
+    </div>
+
+    <!-- Titre des promotions -->
+    <div class="promo-title-section">
+        <div class="container">
+            <h1 class="promo-title">🔥 PROMOTIONS EXCEPTIONNELLES 🔥</h1>
+            <p class="promo-subtitle">Des offres limitées avec des réductions incroyables. Dépêchez-vous !</p>
         </div>
     </div>
 
     <!-- Contenu principal -->
     <div class="container">
-        <div class="contact-container">
-            <!-- Carte de contact -->
-            <div class="contact-card">
-                <div class="contact-header">
-                    <h1 class="contact-title">
-                        <i class="fas fa-headset" style="color: var(--primary-orange);"></i>
-                        <span id="stepTitle">Sélectionnez votre ville</span>
-                    </h1>
+        <div class="main-container">
+            <!-- Grille de promotions -->
+            <main class="promotions-grid">
+                <div class="promotions-count mb-3">
+                    <div class="alert alert-warning" style="font-size: 11px; padding: 8px 12px;">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Attention :</strong> Ces promotions sont à durée limitée. Stocks très limités !
+                    </div>
                 </div>
                 
-                <div class="contact-body">
-                    <!-- Informations produit (si disponibles) -->
-                    <div id="productInfoContainer" style="display: none;">
-                        <div class="product-info-box">
-                            <div class="product-info-title">Produit sélectionné</div>
-                            <div class="product-details">
-                                <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg" 
-                                     alt="Produit" 
-                                     class="product-image-small" 
-                                     id="productImage">
-                                <div class="product-text-info">
-                                    <div class="product-name" id="productName">Produit</div>
-                                    <div class="product-id">ID: <span id="productId">--</span></div>
-                                    <div class="product-price" id="productPrice">-- FCFA</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Étape 1: Sélection de la ville -->
-                    <div id="step1Content" class="step-content">
-                        <p style="font-size: 12px; color: var(--text-medium); margin-bottom: 20px;">
-                            Veuillez sélectionner votre ville pour afficher les agents disponibles près de chez vous.
-                        </p>
-                        
-                        <div class="cities-grid" id="citiesGrid">
-                            <!-- Villes chargées dynamiquement -->
-                        </div>
-                    </div>
-                    
-                    <!-- Étape 2: Liste des agents -->
-                    <div id="step2Content" class="step-content" style="display: none;">
-                        <div id="selectedCityInfo" style="margin-bottom: 20px;">
-                            <p style="font-size: 12px; color: var(--text-dark); margin-bottom: 8px;">
-                                <strong>Ville sélectionnée :</strong> <span id="selectedCityName">--</span>
-                            </p>
-                            <p style="font-size: 11px; color: var(--text-medium);">
-                                Voici la liste des agents disponibles dans cette ville. Cliquez sur "Contacter" pour ouvrir une conversation WhatsApp.
-                            </p>
-                        </div>
-                        
-                        <div class="agent-list" id="agentsList">
-                            <!-- Agents chargés dynamiquement -->
-                        </div>
-                    </div>
-                    
-                    <!-- Étape 3: Confirmation -->
-                    <div id="step3Content" class="step-content" style="display: none;">
-                        <div class="confirmation-box">
-                            <div class="confirmation-icon">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <h2 class="confirmation-title">Prêt à contacter l'agent !</h2>
-                            <p class="confirmation-text">
-                                Cliquez sur le bouton ci-dessous pour ouvrir WhatsApp et contacter 
-                                <strong id="agentNameContact">l'agent</strong> à propos du produit 
-                                <strong id="productNameContact">--</strong>.
-                            </p>
-                            <p style="font-size: 11px; color: var(--text-medium); margin-bottom: 25px;">
-                                Un message pré-rempli sera préparé pour vous faciliter la communication.
-                            </p>
-                            
-                            <div style="margin-bottom: 25px;">
-                                <a id="whatsappFinalLink" href="#" class="whatsapp-btn" style="padding: 12px 24px; font-size: 14px;">
-                                    <i class="fab fa-whatsapp"></i> Ouvrir WhatsApp
-                                </a>
-                            </div>
-                            
-                            <p style="font-size: 10px; color: var(--text-light);">
-                                Si WhatsApp ne s'ouvre pas automatiquement, vous pouvez copier le numéro : 
-                                <strong id="agentPhoneDisplay">--</strong>
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation -->
-                    <div class="contact-navigation">
-                        <button class="btn-prev" id="btnPrev" style="display: none;">
-                            <i class="fas fa-arrow-left"></i> Précédent
-                        </button>
-                        <div style="flex: 1;"></div>
-                        <button class="btn-next" id="btnNext" disabled>
-                            Suivant <i class="fas fa-arrow-right"></i>
-                        </button>
-                        <button class="btn-finish" id="btnFinish" style="display: none;">
-                            Terminer <i class="fas fa-check"></i>
-                        </button>
-                    </div>
+                <div class="promotions-container" id="promotionsContainer">
+                    <!-- Promotions chargées dynamiquement -->
                 </div>
-            </div>
+            </main>
         </div>
     </div>
 
@@ -696,20 +831,20 @@
                     <i class="fas fa-home footer-icon"></i>
                     <span class="footer-label">Accueil</span>
                 </a>
-                <a href="categories.html" class="footer-item">
-                    <i class="fas fa-th-large footer-icon"></i>
-                    <span class="footer-label">Catégories</span>
+                <a href="promotion.html" class="footer-item active">
+                    <i class="fas fa-tags footer-icon"></i>
+                    <span class="footer-label">Promotions</span>
                 </a>
                 <a href="boutique.html" class="footer-item">
                     <i class="fas fa-store footer-icon"></i>
                     <span class="footer-label">Boutique</span>
                 </a>
-                <a href="panier.html" class="footer-item">
+                <a href="panier.html" class="footer-item" id="footerCart">
                     <i class="fas fa-shopping-cart footer-icon"></i>
                     <span class="footer-label">Panier</span>
                     <span id="footerCartCount" class="cart-count-badge">0</span>
                 </a>
-                <a href="profil.html" class="footer-item active">
+                <a href="profil.html" class="footer-item">
                     <i class="far fa-user footer-icon"></i>
                     <span class="footer-label">Mon KDO</span>
                 </a>
@@ -717,406 +852,361 @@
         </div>
     </footer>
 
+    <!-- Notification -->
+    <div class="alert alert-success alert-dismissible fade" id="cartAlert" role="alert">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-check-circle me-3" style="color: var(--primary-orange);"></i>
+            <div>
+                <strong>Produit ajouté au panier !</strong>
+                <p class="mb-0 small" id="cartProductName"></p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
     <!-- Bootstrap & jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Script principal -->
     <script>
-        // Données des villes et agents
-        const citiesData = {
-            'BERTOUA': {
-                name: 'BERTOUA',
-                icon: 'fas fa-city',
-                description: 'Capitale de la région de l\'Est',
-                agents: [
-                    { name: 'Agent Bertoua 1', phone: '681144638', available: true },
-                    { name: 'Agent Bertoua 2', phone: '653386735', available: true },
-                    { name: 'Agent Bertoua 3', phone: '678338218', available: true }
-                ]
+        // Données des promotions
+        const promotions = [
+            {
+                id: 1,
+                name: "ACER CHROMEBOOK",
+                price: 59900,
+                oldPrice: 89900,
+                discount: 33,
+                category: "ordinateur",
+                image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/IMG-20260206-WA0063.jpg",
+                stockLimit: true,
+                stockCount: 3,
+                description: "💻 Ordinateur Portable Professionnel Slim – Marque ACER\n\n🔧 Spécifications techniques :\n- Processeur : Intel Celeron Quad-Core 1.4 GHz\n- Stockage : SSD 128 Go (rapide et fluide)\n- RAM : 2 Go ou 4 Go\n- Connectivité : Wi-Fi, Bluetooth, Port HDMI, Ports USB, Lecteur de carte TF (MicroSD)\n- Webcam intégrée\n- Écran : 12 pouces, slim et élégant\n- Autonomie : + de 7 heures\n- Chargeur d'origine inclus\n\n💼 Convient pour :\n- Étudiants, enseignants\n- Travailleurs, freelance\n- Entrepreneurs, commerçants\n- Tâches bureautiques, navigation, cours en ligne\n\n🇺🇸 Importé des États-Unis\n🎁 Une vraie opportunité à petit prix !",
+                specs: [
+                    "SSD 128 Go",
+                    "RAM 4 Go",
+                    "Processeur Intel Celeron",
+                    "Écran 12 pouces",
+                    "Autonomie 7h+",
+                    "Wi-Fi & Bluetooth",
+                    "Ports USB & HDMI",
+                    "Webcam intégrée"
+                ],
+                availability: "Disponible à Yaoundé, Douala, Bafoussam, Dschang, Bertoua, Maroua, Garoua, Ngaoundéré"
             },
-            'DOUALA': {
-                name: 'DOUALA',
-                icon: 'fas fa-ship',
-                description: 'Capitale économique',
-                agents: [
-                    { name: 'Agent Douala 1', phone: '677889900', available: true },
-                    { name: 'Agent Douala 2', phone: '699112233', available: true },
-                    { name: 'Agent Douala 3', phone: '655667788', available: true }
-                ]
+            {
+                id: 2,
+                name: "DELL LATITUDE 3190",
+                price: 59900,
+                oldPrice: 99900,
+                discount: 40,
+                category: "ordinateur",
+                image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/IMG-20260206-WA0064.jpg",
+                stockLimit: true,
+                stockCount: 5,
+                description: "🔥 PROMO SPÉCIALE – DELL LATITUDE 3190 🔥\n💻 Laptop professionnel – Ultra slim & rapide\n\n✅ Idéal pour étudiants, informaticiens, infographes, bureautique, télétravail et navigation fluide.\n\n⚙️ Caractéristiques clés :\n- Intel Quad Core (Celeron N4120)\n- 4 Go RAM\n- 256 Go SSD ⚡ (démarrage ultra rapide)\n- Écran 12 pouces Ultra Slim\n- Webcam – HDMI – USB – Wi-Fi – Bluetooth\n- Windows 10 Pro\n- Pack Office + logiciels installés ✅\n\n📍 Disponible chez KDO INFORMATIC & TECHNOLOGY\n📌 Yaoundé | Douala | Bafoussam | Dschang | Bertoua | Maroua.",
+                specs: [
+                    "SSD 256 Go",
+                    "RAM 4 Go",
+                    "Intel Quad Core N4120",
+                    "Écran 12 pouces Ultra Slim",
+                    "Windows 10 Pro",
+                    "Wi-Fi & Bluetooth",
+                    "Ports HDMI & USB",
+                    "Webcam intégrée"
+                ],
+                availability: "Disponible à Yaoundé, Douala, Bafoussam, Dschang, Bertoua, Maroua"
             },
-            'YAOUNDÉ': {
-                name: 'YAOUNDÉ',
-                icon: 'fas fa-landmark',
-                description: 'Capitale politique',
-                agents: [
-                    { name: 'Agent Yaoundé 1', phone: '677554433', available: true },
-                    { name: 'Agent Yaoundé 2', phone: '699887766', available: true },
-                    { name: 'Agent Yaoundé 3', phone: '655332211', available: true }
-                ]
+            {
+                id: 3,
+                name: "HP Elitebook 840 G3",
+                price: 160000,
+                oldPrice: 195000,
+                discount: 18,
+                category: "ordinateur",
+                image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg",
+                stockLimit: false,
+                stockCount: 8,
+                description: "💼 Ordinateur Portable Professionnel HP Elitebook 840 G3\n\n🚀 Performances professionnelles pour vos projets les plus exigeants\n\n⚡ Caractéristiques premium :\n- Processeur : Intel Core i5 de 6ème génération\n- Mémoire RAM : 8 Go DDR4\n- Stockage : SSD 256 Go haute vitesse\n- Écran : 14 pouces Full HD\n- Graphiques : Intel HD Graphics 520\n- Connectivité complète : USB 3.0, HDMI, Ethernet\n- Sécurité : Lecteur d'empreintes digitales\n- Système : Windows 10 Professionnel\n\n🎯 Idéal pour :\n- Professionnels en déplacement\n- Développeurs et ingénieurs\n- Éditeurs vidéo et graphistes\n- Entrepreneurs et consultants\n\n🔒 Garantie 3 mois + support technique inclus",
+                specs: [
+                    "SSD 256 Go",
+                    "RAM 8 Go DDR4",
+                    "Intel Core i5 6ème gén",
+                    "Écran 14\" Full HD",
+                    "Windows 10 Pro",
+                    "Lecteur empreintes",
+                    "Connectivité complète",
+                    "Autonomie 8h"
+                ],
+                availability: "Disponible dans toutes les villes"
             },
-            'GAROUA': {
-                name: 'GAROUA',
-                icon: 'fas fa-sun',
-                description: 'Capitale du Nord',
-                agents: [
-                    { name: 'Agent Garoua 1', phone: '677123456', available: true },
-                    { name: 'Agent Garoua 2', phone: '699654321', available: true }
-                ]
-            },
-            'MAROUA': {
-                name: 'MAROUA',
-                icon: 'fas fa-mosque',
-                description: 'Capitale de l\'Extrême-Nord',
-                agents: [
-                    { name: 'Agent Maroua 1', phone: '677112233', available: true },
-                    { name: 'Agent Maroua 2', phone: '699445566', available: true }
-                ]
-            },
-            'NGAOUNDERÉ': {
-                name: 'NGAOUNDERÉ',
-                icon: 'fas fa-train',
-                description: 'Capitale de l\'Adamaoua',
-                agents: [
-                    { name: 'Agent Ngaoundéré 1', phone: '677998877', available: true },
-                    { name: 'Agent Ngaoundéré 2', phone: '699665544', available: true }
-                ]
-            },
-            'DSCHANG': {
-                name: 'DSCHANG',
-                icon: 'fas fa-university',
-                description: 'Ville universitaire',
-                agents: [
-                    { name: 'Agent Dschang 1', phone: '677223344', available: true },
-                    { name: 'Agent Dschang 2', phone: '699556677', available: true }
-                ]
-            },
-            'BAFOUSSAM': {
-                name: 'BAFOUSSAM',
-                icon: 'fas fa-mountain',
-                description: 'Capitale de l\'Ouest',
-                agents: [
-                    { name: 'Agent Bafoussam 1', phone: '677334455', available: true },
-                    { name: 'Agent Bafoussam 2', phone: '699667788', available: true }
-                ]
-            },
-            'AUTRES VILLES': {
-                name: 'AUTRES VILLES',
-                icon: 'fas fa-map-marker-alt',
-                description: 'Autres localités',
-                agents: [
-                    { name: 'Support National', phone: '677000000', available: true },
-                    { name: 'Service Client', phone: '699111111', available: true }
-                ]
+            {
+                id: 4,
+                name: "TOSHIBA Disque Dur 500Go",
+                price: 15000,
+                oldPrice: 22000,
+                discount: 32,
+                category: "disquedur",
+                image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg",
+                stockLimit: true,
+                stockCount: 2,
+                description: "💾 Disque Dur Externe TOSHIBA 500Go - Solution de stockage fiable\n\n⚡ Transfert rapide USB 3.0 pour sauvegarder vos données en un clin d'œil\n\n🔧 Caractéristiques :\n- Capacité : 500 Go\n- Interface : USB 3.0 (compatible USB 2.0)\n- Vitesse de transfert : jusqu'à 5 Gb/s\n- Design compact et portable\n- Compatible PC et Mac\n- Plug & Play - pas besoin d'installation\n\n🎯 Utilisations :\n- Sauvegarde de fichiers importants\n- Stockage de photos et vidéos\n- Transfert de données entre ordinateurs\n- Solution de stockage supplémentaire\n\n🛡️ Garantie 1 an - Qualité Toshiba",
+                specs: [
+                    "Capacité 500 Go",
+                    "USB 3.0",
+                    "Transfert rapide",
+                    "Compact & portable",
+                    "Compatible PC/Mac",
+                    "Plug & Play",
+                    "Garantie 1 an"
+                ],
+                availability: "Disponible à Yaoundé et Douala"
             }
-        };
+        ];
 
-        // Variables d'état
-        let currentStep = 1;
-        let selectedCity = null;
-        let selectedAgent = null;
-        let productInfo = null;
+        // Variables globales
+        let cart = [];
+        let filteredPromotions = [...promotions];
+        let currentCategory = "all";
 
-        // Récupérer les paramètres de l'URL
-        function getUrlParams() {
-            const params = new URLSearchParams(window.location.search);
-            const productId = params.get('productId');
-            const productName = params.get('productName');
-            const productPrice = params.get('productPrice');
-            
-            return {
-                productId: productId || 'N/A',
-                productName: productName || 'Produit non spécifié',
-                productPrice: productPrice || '--'
-            };
+        // Formatage des prix
+        function formatPrice(price) {
+            return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
         }
 
-        // Initialiser les informations produit
-        function initProductInfo() {
-            productInfo = getUrlParams();
+        // Rendu des promotions
+        function renderPromotions() {
+            const container = $('#promotionsContainer');
+            container.empty();
             
-            // Afficher les informations produit si disponibles
-            if (productInfo.productId !== 'N/A') {
-                $('#productInfoContainer').show();
-                $('#productId').text(productInfo.productId);
-                $('#productName').text(productInfo.productName);
-                $('#productPrice').text(productInfo.productPrice);
-                
-                // Pour la dernière étape
-                $('#productNameContact').text(productInfo.productName);
-            }
-        }
-
-        // Formater un numéro de téléphone
-        function formatPhoneNumber(phone) {
-            // Enlever les espaces et caractères non numériques
-            const cleaned = phone.replace(/\D/g, '');
-            
-            // Format +237 XXXXXXXX
-            if (cleaned.length === 9) {
-                return '+237' + cleaned;
-            }
-            
-            // Déjà formaté
-            return cleaned;
-        }
-
-        // Générer le message WhatsApp
-        function generateWhatsAppMessage(agentName, productName, productId, city) {
-            let message = `Bonjour ${agentName}, je suis intéressé par le produit "${productName}" (ID: ${productId}) sur KDO SHOP. Je suis à ${city}. Je souhaite avoir plus d'informations.`;
-            
-            return encodeURIComponent(message);
-        }
-
-        // Générer le lien WhatsApp
-        function generateWhatsAppLink(phone, message) {
-            const formattedPhone = formatPhoneNumber(phone);
-            return `https://wa.me/${formattedPhone}?text=${message}`;
-        }
-
-        // Afficher l'étape
-        function showStep(step) {
-            // Masquer toutes les étapes
-            $('.step-content').hide();
-            
-            // Mettre à jour le stepper
-            $('.stepper-step').removeClass('step-active step-completed');
-            
-            // Marquer les étapes précédentes comme complétées
-            for (let i = 1; i < step; i++) {
-                $(`#step${i}`).addClass('step-completed');
-                $(`#step${i} .step-icon`).html('<i class="fas fa-check"></i>');
-            }
-            
-            // Marquer l'étape actuelle comme active
-            $(`#step${step}`).addClass('step-active');
-            
-            // Afficher le contenu de l'étape
-            $(`#step${step}Content`).show();
-            
-            // Mettre à jour le titre
-            updateStepTitle(step);
-            
-            // Mettre à jour les boutons de navigation
-            updateNavigationButtons(step);
-            
-            // Mettre à jour l'étape courante
-            currentStep = step;
-        }
-
-        // Mettre à jour le titre de l'étape
-        function updateStepTitle(step) {
-            const titles = {
-                1: 'Sélectionnez votre ville',
-                2: 'Choisissez un agent',
-                3: 'Contactez via WhatsApp'
-            };
-            
-            $('#stepTitle').text(titles[step] || 'Contact');
-        }
-
-        // Mettre à jour les boutons de navigation
-        function updateNavigationButtons(step) {
-            // Bouton précédent
-            if (step > 1) {
-                $('#btnPrev').show();
-            } else {
-                $('#btnPrev').hide();
-            }
-            
-            // Bouton suivant/finish
-            if (step < 3) {
-                $('#btnNext').show();
-                $('#btnFinish').hide();
-                
-                // Activer/désactiver le bouton suivant
-                if ((step === 1 && selectedCity) || (step === 2 && selectedAgent)) {
-                    $('#btnNext').prop('disabled', false);
-                } else {
-                    $('#btnNext').prop('disabled', true);
-                }
-            } else {
-                $('#btnNext').hide();
-                $('#btnFinish').show();
-            }
-        }
-
-        // Rendre les villes
-        function renderCities() {
-            const citiesGrid = $('#citiesGrid');
-            citiesGrid.empty();
-            
-            Object.keys(citiesData).forEach(cityKey => {
-                const city = citiesData[cityKey];
-                const isSelected = selectedCity === cityKey;
-                
-                const cityCard = `
-                    <div class="city-card ${isSelected ? 'selected' : ''}" data-city="${cityKey}">
-                        <div class="city-icon">
-                            <i class="${city.icon}"></i>
-                        </div>
-                        <div class="city-name">${city.name}</div>
-                        <div class="city-desc">${city.description}</div>
+            if (filteredPromotions.length === 0) {
+                container.html(`
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                        <h5 class="text-muted">Aucune promotion trouvée</h5>
+                        <p class="text-muted">Essayez de modifier vos filtres de recherche</p>
                     </div>
-                `;
+                `);
+                return;
+            }
+            
+            filteredPromotions.forEach(p => {
+                const descriptionLines = p.description.split('\n');
+                const shortDescription = descriptionLines.slice(0, 3).join('\n');
+                const fullDescription = p.description;
                 
-                citiesGrid.append(cityCard);
-            });
-            
-            // Ajouter les événements de clic
-            $('.city-card').on('click', function() {
-                const cityKey = $(this).data('city');
-                selectCity(cityKey);
-            });
-        }
-
-        // Sélectionner une ville
-        function selectCity(cityKey) {
-            selectedCity = cityKey;
-            
-            // Mettre à jour l'affichage
-            $('.city-card').removeClass('selected');
-            $(`.city-card[data-city="${cityKey}"]`).addClass('selected');
-            
-            // Activer le bouton suivant
-            $('#btnNext').prop('disabled', false);
-            
-            // Mettre à jour les informations de ville pour l'étape 2
-            $('#selectedCityName').text(citiesData[cityKey].name);
-        }
-
-        // Rendre les agents
-        function renderAgents() {
-            if (!selectedCity) return;
-            
-            const agentsList = $('#agentsList');
-            agentsList.empty();
-            
-            const city = citiesData[selectedCity];
-            
-            city.agents.forEach(agent => {
-                const isSelected = selectedAgent && selectedAgent.phone === agent.phone;
-                
-                const agentCard = `
-                    <div class="agent-card ${isSelected ? 'selected' : ''}" data-agent-phone="${agent.phone}">
-                        <div class="agent-info">
-                            <div class="agent-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="agent-details">
-                                <h4>${agent.name}</h4>
-                                <p>Agent KDO SHOP - ${city.name}</p>
-                                <div class="agent-phone">
-                                    <i class="fas fa-phone"></i>
-                                    <span>+237 ${agent.phone}</span>
+                const promoCard = `
+                    <div class="promo-card" data-category="${p.category}">
+                        <div class="promo-header">
+                            <img src="${p.image}" alt="${p.name}" class="promo-image">
+                            <div class="promo-badges">
+                                <div class="badge-promo">
+                                    <i class="fas fa-bolt"></i> -${p.discount}%
                                 </div>
+                                ${p.stockLimit ? `
+                                    <div class="badge-stock">
+                                        <i class="fas fa-exclamation-circle"></i> Stock: ${p.stockCount}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <div class="badge-timer">
+                                <i class="fas fa-clock"></i> Offre limitée
                             </div>
                         </div>
-                        <button class="whatsapp-btn select-agent-btn" data-agent-name="${agent.name}" data-agent-phone="${agent.phone}">
-                            <i class="fab fa-whatsapp"></i> Contacter
-                        </button>
+                        <div class="promo-content">
+                            <h3 class="promo-product-title">${p.name}</h3>
+                            <div class="promo-price-container">
+                                <div class="promo-current-price">${formatPrice(p.price)}</div>
+                                <div class="promo-old-price">${formatPrice(p.oldPrice)}</div>
+                                <div class="promo-discount">-${p.discount}%</div>
+                            </div>
+                            <div class="promo-description" id="description-${p.id}">
+                                ${shortDescription.replace(/\n/g, '<br>')}
+                            </div>
+                            <button class="read-more-btn" data-id="${p.id}">
+                                <i class="fas fa-chevron-down"></i> Voir plus de détails
+                            </button>
+                            <div class="promo-specs">
+                                <div class="specs-title">
+                                    <i class="fas fa-list"></i> Caractéristiques principales
+                                </div>
+                                <ul class="specs-list">
+                                    ${p.specs.map(spec => `<li><i class="fas fa-check"></i> ${spec}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="promo-availability">
+                                <div class="availability-dot"></div>
+                                ${p.availability}
+                            </div>
+                            <div class="promo-actions">
+                                <a href="contact.html?product=${p.id}&productName=${encodeURIComponent(p.name)}&productPrice=${formatPrice(p.price)}" 
+                                   class="btn-contact-promo">
+                                    <i class="fas fa-comment-dots"></i> Contacter pour cette promo
+                                </a>
+                                <button class="btn-cart-promo" data-id="${p.id}">
+                                    <i class="fas fa-cart-plus"></i> Ajouter au panier
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 `;
-                
-                agentsList.append(agentCard);
+                container.append(promoCard);
             });
             
-            // Ajouter les événements de clic
-            $('.select-agent-btn').on('click', function(e) {
-                e.preventDefault();
+            // Initialiser les boutons "Voir plus"
+            initializeReadMoreButtons();
+        }
+
+        // Initialiser les boutons "Voir plus"
+        function initializeReadMoreButtons() {
+            $('.read-more-btn').off('click').on('click', function() {
+                const promoId = $(this).data('id');
+                const descriptionSection = $(`#description-${promoId}`);
+                const button = $(this);
                 
-                const agentName = $(this).data('agent-name');
-                const agentPhone = $(this).data('agent-phone');
-                
-                selectAgent(agentName, agentPhone);
-                
-                // Sélectionner la carte
-                $('.agent-card').removeClass('selected');
-                $(this).closest('.agent-card').addClass('selected');
+                if (descriptionSection.hasClass('expanded')) {
+                    // Réduire la description
+                    const promo = promotions.find(p => p.id === promoId);
+                    const shortDescription = promo.description.split('\n').slice(0, 3).join('\n');
+                    descriptionSection.removeClass('expanded');
+                    descriptionSection.html(shortDescription.replace(/\n/g, '<br>'));
+                    button.html('<i class="fas fa-chevron-down"></i> Voir plus de détails');
+                } else {
+                    // Développer la description
+                    const promo = promotions.find(p => p.id === promoId);
+                    descriptionSection.addClass('expanded');
+                    descriptionSection.html(promo.description.replace(/\n/g, '<br>'));
+                    button.html('<i class="fas fa-chevron-up"></i> Voir moins');
+                }
             });
         }
 
-        // Sélectionner un agent
-        function selectAgent(agentName, agentPhone) {
-            selectedAgent = {
-                name: agentName,
-                phone: agentPhone
-            };
+        // Filtrer les promotions
+        function filterPromotions() {
+            const searchTerm = $('.search-input').val().toLowerCase().trim();
             
-            // Activer le bouton suivant
-            $('#btnNext').prop('disabled', false);
+            filteredPromotions = promotions.filter(p => {
+                // Filtre par catégorie
+                if (currentCategory !== "all" && p.category !== currentCategory) return false;
+                
+                // Filtre par recherche
+                if (searchTerm) {
+                    return p.name.toLowerCase().includes(searchTerm) ||
+                           p.description.toLowerCase().includes(searchTerm) ||
+                           p.specs.some(spec => spec.toLowerCase().includes(searchTerm));
+                }
+                
+                return true;
+            });
             
-            // Préparer le lien WhatsApp pour l'étape 3
-            const message = generateWhatsAppMessage(
-                agentName.split(' ')[0], // Prénom seulement
-                productInfo.productName,
-                productInfo.productId,
-                selectedCity
-            );
+            renderPromotions();
+        }
+
+        // Animation d'ajout au panier
+        function animateAddToCart(productName) {
+            // Notification
+            $('#cartProductName').text(productName);
+            const alert = $('#cartAlert');
+            alert.removeClass('fade').addClass('show');
             
-            const whatsappLink = generateWhatsAppLink(agentPhone, message);
+            setTimeout(() => {
+                alert.removeClass('show').addClass('fade');
+            }, 3000);
             
-            // Mettre à jour les informations pour l'étape 3
-            $('#agentNameContact').text(agentName);
-            $('#agentPhoneDisplay').text('+237 ' + agentPhone);
-            $('#whatsappFinalLink').attr('href', whatsappLink);
+            // Mettre à jour le compteur panier
+            updateCartCount();
+        }
+
+        // Mettre à jour le compteur panier
+        function updateCartCount() {
+            const cartCount = cart.length;
+            $('#footerCartCount').text(cartCount);
+        }
+
+        // Ajout au panier
+        function addToCart(productId) {
+            const product = promotions.find(p => p.id === productId);
+            
+            if (!product) return;
+            
+            // Vérifier si le produit est déjà dans le panier
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                const productCopy = {...product};
+                productCopy.quantity = 1;
+                cart.push(productCopy);
+            }
+            
+            // Animation du bouton
+            const $button = $(`.btn-cart-promo[data-id="${productId}"]`);
+            $button.addClass('adding');
+            setTimeout(() => {
+                $button.removeClass('adding');
+            }, 500);
+            
+            // Animation et notification
+            animateAddToCart(product.name);
+            
+            // Sauvegarder dans localStorage
+            saveCartToLocalStorage();
+        }
+
+        // Sauvegarder le panier dans localStorage
+        function saveCartToLocalStorage() {
+            localStorage.setItem('promoCart', JSON.stringify(cart));
+        }
+
+        // Charger le panier depuis localStorage
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('promoCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartCount();
+            }
         }
 
         // Initialisation
         $(document).ready(function() {
-            // Initialiser les informations produit
-            initProductInfo();
+            // Charger le panier
+            loadCartFromLocalStorage();
             
-            // Afficher l'étape 1
-            showStep(1);
-            
-            // Rendre les villes
-            renderCities();
-            
-            // Gestion des boutons de navigation
-            $('#btnNext').on('click', function() {
-                if (currentStep === 1 && selectedCity) {
-                    // Rendre les agents pour la ville sélectionnée
-                    renderAgents();
-                    showStep(2);
-                } else if (currentStep === 2 && selectedAgent) {
-                    showStep(3);
-                }
-            });
-            
-            $('#btnPrev').on('click', function() {
-                if (currentStep > 1) {
-                    showStep(currentStep - 1);
-                }
-            });
-            
-            $('#btnFinish').on('click', function() {
-                // Ouvrir WhatsApp dans un nouvel onglet
-                window.open($('#whatsappFinalLink').attr('href'), '_blank');
-                
-                // Rediriger vers le tableau de bord après 2 secondes
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 2000);
-            });
+            // Initialiser les promotions
+            renderPromotions();
             
             // Recherche
-            $('.search-btn').on('click', performSearch);
+            $('.search-btn').on('click', filterPromotions);
             
             $('.search-input').on('keyup', function(e) {
                 if (e.key === 'Enter') {
-                    performSearch();
+                    filterPromotions();
                 }
             });
             
-            function performSearch() {
-                const term = $('.search-input').val().toLowerCase().trim();
+            // Filtrage par catégorie
+            $('.category-item').on('click', function(e) {
+                e.preventDefault();
                 
-                if (term) {
-                    // Rediriger vers le dashboard avec le terme de recherche
-                    window.location.href = `dashboard.html?search=${encodeURIComponent(term)}`;
-                }
-            }
+                // Mettre à jour l'état actif
+                $('.category-item').removeClass('active');
+                $(this).addClass('active');
+                
+                // Mettre à jour la catégorie courante
+                currentCategory = $(this).data('category') || "all";
+                
+                // Appliquer les filtres
+                filterPromotions();
+            });
+            
+            // Ajout au panier
+            $(document).on('click', '.btn-cart-promo', function(e) {
+                e.preventDefault();
+                const productId = parseInt($(this).data('id'));
+                addToCart(productId);
+            });
             
             // Navigation footer
             $('.footer-item').on('click', function(e) {
@@ -1125,17 +1215,7 @@
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
             });
-            
-            // Charger le compteur du panier
-            loadCartCount();
         });
-        
-        // Charger le compteur du panier
-        function loadCartCount() {
-            // Simuler un chargement du panier (dans un vrai cas, on irait chercher dans localStorage ou Firestore)
-            const cartCount = localStorage.getItem('cartCount') || 0;
-            $('#footerCartCount').text(cartCount);
-        }
     </script>
 </body>
 </html>
