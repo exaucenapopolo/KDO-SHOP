@@ -1,3 +1,5 @@
+[file name]: inscription.html
+[file content begin]
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -24,135 +26,144 @@
             display: flex;
             align-items: center;
             padding: 20px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .signup-container {
-            max-width: 1000px;
+        .register-container {
+            max-width: 1200px;
             margin: 0 auto;
         }
         
-        .signup-card {
+        .register-card {
             background: var(--white);
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .register-left {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8E3C 100%);
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
             overflow: hidden;
         }
         
-        .signup-header {
-            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8E3C 100%);
-            color: white;
-            padding: 25px 40px;
+        .register-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png') center center no-repeat;
+            background-size: contain;
+            opacity: 0.1;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
             text-align: center;
         }
         
-        .logo-text {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -1px;
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
         }
         
-        .signup-subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-        
-        /* Étapes d'inscription */
-        .steps-container {
-            padding: 30px 40px 20px;
-            border-bottom: 1px solid #E0E0E0;
-        }
-        
-        .steps {
+        .features-list li {
+            margin-bottom: 15px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .features-list li:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        .features-list i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .register-right {
+            padding: 50px 40px;
             position: relative;
         }
         
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 2;
-            flex: 1;
-        }
-        
-        .step-number {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #E0E0E0;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            margin-bottom: 10px;
-            transition: all 0.3s;
-        }
-        
-        .step.active .step-number {
-            background: var(--primary-orange);
-            color: white;
-            transform: scale(1.1);
-        }
-        
-        .step.completed .step-number {
-            background: var(--success-green);
-            color: white;
-        }
-        
-        .step-label {
-            font-size: 12px;
-            color: #666;
-            font-weight: 600;
+        .register-header {
             text-align: center;
+            margin-bottom: 40px;
+            animation: slideInDown 0.6s ease-out;
         }
         
-        .step.active .step-label {
-            color: var(--primary-orange);
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .steps-line {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            height: 4px;
-            background: #E0E0E0;
-            z-index: 1;
-        }
-        
-        .steps-progress {
-            height: 100%;
-            background: var(--primary-orange);
-            width: 0%;
-            transition: width 0.5s;
-        }
-        
-        /* Contenu des étapes */
-        .step-content {
-            padding: 40px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .step-title {
+        .register-title {
             color: var(--text-dark);
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
         }
         
-        .step-description {
+        .register-subtitle {
             color: #666;
-            margin-bottom: 30px;
+            font-size: 16px;
         }
         
         .form-group {
             margin-bottom: 25px;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+        
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .form-label {
@@ -160,6 +171,13 @@
             color: var(--text-dark);
             margin-bottom: 8px;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label i {
+            margin-right: 8px;
+            color: var(--primary-orange);
         }
         
         .form-control {
@@ -175,174 +193,31 @@
             box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
         }
         
-        .form-select {
-            border: 2px solid #E0E0E0;
-            border-radius: 10px;
-            padding: 12px 15px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .form-select:focus {
-            border-color: var(--primary-orange);
-            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
-        }
-        
-        .form-check {
-            margin-bottom: 15px;
-        }
-        
-        .form-check-input:checked {
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
-        
-        /* Boutons de navigation */
-        .step-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: auto;
-            padding-top: 30px;
-            border-top: 1px solid #E0E0E0;
-        }
-        
-        .btn-prev {
-            background: transparent;
-            border: 2px solid var(--primary-orange);
-            color: var(--primary-orange);
-            border-radius: 10px;
-            padding: 12px 25px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .btn-prev:hover {
-            background: var(--accent-gray);
-        }
-        
-        .btn-next, .btn-submit {
+        .btn-primary-custom {
             background: var(--primary-orange);
             border: none;
-            color: white;
             border-radius: 10px;
-            padding: 12px 25px;
+            padding: 14px;
+            font-size: 16px;
             font-weight: 600;
+            color: white;
+            width: 100%;
             transition: all 0.3s;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
         }
         
-        .btn-next:hover, .btn-submit:hover {
+        .btn-primary-custom:hover {
             background: #E55A00;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 0, 0.2);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
         }
         
-        .btn-submit {
-            min-width: 150px;
+        .btn-primary-custom:active {
+            transform: translateY(0);
         }
         
-        /* Résumé de confirmation */
-        .summary-container {
-            background: var(--accent-gray);
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 30px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #D0D0D0;
-        }
-        
-        .summary-item:last-child {
-            border-bottom: none;
-        }
-        
-        .summary-label {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        .summary-value {
-            color: #666;
-        }
-        
-        /* Message de succès */
-        .success-message {
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .success-icon {
-            font-size: 80px;
-            color: var(--success-green);
-            margin-bottom: 20px;
-        }
-        
-        .success-title {
-            color: var(--success-green);
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .success-text {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .signup-header, .steps-container, .step-content {
-                padding: 20px;
-            }
-            
-            .step-number {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
-            }
-            
-            .steps-line {
-                top: 17px;
-            }
-            
-            .step-label {
-                font-size: 10px;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .step-actions {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .btn-prev, .btn-next, .btn-submit {
-                width: 100%;
-            }
-        }
-        
-        .error-message {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            min-width: 300px;
-            display: none;
-        }
-        
-        /* Bouton Google */
         .btn-google {
             background: white;
             border: 2px solid #E0E0E0;
@@ -357,7 +232,6 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 20px;
         }
         
         .btn-google:hover {
@@ -390,6 +264,210 @@
             padding: 0 15px;
             font-size: 14px;
         }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 15px;
+        }
+        
+        .login-link a {
+            color: var(--primary-orange);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+            color: #E55A00;
+        }
+        
+        @media (max-width: 992px) {
+            .register-left {
+                padding: 40px 30px;
+            }
+            
+            .register-right {
+                padding: 40px 30px;
+            }
+            
+            .logo-img {
+                max-width: 150px;
+            }
+            
+            .tagline {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .register-left {
+                padding: 30px 20px;
+            }
+            
+            .register-right {
+                padding: 30px 20px;
+            }
+            
+            .logo-img {
+                max-width: 120px;
+            }
+            
+            .tagline {
+                font-size: 16px;
+            }
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            display: none;
+            animation: slideInRight 0.5s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Message de succès */
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            color: var(--success-green);
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        .success-title {
+            color: var(--success-green);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+        
+        .success-text {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            animation: slideInUp 0.6s ease-out 0.4s both;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Animation pour le formulaire */
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .btn-primary-custom { animation-delay: 0.7s; }
+        .divider { animation-delay: 0.8s; }
+        .btn-google { animation-delay: 0.9s; }
+        .login-link { animation-delay: 1.0s; }
+        
+        /* Style pour le sélecteur de type de compte */
+        .account-type-container {
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+            background: #F9F9F9;
+        }
+        
+        .account-type-option {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        .account-type-option:hover {
+            border-color: var(--primary-orange);
+            background: rgba(255, 107, 0, 0.05);
+        }
+        
+        .account-type-option.selected {
+            border-color: var(--primary-orange);
+            background: rgba(255, 107, 0, 0.1);
+        }
+        
+        .account-type-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .account-type-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: var(--primary-orange);
+        }
+        
+        .account-type-title {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .account-type-description {
+            color: #666;
+            font-size: 14px;
+            margin-left: 34px;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary-orange);
+            border-color: var(--primary-orange);
+        }
     </style>
 </head>
 <body>
@@ -405,277 +483,176 @@
         <button type="button" class="btn-close" onclick="hideNotification()"></button>
     </div>
     
-    <div class="container signup-container">
-        <div class="signup-card">
-            <!-- Header -->
-            <div class="signup-header">
-                <h1 class="logo-text">KDO CAMEROUN</h1>
-                <p class="signup-subtitle">Créez votre compte professionnel en 4 étapes simples</p>
-            </div>
-            
-            <!-- Étapes d'inscription -->
-            <div class="steps-container">
-                <div class="steps">
-                    <div class="steps-line">
-                        <div class="steps-progress" id="stepsProgress"></div>
-                    </div>
-                    
-                    <div class="step active" id="step1">
-                        <div class="step-number">1</div>
-                        <div class="step-label">Informations<br>personnelles</div>
-                    </div>
-                    
-                    <div class="step" id="step2">
-                        <div class="step-number">2</div>
-                        <div class="step-label">Coordonnées<br>& téléphone</div>
-                    </div>
-                    
-                    <div class="step" id="step3">
-                        <div class="step-number">3</div>
-                        <div class="step-label">Type de<br>compte</div>
-                    </div>
-                    
-                    <div class="step" id="step4">
-                        <div class="step-number">4</div>
-                        <div class="step-label">Confirmation<br>finale</div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Contenu des étapes -->
-            <div class="step-content">
-                <!-- Étape 1: Informations personnelles -->
-                <div class="step-pane active" id="step1Content">
-                    <h2 class="step-title">Informations personnelles</h2>
-                    <p class="step-description">Veuillez fournir vos informations de base pour créer votre compte.</p>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="firstName">Prénom *</label>
-                                <input type="text" class="form-control" id="firstName" placeholder="Votre prénom" required>
-                                <div class="error-message" id="firstNameError">Ce champ est requis</div>
-                            </div>
+    <!-- Message de succès (caché par défaut) -->
+    <div id="successMessage" class="success-message" style="display: none;">
+        <div class="success-icon">
+            <i class="fas fa-check-circle pulse"></i>
+        </div>
+        <h2 class="success-title">Inscription réussie !</h2>
+        <p class="success-text">
+            Félicitations ! Votre compte KDO CAMEROUN a été créé avec succès.<br>
+            Vous allez être redirigé vers votre tableau de bord.
+        </p>
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+    </div>
+    
+    <div class="container register-container">
+        <div class="register-card">
+            <div class="row g-0">
+                <!-- Côté gauche - Présentation -->
+                <div class="col-lg-6">
+                    <div class="register-left">
+                        <div class="logo-container">
+                            <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                                 alt="KDO CAMEROUN Logo" class="logo-img">
                         </div>
+                        <p class="tagline">Marketplace professionnelle pour les commerçants d'Afrique centrale</p>
                         
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="lastName">Nom de famille *</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Votre nom" required>
-                                <div class="error-message" id="lastNameError">Ce champ est requis</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="email">Email professionnel *</label>
-                        <input type="email" class="form-control" id="email" placeholder="votre@email.com" required>
-                        <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="password">Mot de passe *</label>
-                                <input type="password" class="form-control" id="password" placeholder="Min. 8 caractères" required>
-                                <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 8 caractères</div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="form-label" for="confirmPassword">Confirmer le mot de passe *</label>
-                                <input type="password" class="form-control" id="confirmPassword" placeholder="Répétez le mot de passe" required>
-                                <div class="error-message" id="confirmPasswordError">Les mots de passe ne correspondent pas</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="divider">
-                        <span>Ou inscrivez-vous avec</span>
-                    </div>
-                    
-                    <button type="button" class="btn-google" id="googleSignupBtn">
-                        <img src="https://www.google.com/favicon.ico" alt="Google Logo">
-                        S'inscrire avec Google
-                    </button>
-                    
-                    <div class="step-actions">
-                        <div></div>
-                        <button class="btn-next" onclick="nextStep(2)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Accès à des milliers de produits</li>
+                            <li><i class="fas fa-check-circle"></i> Fournisseurs vérifiés</li>
+                            <li><i class="fas fa-check-circle"></i> Transactions sécurisées</li>
+                            <li><i class="fas fa-check-circle"></i> Livraison garantie</li>
+                            <li><i class="fas fa-check-circle"></i> Support 24/7</li>
+                            <li><i class="fas fa-check-circle"></i> Conditions de paiement flexibles</li>
+                        </ul>
                     </div>
                 </div>
                 
-                <!-- Étape 2: Coordonnées -->
-                <div class="step-pane" id="step2Content" style="display: none;">
-                    <h2 class="step-title">Coordonnées & téléphone</h2>
-                    <p class="step-description">Où pouvons-nous vous contacter ?</p>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="phone">Numéro de téléphone *</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="Ex: +237 6 81 14 46 38" required>
-                        <div class="error-message" id="phoneError">Veuillez entrer un numéro de téléphone valide</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="country">Pays *</label>
-                        <select class="form-select" id="country" required>
-                            <option value="">Sélectionnez votre pays</option>
-                            <option value="cameroun">Cameroun</option>
-                            <option value="congo">Congo</option>
-                            <option value="tchad">Tchad</option>
-                            <option value="centrafrique">Centrafrique</option>
-                            <option value="gabon">Gabon</option>
-                            <option value="guinee">Guinée Équatoriale</option>
-                        </select>
-                        <div class="error-message" id="countryError">Veuillez sélectionner votre pays</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="city">Ville *</label>
-                        <input type="text" class="form-control" id="city" placeholder="Votre ville" required>
-                        <div class="error-message" id="cityError">Veuillez entrer votre ville</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="address">Adresse complète</label>
-                        <textarea class="form-control" id="address" rows="3" placeholder="Votre adresse complète"></textarea>
-                    </div>
-                    
-                    <div class="step-actions">
-                        <button class="btn-prev" onclick="prevStep(1)"><i class="fas fa-arrow-left me-2"></i> Précédent</button>
-                        <button class="btn-next" onclick="nextStep(3)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
-                    </div>
-                </div>
-                
-                <!-- Étape 3: Type de compte -->
-                <div class="step-pane" id="step3Content" style="display: none;">
-                    <h2 class="step-title">Type de compte</h2>
-                    <p class="step-description">Sélectionnez le type de compte qui correspond à votre activité.</p>
-                    
-                    <div class="row">
-                        <div class="col-md-6 mb-4">
-                            <div class="card h-100 border-2" id="buyerCard" style="cursor: pointer; border-color: #E0E0E0;">
-                                <div class="card-body text-center p-4">
-                                    <div class="mb-3">
-                                        <i class="fas fa-shopping-cart fa-3x text-primary"></i>
-                                    </div>
-                                    <h4 class="card-title">Acheteur</h4>
-                                    <p class="card-text">Je souhaite acheter des produits en gros pour ma boutique</p>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="radio" name="accountType" id="buyer" value="acheteur" checked>
-                                        <label class="form-check-label" for="buyer">
-                                            Sélectionner
+                <!-- Côté droit - Formulaire -->
+                <div class="col-lg-6">
+                    <div class="register-right">
+                        <div class="register-header">
+                            <h2 class="register-title">Rejoignez KDO CAMEROUN</h2>
+                            <p class="register-subtitle">Créez votre compte professionnel en 2 minutes</p>
+                        </div>
+                        
+                        <!-- Formulaire d'inscription -->
+                        <form id="registerForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="firstName">
+                                            <i class="fas fa-user"></i> Prénom
                                         </label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="Votre prénom" required>
+                                        <div class="error-message" id="firstNameError">Veuillez entrer votre prénom</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="lastName">
+                                            <i class="fas fa-user"></i> Nom
+                                        </label>
+                                        <input type="text" class="form-control" id="lastName" placeholder="Votre nom" required>
+                                        <div class="error-message" id="lastNameError">Veuillez entrer votre nom</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-md-6 mb-4">
-                            <div class="card h-100 border-2" id="sellerCard" style="cursor: pointer; border-color: #E0E0E0;">
-                                <div class="card-body text-center p-4">
-                                    <div class="mb-3">
-                                        <i class="fas fa-store fa-3x text-primary"></i>
-                                    </div>
-                                    <h4 class="card-title">Vendeur</h4>
-                                    <p class="card-text">Je souhaite vendre mes produits sur la plateforme</p>
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="radio" name="accountType" id="seller" value="vendeur">
-                                        <label class="form-check-label" for="seller">
-                                            Sélectionner
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="email">
+                                    <i class="fas fa-envelope"></i> Email professionnel
+                                </label>
+                                <input type="email" class="form-control" id="email" placeholder="votre@email.com" required>
+                                <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="phone">
+                                    <i class="fas fa-phone"></i> Numéro de téléphone
+                                </label>
+                                <input type="tel" class="form-control" id="phone" placeholder="6XX XXX XXX" required>
+                                <div class="error-message" id="phoneError">Veuillez entrer un numéro de téléphone valide</div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="password">
+                                            <i class="fas fa-lock"></i> Mot de passe
                                         </label>
+                                        <input type="password" class="form-control" id="password" placeholder="Votre mot de passe" required>
+                                        <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 8 caractères</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="confirmPassword">
+                                            <i class="fas fa-lock"></i> Confirmer le mot de passe
+                                        </label>
+                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmer le mot de passe" required>
+                                        <div class="error-message" id="confirmPasswordError">Les mots de passe ne correspondent pas</div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label" for="businessName">Nom de votre entreprise / boutique</label>
-                        <input type="text" class="form-control" id="businessName" placeholder="Si applicable">
-                    </div>
-                    
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="terms" required>
-                        <label class="form-check-label" for="terms">
-                            J'accepte les <a href="#" class="text-primary">Conditions Générales d'Utilisation</a> 
-                            et la <a href="#" class="text-primary">Politique de Confidentialité</a> *
-                        </label>
-                        <div class="error-message" id="termsError">Vous devez accepter les conditions</div>
-                    </div>
-                    
-                    <div class="step-actions">
-                        <button class="btn-prev" onclick="prevStep(2)"><i class="fas fa-arrow-left me-2"></i> Précédent</button>
-                        <button class="btn-next" onclick="nextStep(4)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
-                    </div>
-                </div>
-                
-                <!-- Étape 4: Confirmation -->
-                <div class="step-pane" id="step4Content" style="display: none;">
-                    <h2 class="step-title">Confirmation finale</h2>
-                    <p class="step-description">Vérifiez vos informations avant de finaliser l'inscription.</p>
-                    
-                    <div class="summary-container">
-                        <div class="summary-item">
-                            <span class="summary-label">Nom complet:</span>
-                            <span class="summary-value" id="summaryName"></span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Email:</span>
-                            <span class="summary-value" id="summaryEmail"></span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Téléphone:</span>
-                            <span class="summary-value" id="summaryPhone"></span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Pays:</span>
-                            <span class="summary-value" id="summaryCountry"></span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Ville:</span>
-                            <span class="summary-value" id="summaryCity"></span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Type de compte:</span>
-                            <span class="summary-value" id="summaryAccountType"></span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Entreprise:</span>
-                            <span class="summary-value" id="summaryBusiness"></span>
-                        </div>
-                    </div>
-                    
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="confirmInfo">
-                        <label class="form-check-label" for="confirmInfo">
-                            Je confirme que toutes les informations ci-dessus sont correctes
-                        </label>
-                        <div class="error-message" id="confirmError">Vous devez confirmer vos informations</div>
-                    </div>
-                    
-                    <div class="step-actions">
-                        <button class="btn-prev" onclick="prevStep(3)"><i class="fas fa-arrow-left me-2"></i> Précédent</button>
-                        <button class="btn-submit" onclick="submitRegistration()">
-                            <i class="fas fa-check me-2"></i> Créer mon compte
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Étape 5: Succès -->
-                <div class="step-pane" id="step5Content" style="display: none;">
-                    <div class="success-message">
-                        <div class="success-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h2 class="success-title">Compte créé avec succès !</h2>
-                        <p class="success-text">
-                            Félicitations ! Votre compte professionnel a été créé avec succès.<br>
-                            Vous allez être redirigé vers votre tableau de bord.
-                        </p>
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="visually-hidden">Chargement...</span>
+                            
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <i class="fas fa-briefcase"></i> Type de compte
+                                </label>
+                                
+                                <div class="account-type-container">
+                                    <div class="account-type-option selected" data-type="acheteur">
+                                        <div class="account-type-header">
+                                            <i class="fas fa-shopping-cart account-type-icon"></i>
+                                            <div class="account-type-title">Acheteur</div>
+                                        </div>
+                                        <div class="account-type-description">
+                                            J'achète pour mon usage personnel ou pour mon entreprise
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="account-type-option" data-type="revendeur">
+                                        <div class="account-type-header">
+                                            <i class="fas fa-store account-type-icon"></i>
+                                            <div class="account-type-title">Revendeur</div>
+                                        </div>
+                                        <div class="account-type-description">
+                                            J'achète les produits KDO pour revendre dans ma boutique ou à mes clients
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="accountType" value="acheteur" required>
+                                <div class="error-message" id="accountTypeError">Veuillez sélectionner un type de compte</div>
+                            </div>
+                            
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
+                                <label class="form-check-label" for="termsCheck" style="font-size: 14px;">
+                                    J'accepte les <a href="#" class="text-primary">Conditions d'utilisation</a> 
+                                    et la <a href="#" class="text-primary">Politique de confidentialité</a> de KDO CAMEROUN
+                                </label>
+                                <div class="error-message" id="termsError">Vous devez accepter les conditions d'utilisation</div>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary-custom" id="registerBtn">
+                                <i class="fas fa-user-plus me-2"></i> Créer mon compte
+                            </button>
+                            
+                            <div class="divider">
+                                <span>Ou inscrivez-vous avec</span>
+                            </div>
+                            
+                            <button type="button" class="btn-google" id="googleRegisterBtn">
+                                <img src="https://www.google.com/favicon.ico" alt="Google Logo">
+                                S'inscrire avec Google
+                            </button>
+                            
+                            <div class="login-link">
+                                Vous avez déjà un compte ? <a href="index.html">Connectez-vous ici</a>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <p class="small text-muted">
+                                En vous inscrivant, vous acceptez nos 
+                                <a href="#" class="text-primary">Conditions d'utilisation</a> 
+                                et notre 
+                                <a href="#" class="text-primary">Politique de confidentialité</a>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -687,7 +664,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Firebase SDK - Version compatibilité -->
+    <!-- Firebase SDK - Version compatibilité (identique à login.html) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -708,9 +685,6 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-
-        // Variables globales
-        let currentStep = 1;
         
         // Fonctions de notification
         function showNotification(title, message, type = 'success') {
@@ -738,347 +712,123 @@
             notification.style.display = 'none';
         }
         
-        function updateStepsProgress() {
-            const progress = ((currentStep - 1) / 4) * 100;
-            document.getElementById('stepsProgress').style.width = progress + '%';
+        // Fonction pour afficher le message de succès et rediriger
+        function showSuccessAndRedirect() {
+            const successMessage = document.getElementById('successMessage');
+            const registerRight = document.querySelector('.register-right');
+            
+            // Masquer le formulaire et afficher le message de succès
+            registerRight.style.position = 'relative';
+            successMessage.style.display = 'flex';
+            
+            // Redirection après 3 secondes
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 3000);
         }
         
-        function showStep(step) {
-            // Masquer toutes les étapes
-            document.querySelectorAll('.step-pane').forEach(pane => {
-                pane.style.display = 'none';
-            });
-            
-            // Afficher l'étape actuelle
-            document.getElementById('step' + step + 'Content').style.display = 'block';
-            
-            // Mettre à jour les indicateurs d'étape
-            document.querySelectorAll('.step').forEach(stepEl => {
-                stepEl.classList.remove('active', 'completed');
-            });
-            
-            for (let i = 1; i <= step; i++) {
-                const stepEl = document.getElementById('step' + i);
-                if (i === step) {
-                    stepEl.classList.add('active');
-                } else {
-                    stepEl.classList.add('completed');
-                }
-            }
-            
-            updateStepsProgress();
-        }
-        
-        function validateStep(step) {
-            let isValid = true;
-            
-            if (step === 1) {
-                const firstName = document.getElementById('firstName').value.trim();
-                const lastName = document.getElementById('lastName').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
-                
-                // Validation des champs
-                if (!firstName) {
-                    document.getElementById('firstNameError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('firstNameError').style.display = 'none';
-                }
-                
-                if (!lastName) {
-                    document.getElementById('lastNameError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('lastNameError').style.display = 'none';
-                }
-                
-                if (!email || !email.includes('@')) {
-                    document.getElementById('emailError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('emailError').style.display = 'none';
-                }
-                
-                if (!password || password.length < 8) {
-                    document.getElementById('passwordError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('passwordError').style.display = 'none';
-                }
-                
-                if (password !== confirmPassword) {
-                    document.getElementById('confirmPasswordError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('confirmPasswordError').style.display = 'none';
-                }
-            }
-            
-            if (step === 2) {
-                const phone = document.getElementById('phone').value.trim();
-                const country = document.getElementById('country').value;
-                const city = document.getElementById('city').value.trim();
-                
-                if (!phone) {
-                    document.getElementById('phoneError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('phoneError').style.display = 'none';
-                }
-                
-                if (!country) {
-                    document.getElementById('countryError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('countryError').style.display = 'none';
-                }
-                
-                if (!city) {
-                    document.getElementById('cityError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('cityError').style.display = 'none';
-                }
-            }
-            
-            if (step === 3) {
-                const terms = document.getElementById('terms').checked;
-                
-                if (!terms) {
-                    document.getElementById('termsError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('termsError').style.display = 'none';
-                }
-            }
-            
-            if (step === 4) {
-                const confirmInfo = document.getElementById('confirmInfo').checked;
-                
-                if (!confirmInfo) {
-                    document.getElementById('confirmError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('confirmError').style.display = 'none';
-                }
-            }
-            
-            return isValid;
-        }
-        
-        function nextStep(next) {
-            if (validateStep(currentStep)) {
-                if (next === 4) {
-                    // Mettre à jour le résumé
-                    document.getElementById('summaryName').textContent = 
-                        document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value;
-                    document.getElementById('summaryEmail').textContent = document.getElementById('email').value;
-                    document.getElementById('summaryPhone').textContent = document.getElementById('phone').value;
-                    
-                    const countrySelect = document.getElementById('country');
-                    document.getElementById('summaryCountry').textContent = 
-                        countrySelect.options[countrySelect.selectedIndex].text;
-                    
-                    document.getElementById('summaryCity').textContent = document.getElementById('city').value;
-                    
-                    const accountType = document.querySelector('input[name="accountType"]:checked').value;
-                    document.getElementById('summaryAccountType').textContent = 
-                        accountType === 'acheteur' ? 'Acheteur' : 'Vendeur';
-                    
-                    const businessName = document.getElementById('businessName').value;
-                    document.getElementById('summaryBusiness').textContent = businessName || 'Non spécifié';
-                }
-                
-                currentStep = next;
-                showStep(currentStep);
-            }
-        }
-        
-        function prevStep(prev) {
-            currentStep = prev;
-            showStep(currentStep);
-        }
-        
-        // Fonction pour l'inscription avec Google
-        async function signupWithGoogle() {
+        // Fonction pour créer un document utilisateur complet dans Firestore
+        async function createUserDocument(user, additionalData) {
             try {
-                const provider = new firebase.auth.GoogleAuthProvider();
+                const userRef = db.collection("users").doc(user.uid);
                 
-                // Désactiver le bouton Google
-                const googleBtn = document.getElementById('googleSignupBtn');
-                const originalText = googleBtn.innerHTML;
-                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Inscription en cours...';
-                googleBtn.disabled = true;
-                
-                const result = await auth.signInWithPopup(provider);
-                const user = result.user;
-                
-                console.log("✅ Inscription Google réussie avec UID:", user.uid);
-                
-                // Vérifier si l'utilisateur existe déjà dans Firestore
-                const userDoc = await db.collection("users").doc(user.uid).get();
-                
-                if (!userDoc.exists) {
-                    // Créer un nouvel utilisateur dans Firestore
-                    const userData = {
-                        uid: user.uid,
-                        firstName: user.displayName?.split(' ')[0] || '',
-                        lastName: user.displayName?.split(' ').slice(1).join(' ') || '',
-                        email: user.email,
-                        phone: user.phoneNumber || '',
-                        photoURL: user.photoURL,
-                        accountType: 'acheteur', // Par défaut
-                        createdAt: new Date().toISOString(),
-                        lastLogin: new Date().toISOString(),
-                        status: 'active',
-                        emailVerified: user.emailVerified,
-                        provider: 'google',
-                        country: '',
-                        city: '',
-                        address: '',
-                        businessName: ''
-                    };
-                    
-                    await db.collection("users").doc(user.uid).set(userData);
-                    
-                    // Créer un panier vide
-                    const cartData = {
-                        userId: user.uid,
-                        items: {},
-                        totalItems: 0,
-                        totalAmount: 0,
-                        updatedAt: new Date().toISOString()
-                    };
-                    
-                    await db.collection("carts").doc(user.uid).set(cartData);
-                    
-                    console.log("✅ Nouvel utilisateur Google créé dans Firestore");
-                    
-                    // Afficher le message de succès
-                    currentStep = 5;
-                    showStep(currentStep);
-                    
-                    // Redirection après 3 secondes
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 3000);
-                } else {
-                    // Si l'utilisateur existe déjà, rediriger vers le dashboard
-                    showNotification("Info", "Vous êtes déjà inscrit, redirection vers le tableau de bord...", "info");
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 2000);
-                }
-                
-            } catch (error) {
-                console.error('❌ Erreur d\'inscription Google:', error);
-                
-                // Réactiver le bouton Google
-                const googleBtn = document.getElementById('googleSignupBtn');
-                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> S\'inscrire avec Google';
-                googleBtn.disabled = false;
-                
-                let errorMessage = 'Erreur d\'inscription avec Google. Veuillez réessayer.';
-                
-                if (error.code === 'auth/popup-closed-by-user') {
-                    errorMessage = 'La fenêtre d\'inscription a été fermée. Veuillez réessayer.';
-                } else if (error.code === 'auth/cancelled-popup-request') {
-                    errorMessage = 'Inscription annulée. Veuillez réessayer.';
-                }
-                
-                showNotification("Erreur", errorMessage, "danger");
-            }
-        }
-        
-        async function submitRegistration() {
-            console.log("Début de l'inscription...");
-            
-            if (!validateStep(4)) {
-                console.log("Validation échouée");
-                return;
-            }
-            
-            // Désactiver le bouton
-            const submitBtn = document.querySelector('.btn-submit');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Création...';
-            submitBtn.disabled = true;
-            
-            try {
-                // Récupérer les données du formulaire
+                // Créer un document utilisateur complet avec tous les champs
                 const userData = {
-                    firstName: document.getElementById('firstName').value.trim(),
-                    lastName: document.getElementById('lastName').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    phone: document.getElementById('phone').value.trim(),
-                    country: document.getElementById('country').value,
-                    city: document.getElementById('city').value.trim(),
-                    address: document.getElementById('address').value.trim(),
-                    accountType: document.querySelector('input[name="accountType"]:checked').value,
-                    businessName: document.getElementById('businessName').value.trim(),
+                    uid: user.uid,
+                    firstName: additionalData.firstName || '',
+                    lastName: additionalData.lastName || '',
+                    email: user.email,
+                    phone: additionalData.phone || '',
+                    photoURL: user.photoURL || '',
+                    address: '',
+                    city: '',
+                    country: 'Cameroun',
                     createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString(),
+                    isActive: true,
+                    role: additionalData.accountType || 'acheteur',
+                    preferences: {
+                        notifications: true,
+                        newsletter: true
+                    },
+                    stats: {
+                        totalOrders: 0,
+                        totalSpent: 0,
+                        favoriteCategories: []
+                    },
+                    accountType: additionalData.accountType || 'acheteur',
                     status: 'active',
-                    emailVerified: false,
-                    provider: 'email'
+                    emailVerified: user.emailVerified || false,
+                    provider: additionalData.provider || 'email'
                 };
                 
-                const password = document.getElementById('password').value;
+                await userRef.set(userData);
+                console.log("✅ Document utilisateur créé avec tous les champs dans Firestore");
                 
-                console.log("Données utilisateur:", userData);
-                console.log("Tentative de création de compte avec email:", userData.email);
-                
-                // 1. Créer l'utilisateur dans Firebase Authentication
-                console.log("Étape 1: Création de l'utilisateur dans Firebase Auth...");
-                const userCredential = await auth.createUserWithEmailAndPassword(userData.email, password);
-                const user = userCredential.user;
-                
-                console.log("✅ Utilisateur créé avec UID:", user.uid);
-                showNotification("Succès", "Compte créé dans l'authentification", "success");
-                
-                // 2. Ajouter l'UID aux données utilisateur
-                userData.uid = user.uid;
-                userData.lastLogin = new Date().toISOString();
-                
-                // 3. Enregistrer les informations supplémentaires dans Firestore
-                console.log("Étape 2: Enregistrement dans Firestore...");
-                await db.collection("users").doc(user.uid).set(userData);
-                
-                console.log("✅ Utilisateur enregistré dans Firestore avec succès!");
-                showNotification("Succès", "Données utilisateur enregistrées", "success");
-                
-                // 4. Créer un panier vide pour l'utilisateur
-                console.log("Étape 3: Création du panier...");
+                // Créer également un panier vide pour l'utilisateur
                 const cartData = {
                     userId: user.uid,
                     items: {},
                     totalItems: 0,
                     totalAmount: 0,
+                    createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString()
                 };
                 
                 await db.collection("carts").doc(user.uid).set(cartData);
-                console.log("✅ Panier créé avec succès!");
+                console.log("✅ Panier vide créé pour l'utilisateur dans Firestore");
                 
-                // 5. Afficher le message de succès
-                console.log("Affichage du message de succès...");
-                currentStep = 5;
-                showStep(currentStep);
-                
-                // 6. Redirection après 3 secondes
-                console.log("Redirection dans 3 secondes...");
-                setTimeout(() => {
-                    console.log("Redirection vers dashboard.html");
-                    window.location.href = 'dashboard.html';
-                }, 3000);
+                return userData;
                 
             } catch (error) {
-                console.error('❌ Erreur détaillée lors de l\'inscription:', error);
+                console.error("❌ Erreur lors de la création du document utilisateur:", error);
+                throw error;
+            }
+        }
+        
+        // Inscription avec email/mot de passe
+        async function signupWithEmail(firstName, lastName, email, phone, password, accountType) {
+            try {
+                // Désactiver le bouton
+                const registerBtn = document.getElementById('registerBtn');
+                const originalText = registerBtn.innerHTML;
+                registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Création du compte...';
+                registerBtn.disabled = true;
+                
+                // Créer l'utilisateur dans Firebase Authentication
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                console.log("✅ Utilisateur créé avec UID:", user.uid);
+                
+                // Mettre à jour le profil avec le nom
+                await user.updateProfile({
+                    displayName: `${firstName} ${lastName}`
+                });
+                
+                // Créer le document utilisateur complet dans Firestore
+                await createUserDocument(user, {
+                    firstName,
+                    lastName,
+                    phone,
+                    accountType,
+                    provider: 'email'
+                });
+                
+                // Envoyer l'email de vérification
+                await user.sendEmailVerification();
+                
+                // Afficher le message de succès
+                showSuccessAndRedirect();
+                
+            } catch (error) {
+                console.error('❌ Erreur d\'inscription:', error);
                 
                 // Réactiver le bouton
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                const registerBtn = document.getElementById('registerBtn');
+                registerBtn.innerHTML = '<i class="fas fa-user-plus me-2"></i> Créer mon compte';
+                registerBtn.disabled = false;
                 
                 let errorMessage = 'Erreur lors de la création du compte. Veuillez réessayer.';
                 
@@ -1095,13 +845,10 @@
                             errorMessage = 'L\'inscription par email/mot de passe n\'est pas activée.';
                             break;
                         case 'auth/weak-password':
-                            errorMessage = 'Le mot de passe est trop faible. Il doit contenir au moins 8 caractères.';
+                            errorMessage = 'Le mot de passe est trop faible. Utilisez au moins 8 caractères.';
                             break;
                         case 'auth/network-request-failed':
                             errorMessage = 'Problème de connexion réseau. Vérifiez votre connexion internet.';
-                            break;
-                        case 'permission-denied':
-                            errorMessage = 'Permission refusée. Vérifiez les règles Firestore.';
                             break;
                         default:
                             errorMessage = `Erreur: ${error.message}`;
@@ -1110,60 +857,270 @@
                 
                 // Afficher l'erreur dans une notification
                 showNotification("Erreur", errorMessage, "danger");
-                console.error("Code d'erreur:", error.code);
-                console.error("Message d'erreur:", error.message);
-                
-                // Afficher aussi une alerte pour s'assurer que l'utilisateur voit l'erreur
-                alert("Erreur d'inscription: " + errorMessage);
             }
+        }
+        
+        // Inscription avec Google
+        async function signupWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                
+                // Désactiver le bouton Google
+                const googleBtn = document.getElementById('googleRegisterBtn');
+                const originalText = googleBtn.innerHTML;
+                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Inscription en cours...';
+                googleBtn.disabled = true;
+                
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                
+                console.log("✅ Inscription Google réussie avec UID:", user.uid);
+                
+                // Extraire le prénom et nom du displayName Google
+                let firstName = '';
+                let lastName = '';
+                if (user.displayName) {
+                    const names = user.displayName.split(' ');
+                    firstName = names[0] || '';
+                    lastName = names.slice(1).join(' ') || '';
+                }
+                
+                // Créer le document utilisateur complet dans Firestore
+                await createUserDocument(user, {
+                    firstName,
+                    lastName,
+                    phone: user.phoneNumber || '',
+                    accountType: 'acheteur', // Par défaut pour les inscriptions Google
+                    provider: 'google'
+                });
+                
+                // Afficher le message de succès
+                showSuccessAndRedirect();
+                
+            } catch (error) {
+                console.error('❌ Erreur d\'inscription Google:', error);
+                
+                // Réactiver le bouton Google
+                const googleBtn = document.getElementById('googleRegisterBtn');
+                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> S\'inscrire avec Google';
+                googleBtn.disabled = false;
+                
+                let errorMessage = 'Erreur d\'inscription avec Google. Veuillez réessayer.';
+                
+                if (error.code === 'auth/popup-closed-by-user') {
+                    errorMessage = 'La fenêtre de connexion a été fermée. Veuillez réessayer.';
+                } else if (error.code === 'auth/cancelled-popup-request') {
+                    errorMessage = 'Inscription annulée. Veuillez réessayer.';
+                } else if (error.code === 'auth/account-exists-with-different-credential') {
+                    errorMessage = 'Un compte existe déjà avec cette adresse email. Connectez-vous avec votre méthode d\'authentification habituelle.';
+                }
+                
+                showNotification("Erreur", errorMessage, "danger");
+            }
+        }
+        
+        // Validation du formulaire
+        function validateForm() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const accountType = document.getElementById('accountType').value;
+            const termsChecked = document.getElementById('termsCheck').checked;
+            
+            let isValid = true;
+            
+            // Validation du prénom
+            const firstNameError = document.getElementById('firstNameError');
+            if (!firstName) {
+                firstNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                firstNameError.style.display = 'none';
+            }
+            
+            // Validation du nom
+            const lastNameError = document.getElementById('lastNameError');
+            if (!lastName) {
+                lastNameError.style.display = 'block';
+                isValid = false;
+            } else {
+                lastNameError.style.display = 'none';
+            }
+            
+            // Validation de l'email
+            const emailError = document.getElementById('emailError');
+            if (!email || !email.includes('@')) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Validation du téléphone
+            const phoneError = document.getElementById('phoneError');
+            const phoneRegex = /^[67]\d{8}$/; // Format téléphone camerounais
+            if (!phone || !phoneRegex.test(phone)) {
+                phoneError.style.display = 'block';
+                isValid = false;
+            } else {
+                phoneError.style.display = 'none';
+            }
+            
+            // Validation du mot de passe
+            const passwordError = document.getElementById('passwordError');
+            if (!password || password.length < 8) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+            
+            // Validation de la confirmation du mot de passe
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            if (password !== confirmPassword) {
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmPasswordError.style.display = 'none';
+            }
+            
+            // Validation du type de compte
+            const accountTypeError = document.getElementById('accountTypeError');
+            if (!accountType) {
+                accountTypeError.style.display = 'block';
+                isValid = false;
+            } else {
+                accountTypeError.style.display = 'none';
+            }
+            
+            // Validation des conditions
+            const termsError = document.getElementById('termsError');
+            if (!termsChecked) {
+                termsError.style.display = 'block';
+                isValid = false;
+            } else {
+                termsError.style.display = 'none';
+            }
+            
+            return isValid;
         }
         
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
             console.log("Page d'inscription chargée");
             
-            // Style pour les cartes de type de compte
-            const buyerCard = document.getElementById('buyerCard');
-            const sellerCard = document.getElementById('sellerCard');
+            // Gestion du choix du type de compte
+            const accountOptions = document.querySelectorAll('.account-type-option');
+            const accountTypeInput = document.getElementById('accountType');
             
-            if (buyerCard) {
-                buyerCard.addEventListener('click', function() {
-                    document.getElementById('buyer').checked = true;
-                    buyerCard.style.borderColor = '#FF6B00';
-                    if (sellerCard) sellerCard.style.borderColor = '#E0E0E0';
-                });
-            }
-            
-            if (sellerCard) {
-                sellerCard.addEventListener('click', function() {
-                    document.getElementById('seller').checked = true;
-                    sellerCard.style.borderColor = '#FF6B00';
-                    if (buyerCard) buyerCard.style.borderColor = '#E0E0E0';
-                });
-            }
-            
-            // Validation en temps réel
-            document.querySelectorAll('input, select, textarea').forEach(element => {
-                element.addEventListener('input', function() {
-                    const errorId = this.id + 'Error';
-                    const errorElement = document.getElementById(errorId);
-                    if (errorElement) {
-                        errorElement.style.display = 'none';
-                    }
+            accountOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Retirer la classe selected de toutes les options
+                    accountOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Ajouter la classe selected à l'option cliquée
+                    this.classList.add('selected');
+                    
+                    // Mettre à jour la valeur du champ caché
+                    const selectedType = this.getAttribute('data-type');
+                    accountTypeInput.value = selectedType;
                 });
             });
             
-            // Gestion de l'inscription avec Google
-            document.getElementById('googleSignupBtn').addEventListener('click', signupWithGoogle);
+            // Gestion du formulaire d'inscription
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    const firstName = document.getElementById('firstName').value.trim();
+                    const lastName = document.getElementById('lastName').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const phone = document.getElementById('phone').value.trim();
+                    const password = document.getElementById('password').value;
+                    const accountType = document.getElementById('accountType').value;
+                    
+                    signupWithEmail(firstName, lastName, email, phone, password, accountType);
+                }
+            });
+            
+            // Gestion de l'inscription Google
+            document.getElementById('googleRegisterBtn').addEventListener('click', function() {
+                signupWithGoogle();
+            });
+            
+            // Validation en temps réel
+            document.getElementById('firstName').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    document.getElementById('firstNameError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('lastName').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    document.getElementById('lastNameError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('email').addEventListener('input', function() {
+                const email = this.value.trim();
+                if (email && email.includes('@')) {
+                    document.getElementById('emailError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('phone').addEventListener('input', function() {
+                const phone = this.value.trim();
+                const phoneRegex = /^[67]\d{0,8}$/;
+                if (phone && phoneRegex.test(phone)) {
+                    document.getElementById('phoneError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('password').addEventListener('input', function() {
+                const password = this.value;
+                if (password.length >= 8) {
+                    document.getElementById('passwordError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = this.value;
+                if (password === confirmPassword) {
+                    document.getElementById('confirmPasswordError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('termsCheck').addEventListener('change', function() {
+                if (this.checked) {
+                    document.getElementById('termsError').style.display = 'none';
+                }
+            });
             
             // Vérifier si l'utilisateur est déjà connecté
             auth.onAuthStateChanged((user) => {
                 if (user) {
-                    console.log("Utilisateur déjà connecté, redirection...");
+                    console.log("Utilisateur déjà connecté, redirection vers le dashboard...");
                     window.location.href = 'dashboard.html';
                 }
+            });
+            
+            // Format automatique du numéro de téléphone
+            document.getElementById('phone').addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0 && !['6', '7'].includes(value[0])) {
+                    value = '6' + value.substring(1);
+                }
+                if (value.length > 9) {
+                    value = value.substring(0, 9);
+                }
+                e.target.value = value;
             });
         });
     </script>
 </body>
 </html>
+[file content end]
