@@ -1044,6 +1044,12 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+                
+                <!-- Indicateur de connexion utilisateur -->
+                <div class="user-indicator ms-3" id="userIndicator" style="display: none;">
+                    <i class="fas fa-user-circle text-primary"></i>
+                    <small class="ms-1" id="userEmail"></small>
+                </div>
             </div>
         </div>
     </header>
@@ -1373,7 +1379,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <!-- Firebase SDK - CORRIGÉ POUR ÉVITER L'ERREUR -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
@@ -1384,20 +1390,21 @@
 
     <!-- Script principal -->
     <script>
-        // Firebase configuration
+        // NOUVELLE CONFIGURATION FIREBASE
         const firebaseConfig = {
-            apiKey: "AIzaSyDa6Sdrlbem4IXElDm6ItaRfxNOLBljFFk",
-            authDomain: "kdo-shop-a1680.firebaseapp.com",
-            projectId: "kdo-shop-a1680",
-            storageBucket: "kdo-shop-a1680.firebasestorage.app",
-            messagingSenderId: "34520735960",
-            appId: "1:34520735960:web:f67cebf61f19cb01c937ad",
-            measurementId: "G-0HC2NWRTX2"
+            apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
+            authDomain: "kdo-cameroun.firebaseapp.com",
+            projectId: "kdo-cameroun",
+            storageBucket: "kdo-cameroun.firebasestorage.app",
+            messagingSenderId: "445876564547",
+            appId: "1:445876564547:web:26507d61bb091fa7bd1af6",
+            measurementId: "G-FX2DVSKLKZ"
         };
 
         // Initialiser Firebase
         let firebaseApp, firebaseDb, firebaseAuth;
         let currentUser = null;
+        let userDocument = null;
         
         // Images pour chaque catégorie
         const categoryImages = {
@@ -1833,6 +1840,7 @@
         let itemsPerPage = 20;
         let totalPages = 1;
         let userCart = {};
+        let userCartItems = {};
 
         // Formatage des prix
         function formatPrice(price) {
@@ -1875,8 +1883,8 @@
 
         // Récupérer la quantité dans le panier pour un produit
         function getCartQuantity(productId) {
-            if (userCart.items && userCart.items[productId]) {
-                return userCart.items[productId].quantity;
+            if (userCartItems && userCartItems[productId]) {
+                return userCartItems[productId].quantity;
             }
             return 0;
         }
@@ -2078,40 +2086,102 @@
             renderProducts();
         }
 
-        // Initialiser Firebase - CORRIGÉ POUR ÉVITER L'ERREUR
+        // Initialiser Firebase avec authentification réelle
         async function initializeFirebase() {
             try {
-                // Vérifier si Firebase est déjà initialisé
-                if (typeof firebase === 'undefined') {
-                    console.error("Firebase n'est pas chargé");
-                    return;
-                }
-                
                 // Initialiser Firebase
                 firebaseApp = firebase.initializeApp(firebaseConfig);
                 firebaseAuth = firebase.auth();
                 firebaseDb = firebase.firestore();
                 
-                // Se connecter anonymement
-                await firebaseAuth.signInAnonymously();
+                console.log("Firebase initialisé avec succès");
                 
+                // Vérifier l'état d'authentification
                 firebaseAuth.onAuthStateChanged(async (user) => {
                     if (user) {
                         currentUser = user;
-                        console.log("Utilisateur connecté:", user.uid);
+                        console.log("Utilisateur connecté:", user.email, user.uid);
                         
-                        // Charger le panier de l'utilisateur depuis Firestore
+                        // Afficher l'indicateur utilisateur
+                        $('#userIndicator').show();
+                        $('#userEmail').text(user.email);
+                        
+                        // Vérifier/Créer le document utilisateur
+                        await checkUserDocument();
+                        
+                        // Charger le panier de l'utilisateur
                         await loadUserCart();
+                        
+                        // Afficher les produits
+                        renderProducts();
                     } else {
-                        console.log("Pas d'utilisateur connecté");
+                        console.log("Utilisateur non connecté - Redirection vers login");
+                        // Rediriger vers la page de connexion
+                        window.location.href = "login.html";
                     }
                 });
+                
+                // Vérifier si un utilisateur est déjà connecté
+                const currentUser = firebaseAuth.currentUser;
+                if (!currentUser) {
+                    console.log("Pas d'utilisateur connecté, redirection...");
+                    window.location.href = "login.html";
+                }
+                
             } catch (error) {
                 console.error("Erreur Firebase:", error);
-                // Si Firebase échoue, utiliser le panier local
-                console.log("Utilisation du panier local");
-                updateCartCount();
-                renderProducts();
+                alert("Erreur d'initialisation de la base de données. Veuillez recharger la page.");
+            }
+        }
+
+        // Vérifier et créer le document utilisateur si nécessaire
+        async function checkUserDocument() {
+            if (!currentUser) return;
+            
+            try {
+                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
+                const userDoc = await userRef.get();
+                
+                if (!userDoc.exists) {
+                    // Créer le document utilisateur avec tous les champs nécessaires
+                    const userData = {
+                        uid: currentUser.uid,
+                        email: currentUser.email,
+                        displayName: currentUser.displayName || "",
+                        phoneNumber: currentUser.phoneNumber || "",
+                        photoURL: currentUser.photoURL || "",
+                        address: "",
+                        city: "",
+                        country: "Cameroun",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+                        isActive: true,
+                        role: "client",
+                        preferences: {
+                            notifications: true,
+                            newsletter: true
+                        },
+                        stats: {
+                            totalOrders: 0,
+                            totalSpent: 0,
+                            favoriteCategories: []
+                        }
+                    };
+                    
+                    await userRef.set(userData);
+                    console.log("Document utilisateur créé avec succès");
+                    userDocument = userData;
+                } else {
+                    userDocument = userDoc.data();
+                    // Mettre à jour la dernière connexion
+                    await userRef.update({
+                        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    console.log("Document utilisateur existant chargé");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la vérification du document utilisateur:", error);
             }
         }
 
@@ -2124,24 +2194,24 @@
             
             try {
                 const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
-                const cartSnap = await cartRef.get();
+                const cartDoc = await cartRef.get();
                 
-                if (cartSnap.exists()) {
-                    userCart = cartSnap.data();
-                    // Convertir l'objet items en array pour la compatibilité
-                    cart = [];
-                    if (userCart.items) {
-                        for (const productId in userCart.items) {
-                            const item = userCart.items[productId];
-                            const product = products.find(p => p.id == productId);
-                            if (product) {
-                                cart.push({
-                                    ...product,
-                                    quantity: item.quantity
-                                });
-                            }
+                if (cartDoc.exists) {
+                    const cartData = cartDoc.data();
+                    userCart = cartData;
+                    
+                    // Initialiser userCartItems à partir des données
+                    userCartItems = cartData.items || {};
+                    
+                    // Calculer le total d'articles
+                    let totalItems = 0;
+                    if (userCartItems) {
+                        for (const productId in userCartItems) {
+                            totalItems += userCartItems[productId].quantity;
                         }
                     }
+                    
+                    userCart.totalItems = totalItems;
                     console.log("Panier chargé:", userCart);
                 } else {
                     // Créer un nouveau panier
@@ -2150,18 +2220,28 @@
                         items: {},
                         totalItems: 0,
                         totalAmount: 0,
-                        updatedAt: new Date().toISOString()
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                     };
+                    
+                    userCartItems = {};
+                    
                     await cartRef.set(userCart);
-                    console.log("Nouveau panier créé");
+                    console.log("Nouveau panier créé pour l'utilisateur");
                 }
                 
                 updateCartCount();
-                renderProducts(); // Re-render pour afficher les quantités
             } catch (error) {
                 console.error("Erreur lors du chargement du panier:", error);
+                // Initialiser un panier vide en cas d'erreur
+                userCart = {
+                    userId: currentUser.uid,
+                    items: {},
+                    totalItems: 0,
+                    totalAmount: 0
+                };
+                userCartItems = {};
                 updateCartCount();
-                renderProducts();
             }
         }
 
@@ -2179,17 +2259,18 @@
                 let totalItems = 0;
                 let totalAmount = 0;
                 
-                for (const productId in userCart.items) {
-                    const item = userCart.items[productId];
+                for (const productId in userCartItems) {
+                    const item = userCartItems[productId];
                     totalItems += item.quantity;
                     totalAmount += item.price * item.quantity;
                 }
                 
+                userCart.items = userCartItems;
                 userCart.totalItems = totalItems;
                 userCart.totalAmount = totalAmount;
-                userCart.updatedAt = new Date().toISOString();
+                userCart.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
                 
-                await cartRef.set(userCart);
+                await cartRef.set(userCart, { merge: true });
                 console.log("Panier sauvegardé dans Firestore");
             } catch (error) {
                 console.error("Erreur lors de la sauvegarde du panier:", error);
@@ -2198,6 +2279,12 @@
 
         // Ajout au panier avec Firebase
         async function addToCart(productId, buttonElement) {
+            if (!currentUser) {
+                alert("Veuillez vous connecter pour ajouter des articles au panier");
+                window.location.href = "login.html";
+                return;
+            }
+            
             // Animation du bouton
             const $button = $(buttonElement);
             $button.addClass('adding');
@@ -2211,37 +2298,26 @@
             animateAddToCart(buttonElement, product);
             
             // Mettre à jour le panier local
-            if (!userCart.items) {
-                userCart.items = {};
+            if (!userCartItems) {
+                userCartItems = {};
             }
             
-            if (userCart.items[productId]) {
-                userCart.items[productId].quantity += 1;
+            if (userCartItems[productId]) {
+                userCartItems[productId].quantity += 1;
             } else {
-                userCart.items[productId] = {
+                userCartItems[productId] = {
                     productId: productId,
                     name: product.name,
                     price: product.price,
-                    image: product.image,
+                    image: getProductImageUrl(product, productId - 1),
                     quantity: 1,
+                    category: product.category,
                     addedAt: new Date().toISOString()
                 };
             }
             
-            // Mettre à jour le panier global (pour la compatibilité)
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                const productCopy = {...product};
-                productCopy.quantity = 1;
-                cart.push(productCopy);
-            }
-            
-            // Sauvegarder dans Firestore si connecté
-            if (currentUser) {
-                await saveCartToFirestore();
-            }
+            // Sauvegarder dans Firestore
+            await saveCartToFirestore();
             
             // Mettre à jour l'affichage
             updateCartCount();
@@ -2261,7 +2337,7 @@
 
         // Mise à jour du compteur panier
         function updateCartCount() {
-            const totalItems = userCart.totalItems || cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const totalItems = userCart.totalItems || 0;
             $('#footerCartCount').text(totalItems);
         }
 
@@ -2275,8 +2351,7 @@
             $('#toggleLabel').text('Désactivé');
             $('#priceSliderContainer').removeClass('active');
             
-            // Initialiser les produits
-            filterProducts();
+            // Initialiser les produits (sera fait après la connexion)
             
             // Gestion du toggle du filtre de prix
             $('#priceToggle').on('change', function() {
