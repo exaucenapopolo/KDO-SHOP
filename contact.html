@@ -278,6 +278,7 @@
             border: 1px solid var(--border-color);
             border-radius: 6px;
             background: var(--accent-gray);
+            display: none; /* Caché par défaut */
         }
         
         .custom-reason-label {
@@ -776,7 +777,7 @@
                             <!-- Raisons chargées dynamiquement -->
                         </div>
                         
-                        <div class="custom-reason-container">
+                        <div class="custom-reason-container" id="customReasonContainer">
                             <label class="custom-reason-label">Autre raison (précisez) :</label>
                             <textarea class="custom-reason-input" id="customReason" placeholder="Décrivez la raison de votre contact..."></textarea>
                         </div>
@@ -987,8 +988,8 @@
                 icon: 'fas fa-map-marker-alt',
                 description: 'Autres localités',
                 agents: [
-                    { name: 'Support National', phone: '677000000', available: true },
-                    { name: 'Service Client', phone: '699111111', available: true }
+                    { name: 'BONUS', phone: '658393359', available: true },
+                    { name: 'TABTOUCH', phone: '672472604', available: true }
                 ]
             }
         };
@@ -1056,7 +1057,7 @@
         // Récupérer les paramètres de l'URL
         function getUrlParams() {
             const params = new URLSearchParams(window.location.search);
-            const productId = params.get('productId');
+            const productId = params.get('product');
             const productName = params.get('productName');
             const productPrice = params.get('productPrice');
             
@@ -1083,27 +1084,45 @@
             }
         }
 
-        // Formater un numéro de téléphone
+        // Formater un numéro de téléphone - CORRECTION DU BUG
         function formatPhoneNumber(phone) {
-            // Enlever les espaces et caractères non numériques
-            const cleaned = phone.replace(/\D/g, '');
+            // S'assurer que phone est une chaîne de caractères
+            const phoneStr = String(phone);
             
-            // Format +237 XXXXXXXX
+            // Enlever les espaces et caractères non numériques
+            const cleaned = phoneStr.replace(/\D/g, '');
+            
+            // Si le numéro commence par +237, le garder tel quel
+            if (cleaned.startsWith('237')) {
+                return '+' + cleaned;
+            }
+            
+            // Si c'est un numéro à 9 chiffres, ajouter +237
             if (cleaned.length === 9) {
                 return '+237' + cleaned;
             }
             
-            // Déjà formaté
-            return cleaned;
+            // Pour les autres formats, retourner tel quel avec un +
+            if (cleaned.length > 0) {
+                return '+' + cleaned;
+            }
+            
+            return phoneStr;
         }
 
         // Générer le message WhatsApp
         function generateWhatsAppMessage(agentName, productName, productId, city, reason, customReason) {
-            let message = `Bonjour ${agentName}, je suis intéressé par le produit "${productName}" (ID: ${productId}) sur KDO CAMEROUN. \n`;
-            message += `Je suis à ${city}. \n`;
+            let message = `Bonjour ${agentName}, \n\n`;
+            message += `Je suis intéressé(e) par le produit suivant sur KDO CAMEROUN :\n`;
+            message += `• Produit : ${productName}\n`;
+            message += `• ID : ${productId}\n`;
+            message += `• Ville : ${city}\n\n`;
+            
+            // Ajouter la raison du contact
             message += `Raison du contact : ${reason}`;
             
-            if (customReason && reason === 'Autre') {
+            // Si c'est "Autre" et qu'il y a une raison personnalisée
+            if (reason === 'Autre' && customReason && customReason.trim() !== '') {
                 message += `\nDétails : ${customReason}`;
             }
             
@@ -1115,6 +1134,8 @@
         // Générer le lien WhatsApp
         function generateWhatsAppLink(phone, message) {
             const formattedPhone = formatPhoneNumber(phone);
+            console.log("Numéro formaté:", formattedPhone);
+            console.log("Message:", decodeURIComponent(message));
             return `https://wa.me/${formattedPhone}?text=${message}`;
         }
 
@@ -1146,6 +1167,15 @@
             
             // Mettre à jour l'étape courante
             currentStep = step;
+            
+            // Gestion spécifique pour l'étape 2
+            if (step === 2) {
+                if (selectedReason === 'other') {
+                    $('#customReasonContainer').show();
+                } else {
+                    $('#customReasonContainer').hide();
+                }
+            }
         }
 
         // Mettre à jour le titre de l'étape
@@ -1260,22 +1290,21 @@
             $('.reason-card').on('click', function() {
                 const reasonId = $(this).data('reason');
                 selectReason(reasonId);
-                
-                // Si c'est "Autre", focus sur le champ texte
-                if (reasonId === 'other') {
-                    setTimeout(() => {
-                        $('#customReason').focus();
-                    }, 100);
-                }
             });
             
             // Écouter les changements dans le champ texte personnalisé
             $('#customReason').on('input', function() {
                 customReasonText = $(this).val();
                 
-                // Si l'utilisateur commence à taper dans le champ "Autre", sélectionner automatiquement cette raison
-                if (customReasonText.trim() !== '' && selectedReason !== 'other') {
-                    selectReason('other');
+                // Mettre à jour le résumé si la raison "Autre" est sélectionnée
+                if (selectedReason === 'other') {
+                    let reasonText = 'Autre';
+                    if (customReasonText.trim() !== '') {
+                        reasonText = `Autre : ${customReasonText.substring(0, 50)}${customReasonText.length > 50 ? '...' : ''}`;
+                    }
+                    
+                    $('#summaryReason').text(reasonText);
+                    $('#finalReason').text(reasonText);
                 }
             });
         }
@@ -1287,6 +1316,17 @@
             // Mettre à jour l'affichage
             $('.reason-card').removeClass('selected');
             $(`.reason-card[data-reason="${reasonId}"]`).addClass('selected');
+            
+            // Afficher ou masquer le champ de raison personnalisée
+            if (reasonId === 'other') {
+                $('#customReasonContainer').show();
+                // Focus sur le champ texte
+                setTimeout(() => {
+                    $('#customReason').focus();
+                }, 100);
+            } else {
+                $('#customReasonContainer').hide();
+            }
             
             // Trouver l'objet raison
             const reasonObj = contactReasons.find(r => r.id === reasonId);
@@ -1386,6 +1426,8 @@
             
             const whatsappLink = generateWhatsAppLink(agentPhone, message);
             $('#whatsappFinalLink').attr('href', whatsappLink);
+            
+            console.log("Lien WhatsApp généré:", whatsappLink);
         }
 
         // Initialisation
@@ -1423,12 +1465,17 @@
             
             $('#btnFinish').on('click', function() {
                 // Ouvrir WhatsApp dans un nouvel onglet
-                window.open($('#whatsappFinalLink').attr('href'), '_blank');
-                
-                // Rediriger vers le tableau de bord après 2 secondes
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 2000);
+                const whatsappLink = $('#whatsappFinalLink').attr('href');
+                if (whatsappLink && whatsappLink !== '#') {
+                    window.open(whatsappLink, '_blank');
+                    
+                    // Rediriger vers le tableau de bord après 2 secondes
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } else {
+                    alert('Erreur : Impossible de générer le lien WhatsApp. Veuillez réessayer.');
+                }
             });
             
             // Recherche
