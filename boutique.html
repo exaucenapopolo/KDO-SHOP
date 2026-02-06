@@ -92,6 +92,138 @@
             font-weight: 500;
         }
         
+        /* Bannière promotions (comme dashboard) */
+        .promo-carousel-container {
+            background: linear-gradient(90deg, #FFF8F3 0%, #FFF 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .promo-carousel {
+            display: flex;
+            animation: slidePromo 25s infinite linear;
+            width: max-content;
+        }
+        
+        .promo-slide {
+            display: flex;
+            align-items: center;
+            padding: 8px 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .promo-badge {
+            background: var(--primary-orange);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 10px;
+            margin-right: 10px;
+        }
+        
+        .promo-text {
+            color: var(--text-dark);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .promo-price {
+            color: var(--primary-orange);
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        
+        @keyframes slidePromo {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* Barre de recherche */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        /* Barre de catégories pour les villes */
+        .cities-scroll {
+            background: var(--accent-gray);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 0;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .cities-container {
+            display: inline-flex;
+            gap: 8px;
+            padding: 0 12px;
+        }
+        
+        .city-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 6px 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 11px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        
+        .city-item:hover,
+        .city-item.active {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+        
         /* Bannière des boutiques */
         .boutique-banner {
             background: linear-gradient(90deg, #FFF8F3 0%, #FFF 100%);
@@ -104,15 +236,49 @@
             color: var(--primary-orange);
             font-weight: 700;
             font-size: 24px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
         
         .boutique-subtitle {
             color: var(--text-medium);
             font-size: 14px;
+            margin-bottom: 15px;
         }
         
-        /* Carte de boutique */
+        .boutique-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .stat-text {
+            font-size: 12px;
+            color: var(--text-dark);
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+        
+        /* Carte de boutique améliorée */
         .boutique-card {
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -121,6 +287,7 @@
             overflow: hidden;
             margin-bottom: 20px;
             box-shadow: var(--shadow);
+            height: 100%;
         }
         
         .boutique-card:hover {
@@ -130,10 +297,11 @@
         }
         
         .boutique-image {
-            height: 200px;
+            height: 180px;
             width: 100%;
             overflow: hidden;
             position: relative;
+            padding: 0;
         }
         
         .boutique-image img {
@@ -161,6 +329,9 @@
         
         .boutique-info {
             padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .boutique-description {
@@ -168,12 +339,13 @@
             color: var(--text-medium);
             line-height: 1.5;
             margin-bottom: 15px;
+            flex: 1;
         }
         
         .boutique-features {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             margin-bottom: 15px;
         }
         
@@ -182,8 +354,8 @@
             align-items: center;
             gap: 5px;
             background: var(--accent-gray);
-            padding: 5px 10px;
-            border-radius: 15px;
+            padding: 4px 8px;
+            border-radius: 12px;
             font-size: 10px;
             color: var(--text-dark);
         }
@@ -195,7 +367,8 @@
         
         .boutique-contact {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            margin-top: auto;
         }
         
         .btn-direction {
@@ -205,7 +378,7 @@
             color: var(--secondary-blue);
             border-radius: 4px;
             padding: 8px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s;
             text-decoration: none;
@@ -229,7 +402,7 @@
             color: white;
             border-radius: 4px;
             padding: 8px;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s;
             text-decoration: none;
@@ -246,7 +419,7 @@
             text-decoration: none;
         }
         
-        /* Section d'information */
+        /* Section d'information améliorée */
         .info-section {
             background: var(--accent-gray);
             border-radius: 8px;
@@ -259,7 +432,14 @@
             color: var(--primary-orange);
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-title i {
+            font-size: 20px;
         }
         
         .info-list {
@@ -269,30 +449,37 @@
         }
         
         .info-list li {
-            padding: 5px 0;
+            padding: 8px 0;
             font-size: 12px;
             color: var(--text-dark);
             display: flex;
             align-items: flex-start;
             gap: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
         }
         
         .info-list li i {
             color: var(--primary-orange);
             margin-top: 3px;
+            flex-shrink: 0;
         }
         
-        /* Carte de localisation */
-        .location-card {
+        /* Section présence nationale améliorée */
+        .presence-section {
             background: var(--white);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 20px;
             margin: 30px 0;
+            box-shadow: var(--shadow);
         }
         
-        .location-title {
-            font-size: 16px;
+        .presence-title {
+            font-size: 18px;
             font-weight: 600;
             color: var(--text-dark);
             margin-bottom: 15px;
@@ -301,20 +488,58 @@
             gap: 10px;
         }
         
-        .location-title i {
+        .presence-title i {
             color: var(--primary-orange);
+            font-size: 20px;
         }
         
-        .map-container {
-            border-radius: 8px;
-            overflow: hidden;
-            height: 200px;
-            background: var(--accent-gray);
+        .presence-description {
+            font-size: 12px;
+            color: var(--text-medium);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .city-presence {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-medium);
+            gap: 10px;
+            padding: 10px;
+            background: var(--accent-gray);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .city-presence:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .city-presence:hover .city-presence-name {
+            color: white;
+        }
+        
+        .city-presence i {
+            color: var(--primary-orange);
             font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .city-presence:hover i {
+            color: white;
+        }
+        
+        .city-presence-name {
+            font-size: 12px;
+            color: var(--text-dark);
+            font-weight: 500;
         }
         
         /* Footer avec navigation fonctionnelle */
@@ -380,14 +605,14 @@
             font-weight: bold;
         }
         
-        /* Responsive */
+        /* Responsive amélioré */
         @media (max-width: 768px) {
             .boutique-title {
                 font-size: 20px;
             }
             
             .boutique-image {
-                height: 180px;
+                height: 160px;
             }
             
             .user-name {
@@ -397,6 +622,14 @@
             .boutique-contact {
                 flex-direction: column;
             }
+            
+            .boutique-stats {
+                gap: 10px;
+            }
+            
+            .cities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 576px) {
@@ -405,7 +638,7 @@
             }
             
             .boutique-image {
-                height: 160px;
+                height: 150px;
             }
             
             .boutique-city {
@@ -417,8 +650,20 @@
                 padding: 15px;
             }
             
-            .location-card {
+            .presence-section {
                 padding: 15px;
+            }
+            
+            .cities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .promo-slide {
+                padding: 8px 15px;
+            }
+            
+            .search-wrapper {
+                margin: 0 10px;
             }
         }
         
@@ -432,7 +677,25 @@
             }
             
             .boutique-image {
-                height: 150px;
+                height: 140px;
+            }
+            
+            .stat-text {
+                font-size: 11px;
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 15s infinite linear;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .boutique-image {
+                height: 130px;
+            }
+            
+            .logo-text {
+                font-size: 12px;
             }
         }
         
@@ -461,6 +724,35 @@
         .boutique-card:nth-child(6) { animation-delay: 0.6s; }
         .boutique-card:nth-child(7) { animation-delay: 0.7s; }
         .boutique-card:nth-child(8) { animation-delay: 0.8s; }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 60px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+        }
+        
+        .scroll-top:hover {
+            background: #E55E00;
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 <body>
@@ -485,11 +777,128 @@
         </div>
     </header>
 
+    <!-- Carrousel de promotions -->
+    <div class="promo-carousel-container">
+        <div class="promo-carousel">
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Visitez nos boutiques dans 8 villes du Cameroun</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Service après-vente garanti dans toutes nos boutiques</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Garantie sur tous les ordinateurs et accessoires</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Livraison et expédition dans toutes les villes du Cameroun</span>
+            </div>
+            <!-- Doubler pour créer l'effet infini -->
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Visitez nos boutiques dans 8 villes du Cameroun</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Service après-vente garanti dans toutes nos boutiques</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Garantie sur tous les ordinateurs et accessoires</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">PROMO</span>
+                <span class="promo-text">Livraison et expédition dans toutes les villes du Cameroun</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="container mb-3">
+        <div class="search-wrapper">
+            <input type="text" class="search-input" placeholder="Rechercher une boutique par ville...">
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Barre de villes -->
+    <div class="cities-scroll">
+        <div class="cities-container">
+            <a href="#" class="city-item active" data-city="all">
+                <i class="fas fa-th-large"></i> Toutes
+            </a>
+            <a href="#" class="city-item" data-city="bertoua">
+                <i class="fas fa-map-marker-alt"></i> Bertoua
+            </a>
+            <a href="#" class="city-item" data-city="yaounde">
+                <i class="fas fa-map-marker-alt"></i> Yaoundé
+            </a>
+            <a href="#" class="city-item" data-city="douala">
+                <i class="fas fa-map-marker-alt"></i> Douala
+            </a>
+            <a href="#" class="city-item" data-city="bafoussam">
+                <i class="fas fa-map-marker-alt"></i> Bafoussam
+            </a>
+            <a href="#" class="city-item" data-city="dchang">
+                <i class="fas fa-map-marker-alt"></i> Dchang
+            </a>
+            <a href="#" class="city-item" data-city="maroua">
+                <i class="fas fa-map-marker-alt"></i> Maroua
+            </a>
+            <a href="#" class="city-item" data-city="garoua">
+                <i class="fas fa-map-marker-alt"></i> Garoua
+            </a>
+            <a href="#" class="city-item" data-city="ngaoundere">
+                <i class="fas fa-map-marker-alt"></i> Ngaoundéré
+            </a>
+        </div>
+    </div>
+
     <!-- Bannière des boutiques -->
     <div class="boutique-banner">
         <div class="container">
             <h1 class="boutique-title">Nos Boutiques au Cameroun</h1>
             <p class="boutique-subtitle">Découvrez nos points de vente à travers le Cameroun. Nous sommes présents dans les principales villes pour mieux vous servir.</p>
+            
+            <div class="boutique-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="stat-text">
+                        <span class="stat-number">8</span> boutiques
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="stat-text">
+                        <span class="stat-number">8</span> villes
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="stat-text">
+                        Livraison nationale
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-text">
+                        Garantie incluse
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -499,29 +908,67 @@
             <!-- Les boutiques seront chargées dynamiquement -->
         </div>
         
-        <!-- Section d'information -->
+        <!-- Section d'information améliorée -->
         <div class="info-section">
-            <h3 class="info-title">Informations importantes</h3>
+            <h3 class="info-title"><i class="fas fa-info-circle"></i> Informations importantes</h3>
             <ul class="info-list">
-                <li><i class="fas fa-clock"></i> <span>Nos boutiques sont ouvertes du lundi au samedi de 8h00 à 18h00</span></li>
-                <li><i class="fas fa-phone-alt"></i> <span>Pour toute information, contactez-nous au (+237) 123 456 789</span></li>
-                <li><i class="fas fa-shipping-fast"></i> <span>Livraison disponible dans toutes les villes du Cameroun</span></li>
-                <li><i class="fas fa-check-circle"></i> <span>Tous nos produits sont garantis et testés avant vente</span></li>
-                <li><i class="fas fa-handshake"></i> <span>Service après-vente disponible dans toutes nos boutiques</span></li>
+                <li><i class="fas fa-clock"></i> <span>Nos boutiques sont ouvertes du lundi au samedi de 9h00 à 18h00</span></li>
+                <li><i class="fas fa-truck"></i> <span>Livraison disponible dans toutes les villes du Cameroun</span></li>
+                <li><i class="fas fa-shipping-fast"></i> <span>Nous expédions aussi dans toutes les villes du Cameroun</span></li>
+                <li><i class="fas fa-check-circle"></i> <span>Service après-vente disponible dans toutes nos boutiques</span></li>
+                <li><i class="fas fa-shield-alt"></i> <span>Garantie sur chaque machine et accessoire vendu</span></li>
             </ul>
         </div>
         
-        <!-- Carte de localisation -->
-        <div class="location-card">
-            <h4 class="location-title"><i class="fas fa-map-marker-alt"></i> Notre présence nationale</h4>
-            <p style="font-size: 12px; color: var(--text-medium); margin-bottom: 15px;">
-                KDO Cameroun est présent dans 8 villes à travers le pays, avec des boutiques modernes et bien équipées pour répondre à tous vos besoins en matériel informatique.
+        <!-- Section présence nationale améliorée -->
+        <div class="presence-section">
+            <h4 class="presence-title"><i class="fas fa-map-marked-alt"></i> Notre présence nationale</h4>
+            <p class="presence-description">
+                KDO Cameroun est présent dans 8 villes stratégiques à travers le pays, avec des boutiques modernes et bien équipées 
+                pour répondre à tous vos besoins en matériel informatique. Notre réseau nous permet de vous offrir un service 
+                de qualité où que vous soyez au Cameroun.
             </p>
-            <div class="map-container">
-                <i class="fas fa-map fa-3x" style="color: var(--primary-orange); margin-right: 10px;"></i>
-                <span>Carte des boutiques KDO Cameroun</span>
+            
+            <div class="cities-grid">
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Bertoua</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Yaoundé</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Douala</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Bafoussam</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Dchang</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Maroua</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Garoua</span>
+                </div>
+                <div class="city-presence">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="city-presence-name">Ngaoundéré</span>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- Bouton scroll to top -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
     </div>
 
     <!-- Footer avec navigation fonctionnelle -->
@@ -579,9 +1026,10 @@
         let firebaseApp, firebaseDb, firebaseAuth;
         let currentUser = null;
         
-        // Données des boutiques
+        // Données des boutiques avec ID pour le filtrage
         const boutiques = [
             {
+                id: "bertoua",
                 ville: "BERTOUA",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/bertoua.jpg",
                 indication: "A Bertoua nous sommes au : Quartier nkolbikon juste après Himalaya bar au niveau de l'immeuble Nouvellement construit en carreau...",
@@ -590,6 +1038,7 @@
                 phone: "+237 123 456 789"
             },
             {
+                id: "yaounde",
                 ville: "YAOUNDÉ",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/Yaound%C3%A9.jpg",
                 indication: "A Yaoundé nous sommes situés à biscuiterie obili au niveau de l'agence de voyage Vatican... Mais nous sommes juste après l'agence de voyage Vatican vous verrez cette immeuble en pierre nous sommes en face de l'immeuble en pierre boutique peint en orange...",
@@ -598,6 +1047,7 @@
                 phone: "+237 123 456 788"
             },
             {
+                id: "douala",
                 ville: "DOUALA",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/Douala.jpg",
                 indication: "A Douala nous sommes à akwa derrière Hôtel Douala bar au niveau de la tombe *king akwa*",
@@ -606,6 +1056,7 @@
                 phone: "+237 123 456 787"
             },
             {
+                id: "bafoussam",
                 ville: "BAFOUSSAM",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/Bafoussam.jpg",
                 indication: "Quand vous êtes à la pharmacie BINAM , vous traversez juste la descente goudronnée , ensuite il y'a un immeuble , vous prenez les escaliers de l'immeuble et nous sommes là première boutique du premier étage",
@@ -614,6 +1065,7 @@
                 phone: "+237 123 456 786"
             },
             {
+                id: "dchang",
                 ville: "DCHANG",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/DCHANG.jpg",
                 indication: "Notre boutique KDO à Dchang est située au centre-ville, facilement accessible depuis la route principale. Venez découvrir notre large gamme de produits informatiques.",
@@ -622,6 +1074,7 @@
                 phone: "+237 123 456 785"
             },
             {
+                id: "maroua",
                 ville: "MAROUA",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/Maroua.jpg",
                 indication: "A maroua nous sommes situés a Domayo carrefour Monsieur le maire en face de la mosquée",
@@ -630,6 +1083,7 @@
                 phone: "+237 123 456 784"
             },
             {
+                id: "garoua",
                 ville: "GAROUA",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/garoua.jpg",
                 indication: "A Garoua nous sommes situés à l'intérieur du village artisanat.",
@@ -638,6 +1092,7 @@
                 phone: "+237 123 456 783"
             },
             {
+                id: "ngaoundere",
                 ville: "NGAOUNDÉRÉ",
                 image: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/boutique/ngaounder%C3%A9.jpg",
                 indication: "A Ngaoundéré nous sommes situés à bini dang vers la dépanneuse",
@@ -647,17 +1102,33 @@
             }
         ];
 
+        // Variables pour le filtrage
+        let filteredBoutiques = [...boutiques];
+        let currentCity = "all";
+        let searchTerm = "";
+
         // Fonction pour afficher les boutiques
         function renderBoutiques() {
             const container = $('#boutiquesContainer');
             container.empty();
             
-            boutiques.forEach((boutique, index) => {
+            if (filteredBoutiques.length === 0) {
+                container.html(`
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+                        <h5 class="text-muted">Aucune boutique trouvée</h5>
+                        <p class="text-muted">Essayez de modifier vos critères de recherche</p>
+                    </div>
+                `);
+                return;
+            }
+            
+            filteredBoutiques.forEach((boutique, index) => {
                 const boutiqueCard = `
                     <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="boutique-card">
+                        <div class="boutique-card" data-city="${boutique.id}">
                             <div class="boutique-image">
-                                <img src="${boutique.image}" alt="Boutique KDO ${boutique.ville}">
+                                <img src="${boutique.image}" alt="Boutique KDO ${boutique.ville}" loading="lazy">
                                 <div class="boutique-city">${boutique.ville}</div>
                             </div>
                             <div class="boutique-info">
@@ -688,6 +1159,21 @@
                 `;
                 container.append(boutiqueCard);
             });
+        }
+
+        // Fonction pour filtrer les boutiques
+        function filterBoutiques() {
+            filteredBoutiques = boutiques.filter(boutique => {
+                // Filtre par ville
+                if (currentCity !== "all" && boutique.id !== currentCity) return false;
+                
+                // Filtre par recherche
+                if (searchTerm && !boutique.ville.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+                
+                return true;
+            });
+            
+            renderBoutiques();
         }
 
         // Initialiser Firebase
@@ -795,16 +1281,36 @@
             }
         }
 
+        // Gestion du scroll to top
+        function setupScrollTop() {
+            const $scrollTop = $('#scrollTop');
+            
+            $(window).on('scroll', function() {
+                if ($(window).scrollTop() > 300) {
+                    $scrollTop.addClass('visible');
+                } else {
+                    $scrollTop.removeClass('visible');
+                }
+            });
+            
+            $scrollTop.on('click', function() {
+                $('html, body').animate({ scrollTop: 0 }, 300);
+            });
+        }
+
         // Initialisation
         $(document).ready(async function() {
             // Initialiser Firebase
             await initializeFirebase();
             
             // Afficher les boutiques
-            renderBoutiques();
+            filterBoutiques();
             
             // Charger le compteur panier
             await loadCartCount();
+            
+            // Configurer le scroll to top
+            setupScrollTop();
             
             // Gestion de la navigation du footer
             $('.footer-item').on('click', function(e) {
@@ -812,6 +1318,35 @@
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
             });
+            
+            // Gestion des filtres par ville
+            $('.city-item').on('click', function(e) {
+                e.preventDefault();
+                
+                // Mettre à jour l'état actif
+                $('.city-item').removeClass('active');
+                $(this).addClass('active');
+                
+                // Mettre à jour la ville courante
+                currentCity = $(this).data('city');
+                
+                // Appliquer les filtres
+                filterBoutiques();
+            });
+            
+            // Gestion de la recherche
+            $('.search-btn').on('click', performSearch);
+            
+            $('.search-input').on('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                searchTerm = $('.search-input').val().trim();
+                filterBoutiques();
+            }
             
             // Gestion des boutons de contact
             $(document).on('click', '.btn-contact-boutique', function(e) {
