@@ -1,11 +1,9 @@
-[file name]: inscription.html
-[file content begin]
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KDO CAMEROUN - Inscription Professionnelle</title>
+    <title>KDO CAMEROUN - Connexion Professionnelle</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -29,12 +27,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .register-container {
+        .login-container {
             max-width: 1200px;
             margin: 0 auto;
         }
         
-        .register-card {
+        .login-card {
             background: var(--white);
             border-radius: 20px;
             box-shadow: 0 15px 50px rgba(0,0,0,0.15);
@@ -47,7 +45,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .register-left {
+        .login-left {
             background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8E3C 100%);
             color: white;
             padding: 50px 40px;
@@ -58,7 +56,7 @@
             overflow: hidden;
         }
         
-        .register-left::before {
+        .login-left::before {
             content: '';
             position: absolute;
             top: 0;
@@ -128,12 +126,12 @@
             font-size: 20px;
         }
         
-        .register-right {
+        .login-right {
             padding: 50px 40px;
             position: relative;
         }
         
-        .register-header {
+        .login-header {
             text-align: center;
             margin-bottom: 40px;
             animation: slideInDown 0.6s ease-out;
@@ -144,14 +142,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .register-title {
+        .login-title {
             color: var(--text-dark);
             font-size: 28px;
             font-weight: 700;
             margin-bottom: 10px;
         }
         
-        .register-subtitle {
+        .login-subtitle {
             color: #666;
             font-size: 16px;
         }
@@ -265,31 +263,46 @@
             font-size: 14px;
         }
         
-        .login-link {
+        .forgot-link {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+            color: #E55A00;
+        }
+        
+        .signup-link {
             text-align: center;
             margin-top: 30px;
             color: #666;
             font-size: 15px;
         }
         
-        .login-link a {
+        .signup-link a {
             color: var(--primary-orange);
             font-weight: 600;
             text-decoration: none;
             transition: all 0.3s;
         }
         
-        .login-link a:hover {
+        .signup-link a:hover {
             text-decoration: underline;
             color: #E55A00;
         }
         
         @media (max-width: 992px) {
-            .register-left {
+            .login-left {
                 padding: 40px 30px;
             }
             
-            .register-right {
+            .login-right {
                 padding: 40px 30px;
             }
             
@@ -303,11 +316,11 @@
         }
         
         @media (max-width: 768px) {
-            .register-left {
+            .login-left {
                 padding: 30px 20px;
             }
             
-            .register-right {
+            .login-right {
                 padding: 30px 20px;
             }
             
@@ -403,71 +416,11 @@
         /* Animation pour le formulaire */
         .form-group:nth-child(1) { animation-delay: 0.1s; }
         .form-group:nth-child(2) { animation-delay: 0.2s; }
-        .form-group:nth-child(3) { animation-delay: 0.3s; }
-        .form-group:nth-child(4) { animation-delay: 0.4s; }
-        .form-group:nth-child(5) { animation-delay: 0.5s; }
-        .form-group:nth-child(6) { animation-delay: 0.6s; }
-        .btn-primary-custom { animation-delay: 0.7s; }
-        .divider { animation-delay: 0.8s; }
-        .btn-google { animation-delay: 0.9s; }
-        .login-link { animation-delay: 1.0s; }
-        
-        /* Style pour le sélecteur de type de compte */
-        .account-type-container {
-            border: 2px solid #E0E0E0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 10px;
-            background: #F9F9F9;
-        }
-        
-        .account-type-option {
-            margin-bottom: 15px;
-            padding: 15px;
-            border: 2px solid #E0E0E0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-        }
-        
-        .account-type-option:hover {
-            border-color: var(--primary-orange);
-            background: rgba(255, 107, 0, 0.05);
-        }
-        
-        .account-type-option.selected {
-            border-color: var(--primary-orange);
-            background: rgba(255, 107, 0, 0.1);
-        }
-        
-        .account-type-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-        
-        .account-type-icon {
-            font-size: 24px;
-            margin-right: 10px;
-            color: var(--primary-orange);
-        }
-        
-        .account-type-title {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        .account-type-description {
-            color: #666;
-            font-size: 14px;
-            margin-left: 34px;
-        }
-        
-        .form-check-input:checked {
-            background-color: var(--primary-orange);
-            border-color: var(--primary-orange);
-        }
+        .forgot-link { animation-delay: 0.3s; }
+        .btn-primary-custom { animation-delay: 0.4s; }
+        .divider { animation-delay: 0.5s; }
+        .btn-google { animation-delay: 0.6s; }
+        .signup-link { animation-delay: 0.7s; }
     </style>
 </head>
 <body>
@@ -488,9 +441,9 @@
         <div class="success-icon">
             <i class="fas fa-check-circle pulse"></i>
         </div>
-        <h2 class="success-title">Inscription réussie !</h2>
+        <h2 class="success-title">Connexion réussie !</h2>
         <p class="success-text">
-            Félicitations ! Votre compte KDO CAMEROUN a été créé avec succès.<br>
+            Félicitations ! Vous êtes maintenant connecté à votre compte KDO CAMEROUN.<br>
             Vous allez être redirigé vers votre tableau de bord.
         </p>
         <div class="spinner-border text-primary" role="status">
@@ -498,12 +451,12 @@
         </div>
     </div>
     
-    <div class="container register-container">
-        <div class="register-card">
+    <div class="container login-container">
+        <div class="login-card">
             <div class="row g-0">
                 <!-- Côté gauche - Présentation -->
                 <div class="col-lg-6">
-                    <div class="register-left">
+                    <div class="login-left">
                         <div class="logo-container">
                             <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
                                  alt="KDO CAMEROUN Logo" class="logo-img">
@@ -516,42 +469,20 @@
                             <li><i class="fas fa-check-circle"></i> Transactions sécurisées</li>
                             <li><i class="fas fa-check-circle"></i> Livraison garantie</li>
                             <li><i class="fas fa-check-circle"></i> Support 24/7</li>
-                            <li><i class="fas fa-check-circle"></i> Conditions de paiement flexibles</li>
                         </ul>
                     </div>
                 </div>
                 
                 <!-- Côté droit - Formulaire -->
                 <div class="col-lg-6">
-                    <div class="register-right">
-                        <div class="register-header">
-                            <h2 class="register-title">Rejoignez KDO CAMEROUN</h2>
-                            <p class="register-subtitle">Créez votre compte professionnel en 2 minutes</p>
+                    <div class="login-right">
+                        <div class="login-header">
+                            <h2 class="login-title">Bienvenue sur KDO CAMEROUN</h2>
+                            <p class="login-subtitle">Connectez-vous à votre espace professionnel</p>
                         </div>
                         
-                        <!-- Formulaire d'inscription -->
-                        <form id="registerForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="firstName">
-                                            <i class="fas fa-user"></i> Prénom
-                                        </label>
-                                        <input type="text" class="form-control" id="firstName" placeholder="Votre prénom" required>
-                                        <div class="error-message" id="firstNameError">Veuillez entrer votre prénom</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="lastName">
-                                            <i class="fas fa-user"></i> Nom
-                                        </label>
-                                        <input type="text" class="form-control" id="lastName" placeholder="Votre nom" required>
-                                        <div class="error-message" id="lastNameError">Veuillez entrer votre nom</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                        <!-- Formulaire de connexion -->
+                        <form id="loginForm">
                             <div class="form-group">
                                 <label class="form-label" for="email">
                                     <i class="fas fa-envelope"></i> Email professionnel
@@ -561,94 +492,36 @@
                             </div>
                             
                             <div class="form-group">
-                                <label class="form-label" for="phone">
-                                    <i class="fas fa-phone"></i> Numéro de téléphone
+                                <label class="form-label" for="password">
+                                    <i class="fas fa-lock"></i> Mot de passe
                                 </label>
-                                <input type="tel" class="form-control" id="phone" placeholder="6XX XXX XXX" required>
-                                <div class="error-message" id="phoneError">Veuillez entrer un numéro de téléphone valide</div>
+                                <input type="password" class="form-control" id="password" placeholder="Votre mot de passe" required>
+                                <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 6 caractères</div>
                             </div>
                             
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="password">
-                                            <i class="fas fa-lock"></i> Mot de passe
-                                        </label>
-                                        <input type="password" class="form-control" id="password" placeholder="Votre mot de passe" required>
-                                        <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 8 caractères</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label" for="confirmPassword">
-                                            <i class="fas fa-lock"></i> Confirmer le mot de passe
-                                        </label>
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirmer le mot de passe" required>
-                                        <div class="error-message" id="confirmPasswordError">Les mots de passe ne correspondent pas</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="#" class="forgot-link">Mot de passe oublié ?</a>
                             
-                            <div class="form-group">
-                                <label class="form-label">
-                                    <i class="fas fa-briefcase"></i> Type de compte
-                                </label>
-                                
-                                <div class="account-type-container">
-                                    <div class="account-type-option selected" data-type="acheteur">
-                                        <div class="account-type-header">
-                                            <i class="fas fa-shopping-cart account-type-icon"></i>
-                                            <div class="account-type-title">Acheteur</div>
-                                        </div>
-                                        <div class="account-type-description">
-                                            J'achète pour mon usage personnel ou pour mon entreprise
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="account-type-option" data-type="revendeur">
-                                        <div class="account-type-header">
-                                            <i class="fas fa-store account-type-icon"></i>
-                                            <div class="account-type-title">Revendeur</div>
-                                        </div>
-                                        <div class="account-type-description">
-                                            J'achète les produits KDO pour revendre dans ma boutique ou à mes clients
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" id="accountType" value="acheteur" required>
-                                <div class="error-message" id="accountTypeError">Veuillez sélectionner un type de compte</div>
-                            </div>
-                            
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="termsCheck" required>
-                                <label class="form-check-label" for="termsCheck" style="font-size: 14px;">
-                                    J'accepte les <a href="#" class="text-primary">Conditions d'utilisation</a> 
-                                    et la <a href="#" class="text-primary">Politique de confidentialité</a> de KDO CAMEROUN
-                                </label>
-                                <div class="error-message" id="termsError">Vous devez accepter les conditions d'utilisation</div>
-                            </div>
-                            
-                            <button type="submit" class="btn-primary-custom" id="registerBtn">
-                                <i class="fas fa-user-plus me-2"></i> Créer mon compte
+                            <button type="submit" class="btn-primary-custom" id="loginBtn">
+                                <i class="fas fa-sign-in-alt me-2"></i> Se connecter
                             </button>
                             
                             <div class="divider">
-                                <span>Ou inscrivez-vous avec</span>
+                                <span>Ou connectez-vous avec</span>
                             </div>
                             
-                            <button type="button" class="btn-google" id="googleRegisterBtn">
+                            <button type="button" class="btn-google" id="googleLoginBtn">
                                 <img src="https://www.google.com/favicon.ico" alt="Google Logo">
-                                S'inscrire avec Google
+                                Se connecter avec Google
                             </button>
                             
-                            <div class="login-link">
-                                Vous avez déjà un compte ? <a href="index.html">Connectez-vous ici</a>
+                            <div class="signup-link">
+                                Vous n'avez pas de compte ? <a href="inscription.html">Inscrivez-vous ici</a>
                             </div>
                         </form>
                         
                         <div class="text-center mt-4">
                             <p class="small text-muted">
-                                En vous inscrivant, vous acceptez nos 
+                                En vous connectant, vous acceptez nos 
                                 <a href="#" class="text-primary">Conditions d'utilisation</a> 
                                 et notre 
                                 <a href="#" class="text-primary">Politique de confidentialité</a>
@@ -664,7 +537,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Firebase SDK - Version compatibilité (identique à login.html) -->
+    <!-- Firebase SDK - Version compatibilité (identique à inscription.html) -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -686,7 +559,7 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         
-        // Fonctions de notification
+        // Fonctions de notification (identique à inscription.html)
         function showNotification(title, message, type = 'success') {
             const notification = document.getElementById('notification');
             const titleEl = document.getElementById('notificationTitle');
@@ -715,10 +588,10 @@
         // Fonction pour afficher le message de succès et rediriger
         function showSuccessAndRedirect() {
             const successMessage = document.getElementById('successMessage');
-            const registerRight = document.querySelector('.register-right');
+            const loginRight = document.querySelector('.login-right');
             
             // Masquer le formulaire et afficher le message de succès
-            registerRight.style.position = 'relative';
+            loginRight.style.position = 'relative';
             successMessage.style.display = 'flex';
             
             // Redirection après 3 secondes
@@ -727,125 +600,56 @@
             }, 3000);
         }
         
-        // Fonction pour créer un document utilisateur complet dans Firestore
-        async function createUserDocument(user, additionalData) {
-            try {
-                const userRef = db.collection("users").doc(user.uid);
-                
-                // Créer un document utilisateur complet avec tous les champs
-                const userData = {
-                    uid: user.uid,
-                    firstName: additionalData.firstName || '',
-                    lastName: additionalData.lastName || '',
-                    email: user.email,
-                    phone: additionalData.phone || '',
-                    photoURL: user.photoURL || '',
-                    address: '',
-                    city: '',
-                    country: 'Cameroun',
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                    lastLogin: new Date().toISOString(),
-                    isActive: true,
-                    role: additionalData.accountType || 'acheteur',
-                    preferences: {
-                        notifications: true,
-                        newsletter: true
-                    },
-                    stats: {
-                        totalOrders: 0,
-                        totalSpent: 0,
-                        favoriteCategories: []
-                    },
-                    accountType: additionalData.accountType || 'acheteur',
-                    status: 'active',
-                    emailVerified: user.emailVerified || false,
-                    provider: additionalData.provider || 'email'
-                };
-                
-                await userRef.set(userData);
-                console.log("✅ Document utilisateur créé avec tous les champs dans Firestore");
-                
-                // Créer également un panier vide pour l'utilisateur
-                const cartData = {
-                    userId: user.uid,
-                    items: {},
-                    totalItems: 0,
-                    totalAmount: 0,
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                };
-                
-                await db.collection("carts").doc(user.uid).set(cartData);
-                console.log("✅ Panier vide créé pour l'utilisateur dans Firestore");
-                
-                return userData;
-                
-            } catch (error) {
-                console.error("❌ Erreur lors de la création du document utilisateur:", error);
-                throw error;
-            }
-        }
-        
-        // Inscription avec email/mot de passe
-        async function signupWithEmail(firstName, lastName, email, phone, password, accountType) {
+        // Connexion avec email/mot de passe
+        async function loginWithEmail(email, password) {
             try {
                 // Désactiver le bouton
-                const registerBtn = document.getElementById('registerBtn');
-                const originalText = registerBtn.innerHTML;
-                registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Création du compte...';
-                registerBtn.disabled = true;
+                const loginBtn = document.getElementById('loginBtn');
+                const originalText = loginBtn.innerHTML;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Connexion...';
+                loginBtn.disabled = true;
                 
-                // Créer l'utilisateur dans Firebase Authentication
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                // Connexion avec Firebase
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 const user = userCredential.user;
                 
-                console.log("✅ Utilisateur créé avec UID:", user.uid);
+                console.log("✅ Connexion réussie avec UID:", user.uid);
                 
-                // Mettre à jour le profil avec le nom
-                await user.updateProfile({
-                    displayName: `${firstName} ${lastName}`
+                // Mettre à jour la dernière connexion dans Firestore
+                await db.collection("users").doc(user.uid).update({
+                    lastLogin: new Date().toISOString()
                 });
-                
-                // Créer le document utilisateur complet dans Firestore
-                await createUserDocument(user, {
-                    firstName,
-                    lastName,
-                    phone,
-                    accountType,
-                    provider: 'email'
-                });
-                
-                // Envoyer l'email de vérification
-                await user.sendEmailVerification();
                 
                 // Afficher le message de succès
                 showSuccessAndRedirect();
                 
             } catch (error) {
-                console.error('❌ Erreur d\'inscription:', error);
+                console.error('❌ Erreur de connexion:', error);
                 
                 // Réactiver le bouton
-                const registerBtn = document.getElementById('registerBtn');
-                registerBtn.innerHTML = '<i class="fas fa-user-plus me-2"></i> Créer mon compte';
-                registerBtn.disabled = false;
+                const loginBtn = document.getElementById('loginBtn');
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i> Se connecter';
+                loginBtn.disabled = false;
                 
-                let errorMessage = 'Erreur lors de la création du compte. Veuillez réessayer.';
+                let errorMessage = 'Erreur de connexion. Veuillez réessayer.';
                 
                 // Messages d'erreur plus précis
                 if (error.code) {
                     switch(error.code) {
-                        case 'auth/email-already-in-use':
-                            errorMessage = 'Cette adresse email est déjà utilisée.';
+                        case 'auth/user-not-found':
+                            errorMessage = 'Aucun compte trouvé avec cet email.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'Mot de passe incorrect.';
                             break;
                         case 'auth/invalid-email':
                             errorMessage = 'L\'adresse email est invalide.';
                             break;
-                        case 'auth/operation-not-allowed':
-                            errorMessage = 'L\'inscription par email/mot de passe n\'est pas activée.';
+                        case 'auth/user-disabled':
+                            errorMessage = 'Ce compte a été désactivé.';
                             break;
-                        case 'auth/weak-password':
-                            errorMessage = 'Le mot de passe est trop faible. Utilisez au moins 8 caractères.';
+                        case 'auth/too-many-requests':
+                            errorMessage = 'Trop de tentatives de connexion. Veuillez réessayer plus tard.';
                             break;
                         case 'auth/network-request-failed':
                             errorMessage = 'Problème de connexion réseau. Vérifiez votre connexion internet.';
@@ -860,59 +664,80 @@
             }
         }
         
-        // Inscription avec Google
-        async function signupWithGoogle() {
+        // Connexion avec Google
+        async function loginWithGoogle() {
             try {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 
                 // Désactiver le bouton Google
-                const googleBtn = document.getElementById('googleRegisterBtn');
+                const googleBtn = document.getElementById('googleLoginBtn');
                 const originalText = googleBtn.innerHTML;
-                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Inscription en cours...';
+                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Connexion en cours...';
                 googleBtn.disabled = true;
                 
                 const result = await auth.signInWithPopup(provider);
                 const user = result.user;
                 
-                console.log("✅ Inscription Google réussie avec UID:", user.uid);
+                console.log("✅ Connexion Google réussie avec UID:", user.uid);
                 
-                // Extraire le prénom et nom du displayName Google
-                let firstName = '';
-                let lastName = '';
-                if (user.displayName) {
-                    const names = user.displayName.split(' ');
-                    firstName = names[0] || '';
-                    lastName = names.slice(1).join(' ') || '';
+                // Vérifier si l'utilisateur existe déjà dans Firestore
+                const userDoc = await db.collection("users").doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    // Créer un nouvel utilisateur dans Firestore
+                    const userData = {
+                        uid: user.uid,
+                        firstName: user.displayName?.split(' ')[0] || '',
+                        lastName: user.displayName?.split(' ').slice(1).join(' ') || '',
+                        email: user.email,
+                        phone: user.phoneNumber || '',
+                        photoURL: user.photoURL,
+                        accountType: 'acheteur',
+                        createdAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
+                        status: 'active',
+                        emailVerified: user.emailVerified,
+                        provider: 'google'
+                    };
+                    
+                    await db.collection("users").doc(user.uid).set(userData);
+                    
+                    // Créer un panier vide
+                    const cartData = {
+                        userId: user.uid,
+                        items: {},
+                        totalItems: 0,
+                        totalAmount: 0,
+                        updatedAt: new Date().toISOString()
+                    };
+                    
+                    await db.collection("carts").doc(user.uid).set(cartData);
+                    
+                    console.log("✅ Nouvel utilisateur Google créé dans Firestore");
+                } else {
+                    // Mettre à jour la dernière connexion
+                    await db.collection("users").doc(user.uid).update({
+                        lastLogin: new Date().toISOString()
+                    });
                 }
-                
-                // Créer le document utilisateur complet dans Firestore
-                await createUserDocument(user, {
-                    firstName,
-                    lastName,
-                    phone: user.phoneNumber || '',
-                    accountType: 'acheteur', // Par défaut pour les inscriptions Google
-                    provider: 'google'
-                });
                 
                 // Afficher le message de succès
                 showSuccessAndRedirect();
                 
             } catch (error) {
-                console.error('❌ Erreur d\'inscription Google:', error);
+                console.error('❌ Erreur de connexion Google:', error);
                 
                 // Réactiver le bouton Google
-                const googleBtn = document.getElementById('googleRegisterBtn');
-                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> S\'inscrire avec Google';
+                const googleBtn = document.getElementById('googleLoginBtn');
+                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Se connecter avec Google';
                 googleBtn.disabled = false;
                 
-                let errorMessage = 'Erreur d\'inscription avec Google. Veuillez réessayer.';
+                let errorMessage = 'Erreur de connexion avec Google. Veuillez réessayer.';
                 
                 if (error.code === 'auth/popup-closed-by-user') {
                     errorMessage = 'La fenêtre de connexion a été fermée. Veuillez réessayer.';
                 } else if (error.code === 'auth/cancelled-popup-request') {
-                    errorMessage = 'Inscription annulée. Veuillez réessayer.';
-                } else if (error.code === 'auth/account-exists-with-different-credential') {
-                    errorMessage = 'Un compte existe déjà avec cette adresse email. Connectez-vous avec votre méthode d\'authentification habituelle.';
+                    errorMessage = 'Connexion annulée. Veuillez réessayer.';
                 }
                 
                 showNotification("Erreur", errorMessage, "danger");
@@ -921,34 +746,10 @@
         
         // Validation du formulaire
         function validateForm() {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
             const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const accountType = document.getElementById('accountType').value;
-            const termsChecked = document.getElementById('termsCheck').checked;
             
             let isValid = true;
-            
-            // Validation du prénom
-            const firstNameError = document.getElementById('firstNameError');
-            if (!firstName) {
-                firstNameError.style.display = 'block';
-                isValid = false;
-            } else {
-                firstNameError.style.display = 'none';
-            }
-            
-            // Validation du nom
-            const lastNameError = document.getElementById('lastNameError');
-            if (!lastName) {
-                lastNameError.style.display = 'block';
-                isValid = false;
-            } else {
-                lastNameError.style.display = 'none';
-            }
             
             // Validation de l'email
             const emailError = document.getElementById('emailError');
@@ -959,50 +760,13 @@
                 emailError.style.display = 'none';
             }
             
-            // Validation du téléphone
-            const phoneError = document.getElementById('phoneError');
-            const phoneRegex = /^[67]\d{8}$/; // Format téléphone camerounais
-            if (!phone || !phoneRegex.test(phone)) {
-                phoneError.style.display = 'block';
-                isValid = false;
-            } else {
-                phoneError.style.display = 'none';
-            }
-            
             // Validation du mot de passe
             const passwordError = document.getElementById('passwordError');
-            if (!password || password.length < 8) {
+            if (!password || password.length < 6) {
                 passwordError.style.display = 'block';
                 isValid = false;
             } else {
                 passwordError.style.display = 'none';
-            }
-            
-            // Validation de la confirmation du mot de passe
-            const confirmPasswordError = document.getElementById('confirmPasswordError');
-            if (password !== confirmPassword) {
-                confirmPasswordError.style.display = 'block';
-                isValid = false;
-            } else {
-                confirmPasswordError.style.display = 'none';
-            }
-            
-            // Validation du type de compte
-            const accountTypeError = document.getElementById('accountTypeError');
-            if (!accountType) {
-                accountTypeError.style.display = 'block';
-                isValid = false;
-            } else {
-                accountTypeError.style.display = 'none';
-            }
-            
-            // Validation des conditions
-            const termsError = document.getElementById('termsError');
-            if (!termsChecked) {
-                termsError.style.display = 'block';
-                isValid = false;
-            } else {
-                termsError.style.display = 'none';
             }
             
             return isValid;
@@ -1010,60 +774,26 @@
         
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("Page d'inscription chargée");
+            console.log("Page de connexion chargée");
             
-            // Gestion du choix du type de compte
-            const accountOptions = document.querySelectorAll('.account-type-option');
-            const accountTypeInput = document.getElementById('accountType');
-            
-            accountOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // Retirer la classe selected de toutes les options
-                    accountOptions.forEach(opt => opt.classList.remove('selected'));
-                    
-                    // Ajouter la classe selected à l'option cliquée
-                    this.classList.add('selected');
-                    
-                    // Mettre à jour la valeur du champ caché
-                    const selectedType = this.getAttribute('data-type');
-                    accountTypeInput.value = selectedType;
-                });
-            });
-            
-            // Gestion du formulaire d'inscription
-            document.getElementById('registerForm').addEventListener('submit', function(e) {
+            // Gestion du formulaire de connexion
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 if (validateForm()) {
-                    const firstName = document.getElementById('firstName').value.trim();
-                    const lastName = document.getElementById('lastName').value.trim();
                     const email = document.getElementById('email').value.trim();
-                    const phone = document.getElementById('phone').value.trim();
                     const password = document.getElementById('password').value;
-                    const accountType = document.getElementById('accountType').value;
                     
-                    signupWithEmail(firstName, lastName, email, phone, password, accountType);
+                    loginWithEmail(email, password);
                 }
             });
             
-            // Gestion de l'inscription Google
-            document.getElementById('googleRegisterBtn').addEventListener('click', function() {
-                signupWithGoogle();
+            // Gestion de la connexion Google
+            document.getElementById('googleLoginBtn').addEventListener('click', function() {
+                loginWithGoogle();
             });
             
             // Validation en temps réel
-            document.getElementById('firstName').addEventListener('input', function() {
-                if (this.value.trim()) {
-                    document.getElementById('firstNameError').style.display = 'none';
-                }
-            });
-            
-            document.getElementById('lastName').addEventListener('input', function() {
-                if (this.value.trim()) {
-                    document.getElementById('lastNameError').style.display = 'none';
-                }
-            });
-            
             document.getElementById('email').addEventListener('input', function() {
                 const email = this.value.trim();
                 if (email && email.includes('@')) {
@@ -1071,56 +801,21 @@
                 }
             });
             
-            document.getElementById('phone').addEventListener('input', function() {
-                const phone = this.value.trim();
-                const phoneRegex = /^[67]\d{0,8}$/;
-                if (phone && phoneRegex.test(phone)) {
-                    document.getElementById('phoneError').style.display = 'none';
-                }
-            });
-            
             document.getElementById('password').addEventListener('input', function() {
                 const password = this.value;
-                if (password.length >= 8) {
+                if (password.length >= 6) {
                     document.getElementById('passwordError').style.display = 'none';
-                }
-            });
-            
-            document.getElementById('confirmPassword').addEventListener('input', function() {
-                const password = document.getElementById('password').value;
-                const confirmPassword = this.value;
-                if (password === confirmPassword) {
-                    document.getElementById('confirmPasswordError').style.display = 'none';
-                }
-            });
-            
-            document.getElementById('termsCheck').addEventListener('change', function() {
-                if (this.checked) {
-                    document.getElementById('termsError').style.display = 'none';
                 }
             });
             
             // Vérifier si l'utilisateur est déjà connecté
             auth.onAuthStateChanged((user) => {
                 if (user) {
-                    console.log("Utilisateur déjà connecté, redirection vers le dashboard...");
+                    console.log("Utilisateur déjà connecté, redirection...");
                     window.location.href = 'dashboard.html';
                 }
-            });
-            
-            // Format automatique du numéro de téléphone
-            document.getElementById('phone').addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.length > 0 && !['6', '7'].includes(value[0])) {
-                    value = '6' + value.substring(1);
-                }
-                if (value.length > 9) {
-                    value = value.substring(0, 9);
-                }
-                e.target.value = value;
             });
         });
     </script>
 </body>
 </html>
-[file content end]
