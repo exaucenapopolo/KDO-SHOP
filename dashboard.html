@@ -1381,18 +1381,18 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <!-- Firebase SDK - Version CLASSIQUE (compatible) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
     <!-- Bootstrap & jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Firebase SDK - MÊME VERSION QUE L'INSCRIPTION (10.8.0 compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <!-- Script principal -->
     <script>
-        // CONFIGURATION FIREBASE
+        // CONFIGURATION FIREBASE (IDENTIQUE À L'INSCRIPTION)
         const firebaseConfig = {
             apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
             authDomain: "kdo-cameroun.firebaseapp.com",
@@ -1403,7 +1403,7 @@
             measurementId: "G-FX2DVSKLKZ"
         };
 
-        // Initialiser Firebase (version 8)
+        // Initialiser Firebase (MÊME MÉTHODE QUE L'INSCRIPTION)
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
@@ -1638,7 +1638,7 @@
             ]
         };
 
-        // Données des produits (simplifiées pour l'exemple)
+        // Données des produits basées sur les nouveaux articles fournis
         const products = [
             // ORDINATEURS PORTABLES (39 produits)
             { id: 1, name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", verified: true, image: "laptop", orders: 245, specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
@@ -1920,7 +1920,7 @@
             renderProducts();
         }
 
-        // Initialiser Firebase
+        // Initialiser Firebase (MÊME MÉTHODE QUE L'INSCRIPTION)
         function initializeFirebase() {
             try {
                 console.log("Initialisation de Firebase...");
@@ -1930,7 +1930,9 @@
                     console.error("Firebase SDK n'est pas chargé");
                     setTimeout(() => {
                         if (typeof firebase === 'undefined') {
-                            alert("Erreur: Firebase SDK n'est pas chargé. Vérifiez votre connexion internet.");
+                            console.log("Firebase toujours non chargé après attente");
+                            // Rediriger vers la page de connexion si Firebase ne se charge pas
+                            window.location.href = "login.html";
                         } else {
                             initializeFirebase();
                         }
@@ -1967,6 +1969,9 @@
                 
                 // Afficher les produits même sans Firebase
                 filterProducts();
+                
+                // Rediriger vers login en cas d'erreur grave
+                window.location.href = "login.html";
             }
         }
 
