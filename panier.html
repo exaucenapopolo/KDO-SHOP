@@ -39,7 +39,7 @@
             -webkit-text-size-adjust: 100%;
         }
         
-        /* Header simplifié */
+        /* Header identique au dashboard */
         .header-kdo {
             border-bottom: 1px solid var(--border-color);
             background: var(--white);
@@ -68,7 +68,47 @@
             letter-spacing: -0.5px;
         }
         
-        /* Carrousel de promotions - AJOUTÉ POUR PANIER */
+        /* Barre de recherche identique au dashboard */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-input {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 8px 40px 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            height: 36px;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
+        }
+        
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background: var(--accent-gray);
+            color: var(--text-medium);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            padding: 0 15px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+        
+        /* Carrousel de promotions identique au dashboard */
         .promo-carousel-container {
             background: linear-gradient(90deg, #FFF8F3 0%, #FFF 100%);
             border-bottom: 1px solid var(--border-color);
@@ -121,46 +161,6 @@
             100% {
                 transform: translateX(-50%);
             }
-        }
-        
-        /* Barre de recherche */
-        .search-wrapper {
-            position: relative;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        
-        .search-input {
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 8px 40px 8px 12px;
-            font-size: 12px;
-            width: 100%;
-            height: 36px;
-        }
-        
-        .search-input:focus {
-            border-color: var(--primary-orange);
-            box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
-        }
-        
-        .search-btn {
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 100%;
-            background: var(--accent-gray);
-            color: var(--text-medium);
-            border: none;
-            border-radius: 0 4px 4px 0;
-            padding: 0 15px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        
-        .search-btn:hover {
-            background: var(--primary-orange);
-            color: white;
         }
         
         /* Barre de progression */
@@ -251,62 +251,11 @@
             transition: width 0.5s ease;
         }
         
-        /* Page de connexion */
-        .login-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            background: var(--white);
-            border-radius: 10px;
-            box-shadow: var(--shadow-hover);
-            border: 1px solid var(--border-color);
-        }
-        
-        .login-title {
-            text-align: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-orange);
-            margin-bottom: 30px;
-        }
-        
-        .login-btn {
-            width: 100%;
-            background: var(--primary-orange);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-top: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .login-btn:hover {
-            background: #E55A00;
-            transform: translateY(-2px);
-        }
-        
-        .login-links {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .login-links a {
-            color: var(--primary-orange);
-            text-decoration: none;
-        }
-        
-        .login-links a:hover {
-            text-decoration: underline;
-        }
-        
         /* Contenu principal */
         .checkout-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 15px;
         }
         
         .checkout-content {
@@ -371,7 +320,7 @@
             font-weight: 600;
         }
         
-        /* Étape 1 - Articles du panier */
+        /* Étape 1 - Articles du panier avec images améliorées */
         .cart-items-container {
             margin-bottom: 20px;
         }
@@ -380,15 +329,17 @@
             display: flex;
             padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
+            align-items: flex-start;
         }
         
         .cart-item:last-child {
             border-bottom: none;
         }
         
+        /* Image améliorée - prend plus de place */
         .cart-item-image {
-            width: 100px;
-            height: 100px;
+            width: 140px;
+            height: 140px;
             background: var(--accent-gray);
             border-radius: 4px;
             display: flex;
@@ -400,9 +351,14 @@
         }
         
         .cart-item-img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .cart-item:hover .cart-item-img {
+            transform: scale(1.05);
         }
         
         .cart-item-details {
@@ -1227,7 +1183,7 @@
             margin: 0;
         }
         
-        /* Footer avec navigation fonctionnelle */
+        /* Footer identique au dashboard */
         .footer-kdo {
             background: var(--white);
             border-top: 1px solid var(--border-color);
@@ -1313,6 +1269,22 @@
             color: var(--secondary-blue);
         }
         
+        /* Badge pour les articles achetés */
+        .purchased-badge {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            background: var(--success-green);
+            color: white;
+            font-size: 9px;
+            padding: 1px 6px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            z-index: 2;
+        }
+        
         /* Responsive */
         @media (max-width: 992px) {
             .checkout-content {
@@ -1355,7 +1327,7 @@
             
             .cart-item-image {
                 width: 100%;
-                height: 150px;
+                height: 200px;
                 margin-right: 0;
                 margin-bottom: 15px;
             }
@@ -1375,10 +1347,6 @@
         }
         
         @media (max-width: 576px) {
-            .logo-text {
-                display: none;
-            }
-            
             .search-wrapper {
                 margin: 0 5px;
                 max-width: 100%;
@@ -1447,11 +1415,11 @@
     </style>
 </head>
 <body>
-    <!-- Header simplifié -->
+    <!-- Header identique au dashboard -->
     <header class="header-kdo">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <!-- Logo -->
+                <!-- Logo avec texte identique au dashboard -->
                 <a href="dashboard.html" class="logo-container text-decoration-none">
                     <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
                          alt="KDO CAMEROUN" 
@@ -1459,7 +1427,7 @@
                     <span class="logo-text">KDO CAMEROUN</span>
                 </a>
                 
-                <!-- Barre de recherche -->
+                <!-- Barre de recherche identique au dashboard -->
                 <div class="search-wrapper">
                     <input type="text" class="search-input" placeholder="Rechercher produits, fournisseurs...">
                     <button class="search-btn">
@@ -1470,7 +1438,7 @@
         </div>
     </header>
 
-    <!-- Carrousel d'informations pour le panier - AJOUTÉ -->
+    <!-- Carrousel de promotions identique au dashboard -->
     <div class="promo-carousel-container">
         <div class="promo-carousel">
             <div class="promo-slide">
@@ -1487,7 +1455,7 @@
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">ASTUCE</span>
-                <span class="promo-text">Économisez avec le code <span class="promo-price">KDO10</span></span>
+                <span class="promo-text">Économisez avec le code <span class="promo-price">KDO27</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">SUPPORT</span>
@@ -1508,7 +1476,7 @@
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">ASTUCE</span>
-                <span class="promo-text">Économisez avec le code <span class="promo-price">KDO10</span></span>
+                <span class="promo-text">Économisez avec le code <span class="promo-price">KDO27</span></span>
             </div>
             <div class="promo-slide">
                 <span class="promo-badge">SUPPORT</span>
@@ -1517,8 +1485,8 @@
         </div>
     </div>
 
-    <!-- Contenu principal (initialement masqué jusqu'à authentification) -->
-    <div id="mainContent" style="display: none;">
+    <!-- Contenu principal -->
+    <div id="mainContent">
         <!-- Barre de progression du paiement -->
         <div class="checkout-progress">
             <div class="container">
@@ -2108,49 +2076,7 @@
         </div>
     </div>
 
-    <!-- Page de connexion (affichée si utilisateur non connecté) -->
-    <div id="loginContent" class="login-container">
-        <h2 class="login-title">Connexion requise</h2>
-        <p class="text-center mb-4">Vous devez être connecté pour accéder à votre panier et passer commande.</p>
-        
-        <div class="alert alert-info">
-            <i class="fas fa-info-circle"></i>
-            <div>Connectez-vous avec votre compte KDO CAMEROUN pour continuer.</div>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" id="loginEmail" placeholder="votre@email.com" required>
-        </div>
-        
-        <div class="form-group mb-3">
-            <label class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" id="loginPassword" placeholder="Votre mot de passe" required>
-        </div>
-        
-        <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="rememberMe">
-            <label class="form-check-label" for="rememberMe">
-                Se souvenir de moi
-            </label>
-        </div>
-        
-        <button class="login-btn" id="loginBtn">
-            <i class="fas fa-sign-in-alt me-2"></i>
-            Se connecter
-        </button>
-        
-        <div class="login-links">
-            <p class="mb-2">
-                <a href="register.html">Créer un compte</a>
-            </p>
-            <p class="mb-0">
-                <a href="forgot-password.html">Mot de passe oublié ?</a>
-            </p>
-        </div>
-    </div>
-
-    <!-- Footer avec navigation fonctionnelle -->
+    <!-- Footer identique au dashboard -->
     <footer class="footer-kdo">
         <div class="container">
             <nav class="footer-nav">
@@ -2249,7 +2175,7 @@
         </div>
     </div>
 
-    <!-- Firebase SDK - MÊME VERSION QUE LE DASHBOARD (10.8.0 compat) -->
+    <!-- Firebase SDK - IDENTIQUE AU DASHBOARD -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -2260,7 +2186,7 @@
 
     <!-- Script principal -->
     <script>
-        // CONFIGURATION FIREBASE (IDENTIQUE AU DASHBOARD)
+        // CONFIGURATION FIREBASE IDENTIQUE AU DASHBOARD
         const firebaseConfig = {
             apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
             authDomain: "kdo-cameroun.firebaseapp.com",
@@ -2289,48 +2215,94 @@
         let orderDetails = {};
         let appliedDiscount = null;
         let allProducts = [];
+        let purchasedItems = {}; // Pour suivre les articles déjà achetés
 
         // Formatage des prix
         function formatPrice(price) {
             return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
         }
 
-        // Obtenir l'URL de l'image d'un produit (identique au dashboard)
-        function getProductImageUrl(product) {
-            const categoryImages = {
-                ordinateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
-                disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
-                usb: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/cle.png",
-                souris: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/souris.jpg",
-                clavier: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/clavier.jpeg",
-                modem: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/modems.jpeg",
-                desktop: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/desktops.jpeg",
-                ram: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/RAM.png",
-                antivirus: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/virus.png",
-                videoprojecteur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/projeteur.jpg",
-                telephone: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/phone.jpeg",
-                adaptateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/adaptateur.jpeg",
-                television: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/t%C3%A9l%C3%A9vision.jpg",
-                chargeur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/chargeur.png",
-                sac: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/sacs.png"
-            };
-            
-            if (product.category === "ordinateur" && product.id) {
-                // Pour les ordinateurs, utiliser l'id pour sélectionner une image
-                const imageIndex = (parseInt(product.id) - 1) % 38;
-                return `https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/${imageIndex + 1}.jpg`;
+        // Images pour chaque catégorie - IDENTIQUE AU DASHBOARD
+        const categoryImages = {
+            // Images spécifiques pour les ordinateurs (38 images)
+            ordinateur: [
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/2.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/3.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/4.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/5.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/6.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/7.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/8.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/9.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/10.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/11.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/12.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/13.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/14.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/15.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/16.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/17.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/18.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/19.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/20.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/21.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/22.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/23.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/24.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/25.jpg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/26.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/27.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/28.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/29.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/30.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/31_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/32_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/33_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/34_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/35_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/36_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/39_1.jpeg",
+                "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/42_1.jpeg"
+            ],
+            // Images pour les autres catégories
+            disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
+            usb: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/cle.png",
+            souris: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/souris.jpg",
+            clavier: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/clavier.jpeg",
+            modem: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/modems.jpeg",
+            desktop: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/desktops.jpeg",
+            ram: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/RAM.png",
+            antivirus: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/virus.png",
+            videoprojecteur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/projeteur.jpg",
+            telephone: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/phone.jpeg",
+            adaptateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/adaptateur.jpeg",
+            television: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/t%C3%A9l%C3%A9vision.jpg",
+            chargeur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/chargeur.png",
+            sac: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/sacs.png"
+        };
+
+        // Fonction pour obtenir l'URL de l'image d'un produit - IDENTIQUE AU DASHBOARD
+        function getProductImageUrl(product, index) {
+            if (product.category === "ordinateur") {
+                // Pour les ordinateurs, utiliser l'index pour sélectionner l'image
+                const imageIndex = (product.id - 1) % categoryImages.ordinateur.length;
+                return categoryImages.ordinateur[imageIndex];
             } else if (categoryImages[product.category]) {
+                // Pour les autres catégories, utiliser l'image de la catégorie
                 return categoryImages[product.category];
+            } else {
+                // Image par défaut si aucune image n'est trouvée
+                return "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
             }
-            return "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
         }
 
-        // Initialiser Firebase et vérifier l'authentification
+        // Initialiser Firebase et vérifier l'authentification - COMME DANS LE DASHBOARD
         function initializeFirebase() {
             try {
                 console.log("Initialisation de Firebase pour le panier...");
                 
-                // Vérifier l'état d'authentification
+                // Vérifier l'état d'authentification - MÊME QUE DASHBOARD
                 auth.onAuthStateChanged(async (user) => {
                     if (user) {
                         currentUser = user;
@@ -2348,81 +2320,25 @@
                         // Charger les produits
                         await loadAllProducts();
                         
-                        // Afficher le panier
-                        showCartPage();
+                        // Charger les articles déjà achetés
+                        await loadPurchasedItems();
                         
                         // Mettre à jour l'affichage
                         updateCartDisplay();
                         updateSummary();
                         
                     } else {
-                        console.log("Utilisateur non connecté");
-                        showLoginPage();
+                        console.log("Utilisateur non connecté - Redirection vers login");
+                        // Rediriger vers la page de connexion comme dans le dashboard
+                        window.location.href = "login.html";
                     }
                 });
                 
             } catch (error) {
                 console.error("Erreur Firebase:", error);
-                showLoginPage();
+                // Rediriger vers login en cas d'erreur
+                window.location.href = "login.html";
             }
-        }
-
-        // Afficher la page de connexion
-        function showLoginPage() {
-            $('#loginContent').show();
-            $('#mainContent').hide();
-            $('.footer-kdo').show();
-            $('.promo-carousel-container').hide();
-        }
-
-        // Afficher la page du panier
-        function showCartPage() {
-            $('#loginContent').hide();
-            $('#mainContent').show();
-            $('.footer-kdo').show();
-            $('.promo-carousel-container').show();
-        }
-
-        // Connexion de l'utilisateur
-        async function loginUser(email, password) {
-            try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                currentUser = userCredential.user;
-                console.log("Connexion réussie:", currentUser.email);
-                
-                // Charger les données utilisateur
-                await loadUserProfile();
-                await loadCartFromFirestore();
-                await loadUserAddresses();
-                await loadAllProducts();
-                
-                showCartPage();
-                updateCartDisplay();
-                updateSummary();
-                
-                return true;
-            } catch (error) {
-                console.error("Erreur de connexion:", error);
-                showLoginError(error.message);
-                return false;
-            }
-        }
-
-        // Afficher les erreurs de connexion
-        function showLoginError(message) {
-            let errorMessage = "Erreur de connexion";
-            
-            if (message.includes("user-not-found")) {
-                errorMessage = "Aucun compte trouvé avec cet email";
-            } else if (message.includes("wrong-password")) {
-                errorMessage = "Mot de passe incorrect";
-            } else if (message.includes("invalid-email")) {
-                errorMessage = "Adresse email invalide";
-            } else if (message.includes("too-many-requests")) {
-                errorMessage = "Trop de tentatives échouées. Veuillez réessayer plus tard";
-            }
-            
-            alert(errorMessage);
         }
 
         // Charger le profil utilisateur depuis Firestore
@@ -2502,6 +2418,39 @@
                 { id: "39", name: "TOSHIBA Disque Dur", price: 15000, oldPrice: 18500, category: "disquedur", specs: "Taille: 500 Go" },
                 { id: "66", name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", specs: "Type de souris: SANS FIL" }
             ];
+        }
+
+        // Charger les articles déjà achetés par l'utilisateur
+        async function loadPurchasedItems() {
+            if (!currentUser) return;
+            
+            try {
+                const ordersRef = db.collection("orders")
+                    .where("userId", "==", currentUser.uid)
+                    .where("paymentStatus", "==", "paid");
+                
+                const snapshot = await ordersRef.get();
+                purchasedItems = {};
+                
+                snapshot.forEach(doc => {
+                    const order = doc.data();
+                    if (order.items) {
+                        for (const productId in order.items) {
+                            const item = order.items[productId];
+                            if (purchasedItems[productId]) {
+                                purchasedItems[productId] += item.quantity;
+                            } else {
+                                purchasedItems[productId] = item.quantity;
+                            }
+                        }
+                    }
+                });
+                
+                console.log("Articles achetés chargés:", purchasedItems);
+            } catch (error) {
+                console.error("Erreur lors du chargement des articles achetés:", error);
+                purchasedItems = {};
+            }
         }
 
         // Charger le panier depuis Firestore - MÊME MÉTHODE QUE LE DASHBOARD
@@ -2691,7 +2640,7 @@
             }
         }
 
-        // Mettre à jour l'affichage du panier
+        // Mettre à jour l'affichage du panier avec images améliorées
         function updateCartDisplay() {
             const container = $('#cartItemsContainer');
             const emptyCart = $('#cartEmpty');
@@ -2715,18 +2664,23 @@
             
             let itemsCount = 0;
             
-            // Rendre chaque article du panier
+            // Rendre chaque article du panier avec les bonnes images
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
                 const product = allProducts.find(p => p.id === productId) || item;
                 const totalPrice = item.price * item.quantity;
-                const imageUrl = getProductImageUrl(product);
+                // Utiliser la même fonction getProductImageUrl que le dashboard
+                const imageUrl = getProductImageUrl(product, productId);
                 itemsCount += item.quantity;
+                
+                // Vérifier si l'article a déjà été acheté
+                const purchasedCount = purchasedItems[productId] || 0;
                 
                 const cartItem = `
                     <div class="cart-item" data-id="${productId}">
                         <div class="cart-item-image">
                             <img src="${imageUrl}" alt="${product.name}" class="cart-item-img">
+                            ${purchasedCount > 0 ? `<div class="purchased-badge"><i class="fas fa-check"></i> Acheté: ${purchasedCount}</div>` : ''}
                         </div>
                         <div class="cart-item-details">
                             <div class="cart-item-header">
@@ -2803,7 +2757,7 @@
             }
             
             // Taxes fixes
-            const taxes = 500;
+            let taxes = 500;
             
             // Appliquer une réduction si code promo
             let discount = 0;
@@ -2814,6 +2768,11 @@
                     discount = appliedDiscount.value;
                 }
                 discount = Math.min(discount, subtotal); // Ne peut pas dépasser le sous-total
+                
+                // Code KDO27: Enlever les taxes et frais
+                if (appliedDiscount.code === 'KDO27') {
+                    taxes = 0;
+                }
             }
             
             // Calculer le total
@@ -3077,10 +3036,11 @@
         function applyDiscountCode(code) {
             // Codes promotionnels
             const discountCodes = {
-                'KDO10': { type: 'percentage', value: 10, minOrder: 50000 },
-                'KDO5000': { type: 'fixed', value: 5000, minOrder: 100000 },
-                'BIENVENUE': { type: 'percentage', value: 15, minOrder: 0 },
-                'LIVRAISON': { type: 'fixed', value: 1000, minOrder: 50000 }
+                'KDO10': { type: 'percentage', value: 10, minOrder: 50000, code: 'KDO10' },
+                'KDO5000': { type: 'fixed', value: 5000, minOrder: 100000, code: 'KDO5000' },
+                'BIENVENUE': { type: 'percentage', value: 15, minOrder: 0, code: 'BIENVENUE' },
+                'LIVRAISON': { type: 'fixed', value: 1000, minOrder: 50000, code: 'LIVRAISON' },
+                'KDO27': { type: 'percentage', value: 10, minOrder: 0, code: 'KDO27', removeTaxes: true } // Code spécial KDO27
             };
             
             const discount = discountCodes[code.toUpperCase()];
@@ -3088,7 +3048,13 @@
             if (discount) {
                 if (orderDetails.subtotal >= discount.minOrder) {
                     appliedDiscount = discount;
-                    $('#discountMessage').html(`<span style="color: var(--success-green);">Code appliqué ! Réduction de ${discount.type === 'percentage' ? discount.value + '%' : formatPrice(discount.value)}</span>`);
+                    let message = `Code appliqué ! Réduction de ${discount.type === 'percentage' ? discount.value + '%' : formatPrice(discount.value)}`;
+                    
+                    if (discount.code === 'KDO27') {
+                        message += ' (Taxes et frais enlevés)';
+                    }
+                    
+                    $('#discountMessage').html(`<span style="color: var(--success-green);">${message}</span>`);
                     updateSummary();
                     return true;
                 } else {
@@ -3098,6 +3064,29 @@
             } else {
                 $('#discountMessage').html(`<span style="color: var(--danger-red);">Code invalide</span>`);
                 return false;
+            }
+        }
+
+        // Enregistrer une activité récente
+        async function saveRecentActivity(activityType, activityData) {
+            if (!currentUser) return;
+            
+            try {
+                const activityRef = db.collection("recentActivities");
+                
+                const activity = {
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    type: activityType,
+                    data: activityData,
+                    createdAt: new Date().toISOString(),
+                    read: false
+                };
+                
+                await activityRef.add(activity);
+                console.log("Activité récente sauvegardée:", activityType);
+            } catch (error) {
+                console.error("Erreur lors de la sauvegarde de l'activité:", error);
             }
         }
 
@@ -3139,7 +3128,7 @@
                         paymentMethod: paymentMethod,
                         summary: orderDetails,
                         discount: appliedDiscount,
-                        status: 'confirmed',
+                        status: 'pending',
                         createdAt: new Date().toISOString(),
                         estimatedDelivery: deliveryDate.toISOString(),
                         paymentStatus: 'pending',
@@ -3148,6 +3137,23 @@
                     
                     await orderRef.set(orderData);
                     console.log("Commande sauvegardée dans Firestore:", orderNumber);
+                    
+                    // Enregistrer une activité récente
+                    await saveRecentActivity('order_created', {
+                        orderId: orderNumber,
+                        total: orderDetails.total,
+                        itemsCount: orderDetails.itemsCount
+                    });
+                    
+                    // Mettre à jour les articles achetés
+                    for (const productId in userCart.items) {
+                        const item = userCart.items[productId];
+                        if (purchasedItems[productId]) {
+                            purchasedItems[productId] += item.quantity;
+                        } else {
+                            purchasedItems[productId] = item.quantity;
+                        }
+                    }
                     
                     // Vider le panier après commande - MÊME MÉTHODE QUE LE DASHBOARD
                     userCart.items = {};
@@ -3213,41 +3219,45 @@
             if (paymentInstructions) {
                 $('.order-success .success-message').after(paymentInstructions);
             }
+            
+            // Réinitialiser pour un nouvel achat après 5 secondes
+            setTimeout(() => {
+                // Retourner à l'étape 1 avec panier vide
+                goToStep(1);
+                updateCartDisplay();
+                updateSummary();
+                
+                // Réinitialiser les champs de formulaire
+                $('#finalConfirmation').prop('checked', false);
+                $('#acceptTerms').prop('checked', false);
+                appliedDiscount = null;
+                $('#discountCode').val('');
+                $('#discountMessage').empty();
+                
+                // Afficher un message temporaire
+                const alertDiv = $('<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 15px;">');
+                alertDiv.html(`
+                    <i class="fas fa-check-circle me-2"></i>
+                    <strong>Commande enregistrée !</strong> Vous pouvez continuer vos achats.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                `);
+                $('#checkoutStep1 .alert').after(alertDiv);
+                
+                // Auto-dismiss après 5 secondes
+                setTimeout(() => {
+                    alertDiv.alert('close');
+                }, 5000);
+            }, 10000); // 10 secondes avant de revenir
         }
 
         // Initialisation
         $(document).ready(async function() {
             console.log("Panier prêt à initialiser Firebase");
             
-            // Initialiser Firebase
+            // Initialiser Firebase - MÊME QUE DASHBOARD
             setTimeout(() => {
                 initializeFirebase();
             }, 100);
-            
-            // Connexion
-            $('#loginBtn').on('click', async function() {
-                const email = $('#loginEmail').val().trim();
-                const password = $('#loginPassword').val();
-                
-                if (!email || !password) {
-                    alert("Veuillez remplir tous les champs");
-                    return;
-                }
-                
-                $('#loginBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i> Connexion en cours...');
-                
-                const success = await loginUser(email, password);
-                
-                if (!success) {
-                    $('#loginBtn').prop('disabled', false).html('<i class="fas fa-sign-in-alt me-2"></i> Se connecter');
-                }
-            });
-            
-            $('#loginPassword').on('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    $('#loginBtn').click();
-                }
-            });
             
             // Navigation entre étapes
             $('#btnToStep2').on('click', function() {
