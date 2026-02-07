@@ -1044,12 +1044,6 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                
-                <!-- Indicateur de connexion utilisateur -->
-                <div class="user-indicator ms-3" id="userIndicator" style="display: none;">
-                    <i class="fas fa-user-circle text-primary"></i>
-                    <small class="ms-1" id="userEmail"></small>
-                </div>
             </div>
         </div>
     </header>
@@ -1379,10 +1373,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+    <!-- Firebase SDK - MÊME VERSION QUE L'INSCRIPTION (10.8.0 compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- Bootstrap & jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -1390,7 +1384,7 @@
 
     <!-- Script principal -->
     <script>
-        // NOUVELLE CONFIGURATION FIREBASE
+        // CONFIGURATION FIREBASE (IDENTIQUE À L'INSCRIPTION)
         const firebaseConfig = {
             apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
             authDomain: "kdo-cameroun.firebaseapp.com",
@@ -1401,8 +1395,12 @@
             measurementId: "G-FX2DVSKLKZ"
         };
 
-        // Initialiser Firebase
-        let firebaseApp, firebaseDb, firebaseAuth;
+        // Initialiser Firebase (MÊME MÉTHODE QUE L'INSCRIPTION)
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Variables globales
         let currentUser = null;
         
         // Images pour chaque catégorie
@@ -2085,52 +2083,39 @@
             renderProducts();
         }
 
-        // Initialiser Firebase avec gestion d'erreur améliorée
-        async function initializeFirebase() {
+        // Initialiser Firebase (MÊME MÉTHODE QUE L'INSCRIPTION)
+        function initializeFirebase() {
             try {
-                // Vérifier si Firebase est déjà initialisé
+                console.log("Initialisation de Firebase...");
+                
+                // Vérifier si Firebase est chargé
                 if (typeof firebase === 'undefined') {
                     console.error("Firebase SDK n'est pas chargé");
-                    alert("Erreur: Firebase SDK n'est pas chargé. Vérifiez votre connexion internet.");
+                    setTimeout(() => {
+                        if (typeof firebase === 'undefined') {
+                            console.log("Firebase toujours non chargé après attente");
+                            // Rediriger vers la page de connexion si Firebase ne se charge pas
+                            window.location.href = "login.html";
+                        } else {
+                            initializeFirebase();
+                        }
+                    }, 1000);
                     return;
                 }
-                
-                // Vérifier si l'application Firebase est déjà initialisée
-                if (firebase.apps.length === 0) {
-                    firebaseApp = firebase.initializeApp(firebaseConfig);
-                } else {
-                    firebaseApp = firebase.apps[0];
-                }
-                
-                firebaseAuth = firebase.auth();
-                firebaseDb = firebase.firestore();
                 
                 console.log("Firebase initialisé avec succès");
                 
                 // Vérifier l'état d'authentification
-                firebaseAuth.onAuthStateChanged(async (user) => {
+                auth.onAuthStateChanged(async (user) => {
                     if (user) {
                         currentUser = user;
                         console.log("Utilisateur connecté:", user.email, user.uid);
                         
-                        // Afficher l'indicateur utilisateur
-                        $('#userIndicator').show();
-                        $('#userEmail').text(user.email);
+                        // Charger le panier de l'utilisateur
+                        await loadUserCart();
                         
-                        try {
-                            // Vérifier/Créer le document utilisateur
-                            await checkUserDocument();
-                            
-                            // Charger le panier de l'utilisateur
-                            await loadUserCart();
-                            
-                            // Initialiser les produits
-                            filterProducts();
-                        } catch (error) {
-                            console.error("Erreur lors du chargement des données:", error);
-                            // Afficher les produits même en cas d'erreur
-                            filterProducts();
-                        }
+                        // Initialiser les produits
+                        filterProducts();
                     } else {
                         console.log("Utilisateur non connecté - Redirection vers login");
                         // Rediriger vers la page de connexion
@@ -2139,66 +2124,17 @@
                 });
                 
             } catch (error) {
-                console.error("Erreur Firebase détaillée:", error);
+                console.error("Erreur Firebase:", error);
                 
-                // Afficher un message d'erreur plus utile
-                let errorMessage = "Erreur d'initialisation de la base de données. ";
-                
-                if (error.code === 'failed-precondition') {
-                    errorMessage += "Firebase est déjà initialisé avec des paramètres différents.";
-                } else if (error.code === 'invalid-api-key') {
-                    errorMessage += "Clé API Firebase invalide.";
-                } else if (error.code) {
-                    errorMessage += `Code: ${error.code}`;
-                }
-                
-                console.error(errorMessage);
-                // Ne pas afficher d'alerte immédiate pour ne pas bloquer l'interface
-                // L'utilisateur pourra quand même voir les produits
-                
-                // Initialiser les produits même sans Firebase
+                // Afficher les produits même sans Firebase
                 filterProducts();
-            }
-        }
-
-        // Vérifier et créer le document utilisateur si nécessaire - VERSION SIMPLIFIÉE
-        async function checkUserDocument() {
-            if (!currentUser) return;
-            
-            try {
-                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
-                const userDoc = await userRef.get();
                 
-                if (!userDoc.exists) {
-                    // Créer le document utilisateur avec des champs simples
-                    const userData = {
-                        uid: currentUser.uid,
-                        email: currentUser.email,
-                        displayName: currentUser.displayName || "",
-                        photoURL: currentUser.photoURL || "",
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString(),
-                        lastLogin: new Date().toISOString(),
-                        isActive: true,
-                        role: "client"
-                    };
-                    
-                    await userRef.set(userData);
-                    console.log("Document utilisateur créé avec succès");
-                } else {
-                    // Mettre à jour la dernière connexion
-                    await userRef.update({
-                        lastLogin: new Date().toISOString()
-                    });
-                    console.log("Document utilisateur existant mis à jour");
-                }
-            } catch (error) {
-                console.error("Erreur lors de la vérification du document utilisateur:", error);
-                // Ne pas bloquer l'application si cette opération échoue
+                // Rediriger vers login en cas d'erreur grave
+                window.location.href = "login.html";
             }
         }
 
-        // Charger le panier utilisateur depuis Firestore - VERSION ROBUSTE
+        // Charger le panier utilisateur depuis Firestore
         async function loadUserCart() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour charger le panier");
@@ -2207,7 +2143,7 @@
             }
             
             try {
-                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
+                const cartRef = db.collection("carts").doc(currentUser.uid);
                 const cartDoc = await cartRef.get();
                 
                 if (cartDoc.exists) {
@@ -2229,14 +2165,12 @@
                     
                     userCartItems = {};
                     
-                    // Ne pas créer le panier immédiatement, seulement quand un produit est ajouté
                     console.log("Panier vide initialisé");
                 }
                 
                 updateCartCount();
             } catch (error) {
                 console.error("Erreur lors du chargement du panier:", error);
-                // Initialiser un panier vide en cas d'erreur
                 userCart = {
                     userId: currentUser ? currentUser.uid : null,
                     items: {},
@@ -2248,7 +2182,7 @@
             }
         }
 
-        // Sauvegarder le panier dans Firestore - VERSION SIMPLIFIÉE
+        // Sauvegarder le panier dans Firestore
         async function saveCartToFirestore() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour sauvegarder le panier");
@@ -2256,7 +2190,7 @@
             }
             
             try {
-                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
+                const cartRef = db.collection("carts").doc(currentUser.uid);
                 
                 // Calculer le total
                 let totalItems = 0;
@@ -2276,7 +2210,6 @@
                     updatedAt: new Date().toISOString()
                 };
                 
-                // Si le panier n'existe pas encore, ajouter createdAt
                 if (!userCart.createdAt) {
                     cartData.createdAt = new Date().toISOString();
                 }
@@ -2284,7 +2217,6 @@
                 await cartRef.set(cartData, { merge: true });
                 console.log("Panier sauvegardé dans Firestore");
                 
-                // Mettre à jour l'objet userCart
                 userCart = cartData;
                 
             } catch (error) {
@@ -2308,6 +2240,11 @@
             }, 500);
             
             const product = products.find(p => p.id === productId);
+            
+            if (!product) {
+                console.error("Produit non trouvé:", productId);
+                return;
+            }
             
             // Animation vers le panier
             animateAddToCart(buttonElement, product);
@@ -2360,9 +2297,11 @@
 
         // Initialisation
         $(document).ready(async function() {
-            // Initialiser Firebase de manière asynchrone
-            setTimeout(async () => {
-                await initializeFirebase();
+            console.log("Dashboard prêt à initialiser Firebase");
+            
+            // Initialiser Firebase
+            setTimeout(() => {
+                initializeFirebase();
             }, 100);
             
             // Initialiser le filtre de prix désactivé
@@ -2482,8 +2421,6 @@
             
             // Navigation footer
             $('.footer-item').on('click', function(e) {
-                // La navigation se fait via les liens href
-                // On met à jour l'état actif
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
             });
