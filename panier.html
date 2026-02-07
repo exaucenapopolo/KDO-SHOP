@@ -68,6 +68,61 @@
             letter-spacing: -0.5px;
         }
         
+        /* Carrousel de promotions - AJOUTÉ POUR PANIER */
+        .promo-carousel-container {
+            background: linear-gradient(90deg, #FFF8F3 0%, #FFF 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 12px;
+        }
+        
+        .promo-carousel {
+            display: flex;
+            animation: slidePromo 25s infinite linear;
+            width: max-content;
+        }
+        
+        .promo-slide {
+            display: flex;
+            align-items: center;
+            padding: 8px 20px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .promo-badge {
+            background: var(--primary-orange);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 10px;
+            margin-right: 10px;
+        }
+        
+        .promo-text {
+            color: var(--text-dark);
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .promo-price {
+            color: var(--primary-orange);
+            font-weight: 700;
+            margin-left: 5px;
+        }
+        
+        @keyframes slidePromo {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
         /* Barre de recherche */
         .search-wrapper {
             position: relative;
@@ -1313,6 +1368,10 @@
                 flex-direction: column;
                 gap: 0;
             }
+            
+            .promo-carousel {
+                animation: slidePromo 20s infinite linear;
+            }
         }
         
         @media (max-width: 576px) {
@@ -1357,6 +1416,10 @@
             .footer-icon {
                 font-size: 16px;
             }
+            
+            .promo-carousel {
+                animation: slidePromo 15s infinite linear;
+            }
         }
         
         /* Pour les très petits écrans */
@@ -1375,6 +1438,10 @@
             
             .payment-desc {
                 margin-left: 0;
+            }
+            
+            .promo-carousel {
+                animation: slidePromo 12s infinite linear;
             }
         }
     </style>
@@ -1402,6 +1469,53 @@
             </div>
         </div>
     </header>
+
+    <!-- Carrousel d'informations pour le panier - AJOUTÉ -->
+    <div class="promo-carousel-container">
+        <div class="promo-carousel">
+            <div class="promo-slide">
+                <span class="promo-badge">AVANTAGE</span>
+                <span class="promo-text">Livraison gratuite dès <span class="promo-price">100 000 FCFA</span> d'achat</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">INFO</span>
+                <span class="promo-text">Paiement sécurisé par <span class="promo-price">Mobile Money</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">GARANTIE</span>
+                <span class="promo-text">Retour gratuit sous <span class="promo-price">7 jours</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">ASTUCE</span>
+                <span class="promo-text">Économisez avec le code <span class="promo-price">KDO10</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">SUPPORT</span>
+                <span class="promo-text">Assistance 24h/24 au <span class="promo-price">6XX XXX XXX</span></span>
+            </div>
+            <!-- Doubler pour créer l'effet infini -->
+            <div class="promo-slide">
+                <span class="promo-badge">AVANTAGE</span>
+                <span class="promo-text">Livraison gratuite dès <span class="promo-price">100 000 FCFA</span> d'achat</span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">INFO</span>
+                <span class="promo-text">Paiement sécurisé par <span class="promo-price">Mobile Money</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">GARANTIE</span>
+                <span class="promo-text">Retour gratuit sous <span class="promo-price">7 jours</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">ASTUCE</span>
+                <span class="promo-text">Économisez avec le code <span class="promo-price">KDO10</span></span>
+            </div>
+            <div class="promo-slide">
+                <span class="promo-badge">SUPPORT</span>
+                <span class="promo-text">Assistance 24h/24 au <span class="promo-price">6XX XXX XXX</span></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Contenu principal (initialement masqué jusqu'à authentification) -->
     <div id="mainContent" style="display: none;">
@@ -2135,10 +2249,10 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
+    <!-- Firebase SDK - MÊME VERSION QUE LE DASHBOARD (10.8.0 compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <!-- Bootstrap & jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -2146,7 +2260,7 @@
 
     <!-- Script principal -->
     <script>
-        // Nouvelle configuration Firebase
+        // CONFIGURATION FIREBASE (IDENTIQUE AU DASHBOARD)
         const firebaseConfig = {
             apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
             authDomain: "kdo-cameroun.firebaseapp.com",
@@ -2157,8 +2271,12 @@
             measurementId: "G-FX2DVSKLKZ"
         };
 
-        // Initialiser Firebase
-        let firebaseApp, firebaseDb, firebaseAuth;
+        // Initialiser Firebase (MÊME MÉTHODE QUE LE DASHBOARD)
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Variables globales
         let currentUser = null;
         let userCart = { items: {}, totalItems: 0, totalAmount: 0 };
         let userProfile = null;
@@ -2177,7 +2295,7 @@
             return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
         }
 
-        // Obtenir l'URL de l'image d'un produit
+        // Obtenir l'URL de l'image d'un produit (identique au dashboard)
         function getProductImageUrl(product) {
             const categoryImages = {
                 ordinateur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
@@ -2197,39 +2315,31 @@
                 sac: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/sacs.png"
             };
             
-            return categoryImages[product.category] || "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
+            if (product.category === "ordinateur" && product.id) {
+                // Pour les ordinateurs, utiliser l'id pour sélectionner une image
+                const imageIndex = (parseInt(product.id) - 1) % 38;
+                return `https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/${imageIndex + 1}.jpg`;
+            } else if (categoryImages[product.category]) {
+                return categoryImages[product.category];
+            }
+            return "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
         }
 
         // Initialiser Firebase et vérifier l'authentification
-        async function initializeFirebase() {
+        function initializeFirebase() {
             try {
-                if (typeof firebase === 'undefined') {
-                    console.error("Firebase n'est pas chargé");
-                    showLoginPage();
-                    return;
-                }
-                
-                // Initialiser Firebase
-                if (!firebase.apps.length) {
-                    firebaseApp = firebase.initializeApp(firebaseConfig);
-                } else {
-                    firebaseApp = firebase.app();
-                }
-                
-                firebaseAuth = firebase.auth();
-                firebaseDb = firebase.firestore();
+                console.log("Initialisation de Firebase pour le panier...");
                 
                 // Vérifier l'état d'authentification
-                firebaseAuth.onAuthStateChanged(async (user) => {
+                auth.onAuthStateChanged(async (user) => {
                     if (user) {
-                        // Utilisateur connecté
                         currentUser = user;
-                        console.log("Utilisateur connecté:", currentUser.uid, currentUser.email);
+                        console.log("Utilisateur connecté:", user.email, user.uid);
                         
                         // Charger le profil utilisateur
                         await loadUserProfile();
                         
-                        // Charger le panier
+                        // Charger le panier - MÊME MÉTHODE QUE LE DASHBOARD
                         await loadCartFromFirestore();
                         
                         // Charger les adresses
@@ -2246,7 +2356,6 @@
                         updateSummary();
                         
                     } else {
-                        // Utilisateur non connecté
                         console.log("Utilisateur non connecté");
                         showLoginPage();
                     }
@@ -2263,6 +2372,7 @@
             $('#loginContent').show();
             $('#mainContent').hide();
             $('.footer-kdo').show();
+            $('.promo-carousel-container').hide();
         }
 
         // Afficher la page du panier
@@ -2270,12 +2380,13 @@
             $('#loginContent').hide();
             $('#mainContent').show();
             $('.footer-kdo').show();
+            $('.promo-carousel-container').show();
         }
 
         // Connexion de l'utilisateur
         async function loginUser(email, password) {
             try {
-                const userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
                 currentUser = userCredential.user;
                 console.log("Connexion réussie:", currentUser.email);
                 
@@ -2319,10 +2430,10 @@
             if (!currentUser) return;
             
             try {
-                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
+                const userRef = db.collection("users").doc(currentUser.uid);
                 const userSnap = await userRef.get();
                 
-                if (userSnap.exists()) {
+                if (userSnap.exists) {
                     userProfile = userSnap.data();
                     console.log("Profil utilisateur chargé:", userProfile);
                     
@@ -2357,7 +2468,7 @@
         // Charger tous les produits depuis Firestore
         async function loadAllProducts() {
             try {
-                const productsRef = firebaseDb.collection("products");
+                const productsRef = db.collection("products");
                 const snapshot = await productsRef.get();
                 
                 allProducts = [];
@@ -2373,7 +2484,7 @@
                 
                 console.log("Produits chargés:", allProducts.length);
                 
-                // Si aucun produit, utiliser des données par défaut
+                // Si aucun produit, utiliser des données par défaut (comme dans le dashboard)
                 if (allProducts.length === 0) {
                     allProducts = getDefaultProducts();
                 }
@@ -2383,7 +2494,7 @@
             }
         }
 
-        // Données par défaut des produits
+        // Données par défaut des produits (identique au dashboard)
         function getDefaultProducts() {
             return [
                 { id: "1", name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go" },
@@ -2393,7 +2504,7 @@
             ];
         }
 
-        // Charger le panier depuis Firestore
+        // Charger le panier depuis Firestore - MÊME MÉTHODE QUE LE DASHBOARD
         async function loadCartFromFirestore() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour charger le panier");
@@ -2401,15 +2512,15 @@
             }
             
             try {
-                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
-                const cartSnap = await cartRef.get();
+                const cartRef = db.collection("carts").doc(currentUser.uid);
+                const cartDoc = await cartRef.get();
                 
-                if (cartSnap.exists()) {
-                    const cartData = cartSnap.data();
+                if (cartDoc.exists) {
+                    const cartData = cartDoc.data();
                     userCart = cartData;
                     console.log("Panier chargé depuis Firestore:", userCart);
                 } else {
-                    // Créer un nouveau panier vide
+                    // Créer un nouveau panier vide - MÊME STRUCTURE QUE LE DASHBOARD
                     userCart = {
                         userId: currentUser.uid,
                         items: {},
@@ -2432,7 +2543,7 @@
             if (!currentUser) return;
             
             try {
-                const addressesRef = firebaseDb.collection("userAddresses").where("userId", "==", currentUser.uid);
+                const addressesRef = db.collection("userAddresses").where("userId", "==", currentUser.uid);
                 const snapshot = await addressesRef.get();
                 
                 userAddresses = [];
@@ -2502,12 +2613,12 @@
             }
             
             try {
-                const addressesRef = firebaseDb.collection("userAddresses");
+                const addressesRef = db.collection("userAddresses");
                 
                 // Si c'est l'adresse par défaut, désactiver les autres adresses par défaut
                 if (isDefault) {
                     // Mettre à jour toutes les autres adresses pour qu'elles ne soient plus par défaut
-                    const batch = firebaseDb.batch();
+                    const batch = db.batch();
                     
                     userAddresses.forEach(addr => {
                         if (addr.isDefault) {
@@ -2546,16 +2657,16 @@
             }
         }
 
-        // Mettre à jour le panier dans Firestore
+        // Mettre à jour le panier dans Firestore - MÊME MÉTHODE QUE LE DASHBOARD
         async function updateCartInFirestore() {
             if (!currentUser) {
                 return;
             }
             
             try {
-                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
+                const cartRef = db.collection("carts").doc(currentUser.uid);
                 
-                // Calculer les totaux
+                // Calculer les totaux - MÊME LOGIQUE QUE LE DASHBOARD
                 let totalItems = 0;
                 let totalAmount = 0;
                 
@@ -2571,6 +2682,9 @@
                 
                 await cartRef.set(userCart);
                 console.log("Panier mis à jour dans Firestore");
+                
+                // Mettre à jour le compteur dans le footer
+                updateCartCount();
                 
             } catch (error) {
                 console.error("Erreur lors de la mise à jour du panier:", error);
@@ -2942,7 +3056,7 @@
             if (!currentUser) return;
             
             try {
-                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
+                const userRef = db.collection("users").doc(currentUser.uid);
                 
                 const updateData = {
                     fullName: deliveryInfo.name,
@@ -3014,7 +3128,7 @@
             // Sauvegarder la commande dans Firestore
             if (currentUser) {
                 try {
-                    const orderRef = firebaseDb.collection("orders").doc();
+                    const orderRef = db.collection("orders").doc();
                     const orderData = {
                         orderId: orderNumber,
                         userId: currentUser.uid,
@@ -3035,7 +3149,7 @@
                     await orderRef.set(orderData);
                     console.log("Commande sauvegardée dans Firestore:", orderNumber);
                     
-                    // Vider le panier après commande
+                    // Vider le panier après commande - MÊME MÉTHODE QUE LE DASHBOARD
                     userCart.items = {};
                     await updateCartInFirestore();
                     
@@ -3103,8 +3217,12 @@
 
         // Initialisation
         $(document).ready(async function() {
+            console.log("Panier prêt à initialiser Firebase");
+            
             // Initialiser Firebase
-            await initializeFirebase();
+            setTimeout(() => {
+                initializeFirebase();
+            }, 100);
             
             // Connexion
             $('#loginBtn').on('click', async function() {
