@@ -1044,6 +1044,12 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
+                
+                <!-- Indicateur de connexion utilisateur -->
+                <div class="user-indicator ms-3" id="userIndicator" style="display: none;">
+                    <i class="fas fa-user-circle text-primary"></i>
+                    <small class="ms-1" id="userEmail"></small>
+                </div>
             </div>
         </div>
     </header>
@@ -1373,10 +1379,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 
-    <!-- Firebase SDK - MÊME VERSION QUE L'INSCRIPTION (10.8.0 compat) -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"></script>
 
     <!-- Bootstrap & jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -1384,7 +1390,7 @@
 
     <!-- Script principal -->
     <script>
-        // CONFIGURATION FIREBASE (IDENTIQUE À L'INSCRIPTION)
+        // NOUVELLE CONFIGURATION FIREBASE
         const firebaseConfig = {
             apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
             authDomain: "kdo-cameroun.firebaseapp.com",
@@ -1395,12 +1401,8 @@
             measurementId: "G-FX2DVSKLKZ"
         };
 
-        // Initialiser Firebase (MÊME MÉTHODE QUE L'INSCRIPTION)
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
-        // Variables globales
+        // Initialiser Firebase
+        let firebaseApp, firebaseDb, firebaseAuth;
         let currentUser = null;
         
         // Images pour chaque catégorie
@@ -1635,26 +1637,197 @@
             // ORDINATEURS PORTABLES (39 produits)
             { id: 1, name: "DELL Latitude 3190", price: 65000, oldPrice: 80000, category: "ordinateur", verified: true, image: "laptop", orders: 245, specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
             { id: 2, name: "HP Elitebook 840 G3", price: 160000, oldPrice: 175000, category: "ordinateur", verified: true, image: "laptop", orders: 189, specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
-            { id: 3, name: "Lenovo V330", price: 185000, oldPrice: 200000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
-            { id: 4, name: "DELL Latitude E5440", price: 120000, oldPrice: 135000, category: "ordinateur", verified: true, image: "laptop", orders: 203, specs: "Procésseur: CORE I5, HDD: 320 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
-            { id: 5, name: "HP Elitebook 840 G2", price: 135000, oldPrice: 150000, category: "ordinateur", verified: true, image: "laptop", orders: 178, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
-            { id: 6, name: "Lenovo Thinkpad T440", price: 95000, oldPrice: 110000, category: "ordinateur", verified: true, image: "laptop", orders: 167, specs: "Procésseur: CORE I5, HDD: 320 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
-            { id: 7, name: "DELL Latitude 3440", price: 110000, oldPrice: 125000, category: "ordinateur", verified: true, image: "laptop", orders: 189, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
-            { id: 8, name: "HP 250 G7", price: 220000, oldPrice: 240000, category: "ordinateur", verified: true, image: "laptop", orders: 134, specs: "Procésseur: CORE I5, HDD: 1 To, RAM: 8 Go", details: categoryDetails.ordinateur },
-            { id: 9, name: "DELL Latitude E7250", price: 175000, oldPrice: 190000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
-            { id: 10, name: "Lenovo Thinkpad X250", price: 145000, oldPrice: 160000, category: "ordinateur", verified: true, image: "laptop", orders: 145, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 3, name: "LENOVO V15 G2 IJL", price: 180000, oldPrice: 195000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Procésseur: INTEL CELERON, HDD: 256 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 4, name: "DELL Latitude 3380", price: 110000, oldPrice: 125000, category: "ordinateur", verified: true, image: "laptop", orders: 134, specs: "Procésseur: CORE I3, HDD: 128 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 5, name: "HP Elitebook Folio", price: 110000, oldPrice: 125000, category: "ordinateur", verified: true, image: "laptop", orders: 178, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 6, name: "HP Probook 645", price: 115000, oldPrice: 130000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Procésseur: AMD A4, HDD: 8 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 7, name: "LENOVO Thinkpad X130e", price: 65000, oldPrice: 80000, category: "ordinateur", verified: true, image: "laptop", orders: 201, specs: "Procésseur: AMD A2, HDD: 250 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 8, name: "LENOVO Thinkpad P50s", price: 210000, oldPrice: 225000, category: "ordinateur", verified: true, image: "laptop", orders: 89, specs: "Procésseur: CORE I7, HDD: 512 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 9, name: "DELL Latitude E5580", price: 230000, oldPrice: 245000, category: "ordinateur", verified: true, image: "laptop", orders: 67, specs: "Procésseur: CORE I7, HDD: 512 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 10, name: "SONY SVF152A29M", price: 150000, oldPrice: 165000, category: "ordinateur", verified: true, image: "laptop", orders: 123, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 11, name: "LENOVO Thinkpad E560", price: 130000, oldPrice: 145000, category: "ordinateur", verified: true, image: "laptop", orders: 145, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 12 Go", details: categoryDetails.ordinateur },
+            { id: 12, name: "LENOVO 11E", price: 90000, oldPrice: 105000, category: "ordinateur", verified: true, image: "laptop", orders: 167, specs: "Procésseur: CORE I3, HDD: 128 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 13, name: "HP Chrome Book", price: 50000, oldPrice: 65000, category: "ordinateur", verified: true, image: "laptop", orders: 189, specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 14, name: "HP Probook 645 G3", price: 115000, oldPrice: 130000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Procésseur: AMD A6, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 15, name: "HP Zbook 15 G3", price: 160000, oldPrice: 175000, category: "ordinateur", verified: true, image: "laptop", orders: 98, specs: "Procésseur: CORE I7, HDD: 750 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 16, name: "HP 11 Stream", price: 50000, oldPrice: 65000, category: "ordinateur", verified: true, image: "laptop", orders: 201, specs: "Procésseur: INTEL CELERON, HDD: 128 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 17, name: "LENOVO 11e", price: 80000, oldPrice: 95000, category: "ordinateur", verified: true, image: "laptop", orders: 178, specs: "Procésseur: QUADCORE, HDD: 320 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 18, name: "LENOVO T480", price: 150000, oldPrice: 165000, category: "ordinateur", verified: true, image: "laptop", orders: 134, specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 19, name: "HP Probook 650 G2", price: 120000, oldPrice: 135000, category: "ordinateur", verified: true, image: "laptop", orders: 145, specs: "Procésseur: AMD A6, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 20, name: "LENOVO Thinkpad X270", price: 150000, oldPrice: 165000, category: "ordinateur", verified: true, image: "laptop", orders: 123, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 21, name: "HP 6560b", price: 110000, oldPrice: 125000, category: "ordinateur", verified: true, image: "laptop", orders: 167, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 22, name: "HP X360", price: 85000, oldPrice: 100000, category: "ordinateur", verified: true, image: "laptop", orders: 189, specs: "Procésseur: QUADCORE, HDD: 128 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 23, name: "DELL Vostro 5568", price: 150000, oldPrice: 165000, category: "ordinateur", verified: true, image: "laptop", orders: 156, specs: "Procésseur: CORE I5, HDD: 1000 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 24, name: "DELL Latitude 5440", price: 150000, oldPrice: 165000, category: "ordinateur", verified: true, image: "laptop", orders: 134, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 25, name: "DELL Latitude 3190 2-in-1", price: 80000, oldPrice: 95000, category: "ordinateur", verified: true, image: "laptop", orders: 178, specs: "Procésseur: Intel(R) Atom, HDD: 128 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 26, name: "LENOVO 11E", price: 70000, oldPrice: 85000, category: "ordinateur", verified: true, image: "laptop", orders: 201, specs: "Procésseur: Intel(R) Atom, HDD: 128 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 27, name: "DELL Latitude E5520", price: 125000, oldPrice: 140000, category: "ordinateur", verified: true, image: "laptop", orders: 145, specs: "Procésseur: CORE I3, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 28, name: "TOSHIBA NB250-108", price: 65000, oldPrice: 80000, category: "ordinateur", verified: true, image: "laptop", orders: 189, specs: "Procésseur: Intel(R) Atom, HDD: 250 Go, RAM: 2 Go", details: categoryDetails.ordinateur },
+            { id: 29, name: "HP ProBook 640 G1", price: 130000, oldPrice: 145000, category: "ordinateur", verified: true, image: "laptop", orders: 123, specs: "Procésseur: CORE I7, HDD: 500 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 30, name: "HP Elitebook 840 G6", price: 210000, oldPrice: 225000, category: "ordinateur", verified: true, image: "laptop", orders: 89, specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 31, name: "HP EliteBook 845 G7", price: 270000, oldPrice: 285000, category: "ordinateur", verified: true, image: "laptop", orders: 67, specs: "Procésseur: AMD Ryzen 5 PRO, HDD: 512 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 32, name: "HP MINI 3115m", price: 90000, oldPrice: 105000, category: "ordinateur", verified: true, image: "laptop", orders: 145, specs: "Procésseur: AMD A2, HDD: 500 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 33, name: "DELL Latitude E6540", price: 130000, oldPrice: 145000, category: "ordinateur", verified: true, image: "laptop", orders: 123, specs: "Procésseur: CORE I5, HDD: 1000 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 34, name: "HP Folio", price: 195000, oldPrice: 210000, category: "ordinateur", verified: true, image: "laptop", orders: 98, specs: "Procésseur: CORE I7, HDD: 500 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 35, name: "LENOVO Yoga 11e X360", price: 80000, oldPrice: 95000, category: "ordinateur", verified: true, image: "laptop", orders: 167, specs: "Procésseur: QUADCORE, HDD: 320 Go, RAM: 4 Go", details: categoryDetails.ordinateur },
+            { id: 36, name: "HP Elitebook I 840 G3", price: 250000, oldPrice: 265000, category: "ordinateur", verified: true, image: "laptop", orders: 78, specs: "Procésseur: CORE I5, HDD: 256 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
+            { id: 37, name: "LENOVO Thinkpad W540", price: 205000, oldPrice: 220000, category: "ordinateur", verified: true, image: "laptop", orders: 67, specs: "Procésseur: CORE I7, HDD: 1000 Go, RAM: 16 Go", details: categoryDetails.ordinateur },
+            { id: 38, name: "HP Probook 11 G2", price: 90000, oldPrice: 105000, category: "ordinateur", verified: true, image: "laptop", orders: 145, specs: "Procésseur: CORE I3, HDD: 128 Go, RAM: 8 Go", details: categoryDetails.ordinateur },
             
             // DISQUES DURS (20 produits)
-            { id: 101, name: "TOSHIBA Disque Dur 500Go", price: 15000, oldPrice: 20000, category: "disquedur", verified: true, image: "hdd", orders: 89, specs: "Vitèsse: 3.0, Capacité: 500 Go", details: categoryDetails.disquedur },
-            { id: 102, name: "Seagate Disque Dur 1To", price: 25000, oldPrice: 30000, category: "disquedur", verified: true, image: "hdd", orders: 67, specs: "Vitèsse: 3.0, Capacité: 1 To", details: categoryDetails.disquedur },
+            { id: 39, name: "TOSHIBA Disque Dur", price: 15000, oldPrice: 18500, category: "disquedur", verified: true, image: "hdd", orders: 456, specs: "Taille: 500 Go", details: categoryDetails.disquedur },
+            { id: 40, name: "SEAGATE Disque Dur", price: 25000, oldPrice: 28500, category: "disquedur", verified: true, image: "hdd", orders: 389, specs: "Taille: 1000 Go", details: categoryDetails.disquedur },
+            { id: 41, name: "SEAGATE Disque Dur", price: 45000, oldPrice: 48500, category: "disquedur", verified: true, image: "hdd", orders: 234, specs: "Taille: 2000 Go", details: categoryDetails.disquedur },
+            { id: 42, name: "TOSHIBA Disque Dur", price: 25000, oldPrice: 28500, category: "disquedur", verified: true, image: "hdd", orders: 378, specs: "Taille: 1000 Go", details: categoryDetails.disquedur },
+            { id: 43, name: "TOSHIBA Disque Dur", price: 20000, oldPrice: 23500, category: "disquedur", verified: true, image: "hdd", orders: 412, specs: "Taille: 1000 Go", details: categoryDetails.disquedur },
+            { id: 44, name: "TOSHIBA Disque Dur", price: 40000, oldPrice: 43500, category: "disquedur", verified: true, image: "hdd", orders: 189, specs: "Taille: 2000 Go", details: categoryDetails.disquedur },
+            { id: 45, name: "Portable SSD", price: 65000, oldPrice: 68500, category: "disquedur", verified: true, image: "ssd", orders: 156, specs: "Taille: 2000 Go", details: categoryDetails.disquedur },
+            { id: 46, name: "VERBATIM SSD", price: 35000, oldPrice: 38500, category: "disquedur", verified: true, image: "ssd", orders: 267, specs: "Taille: 512 Go", details: categoryDetails.disquedur },
+            { id: 47, name: "ADDLINK SSD", price: 45000, oldPrice: 48500, category: "disquedur", verified: true, image: "ssd", orders: 189, specs: "Taille: 1000 Go", details: categoryDetails.disquedur },
+            { id: 48, name: "ADDLINK SSD", price: 65000, oldPrice: 68500, category: "disquedur", verified: true, image: "ssd", orders: 134, specs: "Taille: 2000 Go", details: categoryDetails.disquedur },
+            { id: 49, name: "SAMSUNG SSD", price: 22000, oldPrice: 25500, category: "disquedur", verified: true, image: "ssd", orders: 456, specs: "Taille: 256 Go", details: categoryDetails.disquedur },
+            { id: 50, name: "SAMSUNG SSD", price: 45000, oldPrice: 48500, category: "disquedur", verified: true, image: "ssd", orders: 289, specs: "Taille: 1000 Go", details: categoryDetails.disquedur },
+            { id: 51, name: "ADDLINK SSD", price: 35000, oldPrice: 38500, category: "disquedur", verified: true, image: "ssd", orders: 234, specs: "Taille: 512 Go", details: categoryDetails.disquedur },
+            { id: 52, name: "ADDLINK SSD", price: 20000, oldPrice: 23500, category: "disquedur", verified: true, image: "ssd", orders: 378, specs: "Taille: 256 Go", details: categoryDetails.disquedur },
+            { id: 53, name: "UNION MEMORY SSD", price: 22000, oldPrice: 25500, category: "disquedur", verified: true, image: "ssd", orders: 267, specs: "Taille: 256 Go", details: categoryDetails.disquedur },
+            { id: 54, name: "WESTERN DIGITAL HDD", price: 10000, oldPrice: 13500, category: "disquedur", verified: true, image: "hdd", orders: 512, specs: "Taille: 500 Go", details: categoryDetails.disquedur },
+            { id: 55, name: "WESTERN DIGITAL HDD", price: 8000, oldPrice: 11500, category: "disquedur", verified: true, image: "hdd", orders: 567, specs: "Taille: 320 Go", details: categoryDetails.disquedur },
+            { id: 56, name: "WESTERN DIGITAL HDD", price: 6000, oldPrice: 9500, category: "disquedur", verified: true, image: "hdd", orders: 589, specs: "Taille: 250 Go", details: categoryDetails.disquedur },
+            { id: 57, name: "EXTERNAL CASE", price: 15000, oldPrice: 18500, category: "disquedur", verified: true, image: "case", orders: 345, specs: "Taille: 500 Go", details: categoryDetails.disquedur },
+            { id: 58, name: "TOSHIBA HDD", price: 15000, oldPrice: 18500, category: "disquedur", verified: true, image: "hdd", orders: 456, specs: "Taille: 500 Go", details: categoryDetails.disquedur },
             
-            // CLES USB (7 produits)
-            { id: 201, name: "FASTER Clé USB 64Go", price: 8000, oldPrice: 10000, category: "usb", verified: true, image: "usb", orders: 123, specs: "Vitèsse: 2.0, Capacité: 64 Go", details: categoryDetails.usb },
-            { id: 202, name: "Kingston Clé USB 32Go", price: 5000, oldPrice: 7000, category: "usb", verified: true, image: "usb", orders: 156, specs: "Vitèsse: 3.0, Capacité: 32 Go", details: categoryDetails.usb },
+            // CLÉS USB (7 produits)
+            { id: 59, name: "FASTER Clé USB", price: 5500, oldPrice: 9000, category: "usb", verified: true, image: "usb", orders: 678, specs: "Taille: 64 Go", details: categoryDetails.usb },
+            { id: 60, name: "FASTER Clé USB", price: 4000, oldPrice: 7500, category: "usb", verified: true, image: "usb", orders: 789, specs: "Taille: 32 Go", details: categoryDetails.usb },
+            { id: 61, name: "Kioxia Clé USB", price: 4000, oldPrice: 7500, category: "usb", verified: true, image: "usb", orders: 645, specs: "Taille: 32 Go", details: categoryDetails.usb },
+            { id: 62, name: "Kioxia Clé USB", price: 5500, oldPrice: 9000, category: "usb", verified: true, image: "usb", orders: 567, specs: "Taille: 64 Go", details: categoryDetails.usb },
+            { id: 63, name: "FASTER Clé USB", price: 5500, oldPrice: 9000, category: "usb", verified: true, image: "usb", orders: 612, specs: "Taille: 64 Go", details: categoryDetails.usb },
+            { id: 64, name: "IMATION Clé USB", price: 4000, oldPrice: 7500, category: "usb", verified: true, image: "usb", orders: 534, specs: "Taille: 32 Go", details: categoryDetails.usb },
+            { id: 65, name: "Flash Driver USB", price: 7000, oldPrice: 10500, category: "usb", verified: true, image: "usb", orders: 456, specs: "Taille: 32 Go", details: categoryDetails.usb },
             
             // SOURIS (12 produits)
-            { id: 301, name: "HP Souris Sans Fil", price: 5000, oldPrice: 7000, category: "souris", verified: true, image: "mouse", orders: 234, specs: "Type: SANS FIL, Connecteur: USB", details: categoryDetails.souris },
-            { id: 302, name: "Logitech Souris Filaire", price: 3000, oldPrice: 5000, category: "souris", verified: true, image: "mouse", orders: 189, specs: "Type: FILAIRE, Connecteur: USB", details: categoryDetails.souris },
+            { id: 66, name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", verified: true, image: "mouse", orders: 789, specs: "Type de souris: SANS FIL", details: categoryDetails.souris },
+            { id: 67, name: "TRUST Souris USB", price: 5000, oldPrice: 6500, category: "souris", verified: true, image: "mouse", orders: 678, specs: "Type de souris: SANS FIL", details: categoryDetails.souris },
+            { id: 68, name: "HP Souris USB", price: 3000, oldPrice: 4500, category: "souris", verified: true, image: "mouse", orders: 912, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            { id: 69, name: "GENIUS Souris USB", price: 3000, oldPrice: 4500, category: "souris", verified: true, image: "mouse", orders: 834, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            { id: 70, name: "HP Souris USB", price: 3000, oldPrice: 4500, category: "souris", verified: true, image: "mouse", orders: 756, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            { id: 71, name: "DELL Souris USB", price: 2500, oldPrice: 4000, category: "souris", verified: true, image: "mouse", orders: 945, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            { id: 72, name: "HP Souris USB", price: 2500, oldPrice: 4000, category: "souris", verified: true, image: "mouse", orders: 867, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            { id: 73, name: "HP Souris USB", price: 5000, oldPrice: 6500, category: "souris", verified: true, image: "mouse", orders: 723, specs: "Type de souris: SANS FIL", details: categoryDetails.souris },
+            { id: 74, name: "LENOVO Souris USB", price: 2500, oldPrice: 4000, category: "souris", verified: true, image: "mouse", orders: 912, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            { id: 75, name: "LOGITECH Souris USB", price: 4500, oldPrice: 6000, category: "souris", verified: true, image: "mouse", orders: 645, specs: "Type de souris: SANS FIL", details: categoryDetails.souris },
+            { id: 76, name: "HP Souris USB", price: 4000, oldPrice: 5500, category: "souris", verified: true, image: "mouse", orders: 723, specs: "Type de souris: SANS FIL", details: categoryDetails.souris },
+            { id: 77, name: "SONY Souris USB", price: 3000, oldPrice: 4500, category: "souris", verified: true, image: "mouse", orders: 834, specs: "Type de souris: AVEC FIL", details: categoryDetails.souris },
+            
+            // CLAVIERS (7 produits)
+            { id: 78, name: "LOGITECH Clavier USB", price: 10000, oldPrice: 11500, category: "clavier", verified: true, image: "keyboard", orders: 456, specs: "Type clavier: SANS FIL", details: categoryDetails.clavier },
+            { id: 79, name: "HP Clavier USB", price: 10000, oldPrice: 11500, category: "clavier", verified: true, image: "keyboard", orders: 423, specs: "Type clavier: SANS FIL", details: categoryDetails.clavier },
+            { id: 80, name: "LOGITECH Clavier USB", price: 2500, oldPrice: 4000, category: "clavier", verified: true, image: "keyboard", orders: 789, specs: "Type clavier: AVEC FIL", details: categoryDetails.clavier },
+            { id: 81, name: "GAMERS Clavier USB", price: 10000, oldPrice: 11500, category: "clavier", verified: true, image: "keyboard", orders: 345, specs: "Type clavier: SANS FIL", details: categoryDetails.clavier },
+            { id: 82, name: "GAMERS Clavier USB", price: 15000, oldPrice: 16500, category: "clavier", verified: true, image: "keyboard", orders: 267, specs: "Type clavier: AVEC FIL", details: categoryDetails.clavier },
+            { id: 83, name: "HP Clavier USB", price: 3000, oldPrice: 4500, category: "clavier", verified: true, image: "keyboard", orders: 612, specs: "Type clavier: AVEC FIL", details: categoryDetails.clavier },
+            { id: 84, name: "FLEXIBLE KEYBOARD USB", price: 6000, oldPrice: 7500, category: "clavier", verified: true, image: "keyboard", orders: 489, specs: "Type clavier: AVEC FIL", details: categoryDetails.clavier },
+            
+            // MODEMS (5 produits)
+            { id: 85, name: "KING CRAB Modem", price: 35000, oldPrice: 40000, category: "modem", verified: true, image: "wifi", orders: 189, specs: "Bande passante: 300 Mbps", details: categoryDetails.modem },
+            { id: 86, name: "HUAWEI Modem", price: 17500, oldPrice: 22500, category: "modem", verified: true, image: "wifi", orders: 456, specs: "Bande passante: 100 Mbps", details: categoryDetails.modem },
+            { id: 87, name: "HUAWEI Modem", price: 17500, oldPrice: 22500, category: "modem", verified: true, image: "wifi", orders: 423, specs: "Bande passante: 100 Mbps", details: categoryDetails.modem },
+            { id: 88, name: "HUAWEI Modem", price: 17500, oldPrice: 22500, category: "modem", verified: true, image: "wifi", orders: 378, specs: "Bande passante: 100 Mbps", details: categoryDetails.modem },
+            { id: 89, name: "HUAWEI Modem", price: 21000, oldPrice: 26000, category: "modem", verified: true, image: "wifi", orders: 267, specs: "Bande passante: 200 Mbps", details: categoryDetails.modem },
+            
+            // DESKTOP (6 produits)
+            { id: 90, name: "HP Elitebook Desktop", price: 95000, oldPrice: 110000, category: "desktop", verified: true, image: "desktop", orders: 156, specs: "Procésseur: CORE I5, HDD: 500 Go, RAM: 4 Go", details: categoryDetails.desktop },
+            { id: 91, name: "FUJITSU N12 Desktop", price: 55000, oldPrice: 70000, category: "desktop", verified: true, image: "desktop", orders: 234, specs: "Procésseur: DUALCORE, HDD: 500 Go, RAM: 4 Go", details: categoryDetails.desktop },
+            { id: 92, name: "FUJITSU C11 Desktop", price: 70000, oldPrice: 85000, category: "desktop", verified: true, image: "desktop", orders: 189, specs: "Procésseur: CORE I3, HDD: 320 Go, RAM: 4 Go", details: categoryDetails.desktop },
+            { id: 93, name: "DELL Latitude Desktop", price: 55000, oldPrice: 70000, category: "desktop", verified: true, image: "desktop", orders: 201, specs: "Procésseur: DUALCORE, HDD: 320 Go, RAM: 4 Go", details: categoryDetails.desktop },
+            { id: 94, name: "ASUS Vo1 Desktop", price: 70000, oldPrice: 85000, category: "desktop", verified: true, image: "desktop", orders: 167, specs: "Procésseur: CORE I3, HDD: 320 Go, RAM: 4 Go", details: categoryDetails.desktop },
+            { id: 95, name: "ACER Aspire Desktop", price: 70000, oldPrice: 85000, category: "desktop", verified: true, image: "desktop", orders: 178, specs: "Procésseur: CORE I3, HDD: 500 Go, RAM: 4 Go", details: categoryDetails.desktop },
+            
+            // RAM (12 produits)
+            { id: 96, name: "DDR3L 1600-4800 Mhz", price: 14000, oldPrice: 15500, category: "ram", verified: true, image: "memory", orders: 456, specs: "Laptop Go & RAM: 8 Go", details: categoryDetails.ram },
+            { id: 97, name: "DDR4 3200-4800 Mhz", price: 28000, oldPrice: 29500, category: "ram", verified: true, image: "memory", orders: 267, specs: "Laptop Go & RAM: 16 Go", details: categoryDetails.ram },
+            { id: 98, name: "DDR3L 1600-4800 Mhz", price: 20000, oldPrice: 21500, category: "ram", verified: true, image: "memory", orders: 345, specs: "Laptop Go & RAM: 16 Go", details: categoryDetails.ram },
+            { id: 99, name: "DDR4 2400-3200 Mhz", price: 11000, oldPrice: 12500, category: "ram", verified: true, image: "memory", orders: 567, specs: "Laptop Go & RAM: 4 Go", details: categoryDetails.ram },
+            { id: 100, name: "DDR2 200-400 Mhz", price: 3000, oldPrice: 4500, category: "ram", verified: true, image: "memory", orders: 789, specs: "Laptop Go & RAM: 1 Go", details: categoryDetails.ram },
+            { id: 101, name: "DDR4 2400-3200 Mhz", price: 25000, oldPrice: 26500, category: "ram", verified: true, image: "memory", orders: 234, specs: "Laptop Go & RAM: 8 Go", details: categoryDetails.ram },
+            { id: 102, name: "DDR2 4800-7200 Mhz", price: 5000, oldPrice: 6500, category: "ram", verified: true, image: "memory", orders: 456, specs: "Laptop Go & RAM: 2 Go", details: categoryDetails.ram },
+            { id: 103, name: "DDR2 800-2133 Mhz", price: 5000, oldPrice: 6500, category: "ram", verified: true, image: "memory", orders: 378, specs: "Desktop Go & RAM: 2 Go", details: categoryDetails.ram },
+            { id: 104, name: "DDR2 400-1066 Mhz", price: 3000, oldPrice: 4500, category: "ram", verified: true, image: "memory", orders: 567, specs: "Desktop Go & RAM: 1 Go", details: categoryDetails.ram },
+            { id: 105, name: "DDR3 2400-3200 Mhz", price: 14000, oldPrice: 15500, category: "ram", verified: true, image: "memory", orders: 345, specs: "Desktop Go & RAM: 8 Go", details: categoryDetails.ram },
+            { id: 106, name: "DDR3 2400-3200 Mhz", price: 8000, oldPrice: 9500, category: "ram", verified: true, image: "memory", orders: 489, specs: "Desktop Go & RAM: 4 Go", details: categoryDetails.ram },
+            { id: 107, name: "DDR3 3200-4800 Mhz", price: 28000, oldPrice: 29500, category: "ram", verified: true, image: "memory", orders: 234, specs: "Desktop Go & RAM: 16 Go", details: categoryDetails.ram },
+            
+            // ANTIVIRUS (10 produits)
+            { id: 108, name: "KASPERSKY Antivirus", price: 15000, oldPrice: 17500, category: "antivirus", verified: true, image: "shield", orders: 456, specs: "2 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 109, name: "KASPERSKY Antivirus", price: 19000, oldPrice: 21500, category: "antivirus", verified: true, image: "shield", orders: 345, specs: "4 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 110, name: "KASPERSKY Antivirus", price: 18000, oldPrice: 20500, category: "antivirus", verified: true, image: "shield", orders: 378, specs: "4 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 111, name: "KASPERSKY Antivirus", price: 18000, oldPrice: 20500, category: "antivirus", verified: true, image: "shield", orders: 267, specs: "4 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 112, name: "KASPERSKY Antivirus", price: 18000, oldPrice: 20500, category: "antivirus", verified: true, image: "shield", orders: 312, specs: "4 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 113, name: "KASPERSKY Antivirus", price: 25000, oldPrice: 27500, category: "antivirus", verified: true, image: "shield", orders: 189, specs: "5 postes valide 2 an(s)", details: categoryDetails.antivirus },
+            { id: 114, name: "NORTON Antivirus", price: 30000, oldPrice: 32500, category: "antivirus", verified: true, image: "shield", orders: 156, specs: "9 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 115, name: "NORTON Antivirus", price: 19000, oldPrice: 21500, category: "antivirus", verified: true, image: "shield", orders: 234, specs: "4 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 116, name: "NORTON Antivirus", price: 20000, oldPrice: 22500, category: "antivirus", verified: true, image: "shield", orders: 267, specs: "5 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            { id: 117, name: "KASPERSKY Antivirus", price: 15000, oldPrice: 17500, category: "antivirus", verified: true, image: "shield", orders: 345, specs: "2 postes valide 1 an(s)", details: categoryDetails.antivirus },
+            
+            // PROJECTEURS (8 produits)
+            { id: 118, name: "PHILIPS Projecteur", price: 120000, oldPrice: 130000, category: "videoprojecteur", verified: true, image: "projector", orders: 89, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 119, name: "TOPTRO Projecteur", price: 100000, oldPrice: 110000, category: "videoprojecteur", verified: true, image: "projector", orders: 123, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 120, name: "PANASONIC Projecteur", price: 110000, oldPrice: 120000, category: "videoprojecteur", verified: true, image: "projector", orders: 78, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 121, name: "TMY Projecteur", price: 75000, oldPrice: 85000, category: "videoprojecteur", verified: true, image: "projector", orders: 145, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 122, name: "TMY Projecteur", price: 75000, oldPrice: 85000, category: "videoprojecteur", verified: true, image: "projector", orders: 156, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 123, name: "TMY Projecteur", price: 75000, oldPrice: 85000, category: "videoprojecteur", verified: true, image: "projector", orders: 134, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 124, name: "CASIO Projecteur", price: 110000, oldPrice: 120000, category: "videoprojecteur", verified: true, image: "projector", orders: 67, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            { id: 125, name: "EPSON Projecteur", price: 100000, oldPrice: 110000, category: "videoprojecteur", verified: true, image: "projector", orders: 89, specs: "Connection: VGA / HDMI", details: categoryDetails.videoprojecteur },
+            
+            // TÉLÉPHONES & TABLETTES (9 produits)
+            { id: 126, name: "I-Touch X718", price: 40000, oldPrice: 48500, category: "telephone", verified: true, image: "mobile", orders: 345, specs: "Memoire: 256 Go & RAM 8 Go", details: categoryDetails.telephone },
+            { id: 127, name: "I-Touch A702", price: 30000, oldPrice: 38500, category: "telephone", verified: true, image: "mobile", orders: 456, specs: "Memoire: 16 Go & RAM 2 Go", details: categoryDetails.telephone },
+            { id: 128, name: "I-Touch B33", price: 30000, oldPrice: 38500, category: "telephone", verified: true, image: "mobile", orders: 423, specs: "Memoire: 16 Go & RAM 2 Go", details: categoryDetails.telephone },
+            { id: 129, name: "LENOVO T8-8505x", price: 55000, oldPrice: 63500, category: "telephone", verified: true, image: "mobile", orders: 189, specs: "Memoire: 32 Go & RAM 4 Go", details: categoryDetails.telephone },
+            { id: 130, name: "C Idea Cm525", price: 35000, oldPrice: 43500, category: "telephone", verified: true, image: "mobile", orders: 267, specs: "Memoire: 64 Go & RAM 4 Go", details: categoryDetails.telephone },
+            { id: 131, name: "I-Touch Yes 24", price: 40000, oldPrice: 48500, category: "telephone", verified: true, image: "mobile", orders: 234, specs: "Memoire: 32 Go & RAM 2 Go", details: categoryDetails.telephone },
+            { id: 132, name: "C Idea 5g Lte", price: 38000, oldPrice: 46500, category: "telephone", verified: true, image: "mobile", orders: 189, specs: "Memoire: 256 Go & RAM 6 Go", details: categoryDetails.telephone },
+            { id: 133, name: "C Idea 5g Lte", price: 35000, oldPrice: 43500, category: "telephone", verified: true, image: "mobile", orders: 156, specs: "Memoire: 64 Go & RAM 4 Go", details: categoryDetails.telephone },
+            
+            // ADAPTATEURS (14 produits)
+            { id: 134, name: "SAMSUNG Adaptateur Mixte", price: 5000, oldPrice: 6500, category: "adaptateur", verified: true, image: "adapter", orders: 567, specs: "Entrée: VGA & Sortie HDMI", details: categoryDetails.adaptateur },
+            { id: 135, name: "HP Adaptateur Mixte", price: 5000, oldPrice: 6500, category: "adaptateur", verified: true, image: "adapter", orders: 489, specs: "Entrée: USB & Sortie USB", details: categoryDetails.adaptateur },
+            { id: 136, name: "HP Adaptateur Mv2", price: 4000, oldPrice: 5500, category: "adaptateur", verified: true, image: "adapter", orders: 612, specs: "Entrée: USB & Sortie ANDROID, IPHONE, TYPE C", details: categoryDetails.adaptateur },
+            { id: 137, name: "SONY Adaptateur T1", price: 3000, oldPrice: 4500, category: "adaptateur", verified: true, image: "adapter", orders: 678, specs: "Entrée: HDMI & Sortie ANDROID", details: categoryDetails.adaptateur },
+            { id: 138, name: "HP Adaptateur Mv2", price: 6000, oldPrice: 7500, category: "adaptateur", verified: true, image: "adapter", orders: 456, specs: "Entrée: HDMI & Sortie USB", details: categoryDetails.adaptateur },
+            { id: 139, name: "ASUS Adaptateur B12", price: 1500, oldPrice: 3000, category: "adaptateur", verified: true, image: "adapter", orders: 789, specs: "Entrée: ANDROID, IPHONE, TYPE C & Sortie USB", details: categoryDetails.adaptateur },
+            { id: 140, name: "SAMSUNG Adaptateur G-14", price: 7000, oldPrice: 8500, category: "adaptateur", verified: true, image: "adapter", orders: 345, specs: "Entrée: HDMI & Sortie VGA", details: categoryDetails.adaptateur },
+            { id: 141, name: "SAMSUNG Adaptateur A", price: 2000, oldPrice: 3500, category: "adaptateur", verified: true, image: "adapter", orders: 912, specs: "Entrée: USB & Sortie ANDROID", details: categoryDetails.adaptateur },
+            { id: 142, name: "SONY Adaptateur A", price: 2000, oldPrice: 3500, category: "adaptateur", verified: true, image: "adapter", orders: 867, specs: "Entrée: USB & Sortie ANDROID", details: categoryDetails.adaptateur },
+            { id: 143, name: "SONY Adaptateur A", price: 2000, oldPrice: 3500, category: "adaptateur", verified: true, image: "adapter", orders: 756, specs: "Entrée: USB & Sortie TYPE C", details: categoryDetails.adaptateur },
+            { id: 144, name: "SONY Adaptateur A", price: 2000, oldPrice: 3500, category: "adaptateur", verified: true, image: "adapter", orders: 834, specs: "Entrée: USB & Sortie TYPE C", details: categoryDetails.adaptateur },
+            { id: 145, name: "HP Adaptateur B1", price: 5000, oldPrice: 6500, category: "adaptateur", verified: true, image: "adapter", orders: 489, specs: "Entrée: USB & Sortie USB", details: categoryDetails.adaptateur },
+            { id: 146, name: "HP Adaptateur B1", price: 6000, oldPrice: 7500, category: "adaptateur", verified: true, image: "adapter", orders: 423, specs: "Entrée: USB & Sortie USB", details: categoryDetails.adaptateur },
+            
+            // TÉLÉVISIONS (4 produits)
+            { id: 147, name: "Lg Télévision", price: 65000, oldPrice: 80000, category: "television", verified: true, image: "tv", orders: 189, specs: "Taille: 32 pouces", details: categoryDetails.television },
+            { id: 148, name: "Lg Télévision", price: 110000, oldPrice: 125000, category: "television", verified: true, image: "tv", orders: 134, specs: "Taille: 43 pouces", details: categoryDetails.television },
+            { id: 149, name: "Lg Télévision", price: 210000, oldPrice: 225000, category: "television", verified: true, image: "tv", orders: 78, specs: "Taille: 55 pouces", details: categoryDetails.television },
+            { id: 150, name: "Samsung Télévision", price: 110000, oldPrice: 125000, category: "television", verified: true, image: "tv", orders: 123, specs: "Taille: 43 pouces", details: categoryDetails.television },
+            
+            // CHARGEURS (6 produits)
+            { id: 151, name: "Toshiba Chargeur", price: 8000, oldPrice: 13000, category: "chargeur", verified: true, image: "charger", orders: 567, specs: "Tension: 12 V & Intensité: 4.3 A", details: categoryDetails.chargeur },
+            { id: 152, name: "Hp Chargeur", price: 8000, oldPrice: 13000, category: "chargeur", verified: true, image: "charger", orders: 489, specs: "Tension: 12 V & Intensité: 4.3 A", details: categoryDetails.chargeur },
+            { id: 153, name: "Acer Chargeur", price: 8000, oldPrice: 13000, category: "chargeur", verified: true, image: "charger", orders: 456, specs: "Tension: 12 V & Intensité: 3.4 A", details: categoryDetails.chargeur },
+            { id: 154, name: "Lenovo Chargeur", price: 8000, oldPrice: 13000, category: "chargeur", verified: true, image: "charger", orders: 534, specs: "Tension: 12 V & Intensité: 3.4 A", details: categoryDetails.chargeur },
+            { id: 155, name: "Dell Chargeur", price: 8000, oldPrice: 13000, category: "chargeur", verified: true, image: "charger", orders: 489, specs: "Tension: 12 V & Intensité: 4.2 A", details: categoryDetails.chargeur },
+            { id: 156, name: "Lenovo Chargeur", price: 8000, oldPrice: 13000, category: "chargeur", verified: true, image: "charger", orders: 423, specs: "Tension: 12 V & Intensité: 4.2 A", details: categoryDetails.chargeur },
+            
+            // SACS (9 produits)
+            { id: 157, name: "Lenovo Sac", price: 10000, oldPrice: 15000, category: "sac", verified: true, image: "bag", orders: 456, specs: "Taille: 14'' pouces", details: categoryDetails.sac },
+            { id: 158, name: "Enzo Sac", price: 12000, oldPrice: 17000, category: "sac", verified: true, image: "bag", orders: 378, specs: "Taille: 15.6 pouces", details: categoryDetails.sac },
+            { id: 159, name: "Toshiba Sac", price: 12000, oldPrice: 17000, category: "sac", verified: true, image: "bag", orders: 345, specs: "Taille: 15.6 pouces", details: categoryDetails.sac },
+            { id: 160, name: "Dell Sac", price: 12000, oldPrice: 17000, category: "sac", verified: true, image: "bag", orders: 267, specs: "Taille: 15.6 pouces", details: categoryDetails.sac },
+            { id: 161, name: "Hp Sac", price: 10000, oldPrice: 15000, category: "sac", verified: true, image: "bag", orders: 312, specs: "Taille: 15.6 pouces", details: categoryDetails.sac },
+            { id: 162, name: "Lenovo Sac", price: 10000, oldPrice: 15000, category: "sac", verified: true, image: "bag", orders: 345, specs: "Taille: 15 pouces", details: categoryDetails.sac },
+            { id: 163, name: "Hp Sac", price: 10000, oldPrice: 15000, category: "sac", verified: true, image: "bag", orders: 378, specs: "Taille: 15 pouces", details: categoryDetails.sac },
+            { id: 164, name: "Toshiba Sac", price: 10000, oldPrice: 15000, category: "sac", verified: true, image: "bag", orders: 267, specs: "Taille: 15 pouces", details: categoryDetails.sac },
+            { id: 165, name: "Lenovo Sac", price: 10000, oldPrice: 15000, category: "sac", verified: true, image: "bag", orders: 312, specs: "Taille: 15.6 pouces", details: categoryDetails.sac }
         ];
 
         // Variables globales
@@ -1912,39 +2085,52 @@
             renderProducts();
         }
 
-        // Initialiser Firebase (MÊME MÉTHODE QUE L'INSCRIPTION)
-        function initializeFirebase() {
+        // Initialiser Firebase avec gestion d'erreur améliorée
+        async function initializeFirebase() {
             try {
-                console.log("Initialisation de Firebase...");
-                
-                // Vérifier si Firebase est chargé
+                // Vérifier si Firebase est déjà initialisé
                 if (typeof firebase === 'undefined') {
                     console.error("Firebase SDK n'est pas chargé");
-                    setTimeout(() => {
-                        if (typeof firebase === 'undefined') {
-                            console.log("Firebase toujours non chargé après attente");
-                            // Rediriger vers la page de connexion si Firebase ne se charge pas
-                            window.location.href = "login.html";
-                        } else {
-                            initializeFirebase();
-                        }
-                    }, 1000);
+                    alert("Erreur: Firebase SDK n'est pas chargé. Vérifiez votre connexion internet.");
                     return;
                 }
+                
+                // Vérifier si l'application Firebase est déjà initialisée
+                if (firebase.apps.length === 0) {
+                    firebaseApp = firebase.initializeApp(firebaseConfig);
+                } else {
+                    firebaseApp = firebase.apps[0];
+                }
+                
+                firebaseAuth = firebase.auth();
+                firebaseDb = firebase.firestore();
                 
                 console.log("Firebase initialisé avec succès");
                 
                 // Vérifier l'état d'authentification
-                auth.onAuthStateChanged(async (user) => {
+                firebaseAuth.onAuthStateChanged(async (user) => {
                     if (user) {
                         currentUser = user;
                         console.log("Utilisateur connecté:", user.email, user.uid);
                         
-                        // Charger le panier de l'utilisateur
-                        await loadUserCart();
+                        // Afficher l'indicateur utilisateur
+                        $('#userIndicator').show();
+                        $('#userEmail').text(user.email);
                         
-                        // Initialiser les produits
-                        filterProducts();
+                        try {
+                            // Vérifier/Créer le document utilisateur
+                            await checkUserDocument();
+                            
+                            // Charger le panier de l'utilisateur
+                            await loadUserCart();
+                            
+                            // Initialiser les produits
+                            filterProducts();
+                        } catch (error) {
+                            console.error("Erreur lors du chargement des données:", error);
+                            // Afficher les produits même en cas d'erreur
+                            filterProducts();
+                        }
                     } else {
                         console.log("Utilisateur non connecté - Redirection vers login");
                         // Rediriger vers la page de connexion
@@ -1953,17 +2139,66 @@
                 });
                 
             } catch (error) {
-                console.error("Erreur Firebase:", error);
+                console.error("Erreur Firebase détaillée:", error);
                 
-                // Afficher les produits même sans Firebase
+                // Afficher un message d'erreur plus utile
+                let errorMessage = "Erreur d'initialisation de la base de données. ";
+                
+                if (error.code === 'failed-precondition') {
+                    errorMessage += "Firebase est déjà initialisé avec des paramètres différents.";
+                } else if (error.code === 'invalid-api-key') {
+                    errorMessage += "Clé API Firebase invalide.";
+                } else if (error.code) {
+                    errorMessage += `Code: ${error.code}`;
+                }
+                
+                console.error(errorMessage);
+                // Ne pas afficher d'alerte immédiate pour ne pas bloquer l'interface
+                // L'utilisateur pourra quand même voir les produits
+                
+                // Initialiser les produits même sans Firebase
                 filterProducts();
-                
-                // Rediriger vers login en cas d'erreur grave
-                window.location.href = "login.html";
             }
         }
 
-        // Charger le panier utilisateur depuis Firestore
+        // Vérifier et créer le document utilisateur si nécessaire - VERSION SIMPLIFIÉE
+        async function checkUserDocument() {
+            if (!currentUser) return;
+            
+            try {
+                const userRef = firebaseDb.collection("users").doc(currentUser.uid);
+                const userDoc = await userRef.get();
+                
+                if (!userDoc.exists) {
+                    // Créer le document utilisateur avec des champs simples
+                    const userData = {
+                        uid: currentUser.uid,
+                        email: currentUser.email,
+                        displayName: currentUser.displayName || "",
+                        photoURL: currentUser.photoURL || "",
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
+                        isActive: true,
+                        role: "client"
+                    };
+                    
+                    await userRef.set(userData);
+                    console.log("Document utilisateur créé avec succès");
+                } else {
+                    // Mettre à jour la dernière connexion
+                    await userRef.update({
+                        lastLogin: new Date().toISOString()
+                    });
+                    console.log("Document utilisateur existant mis à jour");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la vérification du document utilisateur:", error);
+                // Ne pas bloquer l'application si cette opération échoue
+            }
+        }
+
+        // Charger le panier utilisateur depuis Firestore - VERSION ROBUSTE
         async function loadUserCart() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour charger le panier");
@@ -1972,7 +2207,7 @@
             }
             
             try {
-                const cartRef = db.collection("carts").doc(currentUser.uid);
+                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
                 const cartDoc = await cartRef.get();
                 
                 if (cartDoc.exists) {
@@ -1994,12 +2229,14 @@
                     
                     userCartItems = {};
                     
+                    // Ne pas créer le panier immédiatement, seulement quand un produit est ajouté
                     console.log("Panier vide initialisé");
                 }
                 
                 updateCartCount();
             } catch (error) {
                 console.error("Erreur lors du chargement du panier:", error);
+                // Initialiser un panier vide en cas d'erreur
                 userCart = {
                     userId: currentUser ? currentUser.uid : null,
                     items: {},
@@ -2011,7 +2248,7 @@
             }
         }
 
-        // Sauvegarder le panier dans Firestore
+        // Sauvegarder le panier dans Firestore - VERSION SIMPLIFIÉE
         async function saveCartToFirestore() {
             if (!currentUser) {
                 console.log("Pas d'utilisateur pour sauvegarder le panier");
@@ -2019,7 +2256,7 @@
             }
             
             try {
-                const cartRef = db.collection("carts").doc(currentUser.uid);
+                const cartRef = firebaseDb.collection("carts").doc(currentUser.uid);
                 
                 // Calculer le total
                 let totalItems = 0;
@@ -2039,6 +2276,7 @@
                     updatedAt: new Date().toISOString()
                 };
                 
+                // Si le panier n'existe pas encore, ajouter createdAt
                 if (!userCart.createdAt) {
                     cartData.createdAt = new Date().toISOString();
                 }
@@ -2046,6 +2284,7 @@
                 await cartRef.set(cartData, { merge: true });
                 console.log("Panier sauvegardé dans Firestore");
                 
+                // Mettre à jour l'objet userCart
                 userCart = cartData;
                 
             } catch (error) {
@@ -2069,11 +2308,6 @@
             }, 500);
             
             const product = products.find(p => p.id === productId);
-            
-            if (!product) {
-                console.error("Produit non trouvé:", productId);
-                return;
-            }
             
             // Animation vers le panier
             animateAddToCart(buttonElement, product);
@@ -2126,11 +2360,9 @@
 
         // Initialisation
         $(document).ready(async function() {
-            console.log("Dashboard prêt à initialiser Firebase");
-            
-            // Initialiser Firebase
-            setTimeout(() => {
-                initializeFirebase();
+            // Initialiser Firebase de manière asynchrone
+            setTimeout(async () => {
+                await initializeFirebase();
             }, 100);
             
             // Initialiser le filtre de prix désactivé
@@ -2250,6 +2482,8 @@
             
             // Navigation footer
             $('.footer-item').on('click', function(e) {
+                // La navigation se fait via les liens href
+                // On met à jour l'état actif
                 $('.footer-item').removeClass('active');
                 $(this).addClass('active');
             });
