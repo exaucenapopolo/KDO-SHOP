@@ -1438,7 +1438,7 @@
         </div>
     </header>
 
-    <!-- Carrousel de promotions identique au dashboard -->
+    <!-- Carrousel de promotions modifié -->
     <div class="promo-carousel-container">
         <div class="promo-carousel">
             <div class="promo-slide">
@@ -1457,10 +1457,6 @@
                 <span class="promo-badge">ASTUCE</span>
                 <span class="promo-text">Économisez avec le code <span class="promo-price">KDO27</span></span>
             </div>
-            <div class="promo-slide">
-                <span class="promo-badge">SUPPORT</span>
-                <span class="promo-text">Assistance 24h/24 au <span class="promo-price">6XX XXX XXX</span></span>
-            </div>
             <!-- Doubler pour créer l'effet infini -->
             <div class="promo-slide">
                 <span class="promo-badge">AVANTAGE</span>
@@ -1477,10 +1473,6 @@
             <div class="promo-slide">
                 <span class="promo-badge">ASTUCE</span>
                 <span class="promo-text">Économisez avec le code <span class="promo-price">KDO27</span></span>
-            </div>
-            <div class="promo-slide">
-                <span class="promo-badge">SUPPORT</span>
-                <span class="promo-text">Assistance 24h/24 au <span class="promo-price">6XX XXX XXX</span></span>
             </div>
         </div>
     </div>
@@ -2060,17 +2052,7 @@
                         </div>
                     </div>
                     
-                    <div style="margin-top: 15px; padding: 15px; background: var(--accent-gray); border-radius: 8px; font-size: 11px; color: var(--text-medium);">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                            <i class="fas fa-info-circle" style="color: var(--secondary-blue);"></i>
-                            <strong>Informations importantes</strong>
-                        </div>
-                        <p style="margin: 0; line-height: 1.4;">
-                            • Les prix peuvent changer selon la disponibilité des fournisseurs<br>
-                            • Vous pouvez modifier votre commande avant le paiement<br>
-                            • Contactez-nous pour toute question: <strong>support@kdo-cameroun.com</strong>
-                        </p>
-                    </div>
+                    <!-- Section "Informations importantes" supprimée -->
                 </div>
             </div>
         </div>
@@ -2217,14 +2199,8 @@
         let allProducts = [];
         let purchasedItems = {}; // Pour suivre les articles déjà achetés
 
-        // Formatage des prix
-        function formatPrice(price) {
-            return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
-        }
-
         // Images pour chaque catégorie - IDENTIQUE AU DASHBOARD
         const categoryImages = {
-            // Images spécifiques pour les ordinateurs (38 images)
             ordinateur: [
                 "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/1.jpg",
                 "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/2.jpg",
@@ -2265,7 +2241,6 @@
                 "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/39_1.jpeg",
                 "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Ordinateur/42_1.jpeg"
             ],
-            // Images pour les autres catégories
             disquedur: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/disque.png",
             usb: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/cle.png",
             souris: "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/souris.jpg",
@@ -2283,18 +2258,24 @@
         };
 
         // Fonction pour obtenir l'URL de l'image d'un produit - IDENTIQUE AU DASHBOARD
-        function getProductImageUrl(product, index) {
-            if (product.category === "ordinateur") {
-                // Pour les ordinateurs, utiliser l'index pour sélectionner l'image
-                const imageIndex = (product.id - 1) % categoryImages.ordinateur.length;
-                return categoryImages.ordinateur[imageIndex];
-            } else if (categoryImages[product.category]) {
-                // Pour les autres catégories, utiliser l'image de la catégorie
-                return categoryImages[product.category];
-            } else {
-                // Image par défaut si aucune image n'est trouvée
+        function getProductImageUrl(product, productId) {
+            if (!product || !product.category) {
                 return "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
             }
+            
+            if (product.category === "ordinateur") {
+                const imageIndex = (parseInt(productId) - 1) % categoryImages.ordinateur.length;
+                return categoryImages.ordinateur[imageIndex];
+            } else if (categoryImages[product.category]) {
+                return categoryImages[product.category];
+            } else {
+                return "https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/89_1.jpg";
+            }
+        }
+
+        // Formatage des prix
+        function formatPrice(price) {
+            return new Intl.NumberFormat('fr-FR').format(price) + " FCFA";
         }
 
         // Initialiser Firebase et vérifier l'authentification - COMME DANS LE DASHBOARD
@@ -2302,41 +2283,28 @@
             try {
                 console.log("Initialisation de Firebase pour le panier...");
                 
-                // Vérifier l'état d'authentification - MÊME QUE DASHBOARD
                 auth.onAuthStateChanged(async (user) => {
                     if (user) {
                         currentUser = user;
                         console.log("Utilisateur connecté:", user.email, user.uid);
                         
-                        // Charger le profil utilisateur
                         await loadUserProfile();
-                        
-                        // Charger le panier - MÊME MÉTHODE QUE LE DASHBOARD
                         await loadCartFromFirestore();
-                        
-                        // Charger les adresses
                         await loadUserAddresses();
-                        
-                        // Charger les produits
                         await loadAllProducts();
-                        
-                        // Charger les articles déjà achetés
                         await loadPurchasedItems();
                         
-                        // Mettre à jour l'affichage
                         updateCartDisplay();
                         updateSummary();
                         
                     } else {
                         console.log("Utilisateur non connecté - Redirection vers login");
-                        // Rediriger vers la page de connexion comme dans le dashboard
                         window.location.href = "login.html";
                     }
                 });
                 
             } catch (error) {
                 console.error("Erreur Firebase:", error);
-                // Rediriger vers login en cas d'erreur
                 window.location.href = "login.html";
             }
         }
@@ -2353,7 +2321,6 @@
                     userProfile = userSnap.data();
                     console.log("Profil utilisateur chargé:", userProfile);
                     
-                    // Préremplir le formulaire avec les informations du profil
                     if (userProfile.fullName) {
                         $('#deliveryName').val(userProfile.fullName);
                     }
@@ -2369,7 +2336,6 @@
                     
                 } else {
                     console.log("Aucun profil trouvé pour cet utilisateur");
-                    // Créer un profil de base si nécessaire
                     userProfile = {
                         uid: currentUser.uid,
                         email: currentUser.email,
@@ -2391,7 +2357,6 @@
                 snapshot.forEach(doc => {
                     const product = { id: doc.id, ...doc.data() };
                     
-                    // S'assurer que le produit a les champs nécessaires
                     if (!product.category) product.category = 'other';
                     if (!product.specs) product.specs = '';
                     
@@ -2400,7 +2365,6 @@
                 
                 console.log("Produits chargés:", allProducts.length);
                 
-                // Si aucun produit, utiliser des données par défaut (comme dans le dashboard)
                 if (allProducts.length === 0) {
                     allProducts = getDefaultProducts();
                 }
@@ -2469,7 +2433,6 @@
                     userCart = cartData;
                     console.log("Panier chargé depuis Firestore:", userCart);
                 } else {
-                    // Créer un nouveau panier vide - MÊME STRUCTURE QUE LE DASHBOARD
                     userCart = {
                         userId: currentUser.uid,
                         items: {},
@@ -2502,14 +2465,12 @@
                     
                     if (address.isDefault) {
                         defaultAddress = address;
-                        // Préremplir le formulaire avec l'adresse par défaut
                         prefillAddressForm(address);
                     }
                 });
                 
                 console.log("Adresses chargées:", userAddresses.length);
                 
-                // Si aucune adresse mais que l'utilisateur a un profil, utiliser ces informations
                 if (userAddresses.length === 0 && userProfile) {
                     prefillWithProfileInfo();
                 }
@@ -2564,9 +2525,7 @@
             try {
                 const addressesRef = db.collection("userAddresses");
                 
-                // Si c'est l'adresse par défaut, désactiver les autres adresses par défaut
                 if (isDefault) {
-                    // Mettre à jour toutes les autres adresses pour qu'elles ne soient plus par défaut
                     const batch = db.batch();
                     
                     userAddresses.forEach(addr => {
@@ -2579,7 +2538,6 @@
                     await batch.commit();
                 }
                 
-                // Ajouter la nouvelle adresse
                 const addressToSave = {
                     userId: currentUser.uid,
                     ...addressData,
@@ -2591,7 +2549,6 @@
                 const docRef = await addressesRef.add(addressToSave);
                 console.log("Adresse sauvegardée dans Firestore:", docRef.id);
                 
-                // Mettre à jour la liste locale
                 addressToSave.id = docRef.id;
                 userAddresses.push(addressToSave);
                 
@@ -2615,7 +2572,6 @@
             try {
                 const cartRef = db.collection("carts").doc(currentUser.uid);
                 
-                // Calculer les totaux - MÊME LOGIQUE QUE LE DASHBOARD
                 let totalItems = 0;
                 let totalAmount = 0;
                 
@@ -2632,7 +2588,6 @@
                 await cartRef.set(userCart);
                 console.log("Panier mis à jour dans Firestore");
                 
-                // Mettre à jour le compteur dans le footer
                 updateCartCount();
                 
             } catch (error) {
@@ -2640,13 +2595,12 @@
             }
         }
 
-        // Mettre à jour l'affichage du panier avec images améliorées
+        // Mettre à jour l'affichage du panier avec les bonnes images
         function updateCartDisplay() {
             const container = $('#cartItemsContainer');
             const emptyCart = $('#cartEmpty');
             const btnToStep2 = $('#btnToStep2');
             
-            // Calculer le nombre total d'articles
             const totalItems = Object.keys(userCart.items).length;
             
             if (totalItems === 0) {
@@ -2664,16 +2618,13 @@
             
             let itemsCount = 0;
             
-            // Rendre chaque article du panier avec les bonnes images
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
                 const product = allProducts.find(p => p.id === productId) || item;
                 const totalPrice = item.price * item.quantity;
-                // Utiliser la même fonction getProductImageUrl que le dashboard
                 const imageUrl = getProductImageUrl(product, productId);
                 itemsCount += item.quantity;
                 
-                // Vérifier si l'article a déjà été acheté
                 const purchasedCount = purchasedItems[productId] || 0;
                 
                 const cartItem = `
@@ -2733,7 +2684,6 @@
             let savings = 0;
             let itemsCount = 0;
             
-            // Calculer le sous-total et les économies
             for (const productId in userCart.items) {
                 const item = userCart.items[productId];
                 subtotal += item.price * item.quantity;
@@ -2744,7 +2694,6 @@
                 }
             }
             
-            // Calculer les frais de livraison
             let shipping = 0;
             if (itemsCount > 0) {
                 if (deliveryOption === 'express') {
@@ -2756,10 +2705,8 @@
                 }
             }
             
-            // Taxes fixes
             let taxes = 500;
             
-            // Appliquer une réduction si code promo
             let discount = 0;
             if (appliedDiscount) {
                 if (appliedDiscount.type === 'percentage') {
@@ -2767,19 +2714,16 @@
                 } else if (appliedDiscount.type === 'fixed') {
                     discount = appliedDiscount.value;
                 }
-                discount = Math.min(discount, subtotal); // Ne peut pas dépasser le sous-total
+                discount = Math.min(discount, subtotal);
                 
-                // Code KDO27: Enlever les taxes et frais
                 if (appliedDiscount.code === 'KDO27') {
                     taxes = 0;
                 }
             }
             
-            // Calculer le total
             let total = subtotal - discount + shipping + taxes;
             if (total < 0) total = 0;
             
-            // Mettre à jour l'affichage
             $('#summarySubtotal').text(formatPrice(subtotal));
             $('#summaryShipping').text(formatPrice(shipping));
             $('#summaryTaxes').text(formatPrice(taxes));
@@ -2791,7 +2735,6 @@
                 $('#summarySavings').hide();
             }
             
-            // Mettre à jour les informations de commande
             orderDetails = {
                 subtotal,
                 shipping,
@@ -2802,13 +2745,11 @@
                 savings
             };
             
-            // Mettre à jour la confirmation
             updateConfirmation();
         }
 
         // Mettre à jour l'affichage de confirmation
         function updateConfirmation() {
-            // Articles
             const confirmationItems = $('#confirmationItems');
             confirmationItems.empty();
             
@@ -2825,7 +2766,6 @@
                 `);
             }
             
-            // Livraison
             const deliveryText = deliveryOption === 'express' ? 'Livraison Express' : 
                                 deliveryOption === 'standard' ? 'Livraison Standard' : 'Retrait en magasin';
             const deliveryPrice = deliveryOption === 'express' ? '5 000 FCFA' : 
@@ -2842,7 +2782,6 @@
                 </div>
             `);
             
-            // Paiement
             const paymentText = paymentMethod === 'mobile_money' ? 'Mobile Money' :
                                paymentMethod === 'card' ? 'Carte bancaire' :
                                paymentMethod === 'bank' ? 'Virement bancaire' : 'Paiement à la livraison';
@@ -2858,7 +2797,6 @@
                 </div>
             `);
             
-            // Adresse (si remplie)
             if (deliveryInfo.name) {
                 const cityNames = {
                     'yaounde': 'Yaoundé',
@@ -2896,55 +2834,42 @@
                 $('#confirmationAddress').html(addressHTML);
             }
             
-            // Mettre à jour le total de commande
             $('#orderTotal').text(formatPrice(orderDetails.total));
             $('#orderPayment').text(paymentText);
         }
 
         // Changer d'étape
         function goToStep(step) {
-            // Masquer toutes les étapes
             $('.checkout-step').removeClass('active');
-            
-            // Désactiver toutes les étapes de progression
             $('.progress-step').removeClass('active completed');
             
-            // Activer la nouvelle étape
             $(`#checkoutStep${step}`).addClass('active');
             
-            // Mettre à jour la progression
             for (let i = 1; i <= step; i++) {
                 $(`#step${i}`).addClass('completed');
             }
             $(`#step${step}`).addClass('active');
             
-            // Mettre à jour la barre de progression
             const progress = ((step - 1) / 3) * 100;
             $('#progressFill').css('width', progress + '%');
             
             currentStep = step;
             
-            // Mettre à jour les boutons de navigation
             updateNavigationButtons();
         }
 
         // Mettre à jour les boutons de navigation
         function updateNavigationButtons() {
-            // Activer/désactiver les boutons suivant selon les conditions
             if (currentStep === 1) {
-                // Étape 1: Panier - Activer si panier non vide
                 const hasItems = Object.keys(userCart.items).length > 0;
                 $('#btnToStep2').prop('disabled', !hasItems);
             } else if (currentStep === 2) {
-                // Étape 2: Livraison - Activer si formulaire valide
                 const isValid = validateDeliveryForm();
                 $('#btnToStep3').prop('disabled', !isValid);
             } else if (currentStep === 3) {
-                // Étape 3: Paiement - Activer si conditions acceptées
                 const isAccepted = $('#acceptTerms').is(':checked');
                 $('#btnToStep4').prop('disabled', !isAccepted);
             } else if (currentStep === 4) {
-                // Étape 4: Confirmation - Activer si confirmation finale cochée
                 const isConfirmed = $('#finalConfirmation').is(':checked');
                 $('#btnConfirmOrder').prop('disabled', !isConfirmed);
             }
@@ -2959,25 +2884,21 @@
             const district = $('#deliveryDistrict').val();
             const address = $('#deliveryAddress').val();
             
-            // Validation basique
             if (!name || !phone || !email || !city || !district || !address) {
                 return false;
             }
             
-            // Validation du téléphone (format camerounais simplifié)
             const phoneRegex = /^[2367][0-9]{8}$/;
             const cleanPhone = phone.replace(/\s/g, '');
             if (!phoneRegex.test(cleanPhone)) {
                 return false;
             }
             
-            // Validation de l'email
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 return false;
             }
             
-            // Sauvegarder les informations
             deliveryInfo = {
                 name,
                 company: $('#deliveryCompany').val(),
@@ -2999,10 +2920,8 @@
             const isDefault = $('#setAsDefaultAddress').is(':checked');
             const saveContact = $('#saveContactInfo').is(':checked');
             
-            // Sauvegarder l'adresse
             await saveUserAddress(deliveryInfo, isDefault);
             
-            // Mettre à jour le profil utilisateur si demandé
             if (saveContact) {
                 await updateUserProfile();
             }
@@ -3034,13 +2953,12 @@
 
         // Appliquer un code promo
         function applyDiscountCode(code) {
-            // Codes promotionnels
             const discountCodes = {
                 'KDO10': { type: 'percentage', value: 10, minOrder: 50000, code: 'KDO10' },
                 'KDO5000': { type: 'fixed', value: 5000, minOrder: 100000, code: 'KDO5000' },
                 'BIENVENUE': { type: 'percentage', value: 15, minOrder: 0, code: 'BIENVENUE' },
                 'LIVRAISON': { type: 'fixed', value: 1000, minOrder: 50000, code: 'LIVRAISON' },
-                'KDO27': { type: 'percentage', value: 10, minOrder: 0, code: 'KDO27', removeTaxes: true } // Code spécial KDO27
+                'KDO27': { type: 'percentage', value: 10, minOrder: 0, code: 'KDO27', removeTaxes: true }
             };
             
             const discount = discountCodes[code.toUpperCase()];
@@ -3092,17 +3010,14 @@
 
         // Finaliser la commande
         async function finalizeOrder() {
-            // Sauvegarder l'adresse d'abord
             const addressSaved = await saveAddressInfo();
             if (!addressSaved) {
                 alert("Veuillez vérifier vos informations d'adresse.");
                 return;
             }
             
-            // Générer un numéro de commande
             const orderNumber = 'CMD-' + Date.now().toString().slice(-8);
             
-            // Calculer la date de livraison estimée
             const today = new Date();
             const deliveryDays = deliveryOption === 'express' ? 3 : 7;
             const deliveryDate = new Date(today);
@@ -3114,7 +3029,6 @@
                 year: 'numeric'
             });
             
-            // Sauvegarder la commande dans Firestore
             if (currentUser) {
                 try {
                     const orderRef = db.collection("orders").doc();
@@ -3138,14 +3052,12 @@
                     await orderRef.set(orderData);
                     console.log("Commande sauvegardée dans Firestore:", orderNumber);
                     
-                    // Enregistrer une activité récente
                     await saveRecentActivity('order_created', {
                         orderId: orderNumber,
                         total: orderDetails.total,
                         itemsCount: orderDetails.itemsCount
                     });
                     
-                    // Mettre à jour les articles achetés
                     for (const productId in userCart.items) {
                         const item = userCart.items[productId];
                         if (purchasedItems[productId]) {
@@ -3155,7 +3067,6 @@
                         }
                     }
                     
-                    // Vider le panier après commande - MÊME MÉTHODE QUE LE DASHBOARD
                     userCart.items = {};
                     await updateCartInFirestore();
                     
@@ -3166,7 +3077,6 @@
                 }
             }
             
-            // Mettre à jour l'affichage de succès
             $('#orderNumber').text(orderNumber);
             $('#orderDate').text(today.toLocaleDateString('fr-FR'));
             $('#orderTotal').text(formatPrice(orderDetails.total));
@@ -3177,10 +3087,8 @@
             $('#orderPayment').text(paymentText);
             $('#deliveryEstimate').text(formattedDate);
             
-            // Passer à l'étape de succès
             goToStep(5);
             
-            // Afficher les instructions de paiement selon la méthode
             let paymentInstructions = '';
             
             if (paymentMethod === 'mobile_money') {
@@ -3220,21 +3128,17 @@
                 $('.order-success .success-message').after(paymentInstructions);
             }
             
-            // Réinitialiser pour un nouvel achat après 5 secondes
             setTimeout(() => {
-                // Retourner à l'étape 1 avec panier vide
                 goToStep(1);
                 updateCartDisplay();
                 updateSummary();
                 
-                // Réinitialiser les champs de formulaire
                 $('#finalConfirmation').prop('checked', false);
                 $('#acceptTerms').prop('checked', false);
                 appliedDiscount = null;
                 $('#discountCode').val('');
                 $('#discountMessage').empty();
                 
-                // Afficher un message temporaire
                 const alertDiv = $('<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-bottom: 15px;">');
                 alertDiv.html(`
                     <i class="fas fa-check-circle me-2"></i>
@@ -3243,18 +3147,16 @@
                 `);
                 $('#checkoutStep1 .alert').after(alertDiv);
                 
-                // Auto-dismiss après 5 secondes
                 setTimeout(() => {
                     alertDiv.alert('close');
                 }, 5000);
-            }, 10000); // 10 secondes avant de revenir
+            }, 10000);
         }
 
         // Initialisation
         $(document).ready(async function() {
             console.log("Panier prêt à initialiser Firebase");
             
-            // Initialiser Firebase - MÊME QUE DASHBOARD
             setTimeout(() => {
                 initializeFirebase();
             }, 100);
@@ -3269,7 +3171,6 @@
             });
             
             $('#btnToStep3').on('click', async function() {
-                // Sauvegarder l'adresse avant de passer à l'étape suivante
                 const isValid = validateDeliveryForm();
                 if (isValid) {
                     await saveAddressInfo();
@@ -3339,11 +3240,9 @@
                     quantity--;
                 }
                 
-                // Limiter à 1-100
                 quantity = Math.max(1, Math.min(100, quantity));
                 input.val(quantity);
                 
-                // Mettre à jour le panier
                 if (userCart.items[productId]) {
                     userCart.items[productId].quantity = quantity;
                     updateCartInFirestore();
@@ -3357,13 +3256,11 @@
                 const productId = $(this).data('id');
                 let quantity = parseInt($(this).val());
                 
-                // Valider l'entrée
                 if (isNaN(quantity) || quantity < 1) quantity = 1;
                 if (quantity > 100) quantity = 100;
                 
                 $(this).val(quantity);
                 
-                // Mettre à jour le panier
                 if (userCart.items[productId]) {
                     userCart.items[productId].quantity = quantity;
                     updateCartInFirestore();
