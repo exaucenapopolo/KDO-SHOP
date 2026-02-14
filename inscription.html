@@ -45,11 +45,12 @@
             text-align: center;
         }
         
-        .logo-text {
-            font-size: 32px;
-            font-weight: 800;
+        /* MODIFICATION : Logo ajouté */
+        .header-logo {
+            max-width: 180px;
+            height: auto;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
             margin-bottom: 10px;
-            letter-spacing: -1px;
         }
         
         .signup-subtitle {
@@ -173,6 +174,11 @@
         .form-control:focus {
             border-color: var(--primary-orange);
             box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        .form-control:read-only {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
         }
         
         .form-select {
@@ -390,6 +396,26 @@
             padding: 0 15px;
             font-size: 14px;
         }
+        
+        /* Lien connexion */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 15px;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: var(--primary-orange);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+            color: #E55A00;
+        }
     </style>
 </head>
 <body>
@@ -407,9 +433,10 @@
     
     <div class="container signup-container">
         <div class="signup-card">
-            <!-- Header -->
+            <!-- Header avec logo -->
             <div class="signup-header">
-                <h1 class="logo-text">KDO CAMEROUN</h1>
+                <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                     alt="KDO CAMEROUN Logo" class="header-logo">
                 <p class="signup-subtitle">Créez votre compte professionnel en 4 étapes simples</p>
             </div>
             
@@ -500,6 +527,11 @@
                         S'inscrire avec Google
                     </button>
                     
+                    <!-- MODIFICATION : Lien vers connexion ajouté -->
+                    <div class="login-link">
+                        Déjà un compte ? <a href="index.html">Connectez-vous ici</a>
+                    </div>
+                    
                     <div class="step-actions">
                         <div></div>
                         <button class="btn-next" onclick="nextStep(2)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
@@ -517,18 +549,12 @@
                         <div class="error-message" id="phoneError">Veuillez entrer un numéro de téléphone valide</div>
                     </div>
                     
+                    <!-- MODIFICATION : Pays fixé sur Cameroun (lecture seule) -->
                     <div class="form-group">
                         <label class="form-label" for="country">Pays *</label>
-                        <select class="form-select" id="country" required>
-                            <option value="">Sélectionnez votre pays</option>
-                            <option value="cameroun">Cameroun</option>
-                            <option value="congo">Congo</option>
-                            <option value="tchad">Tchad</option>
-                            <option value="centrafrique">Centrafrique</option>
-                            <option value="gabon">Gabon</option>
-                            <option value="guinee">Guinée Équatoriale</option>
-                        </select>
-                        <div class="error-message" id="countryError">Veuillez sélectionner votre pays</div>
+                        <input type="text" class="form-control" id="country" value="Cameroun" readonly>
+                        <!-- On garde un champ caché pour la validation et l'envoi -->
+                        <input type="hidden" id="countryHidden" value="cameroun">
                     </div>
                     
                     <div class="form-group">
@@ -560,8 +586,9 @@
                                     <div class="mb-3">
                                         <i class="fas fa-shopping-cart fa-3x text-primary"></i>
                                     </div>
+                                    <!-- MODIFICATION : Titre et description modifiés -->
                                     <h4 class="card-title">Acheteur</h4>
-                                    <p class="card-text">Je souhaite acheter des produits en gros pour ma boutique</p>
+                                    <p class="card-text">Je souhaite acheter pour mon usage personnel</p>
                                     <div class="form-check mt-3">
                                         <input class="form-check-input" type="radio" name="accountType" id="buyer" value="acheteur" checked>
                                         <label class="form-check-label" for="buyer">
@@ -578,10 +605,11 @@
                                     <div class="mb-3">
                                         <i class="fas fa-store fa-3x text-primary"></i>
                                     </div>
-                                    <h4 class="card-title">Vendeur</h4>
-                                    <p class="card-text">Je souhaite vendre mes produits sur la plateforme</p>
+                                    <!-- MODIFICATION : Titre et description modifiés -->
+                                    <h4 class="card-title">Revendeur</h4>
+                                    <p class="card-text">Je souhaite acheter en gros pour revendre dans ma boutique</p>
                                     <div class="form-check mt-3">
-                                        <input class="form-check-input" type="radio" name="accountType" id="seller" value="vendeur">
+                                        <input class="form-check-input" type="radio" name="accountType" id="seller" value="revendeur">
                                         <label class="form-check-label" for="seller">
                                             Sélectionner
                                         </label>
@@ -599,8 +627,9 @@
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="terms" required>
                         <label class="form-check-label" for="terms">
-                            J'accepte les <a href="#" class="text-primary">Conditions Générales d'Utilisation</a> 
-                            et la <a href="#" class="text-primary">Politique de Confidentialité</a> *
+                            <!-- MODIFICATION : Liens mis à jour -->
+                            J'accepte les <a href="conditions-utilisation.html" class="text-primary">Conditions Générales d'Utilisation</a> 
+                            et la <a href="politique-confidentialite.html" class="text-primary">Politique de Confidentialité</a> *
                         </label>
                         <div class="error-message" id="termsError">Vous devez accepter les conditions</div>
                     </div>
@@ -818,7 +847,7 @@
             
             if (step === 2) {
                 const phone = document.getElementById('phone').value.trim();
-                const country = document.getElementById('country').value;
+                // Le pays est fixé à Cameroun, on vérifie juste que la ville est remplie
                 const city = document.getElementById('city').value.trim();
                 
                 if (!phone) {
@@ -826,13 +855,6 @@
                     isValid = false;
                 } else {
                     document.getElementById('phoneError').style.display = 'none';
-                }
-                
-                if (!country) {
-                    document.getElementById('countryError').style.display = 'block';
-                    isValid = false;
-                } else {
-                    document.getElementById('countryError').style.display = 'none';
                 }
                 
                 if (!city) {
@@ -877,15 +899,17 @@
                     document.getElementById('summaryEmail').textContent = document.getElementById('email').value;
                     document.getElementById('summaryPhone').textContent = document.getElementById('phone').value;
                     
-                    const countrySelect = document.getElementById('country');
-                    document.getElementById('summaryCountry').textContent = 
-                        countrySelect.options[countrySelect.selectedIndex].text;
+                    // Pays fixé
+                    document.getElementById('summaryCountry').textContent = 'Cameroun';
                     
                     document.getElementById('summaryCity').textContent = document.getElementById('city').value;
                     
                     const accountType = document.querySelector('input[name="accountType"]:checked').value;
-                    document.getElementById('summaryAccountType').textContent = 
-                        accountType === 'acheteur' ? 'Acheteur' : 'Vendeur';
+                    // Adaptation pour l'affichage
+                    let accountTypeText = '';
+                    if (accountType === 'acheteur') accountTypeText = 'Acheteur';
+                    else if (accountType === 'revendeur') accountTypeText = 'Revendeur';
+                    document.getElementById('summaryAccountType').textContent = accountTypeText;
                     
                     const businessName = document.getElementById('businessName').value;
                     document.getElementById('summaryBusiness').textContent = businessName || 'Non spécifié';
@@ -929,13 +953,13 @@
                         email: user.email,
                         phone: user.phoneNumber || '',
                         photoURL: user.photoURL,
-                        accountType: 'acheteur', // Par défaut
+                        accountType: 'acheteur', // Par défaut pour Google
                         createdAt: new Date().toISOString(),
                         lastLogin: new Date().toISOString(),
                         status: 'active',
                         emailVerified: user.emailVerified,
                         provider: 'google',
-                        country: '',
+                        country: 'Cameroun', // Pays fixé
                         city: '',
                         address: '',
                         businessName: '',
@@ -954,10 +978,6 @@
                             totalSpent: 0,
                             favoriteCategories: []
                         },
-                        // Champs supplémentaires pour compatibilité
-                        address: '',
-                        city: '',
-                        country: 'Cameroun',
                         updatedAt: new Date().toISOString()
                     };
                     
@@ -1000,6 +1020,7 @@
                     if (!existingData.preferences) updateData.preferences = { notifications: true, newsletter: true };
                     if (!existingData.stats) updateData.stats = { totalOrders: 0, totalSpent: 0, favoriteCategories: [] };
                     if (!existingData.updatedAt) updateData.updatedAt = new Date().toISOString();
+                    if (!existingData.country) updateData.country = 'Cameroun'; // S'assurer que le pays est défini
                     
                     // Mettre à jour si nécessaire
                     if (Object.keys(updateData).length > 0) {
@@ -1054,7 +1075,8 @@
                 const lastName = document.getElementById('lastName').value.trim();
                 const email = document.getElementById('email').value.trim();
                 const phone = document.getElementById('phone').value.trim();
-                const country = document.getElementById('country').value;
+                // Pays fixe
+                const country = 'Cameroun';
                 const city = document.getElementById('city').value.trim();
                 const address = document.getElementById('address').value.trim();
                 const accountType = document.querySelector('input[name="accountType"]:checked').value;
