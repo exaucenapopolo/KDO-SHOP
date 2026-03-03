@@ -212,8 +212,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Section Features */
-        .features {
+        /* Section Produits populaires */
+        .products {
             padding: 100px 0;
             background: white;
         }
@@ -242,77 +242,6 @@
             height: 4px;
             background: var(--gradient-orange);
             border-radius: 2px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-            margin-bottom: 30px;
-            border: 1px solid rgba(0,0,0,0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--gradient-orange);
-            transform: scaleX(0);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.1);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 107, 0, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 35px;
-            color: var(--primary-orange);
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover .feature-icon {
-            background: var(--primary-orange);
-            color: white;
-            transform: rotateY(360deg);
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Section Produits populaires */
-        .products {
-            padding: 100px 0;
-            background: var(--accent-gray);
         }
 
         .product-card {
@@ -391,6 +320,73 @@
         .btn-product:hover {
             background: var(--primary-orange);
             color: white;
+        }
+
+        /* Section Features (Pourquoi nous choisir ?) avec images */
+        .features {
+            padding: 100px 0;
+            background: var(--accent-gray);
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-orange);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid var(--primary-orange);
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover .feature-image {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
         }
 
         /* Section Témoignages */
@@ -635,7 +631,7 @@
                         <a class="nav-link" href="#produits">Produits</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
+                        <a class="nav-link" href="#pourquoi">Pourquoi nous choisir</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#temoignages">Témoignages</a>
@@ -664,7 +660,7 @@
                         <a href="connexion.html" class="btn btn-primary-custom">
                             <i class="fas fa-rocket me-2"></i>Commencer
                         </a>
-                        <a href="#produits" class="btn btn-outline-custom">
+                        <a href="connexion.html" class="btn btn-outline-custom">
                             <i class="fas fa-eye me-2"></i>Voir nos produits
                         </a>
                     </div>
@@ -678,91 +674,25 @@
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="services" class="features">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2>Pourquoi nous choisir ?</h2>
-                <p class="text-muted">Des avantages exceptionnels pour une expérience d'achat unique</p>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <h3>Livraison garantie</h3>
-                        <p>Livraison rapide et sécurisée partout au Cameroun, avec suivi en temps réel.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Garantie assurée</h3>
-                        <p>Tous nos produits bénéficient d'une garantie constructeur et d'un service après-vente.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-credit-card"></i>
-                        </div>
-                        <h3>Paiement sécurisé</h3>
-                        <p>Transactions 100% sécurisées avec plusieurs options de paiement disponibles.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <h3>Support 24/7</h3>
-                        <p>Une équipe à votre écoute pour répondre à toutes vos questions.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-tag"></i>
-                        </div>
-                        <h3>Prix compétitifs</h3>
-                        <p>Les meilleurs prix du marché, avec des promotions régulières.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <h3>Produits certifiés</h3>
-                        <p>Des produits authentiques et certifiés, sélectionnés pour leur qualité.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
+    <!-- Products Section (déplacée avant Features) -->
     <section id="produits" class="products">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
                 <h2>Produits populaires</h2>
-                <p class="text-muted">Découvrez notre sélection d'ordinateurs et accessoires les plus vendus</p>
+                <p class="text-muted">Découvrez notre sélection d'ordinateurs et accessoires à prix imbattables</p>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
                     <div class="product-card">
                         <div class="product-image">
                             <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Ordinateur portable">
-                            <span class="product-badge">-15%</span>
+                            <span class="product-badge">-20%</span>
                         </div>
                         <div class="product-info">
-                            <h4>HP Pavilion 15</h4>
-                            <p class="text-muted">Intel Core i7, 16Go RAM, 512Go SSD</p>
-                            <div class="product-price">650 000 FCFA</div>
-                            <button class="btn btn-product">Voir le produit</button>
+                            <h4>HP 15" Édition Spéciale</h4>
+                            <p class="text-muted">Intel Celeron, 4Go RAM, 128Go SSD</p>
+                            <div class="product-price">40 000 FCFA</div>
+                            <a href="connexion.html" class="btn btn-product">Voir le produit</a>
                         </div>
                     </div>
                 </div>
@@ -773,10 +703,10 @@
                             <span class="product-badge">Nouveau</span>
                         </div>
                         <div class="product-info">
-                            <h4>Pack Gamer</h4>
-                            <p class="text-muted">Souris, clavier, casque RGB</p>
-                            <div class="product-price">85 000 FCFA</div>
-                            <button class="btn btn-product">Voir le produit</button>
+                            <h4>Kit Gamer RGB</h4>
+                            <p class="text-muted">Souris + Clavier + Casque + Tapis</p>
+                            <div class="product-price">34 900 FCFA</div>
+                            <a href="connexion.html" class="btn btn-product">Voir le produit</a>
                         </div>
                     </div>
                 </div>
@@ -784,21 +714,75 @@
                     <div class="product-card">
                         <div class="product-image">
                             <img src="https://images.unsplash.com/photo-1603302576837-37561b2e230b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1168&q=80" alt="Ordinateur de bureau">
-                            <span class="product-badge">-10%</span>
+                            <span class="product-badge">-15%</span>
                         </div>
                         <div class="product-info">
-                            <h4>Dell Optiplex 7080</h4>
-                            <p class="text-muted">Intel Core i5, 8Go RAM, 256Go SSD</p>
-                            <div class="product-price">450 000 FCFA</div>
-                            <button class="btn btn-product">Voir le produit</button>
+                            <h4>PC Bureau Intel i3</h4>
+                            <p class="text-muted">8Go RAM, 240Go SSD, Écran inclus</p>
+                            <div class="product-price">80 000 FCFA</div>
+                            <a href="connexion.html" class="btn btn-product">Voir le produit</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-center mt-5" data-aos="fade-up">
-                <a href="#" class="btn btn-primary-custom btn-lg">
+                <a href="connexion.html" class="btn btn-primary-custom btn-lg">
                     <i class="fas fa-arrow-right me-2"></i>Tous nos produits
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section (Pourquoi nous choisir ?) avec images -->
+    <section id="pourquoi" class="features">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Pourquoi nous choisir ?</h2>
+                <p class="text-muted">Des avantages exceptionnels pour une expérience d'achat unique</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <img src="https://images.unsplash.com/photo-1566576721346-d4a3b4eaeb55?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Livraison" class="feature-image">
+                        <h3>Livraison garantie</h3>
+                        <p>Livraison rapide et sécurisée partout au Cameroun, avec suivi en temps réel.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Garantie" class="feature-image">
+                        <h3>Garantie assurée</h3>
+                        <p>Tous nos produits bénéficient d'une garantie constructeur et d'un service après-vente.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Paiement sécurisé" class="feature-image">
+                        <h3>Paiement sécurisé</h3>
+                        <p>Transactions 100% sécurisées avec plusieurs options de paiement disponibles.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Support" class="feature-image">
+                        <h3>Support 24/7</h3>
+                        <p>Une équipe à votre écoute pour répondre à toutes vos questions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card">
+                        <img src="https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Prix compétitifs" class="feature-image">
+                        <h3>Prix compétitifs</h3>
+                        <p>Les meilleurs prix du marché, avec des promotions régulières.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card">
+                        <img src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Certification" class="feature-image">
+                        <h3>Produits certifiés</h3>
+                        <p>Des produits authentiques et certifiés, sélectionnés pour leur qualité.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -887,7 +871,7 @@
                     <ul class="footer-links">
                         <li><a href="#accueil">Accueil</a></li>
                         <li><a href="#produits">Produits</a></li>
-                        <li><a href="#services">Services</a></li>
+                        <li><a href="#pourquoi">Pourquoi nous choisir</a></li>
                         <li><a href="#temoignages">Témoignages</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
@@ -897,22 +881,22 @@
                     <ul class="footer-links">
                         <li><a href="terms.html">Conditions d'utilisation</a></li>
                         <li><a href="privacy.html">Politique de confidentialité</a></li>
-                        <li><a href="#">Mentions légales</a></li>
-                        <li><a href="#">Cookies</a></li>
+                        <li><a href="mentions-legales.html">Mentions légales</a></li>
+                        <li><a href="cookies.html">Cookies</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Contact</h5>
                     <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt me-2"></i> Douala, Cameroun</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Yaoundé, Cameroun</li>
                         <li><i class="fas fa-phone me-2"></i> +237 6 99 99 99 99</li>
-                        <li><i class="fas fa-envelope me-2"></i> contact@kdo-cameroun.cm</li>
-                        <li><i class="fas fa-clock me-2"></i> Lun-Sam : 8h - 18h</li>
+                        <li><i class="fas fa-envelope me-2"></i> contact@chezkdo.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Lun-Sam : 9h - 18h</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 KDO CAMEROUN. Tous droits réservés. Conçu avec <i class="fas fa-heart text-danger"></i> au Cameroun.</p>
+                <p>&copy; 2026 KDO CAMEROUN. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
