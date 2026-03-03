@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDO CAMEROUN - Connexion Professionnelle</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #FF6B00;
+            --secondary-blue: #0066CC;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
+            --white: #FFFFFF;
+            --success-green: #52C41A;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FF6B00 0%, #FF8E3C 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .login-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-left {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, #FF8E3C 100%);
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png') center center no-repeat;
+            background-size: contain;
+            opacity: 0.1;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-img {
+            max-width: 180px;
+            height: auto;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .features-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            padding: 10px 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        
+        .features-list li:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        .features-list i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .login-right {
+            padding: 50px 40px;
+            position: relative;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideInDown 0.6s ease-out;
+        }
+        
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-title {
+            color: var(--text-dark);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .login-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+        
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label i {
+            margin-right: 8px;
+            color: var(--primary-orange);
+        }
+        
+        .form-control {
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary-orange);
+            border: none;
+            border-radius: 10px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary-custom:hover {
+            background: #E55A00;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn-primary-custom:active {
+            transform: translateY(0);
+        }
+        
+        .btn-google {
+            background: white;
+            border: 2px solid #E0E0E0;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            width: 100%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: #999;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #E0E0E0;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+        }
+        
+        .forgot-link {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            text-align: right;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .forgot-link:hover {
+            text-decoration: underline;
+            color: #E55A00;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 15px;
+        }
+        
+        .signup-link a {
+            color: var(--primary-orange);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+            color: #E55A00;
+        }
+        
+        @media (max-width: 992px) {
+            .login-left {
+                padding: 40px 30px;
+            }
+            
+            .login-right {
+                padding: 40px 30px;
+            }
+            
+            .logo-img {
+                max-width: 150px;
+            }
+            
+            .tagline {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .login-left {
+                padding: 30px 20px;
+            }
+            
+            .login-right {
+                padding: 30px 20px;
+            }
+            
+            .logo-img {
+                max-width: 120px;
+            }
+            
+            .tagline {
+                font-size: 16px;
+            }
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            min-width: 300px;
+            display: none;
+            animation: slideInRight 0.5s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Message de succès */
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            color: var(--success-green);
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease-out;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        .success-title {
+            color: var(--success-green);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            animation: slideInUp 0.6s ease-out 0.2s both;
+        }
+        
+        .success-text {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            animation: slideInUp 0.6s ease-out 0.4s both;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Animation pour le formulaire */
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .forgot-link { animation-delay: 0.3s; }
+        .btn-primary-custom { animation-delay: 0.4s; }
+        .divider { animation-delay: 0.5s; }
+        .btn-google { animation-delay: 0.6s; }
+        .signup-link { animation-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <!-- Notification -->
+    <div id="notification" class="notification alert alert-dismissible fade" role="alert">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-info-circle me-3" style="font-size: 24px;"></i>
+            <div>
+                <strong id="notificationTitle"></strong>
+                <p class="mb-0 small" id="notificationMessage"></p>
+            </div>
+        </div>
+        <button type="button" class="btn-close" onclick="hideNotification()"></button>
+    </div>
+    
+    <!-- Message de succès (caché par défaut) -->
+    <div id="successMessage" class="success-message" style="display: none;">
+        <div class="success-icon">
+            <i class="fas fa-check-circle pulse"></i>
+        </div>
+        <h2 class="success-title">Connexion réussie !</h2>
+        <p class="success-text">
+            Félicitations ! Vous êtes maintenant connecté à votre compte KDO CAMEROUN.<br>
+            Vous allez être redirigé vers votre tableau de bord.
+        </p>
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+    </div>
+    
+    <div class="container login-container">
+        <div class="login-card">
+            <div class="row g-0">
+                <!-- Côté gauche - Présentation -->
+                <div class="col-lg-6">
+                    <div class="login-left">
+                        <div class="logo-container">
+                            <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" 
+                                 alt="KDO CAMEROUN Logo" class="logo-img">
+                        </div>
+                        <!-- MODIFICATION : Tagline changée -->
+                        <p class="tagline">leader dans la vente d'ordinateur et d'accessoires informatiques</p>
+                        
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Accès à des milliers de produits</li>
+                            <!-- MODIFICATION : "Fournisseurs vérifiés" remplacé par "Garantie assuré" -->
+                            <li><i class="fas fa-check-circle"></i> Garantie assuré</li>
+                            <li><i class="fas fa-check-circle"></i> Transactions sécurisées</li>
+                            <li><i class="fas fa-check-circle"></i> Livraison garantie</li>
+                            <li><i class="fas fa-check-circle"></i> Support 24/7</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Côté droit - Formulaire -->
+                <div class="col-lg-6">
+                    <div class="login-right">
+                        <div class="login-header">
+                            <h2 class="login-title">Bienvenue sur KDO CAMEROUN</h2>
+                            <p class="login-subtitle">Connectez-vous à votre espace professionnel</p>
+                        </div>
+                        
+                        <!-- Formulaire de connexion -->
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label class="form-label" for="email">
+                                    <i class="fas fa-envelope"></i> Email professionnel
+                                </label>
+                                <input type="email" class="form-control" id="email" placeholder="votre@email.com" required>
+                                <div class="error-message" id="emailError">Veuillez entrer un email valide</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="password">
+                                    <i class="fas fa-lock"></i> Mot de passe
+                                </label>
+                                <input type="password" class="form-control" id="password" placeholder="Votre mot de passe" required>
+                                <div class="error-message" id="passwordError">Le mot de passe doit contenir au moins 6 caractères</div>
+                            </div>
+                            
+                            <!-- MODIFICATION : Lien vers mot-de-passe-oublie.html -->
+                            <a href="mot-de-passe-oublie.html" class="forgot-link">Mot de passe oublié ?</a>
+                            
+                            <button type="submit" class="btn-primary-custom" id="loginBtn">
+                                <i class="fas fa-sign-in-alt me-2"></i> Se connecter
+                            </button>
+                            
+                            <div class="divider">
+                                <span>Ou connectez-vous avec</span>
+                            </div>
+                            
+                            <button type="button" class="btn-google" id="googleLoginBtn">
+                                <img src="https://www.google.com/favicon.ico" alt="Google Logo">
+                                Se connecter avec Google
+                            </button>
+                            
+                            <div class="signup-link">
+                                Vous n'avez pas de compte ? <a href="inscription.html">Inscrivez-vous ici</a>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <p class="small text-muted">
+                                En vous connectant, vous acceptez nos 
+                                <!-- MODIFICATION : Liens vers les nouvelles pages -->
+                                <a href="terms.html" class="text-primary">Conditions d'utilisation</a> 
+                                et notre 
+                                <a href="privacy.html" class="text-primary">Politique de confidentialité</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Firebase SDK - Version compatibilité -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // Nouvelle configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
+            authDomain: "kdo-cameroun.firebaseapp.com",
+            projectId: "kdo-cameroun",
+            storageBucket: "kdo-cameroun.firebasestorage.app",
+            messagingSenderId: "445876564547",
+            appId: "1:445876564547:web:26507d61bb091fa7bd1af6",
+            measurementId: "G-FX2DVSKLKZ"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // Fonctions de notification
+        function showNotification(title, message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const titleEl = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
+            
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+            
+            // Changer la classe en fonction du type
+            notification.className = `notification alert alert-${type} alert-dismissible fade show`;
+            
+            // Afficher
+            notification.style.display = 'block';
+            
+            // Auto-hide après 5 secondes
+            setTimeout(() => {
+                hideNotification();
+            }, 5000);
+        }
+        
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'none';
+        }
+        
+        // Fonction pour afficher le message de succès et rediriger
+        function showSuccessAndRedirect() {
+            const successMessage = document.getElementById('successMessage');
+            const loginRight = document.querySelector('.login-right');
+            
+            // Masquer le formulaire et afficher le message de succès
+            loginRight.style.position = 'relative';
+            successMessage.style.display = 'flex';
+            
+            // Redirection après 3 secondes
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 3000);
+        }
+        
+        // Connexion avec email/mot de passe
+        async function loginWithEmail(email, password) {
+            try {
+                // Désactiver le bouton
+                const loginBtn = document.getElementById('loginBtn');
+                const originalText = loginBtn.innerHTML;
+                loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Connexion...';
+                loginBtn.disabled = true;
+                
+                // Connexion avec Firebase
+                const userCredential = await auth.signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+                
+                console.log("✅ Connexion réussie avec UID:", user.uid);
+                
+                // Mettre à jour la dernière connexion dans Firestore
+                await db.collection("users").doc(user.uid).update({
+                    lastLogin: new Date().toISOString()
+                });
+                
+                // Afficher le message de succès
+                showSuccessAndRedirect();
+                
+            } catch (error) {
+                console.error('❌ Erreur de connexion:', error);
+                
+                // Réactiver le bouton
+                const loginBtn = document.getElementById('loginBtn');
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i> Se connecter';
+                loginBtn.disabled = false;
+                
+                let errorMessage = 'Erreur de connexion. Veuillez réessayer.';
+                
+                // Messages d'erreur plus précis
+                if (error.code) {
+                    switch(error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'Aucun compte trouvé avec cet email.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'Mot de passe incorrect.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'L\'adresse email est invalide.';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage = 'Ce compte a été désactivé.';
+                            break;
+                        case 'auth/too-many-requests':
+                            errorMessage = 'Trop de tentatives de connexion. Veuillez réessayer plus tard.';
+                            break;
+                        case 'auth/network-request-failed':
+                            errorMessage = 'Problème de connexion réseau. Vérifiez votre connexion internet.';
+                            break;
+                        default:
+                            errorMessage = `Erreur: ${error.message}`;
+                    }
+                }
+                
+                // Afficher l'erreur dans une notification
+                showNotification("Erreur", errorMessage, "danger");
+            }
+        }
+        
+        // Connexion avec Google
+        async function loginWithGoogle() {
+            try {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                
+                // Désactiver le bouton Google
+                const googleBtn = document.getElementById('googleLoginBtn');
+                const originalText = googleBtn.innerHTML;
+                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Connexion en cours...';
+                googleBtn.disabled = true;
+                
+                const result = await auth.signInWithPopup(provider);
+                const user = result.user;
+                
+                console.log("✅ Connexion Google réussie avec UID:", user.uid);
+                
+                // Vérifier si l'utilisateur existe déjà dans Firestore
+                const userDoc = await db.collection("users").doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    // Créer un nouvel utilisateur dans Firestore
+                    const userData = {
+                        uid: user.uid,
+                        firstName: user.displayName?.split(' ')[0] || '',
+                        lastName: user.displayName?.split(' ').slice(1).join(' ') || '',
+                        email: user.email,
+                        phone: user.phoneNumber || '',
+                        photoURL: user.photoURL,
+                        accountType: 'acheteur',
+                        createdAt: new Date().toISOString(),
+                        lastLogin: new Date().toISOString(),
+                        status: 'active',
+                        emailVerified: user.emailVerified,
+                        provider: 'google'
+                    };
+                    
+                    await db.collection("users").doc(user.uid).set(userData);
+                    
+                    // Créer un panier vide
+                    const cartData = {
+                        userId: user.uid,
+                        items: {},
+                        totalItems: 0,
+                        totalAmount: 0,
+                        updatedAt: new Date().toISOString()
+                    };
+                    
+                    await db.collection("carts").doc(user.uid).set(cartData);
+                    
+                    console.log("✅ Nouvel utilisateur Google créé dans Firestore");
+                } else {
+                    // Mettre à jour la dernière connexion
+                    await db.collection("users").doc(user.uid).update({
+                        lastLogin: new Date().toISOString()
+                    });
+                }
+                
+                // Afficher le message de succès
+                showSuccessAndRedirect();
+                
+            } catch (error) {
+                console.error('❌ Erreur de connexion Google:', error);
+                
+                // Réactiver le bouton Google
+                const googleBtn = document.getElementById('googleLoginBtn');
+                googleBtn.innerHTML = '<img src="https://www.google.com/favicon.ico" alt="Google Logo"> Se connecter avec Google';
+                googleBtn.disabled = false;
+                
+                let errorMessage = 'Erreur de connexion avec Google. Veuillez réessayer.';
+                
+                if (error.code === 'auth/popup-closed-by-user') {
+                    errorMessage = 'La fenêtre de connexion a été fermée. Veuillez réessayer.';
+                } else if (error.code === 'auth/cancelled-popup-request') {
+                    errorMessage = 'Connexion annulée. Veuillez réessayer.';
+                }
+                
+                showNotification("Erreur", errorMessage, "danger");
+            }
+        }
+        
+        // Validation du formulaire
+        function validateForm() {
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            let isValid = true;
+            
+            // Validation de l'email
+            const emailError = document.getElementById('emailError');
+            if (!email || !email.includes('@')) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+            
+            // Validation du mot de passe
+            const passwordError = document.getElementById('passwordError');
+            if (!password || password.length < 6) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+            
+            return isValid;
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Page de connexion chargée");
+            
+            // Gestion du formulaire de connexion
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (validateForm()) {
+                    const email = document.getElementById('email').value.trim();
+                    const password = document.getElementById('password').value;
+                    
+                    loginWithEmail(email, password);
+                }
+            });
+            
+            // Gestion de la connexion Google
+            document.getElementById('googleLoginBtn').addEventListener('click', function() {
+                loginWithGoogle();
+            });
+            
+            // Validation en temps réel
+            document.getElementById('email').addEventListener('input', function() {
+                const email = this.value.trim();
+                if (email && email.includes('@')) {
+                    document.getElementById('emailError').style.display = 'none';
+                }
+            });
+            
+            document.getElementById('password').addEventListener('input', function() {
+                const password = this.value;
+                if (password.length >= 6) {
+                    document.getElementById('passwordError').style.display = 'none';
+                }
+            });
+            
+            // Vérifier si l'utilisateur est déjà connecté
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    console.log("Utilisateur déjà connecté, redirection...");
+                    window.location.href = 'dashboard.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
