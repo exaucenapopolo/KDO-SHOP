@@ -2,19 +2,23 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>KDO CAMEROUN • Onboarding</title>
-    <!-- Bootstrap 5 CSS (minimal) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDO CAMEROUN - Accueil Professionnel</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         :root {
             --primary-orange: #FF6B00;
             --secondary-blue: #0066CC;
-            --light-bg: #F5F5F7;
-            --text-dark: #1D1D1F;
+            --accent-gray: #F5F5F5;
+            --text-dark: #333333;
             --white: #FFFFFF;
+            --success-green: #52C41A;
+            --gradient-orange: linear-gradient(135deg, #FF6B00 0%, #FF8E3C 100%);
         }
 
         * {
@@ -24,310 +28,984 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--light-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-dark);
-            height: 100vh;
+            overflow-x: hidden;
+            background-color: #fafafa;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand img {
+            height: 50px;
+            transition: transform 0.3s;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 0 10px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-orange);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-orange);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-connexion {
+            background: var(--gradient-orange);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        .btn-connexion:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 100px 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-shape {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,107,0,0.1) 0%, rgba(255,107,0,0) 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hero-shape-2 {
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,102,204,0.1) 0%, rgba(0,102,204,0) 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--text-dark) 0%, var(--primary-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .hero-buttons .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-right: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-orange);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary-orange);
+            color: var(--primary-orange);
+            background: transparent;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section Produits populaires */
+        .products {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-orange);
+            border-radius: 2px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.15);
+        }
+
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-orange);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 15px;
+        }
+
+        .btn-product {
+            background: transparent;
+            border: 2px solid var(--primary-orange);
+            color: var(--primary-orange);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-product:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        /* Section Features (Pourquoi nous choisir ?) avec images réelles */
+        .features {
+            padding: 100px 0;
+            background: var(--accent-gray);
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
             overflow: hidden;
         }
 
-        /* Conteneur principal de l'onboarding */
-        .onboarding-wrapper {
-            width: 100%;
-            max-width: 480px;  /* largeur type mobile */
-            height: 100vh;
-            max-height: 800px;
-            background-color: var(--white);
-            border-radius: 32px 32px 0 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem 1.5rem 2rem;
-            margin: auto;
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-orange);
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
 
-        /* Entête : titre + indicateur skip */
-        .onboarding-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.1);
         }
 
-        .app-title {
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 4px solid var(--primary-orange);
+            padding: 5px;
+            transition: transform 0.5s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(255,107,0,0.3);
+        }
+
+        .feature-card:hover .feature-image {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 25px rgba(255,107,0,0.5);
+        }
+
+        .feature-card h3 {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--text-dark) 30%, var(--primary-orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+            margin-bottom: 15px;
         }
 
-        .btn-skip {
-            background: transparent;
-            border: none;
-            color: var(--secondary-blue);
-            font-weight: 600;
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Section Témoignages */
+        .testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 20px 0;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .testimonial-card::before {
+            content: '\f10d';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 40px;
+            color: rgba(255, 107, 0, 0.1);
+            z-index: 1;
+        }
+
+        .testimonial-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
             font-size: 1rem;
-            padding: 0.5rem 1rem;
-            transition: opacity 0.2s;
-        }
-        .btn-skip:hover {
-            opacity: 0.7;
         }
 
-        /* Carousel */
-        .carousel {
-            flex: 1;
-            min-height: 0;  /* important pour le flex */
-            margin-bottom: 1rem;
-        }
-
-        .carousel-inner {
-            height: 100%;
-            border-radius: 24px;
-        }
-
-        .carousel-item {
-            height: 100%;
-        }
-
-        .slide-content {
-            height: 100%;
+        .testimonial-author {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 1rem;
         }
 
-        .slide-image {
-            width: 100%;
-            max-height: 280px;
-            object-fit: cover;
-            border-radius: 24px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .slide-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            color: var(--text-dark);
-        }
-
-        .slide-description {
-            font-size: 1rem;
-            color: #6e6e73;
-            max-width: 280px;
-            margin: 0 auto;
-        }
-
-        /* Indicateurs (dots) */
-        .carousel-indicators {
-            position: static;
-            margin: 1rem 0 1.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .carousel-indicators [data-bs-target] {
-            width: 8px;
-            height: 8px;
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background-color: #c6c6c8;
-            opacity: 1;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .author-info h5 {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .author-info span {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Section CTA */
+        .cta {
+            padding: 80px 0;
+            background: var(--gradient-orange);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .cta::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            right: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--primary-orange);
             border: none;
-            transition: all 0.2s;
+            border-radius: 50px;
+            padding: 15px 40px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
         }
 
-        .carousel-indicators .active {
-            background-color: var(--primary-orange);
-            width: 24px;
-            border-radius: 4px;
+        .cta .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
 
-        /* Barre de navigation (passer / suivant) */
-        .onboarding-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: #999;
+            padding: 60px 0 30px;
         }
 
-        .btn-pass {
-            background: transparent;
-            border: none;
-            color: var(--secondary-blue);
-            font-weight: 600;
-            font-size: 1.1rem;
-            padding: 0.75rem 0;
-        }
-
-        .btn-next {
-            background: var(--primary-orange);
-            border: none;
+        .footer h5 {
             color: white;
             font-weight: 700;
-            font-size: 1.1rem;
-            padding: 0.75rem 2rem;
-            border-radius: 30px;
-            box-shadow: 0 6px 15px rgba(255, 107, 0, 0.3);
-            transition: all 0.2s;
-        }
-        .btn-next:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(255, 107, 0, 0.4);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
         }
 
-        /* Responsive : petits écrans */
-        @media (max-width: 480px) {
-            .onboarding-wrapper {
-                max-width: 100%;
-                border-radius: 0;
-                height: 100vh;
-                padding: 1rem 1rem 1.5rem;
+        .footer h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-orange);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary-orange);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            margin-top: 40px;
+            padding-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Animations supplémentaires */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Loader pour la transition */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary-orange);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
             }
-            .slide-image {
-                max-height: 240px;
+            .hero-buttons .btn {
+                display: block;
+                width: 100%;
+                margin-bottom: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="onboarding-wrapper">
-        <!-- En-tête avec titre et bouton "Passer" intégré -->
-        <div class="onboarding-header">
-            <span class="app-title">KDO CAMEROUN</span>
-            <button class="btn-skip" id="skipBtn" onclick="window.location.href='connexion.html'">
-                Passer <i class="fas fa-arrow-right ms-1"></i>
-            </button>
-        </div>
-
-        <!-- Carousel (slides) -->
-        <div id="onboardingCarousel" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
-            <div class="carousel-inner">
-                <!-- Slide 1 -->
-                <div class="carousel-item active">
-                    <div class="slide-content">
-                        <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             class="slide-image" alt="Ordinateurs">
-                        <h2 class="slide-title">Bienvenue chez KDO</h2>
-                        <p class="slide-description">
-                            Leader de l'informatique au Cameroun, découvrez des produits de qualité.
-                        </p>
-                    </div>
-                </div>
-                <!-- Slide 2 -->
-                <div class="carousel-item">
-                    <div class="slide-content">
-                        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             class="slide-image" alt="Ordinateur portable">
-                        <h2 class="slide-title">Ordinateurs portables</h2>
-                        <p class="slide-description">
-                            Des marques reconnues avec garantie constructeur.
-                        </p>
-                    </div>
-                </div>
-                <!-- Slide 3 -->
-                <div class="carousel-item">
-                    <div class="slide-content">
-                        <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             class="slide-image" alt="Accessoires gaming">
-                        <h2 class="slide-title">Accessoires gaming</h2>
-                        <p class="slide-description">
-                            Claviers, souris, casques : tout pour le setup parfait.
-                        </p>
-                    </div>
-                </div>
-                <!-- Slide 4 -->
-                <div class="carousel-item">
-                    <div class="slide-content">
-                        <img src="https://images.unsplash.com/photo-1603302576837-37561b2e230b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             class="slide-image" alt="PC de bureau">
-                        <h2 class="slide-title">PC de bureau</h2>
-                        <p class="slide-description">
-                            Performants et adaptés à vos besoins professionnels.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Indicateurs (dots) -->
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#onboardingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#onboardingCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#onboardingCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#onboardingCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-            </div>
-        </div>
-
-        <!-- Footer : boutons "Passer" et "Suivant" -->
-        <div class="onboarding-footer">
-            <button class="btn-pass" id="passFooterBtn" onclick="window.location.href='connexion.html'">
-                <i class="fas fa-chevron-left me-1"></i> Passer
-            </button>
-            <button class="btn-next" id="nextBtn" onclick="handleNext()">
-                Suivant
-            </button>
-        </div>
+    <!-- Loader (caché par défaut) -->
+    <div id="loader-wrapper" class="loader-wrapper" style="display: none;">
+        <div class="loader"></div>
     </div>
 
-    <!-- Scripts : Bootstrap JS + logique personnalisée -->
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/logos.png" alt="KDO CAMEROUN" height="50">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#accueil">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#produits">Produits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pourquoi">Pourquoi nous choisir</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#temoignages">Témoignages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="connexion.html" class="btn btn-connexion">
+                    <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-shape"></div>
+        <div class="hero-shape-2"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                    <h1 class="hero-title">Bienvenue chez KDO CAMEROUN</h1>
+                    <p class="hero-subtitle">Leader dans la vente d'ordinateurs et d'accessoires informatiques au Cameroun. Découvrez une gamme complète de produits de qualité avec garantie assurée.</p>
+                    <div class="hero-buttons">
+                        <a href="connexion.html" class="btn btn-primary-custom">
+                            <i class="fas fa-rocket me-2"></i>Commencer
+                        </a>
+                        <a href="connexion.html" class="btn btn-outline-custom">
+                            <i class="fas fa-eye me-2"></i>Voir nos produits
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Ordinateurs et accessoires" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produits" class="products">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Produits populaires</h2>
+                <p class="text-muted">Découvrez notre sélection d'ordinateurs et accessoires à prix imbattables</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Ordinateur portable">
+                            <span class="product-badge">-20%</span>
+                        </div>
+                        <div class="product-info">
+                            <h4>HP 15" Édition Spéciale</h4>
+                            <p class="text-muted">Intel Celeron, 4Go RAM, 128Go SSD</p>
+                            <div class="product-price">40 000 FCFA</div>
+                            <a href="connexion.html" class="btn btn-product">Voir le produit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1629131726692-1accd0c53ce0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Accessoires">
+                            <span class="product-badge">Nouveau</span>
+                        </div>
+                        <div class="product-info">
+                            <h4>Kit Gamer RGB</h4>
+                            <p class="text-muted">Souris + Clavier + Casque + Tapis</p>
+                            <div class="product-price">34 900 FCFA</div>
+                            <a href="connexion.html" class="btn btn-product">Voir le produit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1603302576837-37561b2e230b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1168&q=80" alt="Ordinateur de bureau">
+                            <span class="product-badge">-15%</span>
+                        </div>
+                        <div class="product-info">
+                            <h4>PC Bureau Intel i3</h4>
+                            <p class="text-muted">8Go RAM, 240Go SSD, Écran inclus</p>
+                            <div class="product-price">80 000 FCFA</div>
+                            <a href="connexion.html" class="btn btn-product">Voir le produit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="connexion.html" class="btn btn-primary-custom btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>Tous nos produits
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section avec les vraies images fournies -->
+    <section id="pourquoi" class="features">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Pourquoi nous choisir ?</h2>
+                <p class="text-muted">Des avantages exceptionnels pour une expérience d'achat unique</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card">
+                        <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Acceuil/a1.jpg" alt="Livraison" class="feature-image">
+                        <h3>Livraison garantie</h3>
+                        <p>Livraison rapide et sécurisée partout au Cameroun, avec suivi en temps réel.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card">
+                        <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Acceuil/a2.jpg" alt="Garantie" class="feature-image">
+                        <h3>Garantie assurée</h3>
+                        <p>Tous nos produits bénéficient d'une garantie constructeur et d'un service après-vente.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card">
+                        <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Acceuil/a3.jpg" alt="Paiement sécurisé" class="feature-image">
+                        <h3>Paiement sécurisé</h3>
+                        <p>Transactions 100% sécurisées avec plusieurs options de paiement disponibles.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card">
+                        <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Acceuil/a4.jpg" alt="Support" class="feature-image">
+                        <h3>Support 24/7</h3>
+                        <p>Une équipe à votre écoute pour répondre à toutes vos questions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card">
+                        <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Acceuil/a1.jpg" alt="Prix compétitifs" class="feature-image">
+                        <h3>Prix compétitifs</h3>
+                        <p>Les meilleurs prix du marché, avec des promotions régulières.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card">
+                        <img src="https://raw.githubusercontent.com/exaucenapopolo/KDO-SHOP/refs/heads/main/Photo/Acceuil/a2.jpg" alt="Certification" class="feature-image">
+                        <h3>Produits certifiés</h3>
+                        <p>Des produits authentiques et certifiés, sélectionnés pour leur qualité.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="temoignages" class="testimonials">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Ce que disent nos clients</h2>
+                <p class="text-muted">Des milliers de clients satisfaits à travers le Cameroun</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4" data-aos="flip-left" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>J'ai acheté mon ordinateur portable chez KDO CAMEROUN et je suis ravi. Livraison rapide et produit conforme. Le service après-vente est très réactif. Je recommande vivement !</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client">
+                                <div class="author-info">
+                                    <h5>Jean Paul</h5>
+                                    <span>Douala</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="flip-left" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Excellente expérience d'achat. La garantie est vraiment assurée, j'ai eu un problème avec mon clavier et il a été remplacé sans frais. Merci à toute l'équipe.</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client">
+                                <div class="author-info">
+                                    <h5>Marie-Claire</h5>
+                                    <span>Yaoundé</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="flip-left" data-aos-delay="300">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>Site très professionnel, large choix de produits et prix compétitifs. Le support 24/7 m'a aidé à choisir le matériel adapté à mes besoins. Je suis client fidèle !</p>
+                            <div class="testimonial-author">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Client">
+                                <div class="author-info">
+                                    <h5>Hervé N.</h5>
+                                    <span>Bafoussam</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 data-aos="fade-down">Prêt à rejoindre KDO CAMEROUN ?</h2>
+            <p data-aos="fade-up" data-aos-delay="200">Créez votre compte professionnel et accédez à des milliers de produits avec des offres exclusives.</p>
+            <a href="connexion.html" class="btn pulse" data-aos="zoom-in" data-aos-delay="400">
+                <i class="fas fa-user-plus me-2"></i>Se connecter / S'inscrire
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <h5>KDO CAMEROUN</h5>
+                    <p>Leader dans la vente d'ordinateurs et d'accessoires informatiques au Cameroun. Qualité, fiabilité et service client exceptionnel.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Liens rapides</h5>
+                    <ul class="footer-links">
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#produits">Produits</a></li>
+                        <li><a href="#pourquoi">Pourquoi nous choisir</a></li>
+                        <li><a href="#temoignages">Témoignages</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Informations légales</h5>
+                    <ul class="footer-links">
+                        <li><a href="terms.html">Conditions d'utilisation</a></li>
+                        <li><a href="privacy.html">Politique de confidentialité</a></li>
+                        <li><a href="mentions-legales.html">Mentions légales</a></li>
+                        <li><a href="cookies.html">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Contact</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Yaoundé, Cameroun</li>
+                        <li><i class="fas fa-phone me-2"></i> +237 6 99 99 99 99</li>
+                        <li><i class="fas fa-envelope me-2"></i> contact@chezkdo.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Lun-Sam : 9h - 18h</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KDO CAMEROUN. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Firebase SDK - Version compatibilité -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <script>
-        // Récupérer les éléments
-        const carousel = document.querySelector('#onboardingCarousel');
-        const nextBtn = document.getElementById('nextBtn');
-        const totalSlides = 4;  // nombre de slides
-
-        // Instance du carousel Bootstrap
-        const carouselInstance = new bootstrap.Carousel(carousel, {
-            interval: false,
-            wrap: false      // désactiver le retour au début
-        });
-
-        // Fonction pour mettre à jour le texte du bouton selon la slide active
-        function updateNextButton() {
-            const activeIndex = Array.from(document.querySelectorAll('.carousel-item')).findIndex(item => item.classList.contains('active'));
-            if (activeIndex === totalSlides - 1) {
-                // Dernière slide : bouton "Commencer"
-                nextBtn.innerHTML = 'Commencer <i class="fas fa-arrow-right ms-2"></i>';
-            } else {
-                nextBtn.innerHTML = 'Suivant <i class="fas fa-arrow-right ms-2"></i>';
-            }
-        }
-
-        // Gestion du clic sur le bouton "Suivant / Commencer"
-        window.handleNext = function() {
-            const activeIndex = Array.from(document.querySelectorAll('.carousel-item')).findIndex(item => item.classList.contains('active'));
-            if (activeIndex === totalSlides - 1) {
-                // Rediriger vers connexion.html
-                window.location.href = 'connexion.html';
-            } else {
-                // Passer à la slide suivante
-                carouselInstance.next();
-            }
+        // Configuration Firebase (identique à celle de connexion.html)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAYcjkrXKcjqFnf8E91JZWU1lMGS-yxSOU",
+            authDomain: "kdo-cameroun.firebaseapp.com",
+            projectId: "kdo-cameroun",
+            storageBucket: "kdo-cameroun.firebasestorage.app",
+            messagingSenderId: "445876564547",
+            appId: "1:445876564547:web:26507d61bb091fa7bd1af6",
+            measurementId: "G-FX2DVSKLKZ"
         };
 
-        // Écouter l'événement "slide.bs.carousel" pour mettre à jour le bouton après changement
-        carousel.addEventListener('slid.bs.carousel', function () {
-            updateNextButton();
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Vérifier si l'utilisateur est déjà connecté
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log("Utilisateur déjà connecté, redirection vers dashboard...");
+                // Afficher un loader avant redirection
+                document.getElementById('loader-wrapper').style.display = 'flex';
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 500); // Petit délai pour voir le loader
+            }
         });
 
-        // Initialiser l'état du bouton au chargement
-        updateNextButton();
+        // Initialisation AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
 
-        // Empêcher le glissement tactile de changer la slide si on veut un contrôle total,
-        // mais on garde le comportement natif pour une meilleure expérience.
-        // Optionnel : désactiver le swipe si souhaité
-        // (non implémenté pour garder la simplicité)
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
     </script>
 </body>
 </html>
