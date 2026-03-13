@@ -34,28 +34,28 @@
         body {
             background-color: var(--white);
             color: var(--text-dark);
-            padding-bottom: 50px;
+            padding-bottom: 60px; /* légèrement augmenté pour le footer plus grand */
             -webkit-text-size-adjust: 100%;
             -moz-text-size-adjust: 100%;
             -ms-text-size-adjust: 100%;
             text-size-adjust: 100%;
         }
         
-        /* Header simplifié */
+        /* Header agrandi */
         .header-kdo {
             border-bottom: 1px solid var(--border-color);
             background: var(--white);
-            padding: 8px 0;
+            padding: 12px 0; /* augmenté de 8px à 12px */
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px; /* légèrement augmenté */
         }
         
         .logo-img {
-            height: 32px;
+            height: 40px; /* augmenté de 32px à 40px */
             width: auto;
             object-fit: contain;
         }
@@ -63,7 +63,7 @@
         .logo-text {
             color: var(--primary-orange);
             font-weight: 700;
-            font-size: 16px;
+            font-size: 18px; /* augmenté de 16px à 18px */
             letter-spacing: -0.5px;
         }
         
@@ -751,14 +751,14 @@
             color: var(--text-light);
         }
         
-        /* Footer avec navigation fonctionnelle */
+        /* Footer avec navigation fonctionnelle - agrandi */
         .footer-kdo {
             background: var(--white);
             border-top: 1px solid var(--border-color);
             position: fixed;
             bottom: 0;
             width: 100%;
-            padding: 8px 0;
+            padding: 12px 0; /* augmenté de 8px à 12px */
             z-index: 1000;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
@@ -777,7 +777,7 @@
             color: var(--text-medium);
             transition: all 0.2s;
             padding: 4px;
-            min-width: 60px;
+            min-width: 70px; /* augmenté de 60px à 70px */
             position: relative;
         }
         
@@ -788,12 +788,12 @@
         }
         
         .footer-icon {
-            font-size: 18px;
+            font-size: 20px; /* augmenté de 18px à 20px */
             margin-bottom: 2px;
         }
         
         .footer-label {
-            font-size: 10px;
+            font-size: 11px; /* augmenté de 10px à 11px */
             font-weight: 500;
         }
         
@@ -878,6 +878,17 @@
             .promo-carousel {
                 animation: slidePromo 20s infinite linear;
             }
+            
+            /* Ajustements footer sur tablette */
+            .footer-item {
+                min-width: 60px;
+            }
+            .footer-icon {
+                font-size: 18px;
+            }
+            .footer-label {
+                font-size: 10px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -898,7 +909,7 @@
             }
             
             .logo-text {
-                font-size: 14px;
+                font-size: 16px; /* légère réduction sur mobile */
             }
             
             .promo-carousel {
@@ -928,7 +939,11 @@
             
             .logo-text {
                 display: block;
-                font-size: 12px;
+                font-size: 14px; /* encore réduit mais reste lisible */
+            }
+            
+            .logo-img {
+                height: 36px; /* légèrement réduit mais plus grand qu'avant */
             }
             
             .search-wrapper {
@@ -961,6 +976,17 @@
             .footer-kdo .container {
                 padding: 0 5px;
             }
+            
+            /* Ajustements footer sur mobile */
+            .footer-item {
+                min-width: 50px;
+            }
+            .footer-icon {
+                font-size: 18px;
+            }
+            .footer-label {
+                font-size: 9px;
+            }
         }
         
         /* Style pour le panier dans le footer */
@@ -978,30 +1004,6 @@
             justify-content: center;
             font-size: 9px;
             font-weight: bold;
-        }
-        
-        /* Améliorations pour mobile */
-        @media (max-width: 480px) {
-            .category-item {
-                padding: 6px 10px;
-                font-size: 10px;
-            }
-            
-            .footer-label {
-                font-size: 9px;
-            }
-            
-            .footer-icon {
-                font-size: 16px;
-            }
-            
-            .product-image {
-                height: 160px;
-            }
-            
-            .logo-text {
-                font-size: 11px;
-            }
         }
         
         /* Pour les très petits écrans */
@@ -1025,7 +1027,7 @@
     </style>
 </head>
 <body>
-    <!-- Header simplifié -->
+    <!-- Header simplifié (agrandi) -->
     <header class="header-kdo">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
@@ -1329,7 +1331,7 @@
         </div>
     </div>
 
-    <!-- Footer avec navigation fonctionnelle -->
+    <!-- Footer avec navigation fonctionnelle (agrandi) -->
     <footer class="footer-kdo">
         <div class="container">
             <nav class="footer-nav">
@@ -1382,7 +1384,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Script principal -->
+    <!-- Script principal (inchangé) -->
     <script>
         // CONFIGURATION FIREBASE (IDENTIQUE À L'INSCRIPTION)
         const firebaseConfig = {
